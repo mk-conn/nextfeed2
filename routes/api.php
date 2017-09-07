@@ -1,5 +1,7 @@
 <?php
 
+use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
+use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 use Illuminate\Http\Request;
 
 /*
@@ -13,6 +15,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')
+//     ->get('/user', function (Request $request) {
+//         return $request->user();
+//     });
+
+
+JsonApi::register('v1', ['namespace' => 'Api'], function (ApiGroup $api) {
+    $api->resource('feeds');
+    $api->resource('folders');
+    $api->resource('articles');
+    $api->resource('settings');
+    $api->resource('users');
 });

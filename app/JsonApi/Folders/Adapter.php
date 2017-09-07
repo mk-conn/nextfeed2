@@ -6,7 +6,7 @@ use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use App\Folder;
+use App\Models\Folder;
 
 class Adapter extends EloquentAdapter
 {

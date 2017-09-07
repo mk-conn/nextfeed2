@@ -13,13 +13,12 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Models\User::class, function (Faker $faker) {
-    static $password;
+$factory->define(App\Models\Feed::class, function (Faker $faker) {
 
     return [
         'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'url'  => $faker->url,
+        'link' => $faker->url,
+        'etag' => $faker->md5
     ];
 });

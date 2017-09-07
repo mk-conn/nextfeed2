@@ -40,8 +40,9 @@ return [
     'resources'     => [
         'feeds'    => App\Models\Feed::class,
         'folders'  => App\Models\Folder::class,
-        'articles' => App\Models\Folder::class,
-        'settings' => App\Models\Folder::class
+        'articles' => App\Models\Article::class,
+        'settings' => App\Models\Setting::class,
+        'users'    => App\Models\User::class
     ],
 
     /*
