@@ -4,12 +4,14 @@ namespace App\Models;
 
 
 use App\BaseModel;
-use App\User;
+
 
 /**
  * Class Setting
  *
  * @package App\Models
+ * @property-read \App\Models\User $user
+ * @mixin \Eloquent
  */
 class Setting extends BaseModel
 {

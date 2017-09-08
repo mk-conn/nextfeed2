@@ -4,18 +4,16 @@ namespace App\Models;
 
 
 use App\BaseModel;
+use PicoFeed\Reader\Reader;
 
 /**
  * Class Feed
  *
  * @package App\Models
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
- * @property-read \App\Models\Folder                                             $folder
- * @mixin \Eloquent
  * @property int                                                                 $id
  * @property string                                                              $name
- * @property int                                                                 $user_id
  * @property int                                                                 $folder_id
+ * @property int                                                                 $user_id
  * @property string|null                                                         $description
  * @property string                                                              $url
  * @property string                                                              $feed_url
@@ -32,6 +30,9 @@ use App\BaseModel;
  * @property \Carbon\Carbon|null                                                 $created_at
  * @property \Carbon\Carbon|null                                                 $updated_at
  * @property string|null                                                         $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
+ * @property-read \App\Models\Folder                                             $folder
+ * @property-read \App\Models\User                                               $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereArticlesPerUpdate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereAuthPassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereAuthUser($value)
@@ -52,6 +53,7 @@ use App\BaseModel;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereUserId($value)
+ * @mixin \Eloquent
  */
 class Feed extends BaseModel
 {
@@ -59,6 +61,14 @@ class Feed extends BaseModel
      *
      */
     const TABLE = 'feeds';
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -79,9 +89,25 @@ class Feed extends BaseModel
     /**
      *
      */
-    public function updateFeed()
+    public function fetchNewArticles()
     {
+        $etag = $this->etag;
+        $lastModified = $this->updated_at;
 
+        $reader = new Reader();
+        $resource = $reader->download($this->feed_url, $lastModified, $etag);
+
+        if ($resource->isModified()) {
+            $parser = $reader->getParser($resource->getUrl(), $resource->getContent(), $resource->getEncoding());
+        }
+
+        $parsedFeed = $parser->execute();
+
+        $items = $parsedFeed->getItems();
+
+        $this->etag = $resource->getEtag();
+
+        $this->save();
     }
 
 }

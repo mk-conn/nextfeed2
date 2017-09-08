@@ -27,8 +27,14 @@ class FeedResourceTest extends TestResource
 {
     use DatabaseMigrations, ModelFactoryTrait;
 
+    /**
+     * @var
+     */
     protected $feedReaderMock;
 
+    /**
+     *
+     */
     public function setUp()
     {
         parent::setup();
@@ -38,6 +44,9 @@ class FeedResourceTest extends TestResource
         $this->app->instance(Reader::class, $this->feedReaderMock);
     }
 
+    /**
+     *
+     */
     public function testCreate()
     {
         $clientMock = \Mockery::mock(Client::class);
@@ -47,6 +56,8 @@ class FeedResourceTest extends TestResource
                    ->andReturn('<xml></xml>');
         $clientMock->shouldReceive('getEncoding')
                    ->andReturn('utf8');
+        $clientMock->shouldReceive('getEtag')
+                   ->andReturn('somerubbishgoesoutfromhere');
 
         $parserMock = \Mockery::mock(Parser::class);
         $parsedFeedMock = \Mockery::mock(Feed::class);
@@ -77,6 +88,8 @@ class FeedResourceTest extends TestResource
                        ->andReturn('http://example.com/logo.png');
         $parsedFeedMock->shouldReceive('icon')
                        ->andReturn('http://example.com/favicon.ico');
+        $parsedFeedMock->shouldReceive('getItems')
+                       ->andReturn([]);
 
 
         $folder = $this->createFolder();
@@ -85,7 +98,7 @@ class FeedResourceTest extends TestResource
             'data' => [
                 'type'          => 'feeds',
                 'attributes'    => [
-                    'url'  => 'golem.de'
+                    'url' => 'golem.de'
                 ],
                 'relationships' => [
                     'folder' => [
@@ -103,8 +116,6 @@ class FeedResourceTest extends TestResource
                          ->decodeResponseJson();
 
         $this->assertEquals('Feed Title', array_get($response, 'data.attributes.name'));
-
-
     }
 
 

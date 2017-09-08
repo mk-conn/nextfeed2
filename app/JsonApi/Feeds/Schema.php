@@ -58,6 +58,14 @@ class Schema extends EloquentSchema
                 self::DATA         => isset($includeRelationships['folder']) ?
                     $resource->folder :
                     $this->createBelongsToIdentity($resource, 'folder')
+            ],
+            'user'   => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => true,
+                self::DATA         => isset($includeRelationships['user']) ?
+                    $resource->user :
+                    $this->createBelongsToIdentity($resource, 'user')
             ]
         ]);
     }

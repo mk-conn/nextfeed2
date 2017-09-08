@@ -19,7 +19,15 @@ use PicoFeed\Reader\Reader;
  */
 class FeedObserver
 {
+    /**
+     * @var Reader
+     */
     protected $feedReader;
+
+    /**
+     * @var
+     */
+    protected $articles;
 
     /**
      * FeedObserver constructor.
@@ -37,6 +45,7 @@ class FeedObserver
     public function creating(Feed $feed)
     {
         $resource = $this->feedReader->discover($feed->url);
+        $etag = $resource->getEtag();
 
         $feedParser = $this->feedReader->getParser(
             $resource->getUrl(),
@@ -52,7 +61,22 @@ class FeedObserver
         $feed->language = $parsedFeed->getLanguage();
         $feed->logo = $parsedFeed->getLogo();
         $feed->name = $parsedFeed->getTitle();
+        $feed->etag = $etag;
 
+        if (!empty($articles = $parsedFeed->getItems())) {
+            $this->articles = $articles;
+        }
+    }
+
+    /**
+     * @param Feed $feed
+     */
+    public function created(Feed $feed)
+    {
+        if ($this->articles) {
+            $feed->articles()
+                 ->saveMany($this->articles);
+        }
     }
 
 }

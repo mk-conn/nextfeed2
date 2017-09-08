@@ -2,6 +2,7 @@
 
 use App\Models\Feed;
 use App\Models\Folder;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,7 @@ class CreateTableFeeds extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('folder_id');
+            $table->integer('user_id');
             $table->string('description')
                   ->nullable();
             $table->string('url');
@@ -43,6 +45,11 @@ class CreateTableFeeds extends Migration
             $table->string('update_error')
                   ->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on(User::TABLE)
+                  ->onDelete('cascade');
 
             $table->foreign('folder_id')
                   ->references('id')

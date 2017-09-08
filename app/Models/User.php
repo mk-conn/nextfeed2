@@ -10,6 +10,27 @@ use Illuminate\Notifications\Notifiable;
  * Class User
  *
  * @package App\Models
+ * @property int                                                                                                            $id
+ * @property string                                                                                                         $name
+ * @property string                                                                                                         $fullname
+ * @property string                                                                                                         $email
+ * @property string                                                                                                         $password
+ * @property string|null                                                                                                    $remember_token
+ * @property \Carbon\Carbon|null                                                                                            $created_at
+ * @property \Carbon\Carbon|null                                                                                            $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Feed[]                                               $feeds
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Folder[]                                             $folders
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Setting[]                                            $settings
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereFullname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class User extends Authenticatable
 {
@@ -27,6 +48,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'fullname',
         'email',
         'password',
     ];
@@ -57,4 +79,11 @@ class User extends Authenticatable
         return $this->hasMany(Folder::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function feeds()
+    {
+        return $this->hasMany(Feed::class);
+    }
 }
