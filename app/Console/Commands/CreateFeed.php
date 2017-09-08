@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+
 use App\Models\Feed;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
  * Class UpdateFeeds
@@ -25,7 +27,7 @@ class CreateFeed extends Command
      *
      * @var string
      */
-    protected $description = 'Update feed(s)';
+    protected $description = 'Discover and store a feed';
 
     /**
      * Create a new command instance.
@@ -44,14 +46,24 @@ class CreateFeed extends Command
     public function handle()
     {
         $url = $this->argument('url');
-        $user = User::findByName($this->argument('user'));
+        $user = User::whereName($this->argument('user'))
+                    ->first();
         $folder = $this->argument('folder');
-        if (!$folder) {
-            $folder = $user->rootFolder();
+
+        if (!$user) {
+            throw new InvalidArgumentException("Invalid user.");
         }
 
 
         $feed = new Feed(['url' => $url]);
+        $feed->user()
+             ->associate($user);
+
+        if ($folder) {
+            $feed->folder()
+                 ->associate($folder);
+        }
+
         $feed->save();
     }
 }

@@ -26,7 +26,7 @@ class FetchFeedArticles extends Command
      *
      * @var string
      */
-    protected $description = 'Update feed(s)';
+    protected $description = 'Update articles of a feed (or all)';
 
     /**
      * Create a new command instance.

@@ -10,25 +10,33 @@ use App\BaseModel;
  *
  * @package App\Models
  * @property int                   $id
- * @property string                $name
+ * @property string                $guid
  * @property int                   $feed_id
- * @property string                $body
+ * @property string                $title
+ * @property string                $author
+ * @property string|null           $language
+ * @property string|null           $publish_date
+ * @property string|null           $updated_date
+ * @property string|null           $content
+ * @property string|null           $description
  * @property string                $url
- * @property string                $feed_location
- * @property string                $icon
+ * @property array                 $categories
  * @property \Carbon\Carbon|null   $created_at
  * @property \Carbon\Carbon|null   $updated_at
- * @property string|null           $deleted_at
  * @property-read \App\Models\Feed $feed
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereAuthor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereCategories($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereFeedId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereFeedLocation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereIcon($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereGuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereLanguage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article wherePublishDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUpdatedDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUrl($value)
  * @mixin \Eloquent
  */
@@ -40,11 +48,17 @@ class Article extends BaseModel
     const TABLE = 'articles';
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'categories' => 'array'
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function feed()
     {
         return $this->belongsTo(Feed::class);
     }
-
 }

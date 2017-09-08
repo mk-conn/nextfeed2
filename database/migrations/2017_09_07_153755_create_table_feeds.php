@@ -19,7 +19,8 @@ class CreateTableFeeds extends Migration
         Schema::create(Feed::TABLE, function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('folder_id');
+            $table->integer('folder_id')
+                  ->nullable();
             $table->integer('user_id');
             $table->string('description')
                   ->nullable();

@@ -9,7 +9,10 @@
 namespace App\Observers;
 
 
+use App\Helpers\ParsedFeed;
+use App\Models\Article;
 use App\Models\Feed;
+use PicoFeed\Parser\Item;
 use PicoFeed\Reader\Reader;
 
 /**
@@ -63,8 +66,11 @@ class FeedObserver
         $feed->name = $parsedFeed->getTitle();
         $feed->etag = $etag;
 
-        if (!empty($articles = $parsedFeed->getItems())) {
-            $this->articles = $articles;
+        if (!empty($items = $parsedFeed->getItems())) {
+            $parsedFeedHelper = new ParsedFeed();
+            $parsedFeedHelper->items = $items;
+
+            app()->instance(ParsedFeed::class, $parsedFeedHelper);
         }
     }
 
@@ -73,10 +79,38 @@ class FeedObserver
      */
     public function created(Feed $feed)
     {
-        if ($this->articles) {
-            $feed->articles()
-                 ->saveMany($this->articles);
+        /** @var ParsedFeed $parsedFeedHelper */
+        $parsedFeedHelper = resolve(ParsedFeed::class);
+        $items = $parsedFeedHelper->items;
+        $articles = collect([]);
+
+        /** @var Item $item */
+        foreach ($items as $item) {
+            $article = new Article(
+                [
+                    'title'        => substr($item->getTitle(), 0, 255),
+                    'author'       => $item->getAuthor(),
+                    'content'      => $item->getContent(),
+                    'guid'         => $item->getId(),
+                    'description'  => $item->getXml()->description,
+                    'url'          => $item->getUrl(),
+                    'publish_date' => $item->getPublishedDate(),
+                    'updated_date' => $item->getUpdatedDate(),
+                    'categories'   => $item->getCategories()
+                ]
+            );
+
+            $article->feed()
+                    ->associate($feed);
+
+            $articles->push($article);
         }
+
+        if ($articles->count()) {
+            $feed->articles()
+                 ->saveMany($articles);
+        }
+
     }
 
 }

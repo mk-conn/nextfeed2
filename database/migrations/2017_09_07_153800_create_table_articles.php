@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Article;
+use App\Models\Feed;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,15 +17,33 @@ class CreateTableArticles extends Migration
     {
         Schema::create(Article::TABLE, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('guid');
             $table->integer('feed_id');
-            $table->string('body');
+            $table->string('title');
+            $table->string('author', 100);
+            $table->string('language', 20)
+                  ->nullable();
+            $table->dateTimeTz('publish_date')
+                  ->nullable();
+            $table->dateTimeTz('updated_date')
+                  ->nullable();
+            $table->text('content')
+                  ->nullable();
+            $table->text('description')
+                  ->nullable();
             $table->string('url');
-            $table->string('feed_location');
-            $table->string('icon');
+            $table->json('categories')
+                  ->nullable();
             $table->timestamps();
 
-            $table->softDeletes();
+//            $table->softDeletes();
+
+            $table->foreign('feed_id')
+                  ->references('id')
+                  ->on(Feed::TABLE)
+                  ->onDelete('cascade');
+
+            $table->unique(['guid', 'feed_id']);
 
         });
     }
