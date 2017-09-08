@@ -58,6 +58,7 @@ class FeedObserver
 
         $parsedFeed = $feedParser->execute();
 
+        $feed->guid = $parsedFeed->getId();
         $feed->description = $parsedFeed->getDescription();
         $feed->site_url = $parsedFeed->getSiteUrl();
         $feed->feed_url = $parsedFeed->getFeedUrl();
@@ -86,9 +87,10 @@ class FeedObserver
 
         /** @var Item $item */
         foreach ($items as $item) {
+
             $article = new Article(
                 [
-                    'title'        => substr($item->getTitle(), 0, 255),
+                    'title'        => $item->getTitle(),
                     'author'       => $item->getAuthor(),
                     'content'      => $item->getContent(),
                     'guid'         => $item->getId(),

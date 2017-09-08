@@ -19,7 +19,7 @@ class CreateTableArticles extends Migration
             $table->increments('id');
             $table->string('guid');
             $table->integer('feed_id');
-            $table->string('title');
+            $table->mediumText('title');
             $table->string('author', 100);
             $table->string('language', 20)
                   ->nullable();
@@ -27,9 +27,9 @@ class CreateTableArticles extends Migration
                   ->nullable();
             $table->dateTimeTz('updated_date')
                   ->nullable();
-            $table->text('content')
+            $table->longText('content')
                   ->nullable();
-            $table->text('description')
+            $table->longText('description')
                   ->nullable();
             $table->string('url');
             $table->json('categories')

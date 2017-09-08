@@ -18,6 +18,7 @@ class CreateTableFeeds extends Migration
     {
         Schema::create(Feed::TABLE, function (Blueprint $table) {
             $table->increments('id');
+            $table->string('guid');
             $table->string('name');
             $table->integer('folder_id')
                   ->nullable();
@@ -57,7 +58,7 @@ class CreateTableFeeds extends Migration
                   ->on(Folder::TABLE)
                   ->onDelete('cascade');
 
-            $table->softDeletes();
+            $table->unique(['guid', 'user_id']);
         });
     }
 

@@ -11,8 +11,9 @@ use PicoFeed\Reader\Reader;
  *
  * @package App\Models
  * @property int                                                                 $id
+ * @property string                                                              $guid
  * @property string                                                              $name
- * @property int                                                                 $folder_id
+ * @property int|null                                                            $folder_id
  * @property int                                                                 $user_id
  * @property string|null                                                         $description
  * @property string                                                              $url
@@ -31,7 +32,7 @@ use PicoFeed\Reader\Reader;
  * @property \Carbon\Carbon|null                                                 $updated_at
  * @property string|null                                                         $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
- * @property-read \App\Models\Folder                                             $folder
+ * @property-read \App\Models\Folder|null                                        $folder
  * @property-read \App\Models\User                                               $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereArticlesPerUpdate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereAuthPassword($value)
@@ -42,6 +43,7 @@ use PicoFeed\Reader\Reader;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereEtag($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereFeedUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereFolderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereGuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereIcon($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereLanguage($value)
