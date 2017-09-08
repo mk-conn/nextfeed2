@@ -46,7 +46,10 @@ class Validators extends AbstractValidatorProvider
      */
     protected function relationshipRules(RelationshipsValidatorInterface $relationships, $record = null)
     {
-        //
+        $allowEmpty = false;
+        $required = is_null($record);
+
+        $relationships->hasOne('user', 'users', $required, $allowEmpty);
     }
 
 }

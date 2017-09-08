@@ -29,7 +29,8 @@ class Hydrator extends EloquentHydrator
      */
     protected $relationships = [
         'folder',
-        'articles'
+        'articles',
+        'user'
     ];
 
 }

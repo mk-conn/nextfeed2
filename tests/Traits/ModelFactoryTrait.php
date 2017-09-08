@@ -55,7 +55,7 @@ trait ModelFactoryTrait
      * @param array     $attrs
      * @param int       $amount
      *
-     * @return mixed
+     * @return Folder
      */
     public function createFolder(User $user = null, $attrs = [], $amount = 1)
     {
@@ -89,7 +89,7 @@ trait ModelFactoryTrait
     {
         $users = factory(User::class)->create($attrs);
 
-        if ($amount = 1) {
+        if ($amount === 1) {
             return $users->first();
         }
 

@@ -93,6 +93,7 @@ class FeedResourceTest extends TestResource
 
 
         $folder = $this->createFolder();
+        $user = $folder->user;
 
         $create = [
             'data' => [
@@ -105,6 +106,12 @@ class FeedResourceTest extends TestResource
                         'data' => [
                             'type' => 'folders',
                             'id'   => "$folder->id"
+                        ]
+                    ],
+                    'user'   => [
+                        'data' => [
+                            'type' => 'users',
+                            'id'   => "$user->id"
                         ]
                     ]
                 ]
