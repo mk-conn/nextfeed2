@@ -34,9 +34,10 @@ class CreateTableArticles extends Migration
             $table->string('url');
             $table->json('categories')
                   ->nullable();
-            $table->timestamps();
-
-//            $table->softDeletes();
+            $table->boolean('read')
+                  ->default(false);
+            $table->boolean('keep')
+                  ->default(false);
 
             $table->foreign('feed_id')
                   ->references('id')
@@ -45,6 +46,8 @@ class CreateTableArticles extends Migration
 
             $table->unique(['guid', 'feed_id']);
 
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
