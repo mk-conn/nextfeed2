@@ -16,9 +16,6 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\Feed::class, function (Faker $faker) {
 
     return [
-        'name' => $faker->name,
-        'url'  => $faker->url,
-        'link' => $faker->url,
-        'etag' => $faker->md5
+        'url' => $faker->url,
     ];
 });

@@ -25,6 +25,7 @@ class Schema extends EloquentSchema
         'site-url',
         'logo',
         'icon',
+        'order',
         'update_error',
         'created_at',
         'updated_at'

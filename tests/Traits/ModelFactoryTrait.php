@@ -22,30 +22,48 @@ trait ModelFactoryTrait
 {
 
     /**
-     * @param Folder|null $folder
-     * @param array       $attrs
-     * @param int         $amount
+     * @param User|null     $user
+     * @param Folder|null   $folder
+     * @param array         $attrs
+     * @param int           $amount
+     * @param callable|null $mock_function
      *
-     * @return mixed
+     * @return Feed|Feed[]
      */
-    public function createFeed(Folder $folder = null, $attrs = [], $amount = 1)
+    public function createFeed(User $user = null, Folder $folder = null, $attrs = [], $amount = 1, callable $mock_function = null)
     {
-        if (!$folder) {
-            $folder = $this->createFolder();
+        if (!$user) {
+            $user = $this->createUser();
         }
 
+        /** @var Feed[] $feeds */
         $feeds = factory(Feed::class, $amount)->make($attrs);
 
+        $setRelations = function ($feed, $user, $folder) {
+            $feed->user()
+                 ->associate($user);
+            if ($folder) {
+                $feed->folder()
+                     ->associate($folder);
+            }
+        };
+
         if ($amount === 1) {
+            /** @var Feed $feed */
             $feed = $feeds->first();
-            $folder->feeds()
-                   ->save($feed);
+            $setRelations($feed, $user, $folder);
+            $feed->save();
 
             return $feed;
         }
 
-        $folder->feeds()
-               ->saveMany($feeds);
+        foreach ($feeds as $feed) {
+            if ($mock_function) {
+                call_user_func($mock_function);
+            }
+            $setRelations($feed, $user, $folder);
+            $feed->save();
+        }
 
         return $feeds;
     }

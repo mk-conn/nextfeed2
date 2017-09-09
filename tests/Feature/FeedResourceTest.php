@@ -32,12 +32,13 @@ class FeedResourceTest extends TestResource
      */
     protected $feedReaderMock;
 
+
     /**
      *
      */
     public function setUp()
     {
-        parent::setup();
+        parent::setUp();
 
         $this->feedReaderMock = \Mockery::mock(Reader::class);
 
@@ -45,9 +46,9 @@ class FeedResourceTest extends TestResource
     }
 
     /**
-     *
+     * Mock everything feed fetching/parsing related
      */
-    public function testCreate()
+    protected function mockIt()
     {
         $clientMock = \Mockery::mock(Client::class);
         $clientMock->shouldReceive('getUrl')
@@ -74,6 +75,8 @@ class FeedResourceTest extends TestResource
         $parserMock->shouldReceive('execute')
                    ->andReturn($parsedFeedMock);
 
+        $parsedFeedMock->shouldReceive('getId')
+                       ->andReturn(str_random(52));
         $parsedFeedMock->shouldReceive('getTitle')
                        ->andReturn('Feed Title');
         $parsedFeedMock->shouldReceive('getDescription')
@@ -90,7 +93,16 @@ class FeedResourceTest extends TestResource
                        ->andReturn('http://example.com/favicon.ico');
         $parsedFeedMock->shouldReceive('getItems')
                        ->andReturn([]);
+    }
 
+
+    /**
+     * Test creation of a feed
+     */
+    public function testCreate()
+    {
+
+        $this->mockIt();
 
         $folder = $this->createFolder();
         $user = $folder->user;
@@ -123,6 +135,22 @@ class FeedResourceTest extends TestResource
                          ->decodeResponseJson();
 
         $this->assertEquals('Feed Title', array_get($response, 'data.attributes.name'));
+    }
+
+    /**
+     *
+     */
+    public function testIndex()
+    {
+        $mock_function = [$this, 'mockIt'];
+        $this->createFeed(null, null, [], 5, $mock_function);
+
+        $response = $this->getJson('api/v1/feeds')
+                         ->assertStatus(Response::HTTP_OK)
+                         ->decodeResponseJson();
+
+        $this->assertCount(5, $response['data']);
+
     }
 
 
