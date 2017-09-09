@@ -2,11 +2,13 @@
 
 namespace App\JsonApi\Folders;
 
+
+use App\Models\Folder;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use App\Models\Folder;
+use Illuminate\Support\Facades\Auth;
 
 class Adapter extends EloquentAdapter
 {
@@ -22,17 +24,23 @@ class Adapter extends EloquentAdapter
     }
 
     /**
-     * @param Builder $query
+     * @param Builder    $query
      * @param Collection $filters
+     *
      * @return void
      */
     protected function filter(Builder $query, Collection $filters)
     {
-        // TODO
+        $user = Auth::user();
+
+        if ($user) {
+            $query->where('user_id', $user->id);
+        }
     }
 
     /**
      * @param Collection $filters
+     *
      * @return mixed
      */
     protected function isSearchOne(Collection $filters)

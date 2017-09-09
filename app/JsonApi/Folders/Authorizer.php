@@ -24,6 +24,16 @@ class Authorizer extends BaseAuthorizer
 
     public function canReadMany($resourceType, EncodingParametersInterface $parameters)
     {
+
+        if (isset($parameters->getFilteringParameters()['user'])) {
+            $user = $this->currentUser();
+            if ($user->name === $parameters->getFilteringParameters()['user']) {
+                return true;
+            }
+
+            return $this->forbidden();
+        }
+
         return true;
     }
 

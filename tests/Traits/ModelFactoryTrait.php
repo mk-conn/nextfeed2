@@ -105,7 +105,7 @@ trait ModelFactoryTrait
      */
     public function createUser($attrs = [], $amount = 1)
     {
-        $users = factory(User::class)->create($attrs);
+        $users = factory(User::class, $amount)->create($attrs);
 
         if ($amount === 1) {
             return $users->first();
