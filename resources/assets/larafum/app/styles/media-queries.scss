@@ -1,0 +1,18 @@
+@include media-breakpoint-down(sm) {
+
+  html {
+    font-size: 14px;
+  }
+
+  h1, h2 {
+    font-size: 18px;
+  }
+  h3, h4, h5 {
+    font-size: 15px;
+  }
+
+  .feed-navigation {
+    font-size: 12px;
+  }
+}
+

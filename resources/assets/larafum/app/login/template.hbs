@@ -1,2 +1,15 @@
+<form class="ui form" {{action (route-action 'authenticate' on='submit')}}>
 
-{{outlet}}
+  <div class="required field">
+    <label for="identification">Login</label>
+    {{input id='identification' placeholder='Enter Login' value=identification}}
+  </div>
+
+  <div class="required field">
+    <label for="password">Password</label>
+    {{input id='password' placeholder='Enter Password' type='password' value=password}}
+  </div>
+
+  <button type="submit">Login</button>
+
+</form>

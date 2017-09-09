@@ -1,0 +1,28 @@
+<div id="side-bar" class="ui large vertical inverted menu">
+
+  <div class="item">
+    <div class="ui header">
+      <a href="/">LARAFUM</a>
+    </div>
+  </div>
+
+  <div class="item">
+    {{#link-to "settings"}}
+      <i class="icon wrench"></i>
+      Settings
+    {{/link-to}}
+  </div>
+
+  {{pinned-articles}}
+
+  {{refresh-feeds}}
+
+  {{outlet}}
+
+</div>
+
+<div id="article-list">{{outlet "article-list"}}</div>
+
+<div id="article-overlay">{{outlet "article-overlay"}}</div>
+
+<div id="content">{{outlet "content"}}</div>

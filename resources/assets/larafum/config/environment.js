@@ -1,7 +1,7 @@
 /* eslint-env node */
 'use strict';
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'larafum',
     environment,
@@ -21,7 +21,21 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    'ember-simple-auth': {
+      authorizer: 'authorizer:token',
+      applicationRootUrl: '/',
+      // crossOriginWhitelist:
+    },
+
+    'ember-simple-auth-token': {
+      refreshTokenPropertyName: 'token',
+      serverTokenEndpoint: 'api/token-auth',
+      serverTokenRefreshEndpoint: 'api/token-refresh',
+      refreshLeeway: 5
     }
+
   };
 
   if (environment === 'development') {
