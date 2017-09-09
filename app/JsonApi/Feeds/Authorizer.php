@@ -6,13 +6,12 @@
  *
  */
 
-namespace App\JsonApi\Folders;
+namespace App\JsonApi\Feeds;
 
 
 use App\JsonApi\BaseAuthorizer;
 use CloudCreativity\JsonApi\Contracts\Object\RelationshipInterface;
 use CloudCreativity\JsonApi\Contracts\Object\ResourceObjectInterface;
-use Illuminate\Support\Facades\Auth;
 use Neomerx\JsonApi\Contracts\Encoder\Parameters\EncodingParametersInterface;
 
 /**
@@ -54,7 +53,16 @@ class Authorizer extends BaseAuthorizer
      */
     public function canCreate($resourceType, ResourceObjectInterface $resource, EncodingParametersInterface $parameters)
     {
-        return false;
+        $relationships = $resource->getRelationships();
+
+        $user = $this->currentUser();
+        $forUser = $relationships->user;
+
+        if ($user->id === $forUser->data->id) {
+            return true;
+        }
+
+        return $this->forbidden();
     }
 
 
@@ -66,11 +74,7 @@ class Authorizer extends BaseAuthorizer
      */
     public function canRead($record, EncodingParametersInterface $parameters)
     {
-        if ($record->user->id === Auth::user()->id) {
-            return true;
-        }
-
-        return $this->forbidden();
+        return false;
     }
 
 

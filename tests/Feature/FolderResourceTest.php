@@ -71,12 +71,10 @@ class FolderResourceTest extends TestResource
         $this->be($userBadGuy);
 
         $user = $this->createUser(['name' => 'anthony']);
-
         $this->createFolder($user, [], 5);
 
-        $response = $this->getJson('api/v1/folders?filter[user]=anthony')
-                         ->assertStatus(Response::HTTP_FORBIDDEN)
-                         ->decodeResponseJson();
+        $this->getJson('api/v1/folders?filter[user]=anthony')
+             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /**
@@ -84,6 +82,18 @@ class FolderResourceTest extends TestResource
      */
     public function testRead()
     {
+        $user = $this->createUser();
+        $this->be($user);
+
+        $folder = $this->createFolder($user, ['name' => 'News']);
+
+        $response = $this->getJson('api/v1/folders/' . $folder->id)
+                         ->assertStatus(Response::HTTP_OK)
+                         ->decodeResponseJson();
+
+        $this->assertEquals('News', array_get($response, 'data.attributes.name'));
+
+
 
     }
 

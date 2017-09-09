@@ -106,6 +106,7 @@ class FeedResourceTest extends TestResource
 
         $folder = $this->createFolder();
         $user = $folder->user;
+        $this->be($user);
 
         $create = [
             'data' => [
@@ -135,6 +136,44 @@ class FeedResourceTest extends TestResource
                          ->decodeResponseJson();
 
         $this->assertEquals('Feed Title', array_get($response, 'data.attributes.name'));
+    }
+
+    /**
+     * Test create is forbidden for different users
+     */
+    public function testCreateForbidden()
+    {
+        $user = $this->createUser();
+        $folder = $this->createFolder($user);
+        $differentUser = $this->createUser();
+
+        $this->be($differentUser);
+
+        $create = [
+            'data' => [
+                'type'          => 'feeds',
+                'attributes'    => [
+                    'url' => 'golem.de'
+                ],
+                'relationships' => [
+                    'folder' => [
+                        'data' => [
+                            'type' => 'folders',
+                            'id'   => "$folder->id"
+                        ]
+                    ],
+                    'user'   => [
+                        'data' => [
+                            'type' => 'users',
+                            'id'   => "$user->id"
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $this->postJson('api/v1/feeds', $create)
+             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /**
