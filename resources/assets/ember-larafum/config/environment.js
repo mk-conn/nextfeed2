@@ -26,6 +26,8 @@ module.exports = function (environment) {
     'ember-simple-auth': {
       authorizer: 'authorizer:token',
       applicationRootUrl: '/',
+      authenticationRoute: 'login',
+      routeAfterAuthentification: 'index'
       // crossOriginWhitelist:
     },
 

@@ -379,17 +379,9 @@ define('ember-larafum/index/route', ['exports', 'ember-simple-auth/mixins/authen
   var Route = Ember.Route;
   exports.default = Route.extend(_authenticatedRouteMixin.default, {
 
-    model: function model() {
-      var adapter = this.container.lookup('adapter:application');
+    model: function model() {},
 
-      return adapter.ajax((_environment.default['API_URL'] || '') + '/api/users/', 'GET');
-    },
-
-    setupController: function setupController(controller, model) {
-      if (!model.username) {
-        this.get('session').invalidate();
-      }
-    }
+    setupController: function setupController(controller, model) {}
   });
 });
 define("ember-larafum/index/template", ["exports"], function (exports) {
@@ -398,7 +390,7 @@ define("ember-larafum/index/template", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "4Hm1oOcg", "block": "{\"symbols\":[],\"statements\":[[1,[18,\"outlet\"],false]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/index/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "26RFVmVI", "block": "{\"symbols\":[],\"statements\":[[0,\"Index!\\n\\n\"],[1,[18,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/index/template.hbs" } });
 });
 define('ember-larafum/initializers/app-version', ['exports', 'ember-cli-app-version/initializer-factory', 'ember-larafum/config/environment'], function (exports, _initializerFactory, _environment) {
   'use strict';
@@ -644,7 +636,7 @@ define('ember-larafum/login/controller', ['exports'], function (exports) {
     }
   });
 });
-define('ember-larafum/login/route', ['exports'], function (exports) {
+define('ember-larafum/login/route', ['exports', 'ember-simple-auth/mixins/unauthenticated-route-mixin'], function (exports, _unauthenticatedRouteMixin) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -652,7 +644,7 @@ define('ember-larafum/login/route', ['exports'], function (exports) {
   });
   var Route = Ember.Route,
       service = Ember.inject.service;
-  exports.default = Route.extend({});
+  exports.default = Route.extend(_unauthenticatedRouteMixin.default, {});
 });
 define("ember-larafum/login/template", ["exports"], function (exports) {
   "use strict";
@@ -1007,6 +999,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("ember-larafum/app")["default"].create({"name":"ember-larafum","version":"0.0.0+0698780c"});
+  require("ember-larafum/app")["default"].create({"name":"ember-larafum","version":"0.0.0+934d127b"});
 }
 //# sourceMappingURL=ember-larafum.map

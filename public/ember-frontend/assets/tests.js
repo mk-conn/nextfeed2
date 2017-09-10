@@ -27,7 +27,7 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('index/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'index/route.js should pass ESLint\n\n');
+    assert.ok(false, 'index/route.js should pass ESLint\n\n3:8 - \'ENV\' is defined but never used. (no-unused-vars)\n13:42 - \'model\' is defined but never used. (no-unused-vars)');
   });
 
   QUnit.test('login/controller.js', function (assert) {
@@ -37,7 +37,7 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('login/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'login/route.js should pass ESLint\n\n3:24 - \'service\' is assigned a value but never used. (no-unused-vars)');
+    assert.ok(false, 'login/route.js should pass ESLint\n\n4:24 - \'service\' is assigned a value but never used. (no-unused-vars)');
   });
 
   QUnit.test('models/user.js', function (assert) {
