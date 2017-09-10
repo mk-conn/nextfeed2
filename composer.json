@@ -16,7 +16,7 @@
     "laravel/scout": "^3.0",
     "laravel/tinker": "~1.0",
     "miniflux/picofeed": "0.1.*",
-    "tymon/jwt-auth": "0.5.*"
+    "tymon/jwt-auth": "dev-develop"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.4",

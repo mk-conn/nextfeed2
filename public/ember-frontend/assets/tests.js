@@ -1,6 +1,6 @@
 'use strict';
 
-define('larafum/tests/app.lint-test', [], function () {
+define('ember-larafum/tests/app.lint-test', [], function () {
   'use strict';
 
   QUnit.module('ESLint | app');
@@ -30,9 +30,19 @@ define('larafum/tests/app.lint-test', [], function () {
     assert.ok(true, 'index/route.js should pass ESLint\n\n');
   });
 
+  QUnit.test('login/controller.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'login/controller.js should pass ESLint\n\n');
+  });
+
   QUnit.test('login/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'login/route.js should pass ESLint\n\n');
+    assert.ok(false, 'login/route.js should pass ESLint\n\n3:24 - \'service\' is assigned a value but never used. (no-unused-vars)');
+  });
+
+  QUnit.test('models/user.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'models/user.js should pass ESLint\n\n');
   });
 
   QUnit.test('resolver.js', function (assert) {
@@ -50,7 +60,7 @@ define('larafum/tests/app.lint-test', [], function () {
     assert.ok(true, 'settings/route.js should pass ESLint\n\n');
   });
 });
-define('larafum/tests/helpers/destroy-app', ['exports'], function (exports) {
+define('ember-larafum/tests/helpers/destroy-app', ['exports'], function (exports) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -61,7 +71,7 @@ define('larafum/tests/helpers/destroy-app', ['exports'], function (exports) {
     Ember.run(application, 'destroy');
   }
 });
-define('larafum/tests/helpers/ember-simple-auth', ['exports', 'ember-simple-auth/authenticators/test'], function (exports, _test) {
+define('ember-larafum/tests/helpers/ember-simple-auth', ['exports', 'ember-simple-auth/authenticators/test'], function (exports, _test) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -102,7 +112,7 @@ define('larafum/tests/helpers/ember-simple-auth', ['exports', 'ember-simple-auth
     return wait();
   }
 });
-define('larafum/tests/helpers/module-for-acceptance', ['exports', 'qunit', 'larafum/tests/helpers/start-app', 'larafum/tests/helpers/destroy-app'], function (exports, _qunit, _startApp, _destroyApp) {
+define('ember-larafum/tests/helpers/module-for-acceptance', ['exports', 'qunit', 'ember-larafum/tests/helpers/start-app', 'ember-larafum/tests/helpers/destroy-app'], function (exports, _qunit, _startApp, _destroyApp) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -133,7 +143,7 @@ define('larafum/tests/helpers/module-for-acceptance', ['exports', 'qunit', 'lara
 
   var resolve = Ember.RSVP.resolve;
 });
-define('larafum/tests/helpers/resolver', ['exports', 'larafum/resolver', 'larafum/config/environment'], function (exports, _resolver, _environment) {
+define('ember-larafum/tests/helpers/resolver', ['exports', 'ember-larafum/resolver', 'ember-larafum/config/environment'], function (exports, _resolver, _environment) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -150,7 +160,7 @@ define('larafum/tests/helpers/resolver', ['exports', 'larafum/resolver', 'larafu
 
   exports.default = resolver;
 });
-define('larafum/tests/helpers/start-app', ['exports', 'larafum/app', 'larafum/config/environment'], function (exports, _app, _environment) {
+define('ember-larafum/tests/helpers/start-app', ['exports', 'ember-larafum/app', 'ember-larafum/config/environment'], function (exports, _app, _environment) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -169,13 +179,13 @@ define('larafum/tests/helpers/start-app', ['exports', 'larafum/app', 'larafum/co
     });
   }
 });
-define('larafum/tests/test-helper', ['larafum/tests/helpers/resolver', 'ember-qunit', 'ember-cli-qunit'], function (_resolver, _emberQunit, _emberCliQunit) {
+define('ember-larafum/tests/test-helper', ['ember-larafum/tests/helpers/resolver', 'ember-qunit', 'ember-cli-qunit'], function (_resolver, _emberQunit, _emberCliQunit) {
   'use strict';
 
   (0, _emberQunit.setResolver)(_resolver.default);
   (0, _emberCliQunit.start)();
 });
-define('larafum/tests/tests.lint-test', [], function () {
+define('ember-larafum/tests/tests.lint-test', [], function () {
   'use strict';
 
   QUnit.module('ESLint | tests');
@@ -225,9 +235,19 @@ define('larafum/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/index/route-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/login/controller-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/login/controller-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/login/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/login/route-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/models/user-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/models/user-test.js should pass ESLint\n\n');
   });
 
   QUnit.test('unit/settings/route-test.js', function (assert) {
@@ -235,7 +255,7 @@ define('larafum/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/settings/route-test.js should pass ESLint\n\n');
   });
 });
-define('larafum/tests/unit/application/adapter-test', ['ember-qunit'], function (_emberQunit) {
+define('ember-larafum/tests/unit/application/adapter-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
   (0, _emberQunit.moduleFor)('adapter:application', 'Unit | Adapter | application', {
@@ -249,7 +269,7 @@ define('larafum/tests/unit/application/adapter-test', ['ember-qunit'], function 
     assert.ok(adapter);
   });
 });
-define('larafum/tests/unit/application/controller-test', ['ember-qunit'], function (_emberQunit) {
+define('ember-larafum/tests/unit/application/controller-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
   (0, _emberQunit.moduleFor)('controller:application', 'Unit | Controller | application', {
@@ -263,7 +283,7 @@ define('larafum/tests/unit/application/controller-test', ['ember-qunit'], functi
     assert.ok(controller);
   });
 });
-define('larafum/tests/unit/application/route-test', ['ember-qunit'], function (_emberQunit) {
+define('ember-larafum/tests/unit/application/route-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:application', 'Unit | Route | application', {
@@ -276,7 +296,7 @@ define('larafum/tests/unit/application/route-test', ['ember-qunit'], function (_
     assert.ok(route);
   });
 });
-define('larafum/tests/unit/index/route-test', ['ember-qunit'], function (_emberQunit) {
+define('ember-larafum/tests/unit/index/route-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:index', 'Unit | Route | index', {
@@ -289,7 +309,21 @@ define('larafum/tests/unit/index/route-test', ['ember-qunit'], function (_emberQ
     assert.ok(route);
   });
 });
-define('larafum/tests/unit/login/route-test', ['ember-qunit'], function (_emberQunit) {
+define('ember-larafum/tests/unit/login/controller-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('controller:login', 'Unit | Controller | login', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('ember-larafum/tests/unit/login/route-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:login', 'Unit | Route | login', {
@@ -302,7 +336,21 @@ define('larafum/tests/unit/login/route-test', ['ember-qunit'], function (_emberQ
     assert.ok(route);
   });
 });
-define('larafum/tests/unit/settings/route-test', ['ember-qunit'], function (_emberQunit) {
+define('ember-larafum/tests/unit/models/user-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForModel)('user', 'Unit | Model | user', {
+    // Specify the other units that are required for this test.
+    needs: []
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var model = this.subject();
+    // let store = this.store();
+    assert.ok(!!model);
+  });
+});
+define('ember-larafum/tests/unit/settings/route-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:settings', 'Unit | Route | settings', {
@@ -315,6 +363,6 @@ define('larafum/tests/unit/settings/route-test', ['ember-qunit'], function (_emb
     assert.ok(route);
   });
 });
-require('larafum/tests/test-helper');
+require('ember-larafum/tests/test-helper');
 EmberENV.TESTS_FILE_LOADED = true;
 //# sourceMappingURL=tests.map

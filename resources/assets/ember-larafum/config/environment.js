@@ -3,7 +3,7 @@
 
 module.exports = function (environment) {
   let ENV = {
-    modulePrefix: 'larafum',
+    modulePrefix: 'ember-larafum',
     environment,
     rootURL: '/',
     locationType: 'auto',
@@ -31,7 +31,7 @@ module.exports = function (environment) {
 
     'ember-simple-auth-token': {
       refreshTokenPropertyName: 'token',
-      serverTokenEndpoint: 'api/token-auth',
+      serverTokenEndpoint: 'api/authenticate',
       serverTokenRefreshEndpoint: 'api/token-refresh',
       refreshLeeway: 5
     }

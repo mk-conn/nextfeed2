@@ -2,7 +2,6 @@
 
 use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
 use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +19,11 @@ use Illuminate\Http\Request;
 //         return $request->user();
 //     });
 
+
+Route::group(['prefix' => 'api'], function () {
+    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
+    Route::post('authenticate', 'AuthenticateController@authenticate');
+});
 
 JsonApi::register('v1', ['namespace' => 'Api'], function (ApiGroup $api) {
     $api->resource('feeds');

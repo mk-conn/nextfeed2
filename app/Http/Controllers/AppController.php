@@ -17,15 +17,15 @@ class AppController
 
         $pattern = [
             '~assets/vendor.css~',
-            '~assets/larafum.css~',
+            '~assets/ember-larafum.css~',
             '~assets/vendor.js~',
-            '~assets/larafum.js~'
+            '~assets/ember-larafum.js~'
         ];
         $replacements = [
             'ember-frontend/assets/vendor.css',
-            'ember-frontend/assets/larafum.css',
+            'ember-frontend/assets/ember-larafum.css',
             'ember-frontend/assets/vendor.js',
-            'ember-frontend/assets/larafum.js'
+            'ember-frontend/assets/ember-larafum.js'
         ];
 
         $indexHtml = preg_replace_array($pattern, $replacements, $indexHtml);
