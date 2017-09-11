@@ -1,0 +1,22 @@
+$btn-action-color: #354A17;
+
+.btn {
+  border-radius: 3px;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 10px 16px;
+  font-size: 12px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  border: 0 none;
+  background-color: $btn-action-color;
+  transition: background-color 120ms linear, color 120ms linear;
+
+  &:hover {
+    color: #ccc;
+    background-color: darken($btn-action-color, 6);
+  }
+}

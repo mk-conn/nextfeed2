@@ -28,7 +28,8 @@ class Adapter extends EloquentAdapter
      */
     protected function filter(Builder $query, Collection $filters)
     {
-        // TODO
+
+        $break =true;
     }
 
     /**
@@ -37,7 +38,7 @@ class Adapter extends EloquentAdapter
      */
     protected function isSearchOne(Collection $filters)
     {
-        // TODO
+        $break = true;
     }
 
 }

@@ -1,15 +1,21 @@
-<form class="ui form" {{action 'authenticate' on='submit'}}>
-
-  <div class="required field">
-    <label for="identification">Login</label>
-    {{input id='identification' placeholder='Enter Login' value=identification}}
-  </div>
-
-  <div class="required field">
-    <label for="password">Password</label>
-    {{input id='password' placeholder='Enter Password' type='password' value=password}}
-  </div>
-
-  <button type="submit">Login</button>
-
-</form>
+<screen>
+  <page>
+    <vbox>
+      <centered class="well">
+        <form class="login-form" {{action 'authenticate' on='submit'}}>
+          <h1>Larafum - Login</h1>
+          <div class="required form-group">
+            <label for="identification">Username</label>
+            {{input id='identification' placeholder='Enter Login' value=identification classNames="form-control"}}
+          </div>
+          <div class="required form-group">
+            <label for="password">Password</label>
+            {{input id='password' placeholder='Enter Password' type='password' value=password
+                    classNames="form-control"}}
+          </div>
+          <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+      </centered>
+    </vbox>
+  </page>
+</screen>

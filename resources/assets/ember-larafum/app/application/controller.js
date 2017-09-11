@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const {Controller, inject: {service}, computed} = Ember;
+const {Controller, inject: {service}, computed, getOwner} = Ember;
 
 export default Controller.extend({
   session: service('session'),
@@ -10,7 +10,8 @@ export default Controller.extend({
   }),
 
   tokenData: computed('session.session.content.authenticated', function () {
-    var authenticator = this.container.lookup('authenticator:jwt'),
+
+    let authenticator = getOwner(this).lookup('authenticator:jwt'),
       session = this.get('session.session.content.authenticated'),
       tokenData = {};
 

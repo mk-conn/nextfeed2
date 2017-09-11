@@ -21,7 +21,7 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 
 
 Route::group(['prefix' => 'api'], function () {
-    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
+    Route::get('auth-user', 'AuthenticateController@getAuthUser');
     Route::post('authenticate', 'AuthenticateController@authenticate');
 });
 
@@ -30,5 +30,5 @@ JsonApi::register('v1', ['namespace' => 'Api'], function (ApiGroup $api) {
     $api->resource('folders');
     $api->resource('articles');
     $api->resource('settings');
-    $api->resource('users');
+    $api->resource('users', ['id' => 'me']);
 });

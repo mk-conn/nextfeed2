@@ -7,7 +7,5 @@ const {computed} = Ember;
 export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
   authorizer: 'authorizer:token',
 
-  host: 'http://host.com',
-
   namespace: 'api/v1'
 });

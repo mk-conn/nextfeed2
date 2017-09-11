@@ -5,6 +5,11 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.module('ESLint | app');
 
+  QUnit.test('adapters/user.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'adapters/user.js should pass ESLint\n\n');
+  });
+
   QUnit.test('app.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'app.js should pass ESLint\n\n');
@@ -25,9 +30,24 @@ define('ember-larafum/tests/app.lint-test', [], function () {
     assert.ok(true, 'application/route.js should pass ESLint\n\n');
   });
 
+  QUnit.test('feeds/feed/articles/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'feeds/feed/articles/route.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('feeds/feed/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'feeds/feed/route.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('feeds/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'feeds/route.js should pass ESLint\n\n');
+  });
+
   QUnit.test('index/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'index/route.js should pass ESLint\n\n3:8 - \'ENV\' is defined but never used. (no-unused-vars)\n13:42 - \'model\' is defined but never used. (no-unused-vars)');
+    assert.ok(false, 'index/route.js should pass ESLint\n\n4:15 - \'getOwner\' is assigned a value but never used. (no-unused-vars)\n4:35 - \'service\' is assigned a value but never used. (no-unused-vars)\n17:31 - \'model\' is defined but never used. (no-unused-vars)');
   });
 
   QUnit.test('login/controller.js', function (assert) {
@@ -53,6 +73,11 @@ define('ember-larafum/tests/app.lint-test', [], function () {
   QUnit.test('router.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'router.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('services/current-user.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'services/current-user.js should pass ESLint\n\n14:7 - Unexpected console statement. (no-console)\n19:9 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('settings/route.js', function (assert) {
@@ -215,6 +240,11 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
     assert.ok(true, 'test-helper.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/adapters/user-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/adapters/user-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/application/adapter-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/application/adapter-test.js should pass ESLint\n\n');
@@ -228,6 +258,21 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
   QUnit.test('unit/application/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/application/route-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/feeds/feed/articles/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/feeds/feed/articles/route-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/feeds/feed/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/feeds/feed/route-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/feeds/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/feeds/route-test.js should pass ESLint\n\n');
   });
 
   QUnit.test('unit/index/route-test.js', function (assert) {
@@ -250,9 +295,28 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/models/user-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/services/current-user-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/services/current-user-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/settings/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/settings/route-test.js should pass ESLint\n\n');
+  });
+});
+define('ember-larafum/tests/unit/adapters/user-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('adapter:user', 'Unit | Adapter | user', {
+    // Specify the other units that are required for this test.
+    // needs: ['serializer:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var adapter = this.subject();
+    assert.ok(adapter);
   });
 });
 define('ember-larafum/tests/unit/application/adapter-test', ['ember-qunit'], function (_emberQunit) {
@@ -287,6 +351,45 @@ define('ember-larafum/tests/unit/application/route-test', ['ember-qunit'], funct
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:application', 'Unit | Route | application', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('ember-larafum/tests/unit/feeds/feed/articles/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:feeds/feed/articles', 'Unit | Route | feeds/feed/articles', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('ember-larafum/tests/unit/feeds/feed/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:feeds/feed', 'Unit | Route | feeds/feed', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('ember-larafum/tests/unit/feeds/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:feeds', 'Unit | Route | feeds', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });
@@ -348,6 +451,20 @@ define('ember-larafum/tests/unit/models/user-test', ['ember-qunit'], function (_
     var model = this.subject();
     // let store = this.store();
     assert.ok(!!model);
+  });
+});
+define('ember-larafum/tests/unit/services/current-user-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('service:current-user', 'Unit | Service | current user', {
+    // Specify the other units that are required for this test.
+    // needs: ['service:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var service = this.subject();
+    assert.ok(service);
   });
 });
 define('ember-larafum/tests/unit/settings/route-test', ['ember-qunit'], function (_emberQunit) {
