@@ -1,0 +1,22 @@
+<hbox class="folder">
+  {{folder.name}}
+  {{#if folder.open}}
+    <hbox justify="end" class="icon">
+      <span class="action" {{action (route-action "closeFolder" folder)}}>{{fa-icon "folder-open-o"}}</span>
+    </hbox>
+  {{else}}
+    <hbox justify="end" class="icon">
+      <span class="action" {{action (route-action "openFolder" folder)}}>{{fa-icon "folder-o"}}</span>
+    </hbox>
+  {{/if}}
+</hbox>
+
+{{#if folder.open}}
+  <div class="list-group">
+    {{#each folder.feeds as |feed|}}
+      {{feed-item feed=feed}}
+    {{/each}}
+  </div>
+{{/if}}
+
+

@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\BaseModel;
+use PicoFeed\Reader\Favicon;
 use PicoFeed\Reader\Reader;
 
 /**
@@ -88,6 +89,13 @@ class Feed extends BaseModel
         return $this->hasMany(Article::class);
     }
 
+    public function fetchIcon()
+    {
+        $favicon = new Favicon();
+        $icon_link = $favicon->find($this->site_url);
+        $this->icon = $icon_link;
+    }
+
     /**
      *
      */
@@ -101,46 +109,46 @@ class Feed extends BaseModel
 
         if ($resource->isModified()) {
             $parser = $reader->getParser($resource->getUrl(), $resource->getContent(), $resource->getEncoding());
-        }
+            $parsedFeed = $parser->execute();
 
-        $parsedFeed = $parser->execute();
+            $items = collect($parsedFeed->getItems());
 
-        $items = collect($parsedFeed->getItems());
+            $guids = $items->pluck('id');
+            $exisitingArticles = Article::whereIn('guid', $guids)
+                                        ->get();
 
-        $guids = $items->pluck('id');
-        $exisitingArticles = Article::whereIn('guid', $guids)
-                                    ->get();
+            foreach ($exisitingArticles as $article) {
+                $item = $items->where('id', $article->guid)
+                              ->first();
 
-        foreach ($exisitingArticles as $article) {
-            $item = $items->where('id', $article->guid)
-                          ->first();
+                $updated = false;
 
-            $updated = false;
+                if ($article->content !== $item->content) {
+                    $article->content = $item->content;
+                    $updated = true;
+                }
 
-            if ($article->content !== $item->content) {
-                $article->content = $item->content;
-                $updated = true;
+                if ($updated) {
+                    $article->updated_date = $item->updatedDate;
+                    $article->save();
+                }
             }
 
-            if ($updated) {
-                $article->updated_date = $item->updatedDate;
+            $existingItems = $exisitingArticles->pluck('guid');
+            $items = $items->whereNotIn('id', $existingItems);
+
+            foreach ($items as $item) {
+                $article = new Article();
+                $article->createFromFeedItem($item);
+                $article->feed()
+                        ->associate($this);
                 $article->save();
             }
+
+            $this->etag = $resource->getEtag();
+            $this->save();
         }
 
-        $existingItems = $exisitingArticles->pluck('guid');
-        $items = $items->whereNotIn('id', $existingItems);
-
-        foreach ($items as $item) {
-            $article = new Article();
-            $article->createFromFeedItem($item);
-            $article->feed()
-                    ->associate($this);
-            $article->save();
-        }
-
-        $this->etag = $resource->getEtag();
-        $this->save();
 
     }
 

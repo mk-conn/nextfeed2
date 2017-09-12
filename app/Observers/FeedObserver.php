@@ -64,12 +64,17 @@ class FeedObserver
         $feed->feed_url = $parsedFeed->getFeedUrl();
         $feed->language = $parsedFeed->getLanguage();
         $feed->logo = $parsedFeed->getLogo();
+        $feed->icon = $parsedFeed->getIcon();
         $feed->name = $parsedFeed->getTitle();
         $feed->etag = $etag;
 
+        if (!$feed->icon) {
+            $feed->fetchIcon();
+        }
+
         if (!empty($items = $parsedFeed->getItems())) {
             $parsedFeedHelper = new ParsedFeed();
-            $parsedFeedHelper->items = $items;
+            $parsedFeedHelper->items = collect($items);
 
             app()->instance(ParsedFeed::class, $parsedFeedHelper);
         }
@@ -82,7 +87,7 @@ class FeedObserver
     {
         /** @var ParsedFeed $parsedFeedHelper */
         $parsedFeedHelper = resolve(ParsedFeed::class);
-        $items = $parsedFeedHelper->items;
+        $items = $parsedFeedHelper->items->unique('id');
         $articles = collect([]);
 
         /** @var Item $item */

@@ -5855,6 +5855,9 @@ button.close {
         background: #103f62; }
 
 .feeds {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   padding-left: 0; }
   .feeds .list-group {
     width: 100%;
@@ -5863,10 +5866,20 @@ button.close {
   .feeds .list-group-item {
     border: none;
     padding: 0; }
-  .feeds .folder {
+  .feeds .folder-item {
     padding: 1rem;
     font-weight: bold;
-    color: #2d4373; }
+    color: #2d4373;
+    background: #eee; }
+    .feeds .folder-item .feed-item {
+      background: inherit; }
+  .feeds .feed-icon {
+    margin-right: 1rem;
+    width: 16px;
+    max-width: 16px; }
+    .feeds .feed-icon img {
+      width: inherit;
+      max-width: inherit; }
   .feeds .icon {
     padding-right: 1rem; }
   .feeds a {
@@ -5879,15 +5892,23 @@ button.close {
     .feeds a:hover {
       background: #ccc; }
     .feeds a.active {
-      background: #ccc;
+      background: #5aa9e4;
       color: #fff; }
 
 .article-list {
-  padding: 0; }
+  padding: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; }
   .article-list .list-group {
     padding: 0; }
     .article-list .list-group .list-group-item {
       border-left: none;
       border-right: none; }
+    .article-list .list-group .article-item.read {
+      font-weight: normal; }
+    .article-list .list-group .article-item.unread {
+      font-weight: bold;
+      color: #2d4373; }
 
 /*# sourceMappingURL=ember-larafum.css.map */

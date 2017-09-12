@@ -19,7 +19,8 @@ class Schema extends EloquentSchema
      */
     protected $attributes = [
         'name',
-        'order'
+        'order',
+        'open'
     ];
 
     /**
@@ -34,10 +35,9 @@ class Schema extends EloquentSchema
         $included = [];
 
         if (isset($includeRelationships['feeds'])) {
-            $includes['feeds'] = [
+            $included['feeds'] = [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => true,
                 self::DATA         => $resource->feeds
             ];
         }

@@ -1,11 +1,11 @@
 .feeds {
-
-  padding-left:0;
+  @include overflow-scroll();
+  padding-left: 0;
 
   .list-group {
     width: 100%;
     padding: 0;
-    margin:0;
+    margin: 0;
   }
 
   .list-group-item {
@@ -13,14 +13,29 @@
     padding: 0;
   }
 
-  .folder {
-    padding:1rem;
-    font-weight:bold;
-    color:#2d4373;
+  .folder-item {
+    padding: 1rem;
+    font-weight: bold;
+    color: #2d4373;
+    background:#eee;
+
+    .feed-item {
+      background:inherit;
+    }
+  }
+
+  .feed-icon {
+    margin-right: 1rem;
+    width: 16px;
+    max-width: 16px;
+    img {
+      width: inherit;
+      max-width: inherit;
+    }
   }
 
   .icon {
-    padding-right:1rem;
+    padding-right: 1rem;
   }
 
   a {
@@ -28,7 +43,7 @@
     text-decoration: none;
     width: 100%;
     padding: 1rem;
-    color:#2d4373;
+    color: #2d4373;
     font-weight: bold;
 
     &:hover {
@@ -36,8 +51,8 @@
     }
 
     &.active {
-      background:#ccc;
-      color:#fff;
+      background: lighten($header-bg-color, 20%);
+      color: #fff;
     }
   }
 

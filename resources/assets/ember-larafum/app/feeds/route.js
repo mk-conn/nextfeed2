@@ -20,4 +20,17 @@ export default Route.extend(AuthenticatedRouteMixin, {
     });
   },
 
+  actions : {
+
+    openFolder(folder) {
+      folder.set('open', true);
+      folder.save();
+    },
+
+    closeFolder(folder) {
+      folder.set('open', false);
+      folder.save();
+    }
+  }
+
 });

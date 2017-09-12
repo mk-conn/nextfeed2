@@ -1,9 +1,16 @@
-<div class="list-group">
-  {{#each model as |article|}}
-    <div class="list-group-item">
-      {{article.title}}
-      {{moment article.publishDate 'LLL'}}
-    </div>
-  {{/each}}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    {{model.feed.name}}
+  </div>
+  <div class="panel-body">
+    <p>{{model.feed.description}}</p>
+  </div>
+
+  <div class="list-group">
+    {{#each model.articles as |article|}}
+      {{article-item article=article}}
+    {{/each}}
+  </div>
 </div>
+
 {{outlet}}

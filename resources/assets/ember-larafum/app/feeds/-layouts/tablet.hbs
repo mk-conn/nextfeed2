@@ -1,52 +1,30 @@
-<page style="height: 100vh;">
-  <hbox fill>
-    <vbox lg="4" md="4" class="side-bar feeds" style="height: 100vh;">
-      <hbox style="overflow: scroll; flex-shrink: 1;" align-content="start">
-        <div>
-          {{fa-icon "sort-text"}}
-        </div>
-        <div>
-          <div>Actions</div>
-        </div>
-        <div class="list-group">
-          {{#each model.folders as |folder|}}
-            <div class="list-group-item">
-              <hbox class="folder">
-                {{folder.name}}
-                <hbox justify="end" class="icon">{{fa-icon "folder-o"}}</hbox>
-              </hbox>
+<vbox lg="3" md="3" class="side-bar feeds" style="height:100vh;">
+  <div>
+    {{fa-icon "sort-text"}}
+  </div>
+  <div>
+    <div>Actions</div>
+  </div>
 
-              <div class="list-group">
-                {{#each folder.feeds as |feed|}}
-                  <div class="list-group-item">{{#link-to "feeds.feed.articles" feed.id}}
-                    {{feed.name}}
-                  {{/link-to}}</div>
-                {{/each}}
-              </div>
-            </div>
-          {{/each}}
-        </div>
+  <div class="list-group">
+    {{#each model.folders as |folder|}}
+      {{folder-item folder=folder}}
+    {{/each}}
+  </div>
 
-        <div class="list-group">
-          {{#each model.feeds as |feed|}}
-            <div class="list-group-item">{{#link-to "feeds.feed.articles" feed.id}}
-              {{feed.name}}
-            {{/link-to}}</div>
-          {{/each}}
-        </div>
+  <div class="list-group">
+    {{#each model.feeds as |feed|}}
+      {{feed-item feed=feed}}
+    {{/each}}
+  </div>
+</vbox>
 
-      </hbox>
-
-    </vbox>
-
-    <vbox md="8" lg="8" class="article-list">
-      <hbox fit style="overflow:scroll;" align="start">
-        {{liquid-outlet "article-list" use="cross-fade"}}
-      </hbox>
-    </vbox>
-
-    <vbox md="7" lg="7" hidden class="article-content">
-      {{liquid-outlet "article-conten" use="cross-fade"}}
-    </vbox>
+<box md="9" lg="9" class="article-list" fill>
+  <hbox fit align="start">
+    {{liquid-outlet "article-list" use="cross-fade"}}
   </hbox>
-</page>
+</box>
+
+<vbox md="7" lg="7" hidden class="article-content">
+  {{liquid-outlet "article-conten" use="cross-fade"}}
+</vbox>

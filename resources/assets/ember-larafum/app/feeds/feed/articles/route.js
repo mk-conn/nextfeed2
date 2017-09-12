@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const {Route} = Ember;
+const {Route, RSVP} = Ember;
 
 export default Route.extend({
 
@@ -19,9 +19,11 @@ export default Route.extend({
 
   model(params) {
     const feed = this.modelFor('feeds.feed');
-
     params[ 'filter' ] = {feed: feed.id};
 
-    return this.get('store').query('article', params)
+    return RSVP.hash({
+      articles: this.get('store').query('article', params),
+      feed: feed
+    });
   }
 });

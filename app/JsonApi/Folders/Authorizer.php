@@ -10,6 +10,7 @@ namespace App\JsonApi\Folders;
 
 
 use App\JsonApi\BaseAuthorizer;
+use App\Models\Folder;
 use CloudCreativity\JsonApi\Contracts\Object\RelationshipInterface;
 use CloudCreativity\JsonApi\Contracts\Object\ResourceObjectInterface;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +55,13 @@ class Authorizer extends BaseAuthorizer
      */
     public function canCreate($resourceType, ResourceObjectInterface $resource, EncodingParametersInterface $parameters)
     {
-        return false;
+        $user = $this->currentUser();
+
+        if (!$user) {
+            return $this->forbidden();
+        }
+
+        return true;
     }
 
 
@@ -75,7 +82,7 @@ class Authorizer extends BaseAuthorizer
 
 
     /**
-     * @param object                      $record
+     * @param Folder                      $record
      * @param ResourceObjectInterface     $resource
      * @param EncodingParametersInterface $parameters
      *
@@ -83,7 +90,12 @@ class Authorizer extends BaseAuthorizer
      */
     public function canUpdate($record, ResourceObjectInterface $resource, EncodingParametersInterface $parameters)
     {
-        return false;
+        $user = $this->currentUser();
+        if ($record->user->id = $user->id) {
+            return true;
+        }
+
+        return $this->forbidden();
     }
 
 

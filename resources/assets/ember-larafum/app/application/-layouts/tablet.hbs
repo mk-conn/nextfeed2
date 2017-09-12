@@ -1,6 +1,5 @@
 <screen>
   <page style="height: 100vh;">
-
     <hbox class="header" fit>
       {{#if currentUser.user}}
         <centered fit class="top nav item">
@@ -18,16 +17,19 @@
         </centered>
         {{#if currentUser.user}}
           <centered fit class="top nav item">
-            {{currentUser.user.fullname}} ({{currentUser.user.username}})
-          </centered>
-          <centered fit class="top nav item">
             <a href="#" {{action (route-action "invalidateSession")}}>
               {{fa-icon "sign-out"}}
             </a>
           </centered>
+
+          <centered fit class="top nav item">
+            {{currentUser.user.fullname}}
+          </centered>
         {{/if}}
       </hbox>
     </hbox>
-    {{liquid-outlet use="fade"}}
+    <hbox fill>
+      {{liquid-outlet use="fade"}}
+    </hbox>
   </page>
 </screen>

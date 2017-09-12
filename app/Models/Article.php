@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\BaseModel;
+use Carbon\Carbon;
 use PicoFeed\Parser\Item;
 
 /**
@@ -96,5 +97,42 @@ class Article extends BaseModel
         $this->publish_date = $item->getPublishedDate();
         $this->updated_date = $item->getUpdatedDate();
         $this->categories = $item->getCategories();
+    }
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    public function getPublishDateAttribute($value)
+    {
+        return $this->getISODate($value);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    public function getUpdatedDateAttribute($value)
+    {
+        return $this->getISODate($value);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    protected function getISODate($value)
+    {
+        $time = strtotime($value);
+
+        if ($time) {
+            return Carbon::createFromTimestamp($time)
+                         ->format(Carbon::ISO8601);
+        }
+
+        return $value;
     }
 }

@@ -1,5 +1,6 @@
 .article-list {
   padding: 0;
+  @include overflow-scroll();
 
   .list-group {
     padding: 0;
@@ -8,6 +9,16 @@
       border-left: none;
       border-right: none;
 
+    }
+
+    .article-item {
+      &.read {
+        font-weight:normal;
+      }
+      &.unread {
+        font-weight: bold;
+        color:#2d4373;
+      }
     }
 
   }

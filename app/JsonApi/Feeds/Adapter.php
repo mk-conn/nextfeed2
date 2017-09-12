@@ -32,11 +32,13 @@ class Adapter extends EloquentAdapter
      */
     protected function filter(Builder $query, Collection $filters)
     {
-//        $user = Auth::user();
-//
-//        if (!$user) {
-//            throw new UnauthorizedHttpException('jwt-auth', 'Invalid user.');
-//        }
+        $user = Auth::user();
+
+        if (!$user) {
+            throw new UnauthorizedHttpException('jwt-auth', 'Invalid user.');
+        }
+
+        $query->whereNull('folder_id');
     }
 
     /**

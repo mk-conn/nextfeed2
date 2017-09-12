@@ -1,0 +1,13 @@
+{{#link-to "feeds.feed.articles" feed.id}}
+  <hbox>
+    <div class="feed-icon">
+      {{#if feed.icon}}
+        <img src="{{feed.icon}}" alt="feed icon">
+      {{else}}
+        {{fa-icon "rss" size=1}}
+      {{/if}}
+    </div>
+    {{feed.name}}
+  </hbox>
+{{/link-to}}
+
