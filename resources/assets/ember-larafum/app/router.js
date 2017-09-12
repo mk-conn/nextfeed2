@@ -6,13 +6,14 @@ const Router = Ember.Router.extend({
   rootURL: config.rootURL
 });
 
-Router.map(function() {
+Router.map(function () {
   this.route('login');
   this.route('settings');
-
-  this.route('feeds', function() {
-    this.route('feed', function() {
-      this.route('articles');
+  this.route('feeds', function () {
+    this.route('feed', {path: '/feed/:id'}, function () {
+      this.route('articles', function() {
+        this.route('article');
+      });
     });
   });
 });

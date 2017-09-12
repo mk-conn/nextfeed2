@@ -47,7 +47,6 @@ class CreateTableArticles extends Migration
             $table->unique(['guid', 'feed_id']);
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

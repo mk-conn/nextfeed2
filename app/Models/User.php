@@ -11,38 +11,26 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * Class User
  *
  * @package App\Models
- * @property int
- *               $id
- * @property string
- *               $name
- * @property string
- *               $fullname
- * @property string
- *               $email
- * @property string
- *               $password
- * @property string|null
- *               $remember_token
- * @property \Carbon\Carbon|null
- *               $created_at
- * @property \Carbon\Carbon|null
- *               $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Feed[]
- *                    $feeds
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Folder[]
- *                    $folders
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[]
- *                $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Setting[]
- *                    $settings
+ * @property int                                                                                                            $id
+ * @property string                                                                                                         $username
+ * @property string                                                                                                         $fullname
+ * @property string                                                                                                         $email
+ * @property string                                                                                                         $password
+ * @property string|null                                                                                                    $remember_token
+ * @property \Carbon\Carbon|null                                                                                            $created_at
+ * @property \Carbon\Carbon|null                                                                                            $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Feed[]                                               $feeds
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Folder[]                                             $folders
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Setting[]                                            $settings
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereFullname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements JWTSubject
@@ -113,6 +101,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return ['user_id' => $this->id, 'username' => $this->username];
     }
 }

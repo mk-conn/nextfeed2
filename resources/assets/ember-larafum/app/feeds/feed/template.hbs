@@ -1,1 +1,13 @@
+<centered fit class="nav-with-padding">
+  {{#if model.logo}}
+    <img src="{{model.logo}}" alt="" class="feed-logo">
+  {{else}}
+    {{fa-icon "rss" size=6}}
+  {{/if}}
+</centered>
+
+<vbox>
+  {{model.description}}
+</vbox>
+
 {{outlet}}

@@ -94,7 +94,7 @@ class FeedObserver
                     'author'       => $item->getAuthor(),
                     'content'      => $item->getContent(),
                     'guid'         => $item->getId(),
-                    'description'  => $item->getXml()->description,
+                    'description'  => $item->getXml()->description[0],
                     'url'          => $item->getUrl(),
                     'publish_date' => $item->getPublishedDate(),
                     'updated_date' => $item->getUpdatedDate(),

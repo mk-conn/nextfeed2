@@ -25,10 +25,10 @@ Route::group(['prefix' => 'api'], function () {
     Route::post('authenticate', 'AuthenticateController@authenticate');
 });
 
-JsonApi::register('v1', ['namespace' => 'Api'], function (ApiGroup $api) {
+JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'jwt.auth'], function (ApiGroup $api) {
     $api->resource('feeds');
     $api->resource('folders');
     $api->resource('articles');
     $api->resource('settings');
-    $api->resource('users', ['id' => 'me']);
+    $api->resource('users');
 });

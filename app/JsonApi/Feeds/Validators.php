@@ -9,6 +9,8 @@ use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
 class Validators extends AbstractValidatorProvider
 {
 
+    protected $allowedSortParameters = ['order', 'name'];
+
     /**
      * @var string
      */

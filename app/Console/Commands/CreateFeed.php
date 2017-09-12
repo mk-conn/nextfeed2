@@ -46,7 +46,7 @@ class CreateFeed extends Command
     public function handle()
     {
         $url = $this->argument('url');
-        $user = User::whereName($this->argument('user'))
+        $user = User::whereUsername($this->argument('user'))
                     ->first();
         $folder = $this->argument('folder');
 

@@ -2,11 +2,14 @@
 
 namespace App\JsonApi\Feeds;
 
+
+use App\Models\Feed;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use App\Models\Feed;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Adapter extends EloquentAdapter
 {
@@ -22,17 +25,23 @@ class Adapter extends EloquentAdapter
     }
 
     /**
-     * @param Builder $query
+     * @param Builder    $query
      * @param Collection $filters
+     *
      * @return void
      */
     protected function filter(Builder $query, Collection $filters)
     {
-        // TODO
+//        $user = Auth::user();
+//
+//        if (!$user) {
+//            throw new UnauthorizedHttpException('jwt-auth', 'Invalid user.');
+//        }
     }
 
     /**
      * @param Collection $filters
+     *
      * @return mixed
      */
     protected function isSearchOne(Collection $filters)

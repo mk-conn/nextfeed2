@@ -56,8 +56,6 @@ use Laravel\Scout\Searchable;
 class Article extends BaseModel
 {
 
-    use SoftDeletes, Searchable;
-
     /**
      *
      */
@@ -76,5 +74,13 @@ class Article extends BaseModel
     public function feed()
     {
         return $this->belongsTo(Feed::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'articles_index';
     }
 }

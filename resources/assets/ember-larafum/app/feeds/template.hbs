@@ -1,29 +1,9 @@
-<screen>
-  <page>
-    <hbox>
-      <vbox xs="3" sm="2" class="sidebar">
-        <centered fit>
-          <h3>Flexi</h3>
-        </centered>
-        <centered fit>
-          {{#link-to "index"}}
-            Examples
-          {{/link-to}}
-        </centered>
-        <centered fit>
-          <a href="https://flexi.readme.io/docs"
-             target="_blank"
-             rel="noopener">Docs</a>
-        </centered>
-        <centered fit>
-          <a href="https://github.com/html-next/flexi"
-             target="_blank"
-             rel="noopener">GitHub</a>
-        </centered>
-      </vbox>
-      <box class="content">
-        {{outlet}}
-      </box>
-    </hbox>
-  </page>
-</screen>
+<div class="list-group">
+{{#each model as |feed|}}
+  <block class="list-group-item">
+    {{#link-to "feeds.feed.articles" feed.id}}
+      {{feed.name}}
+    {{/link-to}}
+  </block>
+{{/each}}
+</div>

@@ -2,11 +2,12 @@
 
 namespace App\JsonApi\Articles;
 
+
+use App\Models\Article;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use App\Models\Article;
 
 class Adapter extends EloquentAdapter
 {
@@ -22,17 +23,21 @@ class Adapter extends EloquentAdapter
     }
 
     /**
-     * @param Builder $query
+     * @param Builder    $query
      * @param Collection $filters
+     *
      * @return void
      */
     protected function filter(Builder $query, Collection $filters)
     {
-        // TODO
+        if ($filters->has('feed')) {
+            $query->where('feed_id', $filters->get('feed'));
+        }
     }
 
     /**
      * @param Collection $filters
+     *
      * @return mixed
      */
     protected function isSearchOne(Collection $filters)

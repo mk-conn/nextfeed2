@@ -4,7 +4,7 @@ const {
   Model, attr
 } = DS;
 export default Model.extend({
-  name: attr('string'),
+  username: attr('string'),
   fullname: attr('string'),
-  email: attr('email')
+  email: attr('string')
 });

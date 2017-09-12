@@ -1,0 +1,33 @@
+<screen>
+  <page style="height:100vh">
+    <hbox>
+      <vbox md="3" sm="2" class="sidebar">
+        <box fit>
+          <h3><a href="/">Larafum - Feeds</a></h3>
+        </box>
+        <block>
+          {{#if session.isAuthenticated}}
+            {{#if currentUser.user}}
+              <p>Signed in as {{currentUser.user.fullname}} ({{currentUser.user.username}})</p>
+              {{fa-icon "sign-out" click=(route-action "invalidateSession")}}
+            {{/if}}
+          {{/if}}
+        </block>
+        <block fit>
+        </block>
+        {{liquid-outlet "side-bar" use="cross-fade"}}
+      </vbox>
+
+      <hbox fit class="top-bar header">
+        {{liquid-outlet "top-bar" use="cross-fade"}}
+        <hbox justify="end">
+          <centered>Settings</centered>
+        </hbox>
+      </hbox>
+
+      <box class="content">
+        {{liquid-outlet use="cross-fade"}}
+      </box>
+    </hbox>
+  </page>
+</screen>
