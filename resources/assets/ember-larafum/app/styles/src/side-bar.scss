@@ -1,6 +1,9 @@
-.feeds {
-  @include overflow-scroll();
+.side-bar {
+  //@include overflow-scroll();
   padding-left: 0;
+  padding-right:0;
+  border-right:1px solid #555;
+  height:100vh;
 
   .list-group {
     width: 100%;
@@ -9,15 +12,16 @@
   }
 
   .list-group-item {
-    border: none;
     padding: 0;
+    border-right:none;
+    border-left:none;
   }
 
   .folder-item {
     padding: 1rem;
     font-weight: bold;
     color: #2d4373;
-    background:#eee;
+    background:lighten(#eee, 10%);
 
     .feed-item {
       background:inherit;

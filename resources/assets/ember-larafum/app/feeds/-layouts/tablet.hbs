@@ -1,29 +1,24 @@
-<vbox lg="3" md="3" class="side-bar feeds" style="height:100vh;">
-  <div>
-    {{fa-icon "sort-text"}}
-  </div>
-  <div>
-    <div>Actions</div>
-  </div>
+<vbox lg="3" md="3" class="side-bar" align="start" justify="start">
+  <hbox align="start" justify="start">
+    <div class="list-group">
+      {{#each model.folders as |folder|}}
+        {{folder-item folder=folder}}
+      {{/each}}
+    </div>
 
-  <div class="list-group">
-    {{#each model.folders as |folder|}}
-      {{folder-item folder=folder}}
-    {{/each}}
-  </div>
-
-  <div class="list-group">
-    {{#each model.feeds as |feed|}}
-      {{feed-item feed=feed}}
-    {{/each}}
-  </div>
+    <div class="list-group">
+      {{#each model.feeds as |feed|}}
+        {{feed-item feed=feed}}
+      {{/each}}
+    </div>
+  </hbox>
 </vbox>
 
-<box md="9" lg="9" class="article-list" fill>
-  <hbox fit align="start">
+<vbox md="9" lg="9" class="article-list">
+  <hbox fill align="start">
     {{liquid-outlet "article-list" use="cross-fade"}}
   </hbox>
-</box>
+</vbox>
 
 <vbox md="7" lg="7" hidden class="article-content">
   {{liquid-outlet "article-conten" use="cross-fade"}}

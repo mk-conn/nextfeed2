@@ -1,5 +1,7 @@
 <h4 class="article-title list-group-item-heading">{{article.title}}</h4>
 <div class="meta list-group-item-text">
   <div>{{moment-format article.updatedDate 'LLL'}}</div>
-  <div>{{article.author}}</div>
+  {{#if article.author}}
+    <i>By {{article.author}}</i>
+  {{/if}}
 </div>

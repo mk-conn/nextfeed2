@@ -5854,44 +5854,45 @@ button.close {
       .header .top.nav.item a.active {
         background: #103f62; }
 
-.feeds {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding-left: 0; }
-  .feeds .list-group {
+.side-bar {
+  padding-left: 0;
+  padding-right: 0;
+  border-right: 1px solid #555;
+  height: 100vh; }
+  .side-bar .list-group {
     width: 100%;
     padding: 0;
     margin: 0; }
-  .feeds .list-group-item {
-    border: none;
-    padding: 0; }
-  .feeds .folder-item {
+  .side-bar .list-group-item {
+    padding: 0;
+    border-right: none;
+    border-left: none; }
+  .side-bar .folder-item {
     padding: 1rem;
     font-weight: bold;
     color: #2d4373;
-    background: #eee; }
-    .feeds .folder-item .feed-item {
+    background: white; }
+    .side-bar .folder-item .feed-item {
       background: inherit; }
-  .feeds .feed-icon {
+  .side-bar .feed-icon {
     margin-right: 1rem;
     width: 16px;
     max-width: 16px; }
-    .feeds .feed-icon img {
+    .side-bar .feed-icon img {
       width: inherit;
       max-width: inherit; }
-  .feeds .icon {
+  .side-bar .icon {
     padding-right: 1rem; }
-  .feeds a {
+  .side-bar a {
     display: inline-block;
     text-decoration: none;
     width: 100%;
     padding: 1rem;
     color: #2d4373;
     font-weight: bold; }
-    .feeds a:hover {
+    .side-bar a:hover {
       background: #ccc; }
-    .feeds a.active {
+    .side-bar a.active {
       background: #5aa9e4;
       color: #fff; }
 

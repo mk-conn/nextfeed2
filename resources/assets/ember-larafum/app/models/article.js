@@ -7,5 +7,6 @@ export default Model.extend({
   author: attr('string'),
   language: attr('string'),
   publishDate: attr('date'),
+  updatedDate: attr('date'),
   feed: belongsTo('feed')
 });
