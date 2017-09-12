@@ -1,9 +1,0 @@
-<div class="list-group">
-{{#each model as |feed|}}
-  <block class="list-group-item">
-    {{#link-to "feeds.feed.articles" feed.id}}
-      {{feed.name}}
-    {{/link-to}}
-  </block>
-{{/each}}
-</div>

@@ -1,0 +1,33 @@
+<screen>
+  <page style="height: 100vh;">
+
+    <hbox class="header" fit>
+      {{#if currentUser.user}}
+        <centered fit class="top nav item">
+          {{#link-to "feeds"}}Feeds{{/link-to}}
+        </centered>
+        <centered fit class="top nav item">
+          <a href="#" {{action (route-action "updateAllFeeds")}}>Update</a>
+        </centered>
+      {{/if}}
+      {{liquid-outlet "top-bar-left"}}
+      <hbox justify="end">
+        {{liquid-outlet "top-bar-right"}}
+        <centered fit class="top nav item">
+          {{#link-to "settings"}}{{fa-icon "cogs"}}{{/link-to}}
+        </centered>
+        {{#if currentUser.user}}
+          <centered fit class="top nav item">
+            {{currentUser.user.fullname}} ({{currentUser.user.username}})
+          </centered>
+          <centered fit class="top nav item">
+            <a href="#" {{action (route-action "invalidateSession")}}>
+              {{fa-icon "sign-out"}}
+            </a>
+          </centered>
+        {{/if}}
+      </hbox>
+    </hbox>
+    {{liquid-outlet use="fade"}}
+  </page>
+</screen>

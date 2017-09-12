@@ -2,7 +2,7 @@
   {{#each model as |article|}}
     <div class="list-group-item">
       {{article.title}}
-      {{moment-format article.publishDate 'LLL'}}
+      {{moment article.publishDate 'LLL'}}
     </div>
   {{/each}}
 </div>

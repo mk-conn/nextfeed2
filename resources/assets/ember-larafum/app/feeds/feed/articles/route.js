@@ -10,9 +10,18 @@ export default Route.extend({
     }
   },
 
-  model() {
+  renderTemplate() {
+    this.render('feeds.feed.articles', {
+      into: 'feeds',
+      outlet: 'article-list'
+    })
+  },
+
+  model(params) {
     const feed = this.modelFor('feeds.feed');
 
-    return this.get('store').query('article', {filter: {feed: feed.id}})
+    params[ 'filter' ] = {feed: feed.id};
+
+    return this.get('store').query('article', params)
   }
 });

@@ -55,6 +55,8 @@ class CreateFeed extends Command
         }
 
 
+
+
         $feed = new Feed(['url' => $url]);
         $feed->user()
              ->associate($user);

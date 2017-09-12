@@ -88,19 +88,8 @@ class FeedObserver
         /** @var Item $item */
         foreach ($items as $item) {
 
-            $article = new Article(
-                [
-                    'title'        => $item->getTitle(),
-                    'author'       => $item->getAuthor(),
-                    'content'      => $item->getContent(),
-                    'guid'         => $item->getId(),
-                    'description'  => $item->getXml()->description[0],
-                    'url'          => $item->getUrl(),
-                    'publish_date' => $item->getPublishedDate(),
-                    'updated_date' => $item->getUpdatedDate(),
-                    'categories'   => $item->getCategories()
-                ]
-            );
+            $article = new Article();
+            $article->createFromFeedItem($item);
 
             $article->feed()
                     ->associate($feed);

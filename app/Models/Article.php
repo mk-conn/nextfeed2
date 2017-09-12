@@ -4,8 +4,7 @@ namespace App\Models;
 
 
 use App\BaseModel;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Scout\Searchable;
+use PicoFeed\Parser\Item;
 
 /**
  * Class Article
@@ -82,5 +81,20 @@ class Article extends BaseModel
     public function searchableAs()
     {
         return 'articles_index';
+    }
+
+    /**
+     * @param Item $item
+     */
+    public function createFromFeedItem(Item $item)
+    {
+        $this->title = $item->getTitle();
+        $this->author = $item->getAuthor();
+        $this->content = $item->getContent();
+        $this->guid = $item->getId();
+        $this->url = $item->getUrl();
+        $this->publish_date = $item->getPublishedDate();
+        $this->updated_date = $item->getUpdatedDate();
+        $this->categories = $item->getCategories();
     }
 }

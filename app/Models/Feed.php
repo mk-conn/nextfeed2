@@ -105,9 +105,42 @@ class Feed extends BaseModel
 
         $parsedFeed = $parser->execute();
 
-        $items = $parsedFeed->getItems();
+        $items = collect($parsedFeed->getItems());
+
+        $guids = $items->pluck('id');
+        $exisitingArticles = Article::whereIn('guid', $guids)
+                                    ->get();
+
+        foreach ($exisitingArticles as $article) {
+            $item = $items->where('id', $article->guid)
+                          ->first();
+
+            $updated = false;
+
+            if ($article->content !== $item->content) {
+                $article->content = $item->content;
+                $updated = true;
+            }
+
+            if ($updated) {
+                $article->updated_date = $item->updatedDate;
+                $article->save();
+            }
+        }
+
+        $existingItems = $exisitingArticles->pluck('guid');
+        $items = $items->whereNotIn('id', $existingItems);
+
+        foreach ($items as $item) {
+            $article = new Article();
+            $article->createFromFeedItem($item);
+            $article->feed()
+                    ->associate($this);
+            $article->save();
+        }
 
         $this->etag = $resource->getEtag();
+        $this->save();
 
     }
 

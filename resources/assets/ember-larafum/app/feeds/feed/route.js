@@ -8,11 +8,4 @@ export default Route.extend({
     return this.store.findRecord('feed', params.id);
   },
 
-  renderTemplate() {
-    this.render('feeds/feed', {
-      into: 'application',
-      outlet: 'top-bar'
-    })
-  },
-
 });

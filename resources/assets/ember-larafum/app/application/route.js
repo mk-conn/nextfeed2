@@ -30,6 +30,10 @@ export default Route.extend(ApplicationRouteMixin, {
   },
 
   actions: {
+    updateAllFeeds() {
+
+    },
+
     invalidateSession() {
       this.get('session').invalidate();
     }
