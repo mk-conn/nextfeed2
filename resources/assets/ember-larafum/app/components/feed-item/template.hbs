@@ -1,13 +1,16 @@
 {{#link-to "feeds.feed.articles" feed.id}}
-  <hbox>
-    <div class="feed-icon">
-      {{#if feed.icon}}
-        <img src="{{feed.icon}}" alt="feed icon">
-      {{else}}
-        {{fa-icon "rss" size=1}}
-      {{/if}}
+  <div class="d-flex justify-content-between">
+    <div>
+      <span class="feed-icon">
+        {{#if feed.icon}}
+          <img src="{{feed.icon}}" alt="feed icon">
+        {{else}}
+          {{fa-icon "rss" size=1}}
+        {{/if}}
+      </span>
+      {{feed.name}}
     </div>
-    {{feed.name}}
-  </hbox>
+    <span class="badge badge-secondary">{{feed.meta.articles-count}}</span>
+  </div>
 {{/link-to}}
 

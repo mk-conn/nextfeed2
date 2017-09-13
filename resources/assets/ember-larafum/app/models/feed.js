@@ -18,5 +18,6 @@ export default DS.Model.extend({
   order: attr('number'),
   user: belongsTo('user'),
   folder: belongsTo('folder'),
-  articles: hasMany('article')
+  articles: hasMany('article'),
+  meta: attr()
 });

@@ -70,5 +70,24 @@ class Schema extends EloquentSchema
             ]
         ]);
     }
+
+    /**
+     * @param Feed $resource
+     *
+     * @return array*
+     */
+    public function getPrimaryMeta($resource)
+    {
+        return [
+            'articles-count' => count($resource->articles)
+        ];
+    }
+
+    public function getInclusionMeta($resource)
+    {
+        return [
+            'articles-count' => count($resource->articles)
+        ];
+    }
 }
 

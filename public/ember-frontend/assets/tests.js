@@ -115,6 +115,11 @@ define('ember-larafum/tests/app.lint-test', [], function () {
     assert.ok(true, 'router.js should pass ESLint\n\n');
   });
 
+  QUnit.test('serializers/feed.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'serializers/feed.js should pass ESLint\n\n');
+  });
+
   QUnit.test('services/current-user.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'services/current-user.js should pass ESLint\n\n');
@@ -467,6 +472,11 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/models/user-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/serializers/feed-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/serializers/feed-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/services/current-user-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/services/current-user-test.js should pass ESLint\n\n');
@@ -703,6 +713,23 @@ define('ember-larafum/tests/unit/models/user-test', ['ember-qunit'], function (_
     var model = this.subject();
     // let store = this.store();
     assert.ok(!!model);
+  });
+});
+define('ember-larafum/tests/unit/serializers/feed-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForModel)('feed', 'Unit | Serializer | feed', {
+    // Specify the other units that are required for this test.
+    needs: ['serializer:feed']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it serializes records', function (assert) {
+    var record = this.subject();
+
+    var serializedRecord = record.serialize();
+
+    assert.ok(serializedRecord);
   });
 });
 define('ember-larafum/tests/unit/services/current-user-test', ['ember-qunit'], function (_emberQunit) {
