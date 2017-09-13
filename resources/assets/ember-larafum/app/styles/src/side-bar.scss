@@ -1,9 +1,9 @@
 .side-bar {
-  //@include overflow-scroll();
+  @include overflow-scroll();
   padding-left: 0;
   padding-right:0;
-  border-right:1px solid #555;
-  height:100vh;
+  border-right:1px solid #ccc;
+  max-height:inherit;
 
   .list-group {
     width: 100%;

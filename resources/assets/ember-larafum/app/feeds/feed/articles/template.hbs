@@ -1,16 +1,18 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    {{model.feed.name}}
-  </div>
-  <div class="panel-body">
-    <p>{{model.feed.description}}</p>
+<div class="card">
+  {{#if model.feed.logo}}
+    <img class="card-img-top feed-logo" src="{{model.feed.logo}}" alt="Feed Logo">
+  {{/if}}
+  <div class="card-body">
+    <h4 class="card-title">{{model.feed.name}}</h4>
+    <h6 class="card-subtitle mb-2 text-muted"></h6>
+    <p class="card-text">{{model.feed.description}}</p>
   </div>
 
-  <div class="list-group">
+  <ul class="list-group article-items mw-100 h-100 list-group-flush">
     {{#each model.articles as |article|}}
       {{article-item article=article tagName="hbox" classNames="list-group-item article-item"}}
     {{/each}}
-  </div>
+  </ul>
 </div>
 
 {{outlet}}

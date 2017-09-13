@@ -1,6 +1,10 @@
 .article-list {
   padding: 0;
-  @include overflow-scroll();
+
+  img.feed-logo {
+    max-width:50px;
+    align-self: flex-end;
+  }
 
   .list-group {
     padding: 0;
@@ -23,4 +27,8 @@
 
   }
 
+  .article-items {
+    overflow-y: scroll;
+
+  }
 }

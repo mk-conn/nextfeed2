@@ -5,3 +5,16 @@
   //overflow-scrolling: touch;
   -webkit-overflow-scrolling: touch;
 }
+
+body {
+  div.ember-view:first-child {
+    height:inherit;
+    min-height:inherit;
+    max-height:inherit;
+  }
+}
+
+.action {
+  cursor:pointer;
+}
+

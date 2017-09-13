@@ -20,7 +20,7 @@
     "@html-next/flexi-default-styles": "^2.0.1",
     "@html-next/flexi-dsl": "^2.0.1",
     "@html-next/flexi-layouts": "^2.0.1",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "^4.0.0-beta",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
     "ember-bootstrap": "^1.0.0-rc.2",
