@@ -1221,7 +1221,7 @@ define('ember-larafum/feeds/feed/articles/controller', ['exports'], function (ex
   var Controller = Ember.Controller;
   exports.default = Controller.extend({
     queryParams: ['sort'],
-    sort: '-updated-date'
+    sort: 'id'
   });
 });
 define('ember-larafum/feeds/feed/articles/route', ['exports'], function (exports) {
@@ -1248,6 +1248,7 @@ define('ember-larafum/feeds/feed/articles/route', ['exports'], function (exports
     },
     model: function model(params) {
       var feed = this.modelFor('feeds.feed');
+
       params['filter'] = { feed: feed.id };
       params['fields'] = { articles: 'title,description,author,keep,read,url,updated-date,categories' };
 

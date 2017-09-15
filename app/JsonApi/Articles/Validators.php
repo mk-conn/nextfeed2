@@ -13,7 +13,8 @@ class Validators extends AbstractValidatorProvider
         'publish-date',
         'title',
         'author',
-        'updated-date'
+        'updated-date',
+        'id'
     ];
 
     /**
