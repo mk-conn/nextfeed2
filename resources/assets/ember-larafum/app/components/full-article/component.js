@@ -1,12 +1,18 @@
 import Ember from 'ember';
 
-const {Component, computed, get} = Ember;
+const {Component, computed, get, String} = Ember;
 
 export default Component.extend({
 
+  classNames: [ 'full-article' ],
+
   content: computed('article.content', function () {
-    console.log('article:', this.get('article'));
-    return this.get('article.content').htmlSafe();
+    console.log('component: article:', this.get('article'));
+
+    const article = get(this, 'article');
+    const content = get(article, 'content');
+
+    return String.htmlSafe(content);
   })
 
 });

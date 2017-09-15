@@ -1,24 +1,24 @@
 import Ember from 'ember';
 
-const {Component, computed, get} = Ember;
+const {Component, computed, get, String, $} = Ember;
 
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNameBindings: [ 'read:read:unread' ],
 
-  description: computed('article.content', function() {
-    const stripAt = 240;
-    let text = '';
-    try {
-      text = $(get(this, 'article.content'))
-        .text();
-      if (text.length > stripAt) {
-        text = text.slice(0, stripAt) + ' ...'.htmlSafe();
-      }
-    } catch (e) {
-      console.error(e);
-    }
+  articleDescription: computed('article.description', function () {
 
-    return text;
-  })
+    let description = get(this, 'article.description');
+    description = description.replace(/<a.*?a>/gm, "");
+
+    return String.htmlSafe(description);
+  }),
+
+  didRender() {
+    const component = this.$();
+
+    $('img', component).each(function () {
+      $(this).addClass('img-fluid');
+    });
+  }
 });

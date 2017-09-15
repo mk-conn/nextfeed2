@@ -97,6 +97,30 @@ class Article extends BaseModel
         $this->publish_date = $item->getPublishedDate();
         $this->updated_date = $item->getUpdatedDate();
         $this->categories = $item->getCategories();
+        $this->description = $this->parseDescription($item);
+    }
+
+    /**
+     * @param $item
+     *
+     * @return null|string
+     */
+    protected function parseDescription($item)
+    {
+        $description = null;
+        $xml = $item->getXml();
+
+        if (isset($xml->description)) {
+            $description = $xml->description;
+        } else if (isset($xml->summary)) {
+            $description = $xml->summary;
+        }
+
+        if (is_array($description)) {
+            $description = implode(' ', $description);
+        }
+
+        return $description;
     }
 
     /**

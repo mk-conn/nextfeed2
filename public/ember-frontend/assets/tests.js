@@ -22,7 +22,7 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('components/article-item/component.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/article-item/component.js should pass ESLint\n\n3:8 - \'Component\' is assigned a value but never used. (no-unused-vars)\n13:14 - \'$\' is not defined. (no-undef)\n19:7 - Unexpected console statement. (no-console)');
+    assert.ok(true, 'components/article-item/component.js should pass ESLint\n\n');
   });
 
   QUnit.test('components/feed-item/component.js', function (assert) {
@@ -37,12 +37,12 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('components/full-article/component.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/full-article/component.js should pass ESLint\n\n3:29 - \'get\' is assigned a value but never used. (no-unused-vars)\n8:5 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'components/full-article/component.js should pass ESLint\n\n10:5 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('feeds/feed/articles/article/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'feeds/feed/articles/article/route.js should pass ESLint\n\n6:5 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'feeds/feed/articles/article/route.js should pass ESLint\n\n3:8 - \'Route\' is assigned a value but never used. (no-unused-vars)\n14:5 - Unexpected console statement. (no-console)\n15:5 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('feeds/feed/articles/controller.js', function (assert) {
@@ -128,6 +128,11 @@ define('ember-larafum/tests/app.lint-test', [], function () {
   QUnit.test('services/current-user.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'services/current-user.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('services/gui.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'services/gui.js should pass ESLint\n\n');
   });
 
   QUnit.test('settings/route.js', function (assert) {

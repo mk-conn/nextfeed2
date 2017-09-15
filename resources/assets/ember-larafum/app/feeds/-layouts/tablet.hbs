@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-4 col-lg-4 col-sm-5 col-xl-4 side-bar mh-100">
+  <div class="col-md-3 col-lg-3 col-sm-3 col-xl-3 side-bar mh-100">
 
     <div class="list-group folder-list">
       {{#each model.folders as |folder|}}
@@ -13,11 +13,8 @@
       {{/each}}
     </div>
   </div>
-  <div class="col-lg-8 col-md-8 col-sm-4 col-xl-8" class="article-list">
+  <div class="col-lg-7 col-md-7 col-sm-3 col-xl-7" class="article-list">
     {{outlet "article-list" tagName=''}}
   </div>
 </div>
-
-{{outlet "article" use="cross-fade" className="hidden article"}}
-
 
