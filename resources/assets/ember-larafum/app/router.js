@@ -10,9 +10,9 @@ Router.map(function () {
   this.route('login');
   this.route('settings');
   this.route('feeds', function () {
-    this.route('feed', {path: '/feed/:id'}, function () {
-      this.route('articles', function() {
-        this.route('article');
+    this.route('feed', {path: '/:id'}, function () {
+      this.route('articles', function () {
+        this.route('article', {path: '/:id'});
       });
     });
   });

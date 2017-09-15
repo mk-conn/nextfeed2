@@ -1,0 +1,16 @@
+<h3 class="ui header">
+  {{article.title}}
+</h3>
+
+<div class="article-body">
+  {{content}}
+</div>
+<div class="ui divider"></div>
+<a class="ui small icon button" href={{article.url}} target="_blank" {{action (route-action "originalArticle")
+                                                                            preventDefault=false}}
+   data-content="Open article in new tab">
+  <i class="external icon"></i>
+  Open Original Article
+</a>
+
+<div class="ui divider"></div>

@@ -20,6 +20,7 @@ export default Route.extend({
   model(params) {
     const feed = this.modelFor('feeds.feed');
     params[ 'filter' ] = {feed: feed.id};
+    params[ 'fields' ] = {articles: 'title,description,author,keep,read,url,updated-date,categories'};
 
     return RSVP.hash({
       articles: this.get('store').query('article', params),

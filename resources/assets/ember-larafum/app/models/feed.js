@@ -5,8 +5,8 @@ const {Model, attr, belongsTo, hasMany} = DS;
 export default DS.Model.extend({
   name: attr('string'),
   url: attr('string'),
-  feed_url: attr('string'),
-  site_url: attr('string'),
+  feedUrl: attr('string'),
+  siteUrl: attr('string'),
   guid: attr('string'),
   description: attr('string'),
   icon: attr('string'),

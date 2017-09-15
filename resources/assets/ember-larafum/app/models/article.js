@@ -4,9 +4,11 @@ const {Model, attr, belongsTo} = DS;
 
 export default Model.extend({
   title: attr('string'),
+  content: attr('string'),
+  categories: attr(),
   author: attr('string'),
   language: attr('string'),
   publishDate: attr('date'),
   updatedDate: attr('date'),
-  feed: belongsTo('feed')
+  feed: belongsTo('feed'),
 });

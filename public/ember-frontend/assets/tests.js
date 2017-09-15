@@ -22,7 +22,7 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('components/article-item/component.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'components/article-item/component.js should pass ESLint\n\n');
+    assert.ok(false, 'components/article-item/component.js should pass ESLint\n\n3:8 - \'Component\' is assigned a value but never used. (no-unused-vars)\n13:14 - \'$\' is not defined. (no-undef)\n19:7 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('components/feed-item/component.js', function (assert) {
@@ -35,9 +35,14 @@ define('ember-larafum/tests/app.lint-test', [], function () {
     assert.ok(true, 'components/folder-item/component.js should pass ESLint\n\n');
   });
 
+  QUnit.test('components/full-article/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/full-article/component.js should pass ESLint\n\n3:29 - \'get\' is assigned a value but never used. (no-unused-vars)\n8:5 - Unexpected console statement. (no-console)');
+  });
+
   QUnit.test('feeds/feed/articles/article/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'feeds/feed/articles/article/route.js should pass ESLint\n\n');
+    assert.ok(false, 'feeds/feed/articles/article/route.js should pass ESLint\n\n6:5 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('feeds/feed/articles/controller.js', function (assert) {
@@ -341,6 +346,35 @@ define('ember-larafum/tests/integration/components/folder-item/component-test', 
     assert.equal(this.$().text().trim(), 'template block text');
   });
 });
+define('ember-larafum/tests/integration/components/full-article/component-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForComponent)('full-article', 'Integration | Component | full article', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      "id": "rIGZVe35",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"full-article\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      "id": "7t3XzhbH",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"full-article\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
 define('ember-larafum/tests/test-helper', ['ember-larafum/tests/helpers/resolver', 'ember-qunit', 'ember-cli-qunit'], function (_resolver, _emberQunit, _emberCliQunit) {
   'use strict';
 
@@ -385,6 +419,11 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
   QUnit.test('integration/components/folder-item/component-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'integration/components/folder-item/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/components/full-article/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/full-article/component-test.js should pass ESLint\n\n');
   });
 
   QUnit.test('test-helper.js', function (assert) {

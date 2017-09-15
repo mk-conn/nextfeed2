@@ -10,10 +10,10 @@ namespace App\JsonApi\Articles;
 
 
 use App\JsonApi\BaseAuthorizer;
+use App\Models\Article;
 use App\Models\Feed;
 use CloudCreativity\JsonApi\Contracts\Object\RelationshipInterface;
 use CloudCreativity\JsonApi\Contracts\Object\ResourceObjectInterface;
-use Illuminate\Support\Facades\Auth;
 use Neomerx\JsonApi\Contracts\Encoder\Parameters\EncodingParametersInterface;
 
 /**
@@ -58,14 +58,16 @@ class Authorizer extends BaseAuthorizer
 
 
     /**
-     * @param object                      $record
+     * @param Article                     $record
      * @param EncodingParametersInterface $parameters
      *
      * @return bool
      */
     public function canRead($record, EncodingParametersInterface $parameters)
     {
-        if ($record->user->id === Auth::user()->id) {
+        $user = $this->currentUser();
+
+        if ($record->feed->user->id === $user->id) {
             return true;
         }
 

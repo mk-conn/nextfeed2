@@ -5628,8 +5628,10 @@ a.text-dark:focus, a.text-dark:hover {
 
 .article-list {
   padding: 0; }
+  .article-list .card-body .card-title {
+    align-self: flex-end; }
   .article-list img.feed-logo {
-    max-width: 50px;
+    max-width: 50%;
     align-self: flex-end; }
   .article-list .list-group {
     padding: 0; }

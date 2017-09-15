@@ -1,9 +1,13 @@
 <div class="card">
-  {{#if model.feed.logo}}
-    <img class="card-img-top feed-logo" src="{{model.feed.logo}}" alt="Feed Logo">
-  {{/if}}
   <div class="card-body">
-    <h4 class="card-title">{{model.feed.name}}</h4>
+    <hbox align="center" justify="between">
+      {{#if model.feed.logo}}
+        <img class="img-fluid" src="{{model.feed.logo}}" alt="Feed Logo">
+      {{/if}}
+      <h4 class="card-title align-self-end">
+        <a href="{{model.feed.siteUrl}}" target="_blank">{{model.feed.name}}</a>
+      </h4>
+    </hbox>
     <h6 class="card-subtitle mb-2 text-muted"></h6>
     <p class="card-text">{{model.feed.description}}</p>
   </div>
@@ -14,5 +18,3 @@
     {{/each}}
   </ul>
 </div>
-
-{{outlet}}

@@ -1,8 +1,14 @@
 .article-list {
   padding: 0;
 
+  .card-body {
+    .card-title {
+      align-self: flex-end;
+    }
+  }
+
   img.feed-logo {
-    max-width:50px;
+    max-width: 50%;
     align-self: flex-end;
   }
 
@@ -17,11 +23,11 @@
 
     .article-item {
       &.read {
-        font-weight:normal;
+        font-weight: normal;
       }
       &.unread {
         font-weight: bold;
-        color:#2d4373;
+        color: #2d4373;
       }
     }
 
