@@ -5649,6 +5649,7 @@ a.text-dark:focus, a.text-dark:hover {
       font-weight: bold;
       color: #2d4373; }
     .article-list .list-group .article-description img:first-child {
+      float: left;
       margin-right: 1rem; }
   .article-list .article-items {
     overflow-y: scroll; }
