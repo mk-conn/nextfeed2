@@ -12,8 +12,8 @@ export default Route.extend({
 
   renderTemplate() {
     this.render('feeds.feed.articles', {
-      into: 'feeds',
-      outlet: 'article-list'
+      into: 'application',
+      outlet: 'content'
     })
   },
 

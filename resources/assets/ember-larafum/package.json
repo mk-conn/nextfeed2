@@ -16,10 +16,6 @@
     "test": "ember test"
   },
   "devDependencies": {
-    "@html-next/flexi-config": "^2.0.0",
-    "@html-next/flexi-default-styles": "^2.0.1",
-    "@html-next/flexi-dsl": "^2.0.1",
-    "@html-next/flexi-layouts": "^2.0.1",
     "bootstrap": "^4.0.0-beta",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
@@ -42,7 +38,7 @@
     "ember-data": "~2.15.0",
     "ember-data-change-tracker": "^0.6.2",
     "ember-export-application-global": "^2.0.0",
-    "ember-font-awesome": "^4.0.0-alpha.3",
+    "ember-font-awesome": "^4.0.0-alpha.10",
     "ember-infinity": "^0.2.8",
     "ember-load-initializers": "^1.0.0",
     "ember-moment": "^7.4.1",
@@ -52,8 +48,6 @@
     "ember-simple-auth-token": "^2.1.0",
     "ember-source": "~2.15.0",
     "ember-welcome-page": "^3.0.0",
-    "flexi": "^2.0.1",
-    "liquid-fire": "^0.28.0",
     "loader.js": "^4.2.3"
   },
   "engines": {

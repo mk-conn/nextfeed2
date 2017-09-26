@@ -1,10 +1,4 @@
-.side-bar {
-  @include overflow-scroll();
-  padding-left: 0;
-  padding-right:0;
-  border-right:1px solid #ccc;
-  max-height:inherit;
-
+#side-bar {
   .list-group {
     width: 100%;
     padding: 0;
@@ -13,18 +7,18 @@
 
   .list-group-item {
     padding: 0;
-    border-right:none;
-    border-left:none;
+    border-right: none;
+    border-left: none;
   }
 
   .folder-item {
     padding: 1rem;
     font-weight: bold;
     color: #2d4373;
-    background:lighten(#eee, 10%);
+    background: lighten(#eee, 10%);
 
     .feed-item {
-      background:inherit;
+      background: inherit;
     }
   }
 

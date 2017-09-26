@@ -20,7 +20,14 @@ export default Route.extend(AuthenticatedRouteMixin, {
     });
   },
 
-  actions : {
+  renderTemplate() {
+    this.render('feeds', {
+      into: 'application',
+      outlet: 'side-bar'
+    })
+  },
+
+  actions: {
 
     openFolder(folder) {
       folder.set('open', true);

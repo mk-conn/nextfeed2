@@ -80,20 +80,7 @@ define("ember-larafum/application/template", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "SoT2nZVF", "block": "{\"symbols\":[],\"statements\":[[6,\"header\"],[7],[0,\"\\n  \"],[6,\"nav\"],[9,\"class\",\"navbar navbar-expand-lg navbar-light bg-light\"],[7],[0,\"\\n    \"],[6,\"a\"],[9,\"class\",\"navbar-brand\"],[9,\"href\",\"/\"],[7],[0,\"Nextfeed\"],[8],[0,\"\\n    \"],[6,\"ul\"],[9,\"class\",\"navbar-nav mr-auto\"],[7],[0,\"\\n\"],[4,\"link-to\",[\"feeds\"],[[\"tagName\",\"classNames\",\"activeClass\"],[\"li\",\"nav-item\",\"active\"]],{\"statements\":[[0,\"        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[7],[0,\"Feeds\"],[8]],\"parameters\":[]},null],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[1,[25,\"liquid-outlet\",[\"top-bar-left\"],null],false],[0,\"\\n\\n    \"],[1,[25,\"liquid-outlet\",[\"top-bar-right\"],null],false],[0,\"\\n\\n    \"],[6,\"form\"],[9,\"class\",\"form-inline my-2 my-lg-0\"],[7],[0,\"\\n      \"],[6,\"input\"],[9,\"class\",\"form-control mr-sm-2\"],[9,\"type\",\"text\"],[9,\"placeholder\",\"Search\"],[9,\"aria-label\",\"Search\"],[7],[8],[0,\"\\n      \"],[6,\"button\"],[9,\"class\",\"btn btn-outline-success my-2 my-sm-0\"],[9,\"type\",\"submit\"],[7],[0,\"Search\"],[8],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[6,\"ul\"],[9,\"class\",\"navbar-nav\"],[7],[0,\"\\n      \"],[6,\"li\"],[9,\"class\",\"nav-item\"],[7],[0,\"\\n        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"updateAllFeeds\"],null]]],[7],[0,\"\\n          \"],[6,\"i\"],[9,\"class\",\"fa fa-refresh\"],[9,\"aria-hidden\",\"true\"],[7],[8],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n\"],[4,\"link-to\",[\"settings\"],[[\"tagName\",\"classNames\"],[\"li\",\"nav-item\"]],{\"statements\":[[0,\"        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[7],[6,\"i\"],[9,\"class\",\"fa fa-cogs\"],[9,\"aria-hidden\",\"true\"],[7],[8],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"      \"],[6,\"li\"],[9,\"class\",\"nav-item\"],[7],[0,\"\\n        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"invalidateSession\"],null]]],[7],[0,\"\\n          \"],[6,\"i\"],[9,\"class\",\"fa fa-sign-out\"],[9,\"aria-hidden\",\"true\"],[7],[8],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n    \"],[8],[0,\"\\n  \"],[8],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"class\",\"container-fluid\"],[7],[0,\"\\n  \"],[1,[25,\"outlet\",null,[[\"use\"],[\"fade\"]]],false],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"id\",\"full-article\"],[7],[0,\"\\n  \"],[1,[25,\"outlet\",[\"full-article\"],null],false],[0,\"\\n\"],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/application/template.hbs" } });
-});
-define("ember-larafum/components/-lf-get-outlet-state", ["exports", "liquid-fire/components/-lf-get-outlet-state"], function (exports, _lfGetOutletState) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _lfGetOutletState.default;
-    }
-  });
+  exports.default = Ember.HTMLBars.template({ "id": "82eTdQ02", "block": "{\"symbols\":[],\"statements\":[[6,\"header\"],[7],[0,\"\\n  \"],[6,\"nav\"],[9,\"class\",\"navbar navbar-expand-lg navbar-light bg-light\"],[7],[0,\"\\n    \"],[6,\"a\"],[9,\"class\",\"navbar-brand\"],[9,\"href\",\"/\"],[7],[0,\"Nextfeed\"],[8],[0,\"\\n    \"],[6,\"ul\"],[9,\"class\",\"navbar-nav mr-auto\"],[7],[0,\"\\n\"],[4,\"link-to\",[\"feeds\"],[[\"tagName\",\"classNames\",\"activeClass\"],[\"li\",\"nav-item\",\"active\"]],{\"statements\":[[0,\"        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[7],[0,\"Feeds\"],[8]],\"parameters\":[]},null],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[1,[25,\"outlet\",[\"top-bar-left\"],null],false],[0,\"\\n\\n    \"],[1,[25,\"outlet\",[\"top-bar-right\"],null],false],[0,\"\\n\\n    \"],[6,\"form\"],[9,\"class\",\"form-inline my-2 my-lg-0\"],[7],[0,\"\\n      \"],[6,\"input\"],[9,\"class\",\"form-control mr-sm-2\"],[9,\"type\",\"text\"],[9,\"placeholder\",\"Search\"],[9,\"aria-label\",\"Search\"],[7],[8],[0,\"\\n      \"],[6,\"button\"],[9,\"class\",\"btn btn-outline-success my-2 my-sm-0\"],[9,\"type\",\"submit\"],[7],[0,\"Search\"],[8],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[6,\"ul\"],[9,\"class\",\"navbar-nav\"],[7],[0,\"\\n      \"],[6,\"li\"],[9,\"class\",\"nav-item\"],[7],[0,\"\\n        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"updateAllFeeds\"],null]]],[7],[0,\"\\n          \"],[6,\"i\"],[9,\"class\",\"fa fa-refresh\"],[9,\"aria-hidden\",\"true\"],[7],[8],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n\"],[4,\"link-to\",[\"settings\"],[[\"tagName\",\"classNames\"],[\"li\",\"nav-item\"]],{\"statements\":[[0,\"        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[7],[6,\"i\"],[9,\"class\",\"fa fa-cogs\"],[9,\"aria-hidden\",\"true\"],[7],[8],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"      \"],[6,\"li\"],[9,\"class\",\"nav-item\"],[7],[0,\"\\n        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"invalidateSession\"],null]]],[7],[0,\"\\n          \"],[6,\"i\"],[9,\"class\",\"fa fa-sign-out\"],[9,\"aria-hidden\",\"true\"],[7],[8],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n    \"],[8],[0,\"\\n  \"],[8],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"id\",\"side-bar\"],[7],[0,\"\\n  \"],[1,[25,\"outlet\",[\"side-bar\"],null],false],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"id\",\"content-zone\"],[7],[0,\"\\n  \"],[1,[25,\"outlet\",[\"content\"],null],false],[0,\"\\n\"],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/application/template.hbs" } });
 });
 define('ember-larafum/components/article-item/component', ['exports'], function (exports) {
   'use strict';
@@ -906,45 +893,6 @@ define("ember-larafum/components/feed-item/template", ["exports"], function (exp
   });
   exports.default = Ember.HTMLBars.template({ "id": "Q/MRMu2G", "block": "{\"symbols\":[],\"statements\":[[4,\"link-to\",[\"feeds.feed.articles\",[19,0,[\"feed\",\"id\"]]],null,{\"statements\":[[0,\"  \"],[6,\"div\"],[9,\"class\",\"d-flex justify-content-between\"],[7],[0,\"\\n    \"],[6,\"div\"],[7],[0,\"\\n      \"],[6,\"span\"],[9,\"class\",\"feed-icon\"],[7],[0,\"\\n\"],[4,\"if\",[[19,0,[\"feed\",\"icon\"]]],null,{\"statements\":[[0,\"          \"],[6,\"img\"],[10,\"src\",[26,[[20,[\"feed\",\"icon\"]]]]],[9,\"alt\",\"feed icon\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"          \"],[6,\"i\"],[9,\"class\",\"fa fa-1x fa-rss\"],[9,\"aria-hidden\",\"true\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]}],[0,\"      \"],[8],[0,\"\\n      \"],[1,[20,[\"feed\",\"name\"]],false],[0,\"\\n    \"],[8],[0,\"\\n    \"],[6,\"span\"],[9,\"class\",\"badge badge-secondary\"],[7],[1,[20,[\"feed\",\"meta\",\"articles-count\"]],false],[8],[0,\"\\n  \"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/components/feed-item/template.hbs" } });
 });
-define('ember-larafum/components/flexi-container', ['exports', 'flexi-layouts/components/flexi-container'], function (exports, _flexiContainer) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _flexiContainer.default;
-    }
-  });
-});
-define('ember-larafum/components/flexi-grid', ['exports', 'flexi-layouts/components/flexi-grid'], function (exports, _flexiGrid) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _flexiGrid.default;
-    }
-  });
-});
-define('ember-larafum/components/flexi-layout', ['exports', 'flexi-layouts/components/flexi-layout'], function (exports, _flexiLayout) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _flexiLayout.default;
-    }
-  });
-});
 define('ember-larafum/components/folder-item/component', ['exports'], function (exports) {
   'use strict';
 
@@ -961,7 +909,7 @@ define("ember-larafum/components/folder-item/template", ["exports"], function (e
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "DE0XkOVP", "block": "{\"symbols\":[\"feed\"],\"statements\":[[6,\"hbox\"],[9,\"class\",\"folder\"],[7],[0,\"\\n  \"],[1,[20,[\"folder\",\"name\"]],false],[0,\"\\n\"],[4,\"if\",[[19,0,[\"folder\",\"open\"]]],null,{\"statements\":[[0,\"    \"],[6,\"hbox\"],[9,\"class\",\"icon justify-end\"],[7],[0,\"\\n      \"],[6,\"span\"],[9,\"class\",\"action\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"closeFolder\",[19,0,[\"folder\"]]],null]]],[7],[6,\"i\"],[9,\"class\",\"fa fa-folder-open-o\"],[9,\"aria-hidden\",\"true\"],[7],[8],[8],[0,\"\\n    \"],[8],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"    \"],[6,\"hbox\"],[9,\"class\",\"icon justify-end\"],[7],[0,\"\\n      \"],[6,\"span\"],[9,\"class\",\"action\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"openFolder\",[19,0,[\"folder\"]]],null]]],[7],[6,\"i\"],[9,\"class\",\"fa fa-folder-o\"],[9,\"aria-hidden\",\"true\"],[7],[8],[8],[0,\"\\n    \"],[8],[0,\"\\n\"]],\"parameters\":[]}],[8],[0,\"\\n\\n\"],[4,\"if\",[[19,0,[\"folder\",\"open\"]]],null,{\"statements\":[[0,\"  \"],[6,\"div\"],[9,\"class\",\"list-group\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"folder\",\"feeds\"]]],null,{\"statements\":[[0,\"      \"],[1,[25,\"feed-item\",null,[[\"feed\"],[[19,1,[]]]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/components/folder-item/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "8AAJMNiW", "block": "{\"symbols\":[\"feed\"],\"statements\":[[6,\"hbox\"],[9,\"class\",\"folder\"],[7],[0,\"\\n  \"],[1,[20,[\"folder\",\"name\"]],false],[0,\"\\n\"],[4,\"if\",[[19,0,[\"folder\",\"open\"]]],null,{\"statements\":[[0,\"    \"],[6,\"hbox\"],[9,\"justify\",\"end\"],[9,\"class\",\"icon\"],[7],[0,\"\\n      \"],[6,\"span\"],[9,\"class\",\"action\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"closeFolder\",[19,0,[\"folder\"]]],null]]],[7],[6,\"i\"],[9,\"class\",\"fa fa-folder-open-o\"],[9,\"aria-hidden\",\"true\"],[7],[8],[8],[0,\"\\n    \"],[8],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"    \"],[6,\"hbox\"],[9,\"justify\",\"end\"],[9,\"class\",\"icon\"],[7],[0,\"\\n      \"],[6,\"span\"],[9,\"class\",\"action\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"openFolder\",[19,0,[\"folder\"]]],null]]],[7],[6,\"i\"],[9,\"class\",\"fa fa-folder-o\"],[9,\"aria-hidden\",\"true\"],[7],[8],[8],[0,\"\\n    \"],[8],[0,\"\\n\"]],\"parameters\":[]}],[8],[0,\"\\n\\n\"],[4,\"if\",[[19,0,[\"folder\",\"open\"]]],null,{\"statements\":[[0,\"  \"],[6,\"div\"],[9,\"class\",\"list-group\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"folder\",\"feeds\"]]],null,{\"statements\":[[0,\"      \"],[1,[25,\"feed-item\",null,[[\"feed\"],[[19,1,[]]]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/components/folder-item/template.hbs" } });
 });
 define('ember-larafum/components/full-article/component', ['exports'], function (exports) {
   'use strict';
@@ -996,19 +944,6 @@ define("ember-larafum/components/full-article/template", ["exports"], function (
   });
   exports.default = Ember.HTMLBars.template({ "id": "AR74XIKM", "block": "{\"symbols\":[],\"statements\":[[4,\"link-to\",[[19,0,[\"onCloseRoute\"]]],null,{\"statements\":[[0,\"  \"],[6,\"i\"],[9,\"class\",\"fa fa-close\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[6,\"h3\"],[9,\"class\",\"ui header\"],[7],[0,\"\\n  \"],[1,[20,[\"article\",\"title\"]],false],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"class\",\"article-content\"],[7],[0,\"\\n  \"],[1,[18,\"content\"],false],[0,\"\\n\"],[8],[0,\"\\n\"],[6,\"div\"],[9,\"class\",\"ui divider\"],[7],[8],[0,\"\\n\"],[6,\"a\"],[9,\"class\",\"ui small icon button\"],[10,\"href\",[20,[\"article\",\"url\"]],null],[9,\"target\",\"_blank\"],[9,\"data-content\",\"Open article in new tab\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"originalArticle\"],null]],[[\"preventDefault\"],[false]]],[7],[0,\"\\n  \"],[6,\"i\"],[9,\"class\",\"external icon\"],[7],[8],[0,\"\\n  Open Original Article\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"class\",\"ui divider\"],[7],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/components/full-article/template.hbs" } });
 });
-define("ember-larafum/components/illiquid-model", ["exports", "liquid-fire/components/illiquid-model"], function (exports, _illiquidModel) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _illiquidModel.default;
-    }
-  });
-});
 define('ember-larafum/components/infinity-loader', ['exports', 'ember-infinity/components/infinity-loader'], function (exports, _infinityLoader) {
   'use strict';
 
@@ -1016,142 +951,6 @@ define('ember-larafum/components/infinity-loader', ['exports', 'ember-infinity/c
     value: true
   });
   exports.default = _infinityLoader.default;
-});
-define("ember-larafum/components/liquid-bind", ["exports", "liquid-fire/components/liquid-bind"], function (exports, _liquidBind) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _liquidBind.default;
-    }
-  });
-});
-define("ember-larafum/components/liquid-child", ["exports", "liquid-fire/components/liquid-child"], function (exports, _liquidChild) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _liquidChild.default;
-    }
-  });
-});
-define("ember-larafum/components/liquid-container", ["exports", "liquid-fire/components/liquid-container"], function (exports, _liquidContainer) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _liquidContainer.default;
-    }
-  });
-});
-define("ember-larafum/components/liquid-if", ["exports", "liquid-fire/components/liquid-if"], function (exports, _liquidIf) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _liquidIf.default;
-    }
-  });
-});
-define("ember-larafum/components/liquid-measured", ["exports", "liquid-fire/components/liquid-measured"], function (exports, _liquidMeasured) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _liquidMeasured.default;
-    }
-  });
-  Object.defineProperty(exports, "measure", {
-    enumerable: true,
-    get: function () {
-      return _liquidMeasured.measure;
-    }
-  });
-});
-define("ember-larafum/components/liquid-outlet", ["exports", "liquid-fire/components/liquid-outlet"], function (exports, _liquidOutlet) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _liquidOutlet.default;
-    }
-  });
-});
-define("ember-larafum/components/liquid-spacer", ["exports", "liquid-fire/components/liquid-spacer"], function (exports, _liquidSpacer) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _liquidSpacer.default;
-    }
-  });
-});
-define('ember-larafum/components/liquid-sync', ['exports', 'liquid-fire/components/liquid-sync'], function (exports, _liquidSync) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _liquidSync.default;
-    }
-  });
-});
-define("ember-larafum/components/liquid-unless", ["exports", "liquid-fire/components/liquid-unless"], function (exports, _liquidUnless) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _liquidUnless.default;
-    }
-  });
-});
-define("ember-larafum/components/liquid-versions", ["exports", "liquid-fire/components/liquid-versions"], function (exports, _liquidVersions) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _liquidVersions.default;
-    }
-  });
 });
 define('ember-larafum/components/welcome-page', ['exports', 'ember-welcome-page/components/welcome-page'], function (exports, _welcomePage) {
   'use strict';
@@ -1242,8 +1041,8 @@ define('ember-larafum/feeds/feed/articles/route', ['exports'], function (exports
 
     renderTemplate: function renderTemplate() {
       this.render('feeds.feed.articles', {
-        into: 'feeds',
-        outlet: 'article-list'
+        into: 'application',
+        outlet: 'content'
       });
     },
     model: function model(params) {
@@ -1309,6 +1108,12 @@ define('ember-larafum/feeds/route', ['exports', 'ember-simple-auth/mixins/authen
         })
       });
     },
+    renderTemplate: function renderTemplate() {
+      this.render('feeds', {
+        into: 'application',
+        outlet: 'side-bar'
+      });
+    },
 
 
     actions: {
@@ -1330,26 +1135,7 @@ define("ember-larafum/feeds/template", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "cObUTQbB", "block": "{\"symbols\":[\"feed\",\"folder\"],\"statements\":[[6,\"div\"],[9,\"class\",\"d-flex flex-row\"],[7],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"col-md-3 col-lg-3 col-sm-3 col-xl-3 side-bar mh-100\"],[7],[0,\"\\n\\n    \"],[6,\"div\"],[9,\"class\",\"list-group folder-list\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\",\"folders\"]]],null,{\"statements\":[[0,\"        \"],[1,[25,\"folder-item\",null,[[\"folder\",\"classNames\"],[[19,2,[]],\"folder-item list-group-item\"]]],false],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"    \"],[8],[0,\"\\n\\n    \"],[6,\"div\"],[9,\"class\",\"list-group feed-list\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\",\"feeds\"]]],null,{\"statements\":[[0,\"        \"],[1,[25,\"feed-item\",null,[[\"feed\",\"classNames\"],[[19,1,[]],\"list-group-item feed-item\"]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[8],[0,\"\\n  \"],[8],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"col-lg-7 col-md-7 col-sm-3 col-xl-7\"],[9,\"class\",\"article-list\"],[7],[0,\"\\n    \"],[1,[25,\"outlet\",[\"article-list\"],[[\"tagName\"],[\"\"]]],false],[0,\"\\n  \"],[8],[0,\"\\n\"],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/template.hbs" } });
-});
-define('ember-larafum/helpers/-inject-layout', ['exports', 'flexi-layouts/helpers/-inject-layout'], function (exports, _injectLayout) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _injectLayout.default;
-    }
-  });
-  Object.defineProperty(exports, 'injectLayout', {
-    enumerable: true,
-    get: function () {
-      return _injectLayout.injectLayout;
-    }
-  });
+  exports.default = Ember.HTMLBars.template({ "id": "MYWE91Yp", "block": "{\"symbols\":[\"feed\",\"folder\"],\"statements\":[[6,\"div\"],[9,\"class\",\"list-group folder-list\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\",\"folders\"]]],null,{\"statements\":[[0,\"    \"],[1,[25,\"folder-item\",null,[[\"folder\",\"classNames\"],[[19,2,[]],\"folder-item list-group-item\"]]],false],[0,\"\\n\"]],\"parameters\":[2]},null],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"class\",\"list-group feed-list\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\",\"feeds\"]]],null,{\"statements\":[[0,\"    \"],[1,[25,\"feed-item\",null,[[\"feed\",\"classNames\"],[[19,1,[]],\"list-group-item feed-item\"]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/template.hbs" } });
 });
 define('ember-larafum/helpers/app-version', ['exports', 'ember-larafum/config/environment', 'ember-cli-app-version/utils/regexp'], function (exports, _environment, _regexp) {
   'use strict';
@@ -1471,44 +1257,6 @@ define('ember-larafum/helpers/is-same', ['exports', 'ember-larafum/config/enviro
   });
   exports.default = _isSame.default.extend({
     globalAllowEmpty: !!Ember.get(_environment.default, 'moment.allowEmpty')
-  });
-});
-define('ember-larafum/helpers/lf-lock-model', ['exports', 'liquid-fire/helpers/lf-lock-model'], function (exports, _lfLockModel) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _lfLockModel.default;
-    }
-  });
-  Object.defineProperty(exports, 'lfLockModel', {
-    enumerable: true,
-    get: function () {
-      return _lfLockModel.lfLockModel;
-    }
-  });
-});
-define('ember-larafum/helpers/lf-or', ['exports', 'liquid-fire/helpers/lf-or'], function (exports, _lfOr) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _lfOr.default;
-    }
-  });
-  Object.defineProperty(exports, 'lfOr', {
-    enumerable: true,
-    get: function () {
-      return _lfOr.lfOr;
-    }
   });
 });
 define('ember-larafum/helpers/moment-add', ['exports', 'ember-larafum/config/environment', 'ember-moment/helpers/moment-add'], function (exports, _environment, _momentAdd) {
@@ -1915,21 +1663,6 @@ define('ember-larafum/initializers/injectStore', ['exports'], function (exports)
     initialize: function initialize() {}
   };
 });
-define("ember-larafum/initializers/liquid-fire", ["exports", "liquid-fire/ember-internals"], function (exports, _emberInternals) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-
-  (0, _emberInternals.initialize)();
-
-  exports.default = {
-    name: 'liquid-fire',
-    initialize: function initialize() {}
-  };
-});
 define('ember-larafum/initializers/load-bootstrap-config', ['exports', 'ember-larafum/config/environment', 'ember-bootstrap/config'], function (exports, _environment, _config) {
   'use strict';
 
@@ -2042,7 +1775,14 @@ define('ember-larafum/login/route', ['exports', 'ember-simple-auth/mixins/unauth
   });
   var Route = Ember.Route,
       service = Ember.inject.service;
-  exports.default = Route.extend(_unauthenticatedRouteMixin.default, {});
+  exports.default = Route.extend(_unauthenticatedRouteMixin.default, {
+    renderTemplate: function renderTemplate() {
+      this.render('login', {
+        into: 'application',
+        outlet: 'content'
+      });
+    }
+  });
 });
 define("ember-larafum/login/template", ["exports"], function (exports) {
   "use strict";
@@ -2288,16 +2028,6 @@ define('ember-larafum/services/current-user', ['exports'], function (exports) {
     }
   });
 });
-define('ember-larafum/services/device/layout', ['exports', 'ember-larafum/config/environment', 'flexi-layouts/services/device/layout'], function (exports, _environment, _layout) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = _layout.default.extend({
-    breakpoints: _environment.default.flexi.breakpoints
-  });
-});
 define('ember-larafum/services/gui', ['exports'], function (exports) {
   'use strict';
 
@@ -2344,14 +2074,6 @@ define('ember-larafum/services/gui', ['exports'], function (exports) {
       $(component).removeClass('activated');
     }
   });
-});
-define("ember-larafum/services/liquid-fire-transitions", ["exports", "liquid-fire/transition-map"], function (exports, _transitionMap) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = _transitionMap.default;
 });
 define('ember-larafum/services/moment', ['exports', 'ember-larafum/config/environment', 'ember-moment/services/moment'], function (exports, _environment, _moment) {
   'use strict';
@@ -2444,188 +2166,6 @@ define("ember-larafum/transitions", ["exports"], function (exports) {
     //   );
   };
 });
-define('ember-larafum/transitions/cross-fade', ['exports', 'liquid-fire/transitions/cross-fade'], function (exports, _crossFade) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _crossFade.default;
-    }
-  });
-});
-define('ember-larafum/transitions/default', ['exports', 'liquid-fire/transitions/default'], function (exports, _default) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _default.default;
-    }
-  });
-});
-define('ember-larafum/transitions/explode', ['exports', 'liquid-fire/transitions/explode'], function (exports, _explode) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _explode.default;
-    }
-  });
-});
-define('ember-larafum/transitions/fade', ['exports', 'liquid-fire/transitions/fade'], function (exports, _fade) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _fade.default;
-    }
-  });
-});
-define('ember-larafum/transitions/flex-grow', ['exports', 'liquid-fire/transitions/flex-grow'], function (exports, _flexGrow) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _flexGrow.default;
-    }
-  });
-});
-define('ember-larafum/transitions/fly-to', ['exports', 'liquid-fire/transitions/fly-to'], function (exports, _flyTo) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _flyTo.default;
-    }
-  });
-});
-define('ember-larafum/transitions/move-over', ['exports', 'liquid-fire/transitions/move-over'], function (exports, _moveOver) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _moveOver.default;
-    }
-  });
-});
-define('ember-larafum/transitions/scale', ['exports', 'liquid-fire/transitions/scale'], function (exports, _scale) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _scale.default;
-    }
-  });
-});
-define('ember-larafum/transitions/scroll-then', ['exports', 'liquid-fire/transitions/scroll-then'], function (exports, _scrollThen) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _scrollThen.default;
-    }
-  });
-});
-define('ember-larafum/transitions/to-down', ['exports', 'liquid-fire/transitions/to-down'], function (exports, _toDown) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _toDown.default;
-    }
-  });
-});
-define('ember-larafum/transitions/to-left', ['exports', 'liquid-fire/transitions/to-left'], function (exports, _toLeft) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _toLeft.default;
-    }
-  });
-});
-define('ember-larafum/transitions/to-right', ['exports', 'liquid-fire/transitions/to-right'], function (exports, _toRight) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _toRight.default;
-    }
-  });
-});
-define('ember-larafum/transitions/to-up', ['exports', 'liquid-fire/transitions/to-up'], function (exports, _toUp) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _toUp.default;
-    }
-  });
-});
-define('ember-larafum/transitions/wait', ['exports', 'liquid-fire/transitions/wait'], function (exports, _wait) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function () {
-      return _wait.default;
-    }
-  });
-});
 
 
 define('ember-larafum/config/environment', ['ember'], function(Ember) {
@@ -2648,6 +2188,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("ember-larafum/app")["default"].create({"name":"ember-larafum","version":"0.0.0+4d83f493"});
+  require("ember-larafum/app")["default"].create({"name":"ember-larafum","version":"0.0.0+2f397738"});
 }
 //# sourceMappingURL=ember-larafum.map

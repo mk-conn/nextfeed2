@@ -6,9 +6,9 @@
         <a class="nav-link" href="#">Feeds</a>{{/link-to}}
     </ul>
 
-    {{liquid-outlet "top-bar-left"}}
+    {{outlet "top-bar-left"}}
 
-    {{liquid-outlet "top-bar-right"}}
+    {{outlet "top-bar-right"}}
 
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
@@ -33,10 +33,10 @@
   </nav>
 </header>
 
-<div class="container-fluid">
-  {{outlet use="fade"}}
+<div id="side-bar">
+  {{outlet "side-bar"}}
 </div>
 
-<div id="full-article">
-  {{outlet "full-article"}}
+<div id="content-zone">
+  {{outlet "content"}}
 </div>
