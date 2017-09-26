@@ -1,3 +1,5 @@
+$main-box-background-color: #003366;
+
 @mixin overflow-scroll() {
   //overflow: auto;
   overflow-y: scroll;
@@ -7,14 +9,25 @@
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+  font: 100% sans-serif;
+  margin: 0;
+  padding: 0;
   height: 100vh;
-  width: 100vw;
+  width: 100vh;
+
   div.ember-view:first-child {
-    height: inherit;
-    min-height: inherit;
-    max-height: inherit;
+    width:inherit;
+    height:inherit;
+    display: grid;
+    grid-template-areas: "header header" "side-bar content";
+    background:#ccc;
+    grid-template-rows: 2em 1fr;
+    grid-template-columns: 6em 1fr;
+
+    header {
+      grid-area: header;
+    }
+
   }
 }
 

@@ -4,5 +4,5 @@ const {Controller} = Ember;
 
 export default Controller.extend({
   queryParams: [ 'sort' ],
-  sort: 'id'
+  sort: '-updated-date,-id'
 });
