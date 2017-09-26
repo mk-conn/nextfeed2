@@ -80,7 +80,7 @@ define("ember-larafum/application/template", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "82eTdQ02", "block": "{\"symbols\":[],\"statements\":[[6,\"header\"],[7],[0,\"\\n  \"],[6,\"nav\"],[9,\"class\",\"navbar navbar-expand-lg navbar-light bg-light\"],[7],[0,\"\\n    \"],[6,\"a\"],[9,\"class\",\"navbar-brand\"],[9,\"href\",\"/\"],[7],[0,\"Nextfeed\"],[8],[0,\"\\n    \"],[6,\"ul\"],[9,\"class\",\"navbar-nav mr-auto\"],[7],[0,\"\\n\"],[4,\"link-to\",[\"feeds\"],[[\"tagName\",\"classNames\",\"activeClass\"],[\"li\",\"nav-item\",\"active\"]],{\"statements\":[[0,\"        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[7],[0,\"Feeds\"],[8]],\"parameters\":[]},null],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[1,[25,\"outlet\",[\"top-bar-left\"],null],false],[0,\"\\n\\n    \"],[1,[25,\"outlet\",[\"top-bar-right\"],null],false],[0,\"\\n\\n    \"],[6,\"form\"],[9,\"class\",\"form-inline my-2 my-lg-0\"],[7],[0,\"\\n      \"],[6,\"input\"],[9,\"class\",\"form-control mr-sm-2\"],[9,\"type\",\"text\"],[9,\"placeholder\",\"Search\"],[9,\"aria-label\",\"Search\"],[7],[8],[0,\"\\n      \"],[6,\"button\"],[9,\"class\",\"btn btn-outline-success my-2 my-sm-0\"],[9,\"type\",\"submit\"],[7],[0,\"Search\"],[8],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[6,\"ul\"],[9,\"class\",\"navbar-nav\"],[7],[0,\"\\n      \"],[6,\"li\"],[9,\"class\",\"nav-item\"],[7],[0,\"\\n        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"updateAllFeeds\"],null]]],[7],[0,\"\\n          \"],[6,\"i\"],[9,\"class\",\"fa fa-refresh\"],[9,\"aria-hidden\",\"true\"],[7],[8],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n\"],[4,\"link-to\",[\"settings\"],[[\"tagName\",\"classNames\"],[\"li\",\"nav-item\"]],{\"statements\":[[0,\"        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[7],[6,\"i\"],[9,\"class\",\"fa fa-cogs\"],[9,\"aria-hidden\",\"true\"],[7],[8],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"      \"],[6,\"li\"],[9,\"class\",\"nav-item\"],[7],[0,\"\\n        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"invalidateSession\"],null]]],[7],[0,\"\\n          \"],[6,\"i\"],[9,\"class\",\"fa fa-sign-out\"],[9,\"aria-hidden\",\"true\"],[7],[8],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n    \"],[8],[0,\"\\n  \"],[8],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"id\",\"side-bar\"],[7],[0,\"\\n  \"],[1,[25,\"outlet\",[\"side-bar\"],null],false],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"id\",\"content-zone\"],[7],[0,\"\\n  \"],[1,[25,\"outlet\",[\"content\"],null],false],[0,\"\\n\"],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/application/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "dSI/ZR8d", "block": "{\"symbols\":[],\"statements\":[[6,\"header\"],[7],[0,\"\\n  \"],[6,\"nav\"],[9,\"class\",\"navbar navbar-expand-lg navbar-light bg-light\"],[7],[0,\"\\n    \"],[6,\"a\"],[9,\"class\",\"navbar-brand\"],[9,\"href\",\"/\"],[7],[0,\"Nextfeed\"],[8],[0,\"\\n    \"],[6,\"ul\"],[9,\"class\",\"navbar-nav mr-auto\"],[7],[0,\"\\n\"],[4,\"link-to\",[\"feeds\"],[[\"tagName\",\"classNames\",\"activeClass\"],[\"li\",\"nav-item\",\"active\"]],{\"statements\":[[0,\"        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[7],[0,\"Feeds\"],[8]],\"parameters\":[]},null],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[1,[25,\"outlet\",[\"top-bar-left\"],null],false],[0,\"\\n\\n    \"],[1,[25,\"outlet\",[\"top-bar-right\"],null],false],[0,\"\\n\\n    \"],[6,\"form\"],[9,\"class\",\"form-inline my-2 my-lg-0\"],[7],[0,\"\\n      \"],[6,\"input\"],[9,\"class\",\"form-control mr-sm-2\"],[9,\"type\",\"text\"],[9,\"placeholder\",\"Search\"],[9,\"aria-label\",\"Search\"],[7],[8],[0,\"\\n      \"],[6,\"button\"],[9,\"class\",\"btn btn-outline-success my-2 my-sm-0\"],[9,\"type\",\"submit\"],[7],[0,\"Search\"],[8],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[6,\"ul\"],[9,\"class\",\"navbar-nav\"],[7],[0,\"\\n      \"],[6,\"li\"],[9,\"class\",\"nav-item\"],[7],[0,\"\\n        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"updateAllFeeds\"],null]]],[7],[0,\"\\n          \"],[6,\"i\"],[9,\"class\",\"fa fa-refresh\"],[9,\"aria-hidden\",\"true\"],[7],[8],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n\"],[4,\"link-to\",[\"settings\"],[[\"tagName\",\"classNames\"],[\"li\",\"nav-item\"]],{\"statements\":[[0,\"        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[7],[6,\"i\"],[9,\"class\",\"fa fa-cogs\"],[9,\"aria-hidden\",\"true\"],[7],[8],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"      \"],[6,\"li\"],[9,\"class\",\"nav-item\"],[7],[0,\"\\n        \"],[6,\"a\"],[9,\"class\",\"nav-link\"],[9,\"href\",\"#\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"invalidateSession\"],null]]],[7],[0,\"\\n          \"],[6,\"i\"],[9,\"class\",\"fa fa-sign-out\"],[9,\"aria-hidden\",\"true\"],[7],[8],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n    \"],[8],[0,\"\\n  \"],[8],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"id\",\"side-bar\"],[7],[0,\"\\n  \"],[1,[25,\"outlet\",[\"side-bar\"],null],false],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"id\",\"content-zone\"],[7],[0,\"\\n  \"],[1,[25,\"outlet\",[\"content\"],null],false],[0,\"\\n\"],[8],[0,\"\\n\\n\"],[6,\"div\"],[9,\"id\",\"article\"],[7],[0,\"\\n  \"],[1,[25,\"outlet\",[\"article\"],null],false],[0,\"\\n\"],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/application/template.hbs" } });
 });
 define('ember-larafum/components/article-item/component', ['exports'], function (exports) {
   'use strict';
@@ -978,7 +978,7 @@ define('ember-larafum/feeds/feed/articles/article/route', ['exports'], function 
     gui: inject.service(),
 
     beforeModel: function beforeModel() {
-      this.get('gui').activate('full-article');
+      this.get('gui').activate('article');
     },
     model: function model(params) {
       console.log('article:', params);
@@ -989,7 +989,7 @@ define('ember-larafum/feeds/feed/articles/article/route', ['exports'], function 
     renderTemplate: function renderTemplate() {
       this.render('feeds/feed/articles/article', {
         into: 'application',
-        outlet: 'full-article'
+        outlet: 'article'
       });
     },
 
@@ -998,7 +998,7 @@ define('ember-larafum/feeds/feed/articles/article/route', ['exports'], function 
       originalArticle: function originalArticle() {},
       willTransition: function willTransition() {
         Ember.debug('>>>> Feeds.Show.Articles.ShowRoute::willTransition()');
-        this.get('gui').deactivate('full-article');
+        this.get('gui').deactivate('article');
       }
     }
   });

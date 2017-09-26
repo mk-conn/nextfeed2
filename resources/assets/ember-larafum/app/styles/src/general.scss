@@ -1,12 +1,12 @@
 $main-box-background-color: #003366;
-$header-bg-color:#103034;
+$header-bg-color: #103034;
 
 @mixin overflow-scroll() {
   //overflow: auto;
-  overflow-y: scroll;
+  overflow-y: visible;
   overflow-x: hidden;
   //overflow-scrolling: touch;
-  -webkit-overflow-scrolling: touch;
+  //-webkit-overflow-scrolling: touch;
 }
 
 body.ember-application {
@@ -23,7 +23,7 @@ body.ember-application {
     grid-template-areas: "header header" "side-bar content-zone";
     background: #ccc;
     grid-template-rows: 4em 1fr;
-    grid-template-columns: 25em 1fr;
+    grid-template-columns: 20em 1fr;
   }
 
   header {
@@ -32,12 +32,16 @@ body.ember-application {
 
   #side-bar {
     grid-area: side-bar;
-    overflow-y: scroll;
+    @include overflow-scroll();
   }
 
   #content-zone {
     grid-area: content-zone;
-    overflow-y: scroll;
+    @include overflow-scroll();
+  }
+
+  #article {
+
   }
 }
 

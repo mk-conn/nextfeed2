@@ -7,7 +7,7 @@ export default Ember.Route.extend({
   gui: inject.service(),
 
   beforeModel() {
-    this.get('gui').activate('full-article');
+    this.get('gui').activate('article');
   },
 
   model(params) {
@@ -20,7 +20,7 @@ export default Ember.Route.extend({
   renderTemplate() {
     this.render('feeds/feed/articles/article', {
       into: 'application',
-      outlet: 'full-article'
+      outlet: 'article'
     })
   },
 
@@ -31,7 +31,7 @@ export default Ember.Route.extend({
 
     willTransition() {
       Ember.debug(`>>>> Feeds.Show.Articles.ShowRoute::willTransition()`);
-      this.get('gui').deactivate('full-article');
+      this.get('gui').deactivate('article');
     }
   }
 });

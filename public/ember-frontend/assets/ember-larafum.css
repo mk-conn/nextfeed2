@@ -11,15 +11,17 @@ body.ember-application {
     grid-template-areas: "header header" "side-bar content-zone";
     background: #ccc;
     grid-template-rows: 4em 1fr;
-    grid-template-columns: 25em 1fr; }
+    grid-template-columns: 20em 1fr; }
   body.ember-application header {
     grid-area: header; }
   body.ember-application #side-bar {
     grid-area: side-bar;
-    overflow-y: scroll; }
+    overflow-y: visible;
+    overflow-x: hidden; }
   body.ember-application #content-zone {
     grid-area: content-zone;
-    overflow-y: scroll; }
+    overflow-y: visible;
+    overflow-x: hidden; }
 
 .action {
   cursor: pointer; }
@@ -5640,5 +5642,58 @@ a.text-dark:focus, a.text-dark:hover {
   #side-bar a.active {
     background: #287882;
     color: #fff; }
+
+#article {
+  min-height: 100vh;
+  max-height: 100vw;
+  /* has to be scroll, not auto */
+  overflow-y: visible;
+  overflow-x: hidden;
+  position: absolute;
+  padding: 1rem;
+  top: 0;
+  right: 0;
+  width: 0;
+  z-index: 3;
+  background: #fff;
+  transition: all .6s ease; }
+  #article .full-article {
+    background: #fff;
+    padding-bottom: 5rem; }
+  #article .article-title {
+    text-overflow: ellipsis; }
+  #article .article-embed {
+    height: 80vh; }
+    #article .article-embed iframe {
+      width: 100%;
+      height: 100%; }
+  #article.activated {
+    width: 100%; }
+
+#article-content-container {
+  min-height: 100vh;
+  max-height: 100vh;
+  /* has to be scroll, not auto */
+  overflow-y: visible;
+  overflow-x: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  z-index: 4;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.16), -1em 0 0.4em rgba(0, 0, 0, 0.16);
+  background: rgba(11, 11, 11, 0.9);
+  transition: all 0.5s ease; }
+  #article-content-container .article-full {
+    background: #fff; }
+  #article-content-container .article-title {
+    text-overflow: ellipsis; }
+  #article-content-container .article-body {
+    padding-bottom: 3rem; }
+  #article-content-container .article-embed {
+    height: 80vh; }
+    #article-content-container .article-embed iframe {
+      width: 100%;
+      height: 100%; }
 
 /*# sourceMappingURL=ember-larafum.css.map */
