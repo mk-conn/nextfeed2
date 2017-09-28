@@ -7,10 +7,17 @@ export default Component.extend({
   classNameBindings: [ 'read:read:unread' ],
 
   articleDescription: computed('article.description', function () {
-
-    let description = get(this, 'article.description');
-    description = description.replace(/<a.*?a>/gm, "");
-
+    const stripAt = 240;
+    // let description = get(this, 'article.description');
+    // description = description.replace(/<a.*?a>/gm, "");
+    let description = '';
+    try {
+      description = $(get(this, 'article.description')).text();
+      if (description.length > stripAt) {
+        description = description.slice(0, stripAt) + ' ...';
+      }
+    } catch (e) {
+    }
     return String.htmlSafe(description);
   }),
 

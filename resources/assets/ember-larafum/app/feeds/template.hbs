@@ -3,9 +3,14 @@
     {{folder-item folder=folder classNames="folder-item list-group-item"}}
   {{/each}}
 </div>
-
-<div class="list-group feed-list">
-  {{#each model.feeds as |feed|}}
-    {{feed-item feed=feed classNames="list-group-item feed-item"}}
-  {{/each}}
+<div class="folder-item">
+  <div class="folder">
+    <span class="border border-left-0 border-right-0 border-top-0">Feeds</span>
+  </div>
+  <div class="list-group feed-list">
+    {{#each model.feeds as |feed|}}
+      {{feed-item feed=feed classNames="list-group-item feed-item"}}
+    {{/each}}
+  </div>
 </div>
+

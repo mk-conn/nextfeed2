@@ -20,9 +20,9 @@ define('ember-larafum/tests/app.lint-test', [], function () {
     assert.ok(true, 'application/route.js should pass ESLint\n\n');
   });
 
-  QUnit.test('components/article-item/component.js', function (assert) {
+  QUnit.test('components/article-list-item/component.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'components/article-item/component.js should pass ESLint\n\n');
+    assert.ok(false, 'components/article-list-item/component.js should pass ESLint\n\n19:17 - Empty block statement. (no-empty)');
   });
 
   QUnit.test('components/feed-item/component.js', function (assert) {
@@ -42,7 +42,7 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('feeds/feed/articles/article/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'feeds/feed/articles/article/route.js should pass ESLint\n\n3:8 - \'Route\' is assigned a value but never used. (no-unused-vars)\n14:5 - Unexpected console statement. (no-console)\n15:5 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'feeds/feed/articles/article/route.js should pass ESLint\n\n14:5 - Unexpected console statement. (no-console)\n15:5 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('feeds/feed/articles/controller.js', function (assert) {
@@ -52,7 +52,7 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('feeds/feed/articles/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'feeds/feed/articles/route.js should pass ESLint\n\n');
+    assert.ok(false, 'feeds/feed/articles/route.js should pass ESLint\n\n4:15 - \'RSVP\' is assigned a value but never used. (no-unused-vars)\n4:21 - \'set\' is assigned a value but never used. (no-unused-vars)');
   });
 
   QUnit.test('feeds/feed/route.js', function (assert) {

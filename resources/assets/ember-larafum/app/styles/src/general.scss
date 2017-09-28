@@ -1,16 +1,23 @@
 $main-box-background-color: #003366;
 $header-bg-color: #103034;
 
+// https://coolors.co/7c6c77-ebf8b8-aaa694-d1d0a3-ffe787
+$color1: rgba(124, 108, 119, 1);
+$color2: rgba(235, 248, 184, 1);
+$color3: rgba(170, 166, 148, 1);
+$color4: rgba(209, 208, 163, 1);
+$color5: rgba(255, 231, 135, 1);
+
 @mixin overflow-scroll() {
   //overflow: auto;
   overflow-y: visible;
   overflow-x: hidden;
-  //overflow-scrolling: touch;
+  overflow-scrolling: touch;
   //-webkit-overflow-scrolling: touch;
 }
 
 body.ember-application {
-  font: 100% sans-serif;
+  //font: 100% sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -31,6 +38,7 @@ body.ember-application {
   }
 
   #side-bar {
+    background: $color1;
     grid-area: side-bar;
     @include overflow-scroll();
   }

@@ -1,15 +1,15 @@
-<hbox class="folder">
-  {{folder.name}}
+<div class="folder">
   {{#if folder.open}}
-    <hbox justify="end" class="icon">
-      <span class="action" {{action (route-action "closeFolder" folder)}}>{{fa-icon "folder-open-o"}}</span>
-    </hbox>
+    <span class="icon action" {{action (route-action "closeFolder" folder)}}>
+      {{fa-icon "folder-open-o"}}
+    </span>
   {{else}}
-    <hbox justify="end" class="icon">
-      <span class="action" {{action (route-action "openFolder" folder)}}>{{fa-icon "folder-o"}}</span>
-    </hbox>
+    <span class="icon action" {{action (route-action "openFolder" folder)}}>
+      {{fa-icon "folder-o"}}
+    </span>
   {{/if}}
-</hbox>
+  {{folder.name}}
+</div>
 
 {{#if folder.open}}
   <div class="list-group">

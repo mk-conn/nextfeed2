@@ -1,8 +1,15 @@
 import Ember from 'ember';
+import InfinityRoute from "ember-infinity/mixins/route";
 
-const {Route, RSVP} = Ember;
+const {Route, RSVP, set} = Ember;
 
-export default Route.extend({
+export default Route.extend(InfinityRoute, {
+
+  perPageParam: 'page[size]',
+
+  pageParam: 'page[number]',
+
+  totalPagesParam: 'meta.page.last-page',
 
   queryParams: {
     sort: {
@@ -23,9 +30,29 @@ export default Route.extend({
     params[ 'filter' ] = {feed: feed.id};
     params[ 'fields' ] = {articles: 'title,description,author,keep,read,url,updated-date,categories'};
 
-    return RSVP.hash({
-      articles: this.get('store').query('article', params),
-      feed: feed
-    });
+    return this.infinityModel('article', params);
+
+    // return RSVP.hash({
+    //   articles: this.get('store').query('article', params),
+    //   feed: feed
+    // });
+  },
+
+  setupController(controller, model) {
+    this._super(controller, model);
+
+    controller.set('feed', this.modelFor('feeds.feed'));
+  },
+
+  actions: {
+
+    read(article) {
+      article.set('read', true);
+      article.save();
+    },
+
+    readAll() {
+
+    }
   }
 });

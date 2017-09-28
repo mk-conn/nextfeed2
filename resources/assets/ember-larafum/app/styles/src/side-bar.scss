@@ -1,21 +1,30 @@
 #side-bar {
+
+  $list-group-bg: #555;
+  $list-group-action-color: #ccc;
+
+  background: $list-group-bg;
+
   .list-group {
     width: 100%;
     padding: 0;
     margin: 0;
+    background: inherit;
   }
 
   .list-group-item {
     padding: 0;
-    border-right: none;
-    border-left: none;
+    border: none;
+    background: inherit;
   }
 
   .folder-item {
-    padding: 1rem;
     font-weight: bold;
-    color: #2d4373;
-    background: lighten(#eee, 10%);
+
+    .folder {
+      color: #eee;
+      padding: 1em;
+    }
 
     .feed-item {
       background: inherit;
@@ -25,7 +34,10 @@
   .feed-icon {
     margin-right: 1rem;
     width: 16px;
+    //background: #333;
+    padding-left: 1em;
     max-width: 16px;
+
     img {
       width: inherit;
       max-width: inherit;
@@ -40,16 +52,17 @@
     display: inline-block;
     text-decoration: none;
     width: 100%;
-    padding: 1rem;
-    color: #2d4373;
+    padding: 1em 1em 1em 0;
+    color: $list-group-action-color;
     font-weight: bold;
 
     &:hover {
-      background: #ccc;
+      background: lighten($color1, 5%);
+      color: #999;
     }
 
     &.active {
-      background: lighten($header-bg-color, 20%);
+      background: lighten($color1, 10%);
       color: #fff;
     }
   }

@@ -1,0 +1,33 @@
+<div class="d-flex w-100 justify-content-between">
+  <h5 class="article-title mb-1">{{article.title}}</h5>
+  <small>{{moment-format article.updatedDate 'LLL'}}</small>
+</div>
+<p>{{articleDescription}}</p>
+<div class="actions">
+  {{#link-to "feeds.feed.articles.article" article.id classNames="btn btn-outline-secondary"}}
+    {{fa-icon "expand"}}
+  {{/link-to}}
+  <a class="btn btn-outline-secondary" href={{article.url}} target="_blank" {{action "originalArticle"
+                                                                                     preventDefault=false}}
+     data-content="Open article in new tab">
+    {{fa-icon "external-link"}}
+  </a>
+  <a class="btn btn-outline-secondary"
+     href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}%0A%0A{{article.url}}">
+    {{fa-icon "share"}}
+  </a>
+  <a class="btn btn-outline-secondary" data-content="{{readUnreadHint}}" {{action "toggleUnread"}}>
+    {{#if article.read}}
+      {{fa-icon "check-circle-o"}}
+    {{else}}
+      {{fa-icon "circle-o"}}
+    {{/if}}
+  </a>
+  <a class="btn btn-outline-secondary" {{action "toggleStarred"}} data-content={{starHint}}>
+    {{#if article.keep}}
+      {{fa-icon "star"}}
+    {{else}}
+      {{fa-icon "star-o"}}
+    {{/if}}
+  </a>
+</div>

@@ -1,5 +1,4 @@
 body.ember-application {
-  font: 100% sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -15,13 +14,16 @@ body.ember-application {
   body.ember-application header {
     grid-area: header; }
   body.ember-application #side-bar {
+    background: #7c6c77;
     grid-area: side-bar;
     overflow-y: visible;
-    overflow-x: hidden; }
+    overflow-x: hidden;
+    overflow-scrolling: touch; }
   body.ember-application #content-zone {
     grid-area: content-zone;
     overflow-y: visible;
-    overflow-x: hidden; }
+    overflow-x: hidden;
+    overflow-scrolling: touch; }
 
 .action {
   cursor: pointer; }
@@ -5601,47 +5603,47 @@ a.text-dark:focus, a.text-dark:hover {
   padding: 5rem;
   background: #fff; }
 
-#side-bar .list-group {
-  width: 100%;
-  padding: 0;
-  margin: 0; }
-
-#side-bar .list-group-item {
-  padding: 0;
-  border-right: none;
-  border-left: none; }
-
-#side-bar .folder-item {
-  padding: 1rem;
-  font-weight: bold;
-  color: #2d4373;
-  background: white; }
-  #side-bar .folder-item .feed-item {
+#side-bar {
+  background: #555; }
+  #side-bar .list-group {
+    width: 100%;
+    padding: 0;
+    margin: 0;
     background: inherit; }
-
-#side-bar .feed-icon {
-  margin-right: 1rem;
-  width: 16px;
-  max-width: 16px; }
-  #side-bar .feed-icon img {
-    width: inherit;
-    max-width: inherit; }
-
-#side-bar .icon {
-  padding-right: 1rem; }
-
-#side-bar a {
-  display: inline-block;
-  text-decoration: none;
-  width: 100%;
-  padding: 1rem;
-  color: #2d4373;
-  font-weight: bold; }
-  #side-bar a:hover {
-    background: #ccc; }
-  #side-bar a.active {
-    background: #287882;
-    color: #fff; }
+  #side-bar .list-group-item {
+    padding: 0;
+    border: none;
+    background: inherit; }
+  #side-bar .folder-item {
+    font-weight: bold; }
+    #side-bar .folder-item .folder {
+      color: #eee;
+      padding: 1em; }
+    #side-bar .folder-item .feed-item {
+      background: inherit; }
+  #side-bar .feed-icon {
+    margin-right: 1rem;
+    width: 16px;
+    padding-left: 1em;
+    max-width: 16px; }
+    #side-bar .feed-icon img {
+      width: inherit;
+      max-width: inherit; }
+  #side-bar .icon {
+    padding-right: 1rem; }
+  #side-bar a {
+    display: inline-block;
+    text-decoration: none;
+    width: 100%;
+    padding: 1em 1em 1em 0;
+    color: #ccc;
+    font-weight: bold; }
+    #side-bar a:hover {
+      background: #897884;
+      color: #999; }
+    #side-bar a.active {
+      background: #958690;
+      color: #fff; }
 
 #article {
   min-height: 100vh;
@@ -5649,8 +5651,10 @@ a.text-dark:focus, a.text-dark:hover {
   /* has to be scroll, not auto */
   overflow-y: visible;
   overflow-x: hidden;
+  overflow-scrolling: touch;
   position: absolute;
   padding: 1rem;
+  display: none;
   top: 0;
   right: 0;
   width: 0;
@@ -5668,7 +5672,8 @@ a.text-dark:focus, a.text-dark:hover {
       width: 100%;
       height: 100%; }
   #article.activated {
-    width: 100%; }
+    width: 100%;
+    display: block; }
 
 #article-content-container {
   min-height: 100vh;
@@ -5676,6 +5681,7 @@ a.text-dark:focus, a.text-dark:hover {
   /* has to be scroll, not auto */
   overflow-y: visible;
   overflow-x: hidden;
+  overflow-scrolling: touch;
   position: absolute;
   top: 0;
   right: 0;
