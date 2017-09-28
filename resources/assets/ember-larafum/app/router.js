@@ -13,7 +13,7 @@ Router.map(function () {
   this.route('feeds', {path: '/feeds'}, function () {
     this.route('feed', {path: '/:feed_id'}, function () {
       this.route('articles', function () {
-        this.route('article', {path: '/:article_id'}, function() {});
+        this.route('article', {path: '/:article_id'});
       });
     });
   });

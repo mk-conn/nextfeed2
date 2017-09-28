@@ -12,4 +12,5 @@ export default Model.extend({
   publishDate: attr('date'),
   updatedDate: attr('date'),
   feed: belongsTo('feed'),
+  url: attr('string')
 });

@@ -1,16 +1,6 @@
-#article {
-  //min-height: 100vh;
-  //max-height: 100vw;
-  /* has to be scroll, not auto */
-  @include overflow-scroll();
-  position: absolute;
-  padding: 1rem;
-  display:none;
-  top: 0;
-  right: 0;
-  width: 0;
-  z-index: 3;
-  //background: rgba(11, 11, 11, .75);
+.full-article {
+  width:inherit;
+  color:#333;
   background: #fff;
   transition: all .6s ease;
 
@@ -23,55 +13,6 @@
     text-overflow: ellipsis;
   }
 
-  .article-embed {
-    height: 80vh;
-
-    iframe {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  &.activated {
-    width:100%;
-    display:block;
-  }
-
 }
 
 
-#article-content-container {
-  min-height: 100vh;
-  max-height: 100vh;
-  /* has to be scroll, not auto */
-  @include overflow-scroll();
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  z-index: 4;
-  box-shadow: 3px 3px rgba(0, 0, 0, .16), -1em 0 0.4em rgba(0, 0, 0, .16);
-  background: rgba(11, 11, 11, .9);
-  transition: all 0.5s ease;
-
-  .article-full {
-    background: #fff;
-  }
-
-  .article-title {
-    text-overflow: ellipsis;
-  }
-
-  .article-body {
-    padding-bottom: 3rem;
-  }
-
-  .article-embed {
-    height: 80vh;
-
-    iframe {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}

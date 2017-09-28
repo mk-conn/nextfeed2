@@ -37,12 +37,7 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('components/full-article/component.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/full-article/component.js should pass ESLint\n\n21:7 - Unexpected console statement. (no-console)');
-  });
-
-  QUnit.test('feeds/feed/articles/article/index/route.js', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'feeds/feed/articles/article/index/route.js should pass ESLint\n\n');
+    assert.ok(true, 'components/full-article/component.js should pass ESLint\n\n');
   });
 
   QUnit.test('feeds/feed/articles/article/route.js', function (assert) {
@@ -461,11 +456,6 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/application/route-test.js should pass ESLint\n\n');
   });
 
-  QUnit.test('unit/feeds/feed/articles/article/index/route-test.js', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/feeds/feed/articles/article/index/route-test.js should pass ESLint\n\n');
-  });
-
   QUnit.test('unit/feeds/feed/articles/article/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/feeds/feed/articles/article/route-test.js should pass ESLint\n\n');
@@ -579,19 +569,6 @@ define('ember-larafum/tests/unit/application/route-test', ['ember-qunit'], funct
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:application', 'Unit | Route | application', {
-    // Specify the other units that are required for this test.
-    // needs: ['controller:foo']
-  });
-
-  (0, _emberQunit.test)('it exists', function (assert) {
-    var route = this.subject();
-    assert.ok(route);
-  });
-});
-define('ember-larafum/tests/unit/feeds/feed/articles/article/index/route-test', ['ember-qunit'], function (_emberQunit) {
-  'use strict';
-
-  (0, _emberQunit.moduleFor)('route:feeds/feed/articles/article/index', 'Unit | Route | feeds/feed/articles/article/index', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });

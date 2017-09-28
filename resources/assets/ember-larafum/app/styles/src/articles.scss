@@ -1,3 +1,23 @@
+.article-placeholder {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.article-placeholder:before {
+  position: fixed;
+  left:0;
+  top:0;
+  content: "";
+  background-image: url("/ember-frontend/img/feed-icon.png");
+  background-repeat: no-repeat;
+  background-size: 50%;
+  filter: opacity(20%);
+}
+
 .articles {
   height: 100vh;
   max-height: 100%;

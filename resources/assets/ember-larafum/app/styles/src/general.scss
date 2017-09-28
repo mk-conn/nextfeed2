@@ -63,6 +63,11 @@ body.ember-application {
     background: lighten($color4, 25%);
     grid-area: column-two;
     @include overflow-scroll();
+
+    .article-placeholder {
+      align-self: center;
+      //background: url('/ember-frontend/img/feed-icon.png') no-repeat cover;
+    }
   }
 }
 
