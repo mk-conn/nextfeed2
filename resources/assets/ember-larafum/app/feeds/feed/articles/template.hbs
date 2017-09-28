@@ -1,7 +1,11 @@
 <div class="articles">
   <div class="feed-header" id="articles-header">
-    <h4>
+    <h4 class="d-flex justify-content-between">
       <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
+      <div>
+        <span title="Unread" class="badge badge-secondary">{{feed.meta.articles-unread-count}}</span> /
+        <span title="Total" class="badge badge-dark">{{feed.meta.articles-count}}</span>
+      </div>
     </h4>
     <p class="card-text">{{feed.description}}</p>
 

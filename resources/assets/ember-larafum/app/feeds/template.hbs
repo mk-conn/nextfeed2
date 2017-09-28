@@ -1,4 +1,10 @@
-Folders
+<div class="folder-item">
+  <div class="folder">
+    <span class="text-muted">
+      Folders
+    </span>
+  </div>
+</div>
 <div class="list-group folder-list">
   {{#each model.folders as |folder|}}
     {{folder-item folder=folder classNames="folder-item list-group-item"}}
@@ -6,7 +12,9 @@ Folders
 </div>
 <div class="folder-item">
   <div class="folder">
-    <span class="border border-left-0 border-right-0 border-top-0">Feeds</span>
+    <span class="text-muted">
+      Feeds
+    </span>
   </div>
   <div class="list-group feed-list">
     {{#each model.feeds as |feed|}}
