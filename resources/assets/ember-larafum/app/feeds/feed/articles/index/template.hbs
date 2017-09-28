@@ -1,4 +1,8 @@
 <div class="article-placeholder">
-  <img src="/ember-frontend/img/feed-icon.png" class="img-fluid" alt="">
+  {{#if feed.logo}}
+    <img src="{{feed.logo}}" alt="">
+  {{else}}
+    <img src="/ember-frontend/img/feed-icon.png" class="img-fluid" alt="">
+  {{/if}}
   <span class="text-muted">Select an article on the left to start reading.</span>
 </div>

@@ -6,8 +6,8 @@
   align-items: center;
 
   img {
-    width:10%;
-    filter:opacity(20%);
+    max-width:50%;
+    filter:opacity(50%);
   }
 
 }
@@ -23,7 +23,7 @@
 
   #article-list-items {
     @include overflow-scroll();
-    height:inherit;
+    height: inherit;
     max-height: inherit;
     .article-list-item {
       padding: .5rem;
@@ -31,16 +31,16 @@
       font-size: .8rem;
 
       &.unread {
-        color:inherit;
+        color: inherit;
       }
 
       &.read {
-        color:$color2;
+        color: $color2;
       }
 
       .article-title {
         font-size: .9rem;
-        font-weight:bold;
+        font-weight: bold;
       }
 
       .actions {
@@ -49,18 +49,10 @@
     }
 
   }
-
-  #articles-header {
-    grid-area: articles-header;
-    padding: .5rem;
-
-    > img {
-      max-height: 5em;
-      margin-left: -.5rem;
-      margin-top: -.5rem;
-    }
-
-  }
-
 }
 
+#articles-header {
+  padding: .5rem;
+  background: lighten($color1, 45%);
+  color:#333;
+}

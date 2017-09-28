@@ -7,5 +7,12 @@ export default Ember.Route.extend({
       into: 'application',
       outlet: 'column-two'
     })
+  },
+
+  setupController(controller, model) {
+    this._super(controller, model);
+
+    controller.set('feed', this.modelFor('feeds.feed'));
   }
+
 });

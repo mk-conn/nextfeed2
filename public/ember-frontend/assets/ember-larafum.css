@@ -5693,8 +5693,8 @@ header {
   justify-content: center;
   align-items: center; }
   .article-placeholder img {
-    width: 10%;
-    filter: opacity(20%); }
+    max-width: 50%;
+    filter: opacity(50%); }
 
 .articles {
   height: inherit;
@@ -5722,13 +5722,11 @@ header {
         font-weight: bold; }
       .articles #article-list-items .article-list-item .actions {
         color: #18304e; }
-  .articles #articles-header {
-    grid-area: articles-header;
-    padding: .5rem; }
-    .articles #articles-header > img {
-      max-height: 5em;
-      margin-left: -.5rem;
-      margin-top: -.5rem; }
+
+#articles-header {
+  padding: .5rem;
+  background: #77a1d5;
+  color: #333; }
 
 .full-article {
   width: inherit;

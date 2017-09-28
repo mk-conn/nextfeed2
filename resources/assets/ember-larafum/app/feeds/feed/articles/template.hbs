@@ -1,13 +1,8 @@
 <div class="articles">
-
   <div class="feed-header" id="articles-header">
-    {{#if feed.logo}}
-      <img class="img-fluid" src="{{feed.logo}}" alt="Feed Logo">
-    {{else}}
-      <h4 class="card-title align-self-end">
-        <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
-      </h4>
-    {{/if}}
+    <h4>
+      <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
+    </h4>
     <p class="card-text">{{feed.description}}</p>
   </div>
 
@@ -16,7 +11,7 @@
       {{article-list-item article=article feed=model.feed classNames="article-list-item"}}
     {{/each}}
   </div>
-    {{infinity-loader infinityModel=model loadingText="Loading..." scrollable='#article-list-items'}}
+  {{infinity-loader infinityModel=model loadingText="Loading..." scrollable='#article-list-items'}}
 </div>
 
 
