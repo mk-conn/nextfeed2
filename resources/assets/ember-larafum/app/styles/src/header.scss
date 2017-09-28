@@ -1,36 +1,15 @@
-$header-font-color: #fff;
-$header-bg-color: #1e77ba;
-//
-//.header {
-//  height: $header-height;
-//  background: $header-bg-color;
-//  color: $header-font-color;
-//
-//  .top.nav.item {
-//    height: 100%;
-//    min-height: 100%;
-//
-//    a, span {
-//      color: inherit;
-//      padding: 1.5rem;
-//      text-decoration: none;
-//      display: block;
-//      height: 100%;
-//      min-height: 100%;
-//
-//      &:hover:not(span) {
-//        color: darken($header-font-color, 20%);
-//        background: darken($header-bg-color, 10%);
-//      }
-//
-//      &.active {
-//        background: darken($header-bg-color, 20%);
-//      }
-//    }
-//    &:last-child {
-//      //margin-right:1.5rem;
-//    }
-//  }
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-//}
+  &:first-child {
+    padding-left:1rem;
+  }
 
+  &:last-child {
+    padding-right:1rem;
+  }
+
+}

@@ -9,15 +9,12 @@
 namespace App\Http\Controllers;
 
 
-class FeedsController extends Controller
+/**
+ * Class OriginalArticleController
+ *
+ * @package App\Http\Controllers
+ */
+class OriginalArticleController extends Controller
 {
-    public function refreshAll()
-    {
 
-    }
-
-    public function refresh($feedId)
-    {
-
-    }
 }

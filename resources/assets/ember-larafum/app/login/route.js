@@ -7,7 +7,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
 renderTemplate() {
   this.render('login', {
     into: 'application',
-    outlet: 'content'
+    outlet: 'main'
   })
 }
 

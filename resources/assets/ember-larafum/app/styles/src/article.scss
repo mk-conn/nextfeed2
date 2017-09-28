@@ -1,6 +1,6 @@
 #article {
-  min-height: 100vh;
-  max-height: 100vw;
+  //min-height: 100vh;
+  //max-height: 100vw;
   /* has to be scroll, not auto */
   @include overflow-scroll();
   position: absolute;

@@ -1,23 +1,22 @@
-<div class="card">
-  <div class="card-body">
-    <div class="d-flex justify-content-between">
-      {{#if feed.logo}}
-        <img class="img-fluid" src="{{feed.logo}}" alt="Feed Logo">
-      {{/if}}
+<div class="articles">
+
+  <div class="feed-header" id="articles-header">
+    {{#if feed.logo}}
+      <img class="img-fluid" src="{{feed.logo}}" alt="Feed Logo">
+    {{else}}
       <h4 class="card-title align-self-end">
         <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
       </h4>
-    </div>
-    <h6 class="card-subtitle mb-2 text-muted"></h6>
+    {{/if}}
     <p class="card-text">{{feed.description}}</p>
   </div>
 
-  <ul class="list-group article-items" id="article-list-items">
+  <div id="article-list-items">
     {{#each model as |article|}}
-      {{article-list-item article=article feed=model.feed classNames="list-group-item article-item"}}
+      {{article-list-item article=article feed=model.feed classNames="article-list-item"}}
     {{/each}}
-  </ul>
+  </div>
 </div>
 
-{{infinity-loader infinityModel=model loadingText="Loading..." scrollable='#content-zone'}}
+{{infinity-loader infinityModel=model loadingText="Loading..." scrollable='#article-list-items'}}
 

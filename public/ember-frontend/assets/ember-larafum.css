@@ -1,4 +1,5 @@
 body.ember-application {
+  font: 100% sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -7,11 +8,13 @@ body.ember-application {
     width: inherit;
     height: inherit;
     display: grid;
-    grid-template-areas: "header header" "side-bar content-zone";
+    grid-template-areas: "header header header" "side-bar column-one column-two";
     background: #ccc;
     grid-template-rows: 4em 1fr;
-    grid-template-columns: 20em 1fr; }
+    grid-template-columns: 16em 25em 1fr; }
   body.ember-application header {
+    height: 4em;
+    background: #534850;
     grid-area: header; }
   body.ember-application #side-bar {
     background: #7c6c77;
@@ -19,11 +22,32 @@ body.ember-application {
     overflow-y: visible;
     overflow-x: hidden;
     overflow-scrolling: touch; }
-  body.ember-application #content-zone {
-    grid-area: content-zone;
+  body.ember-application #column-one {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #fffffe;
+    grid-area: column-one;
     overflow-y: visible;
     overflow-x: hidden;
     overflow-scrolling: touch; }
+  body.ember-application #column-two {
+    display: flex;
+    flex-direction: column;
+    padding: .5em;
+    background: #fcfbf8;
+    grid-area: column-two;
+    overflow-y: visible;
+    overflow-x: hidden;
+    overflow-scrolling: touch; }
+
+blockquote {
+  padding-top: .5rem;
+  padding-left: .5rem;
+  border-left: .2rem solid #ccc; }
+
+.justify-self-center {
+  align-self: center !important; }
 
 .action {
   cursor: pointer; }
@@ -354,22 +378,22 @@ h1, h2, h3, h4, h5, h6,
   color: inherit; }
 
 h1, .h1 {
-  font-size: 2.5rem; }
+  font-size: 1.4rem; }
 
 h2, .h2 {
-  font-size: 2rem; }
+  font-size: 1.35rem; }
 
 h3, .h3 {
-  font-size: 1.75rem; }
+  font-size: 1.3rem; }
 
 h4, .h4 {
-  font-size: 1.5rem; }
+  font-size: 1.3rem; }
 
 h5, .h5 {
-  font-size: 1.25rem; }
+  font-size: 1.2rem; }
 
 h6, .h6 {
-  font-size: 1rem; }
+  font-size: 1.1rem; }
 
 .lead {
   font-size: 1.25rem;
@@ -5603,6 +5627,16 @@ a.text-dark:focus, a.text-dark:hover {
   padding: 5rem;
   background: #fff; }
 
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; }
+  header:first-child {
+    padding-left: 1rem; }
+  header:last-child {
+    padding-right: 1rem; }
+
 #side-bar {
   background: #555; }
   #side-bar .list-group {
@@ -5645,9 +5679,33 @@ a.text-dark:focus, a.text-dark:hover {
       background: #958690;
       color: #fff; }
 
+.articles {
+  height: 100vh;
+  max-height: 100%;
+  display: flex;
+  justify-self: flex-start !important;
+  flex-direction: column;
+  margin-bottom: -6rem;
+  padding-bottom: 6rem; }
+  .articles #article-list-items {
+    overflow-y: visible;
+    overflow-x: hidden;
+    overflow-scrolling: touch; }
+    .articles #article-list-items .article-list-item {
+      padding: .5rem;
+      border-top: 1px solid #ccc;
+      font-size: .8rem; }
+      .articles #article-list-items .article-list-item .article-title {
+        font-size: .9rem; }
+  .articles #articles-header {
+    grid-area: articles-header;
+    padding: .5rem; }
+    .articles #articles-header > img {
+      max-height: 5em;
+      margin-left: -.5rem;
+      margin-top: -.5rem; }
+
 #article {
-  min-height: 100vh;
-  max-height: 100vw;
   /* has to be scroll, not auto */
   overflow-y: visible;
   overflow-x: hidden;

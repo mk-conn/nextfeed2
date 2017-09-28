@@ -1,46 +1,41 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="top nav left">
     <a class="navbar-brand" href="/">Nextfeed</a>
-    <ul class="navbar-nav mr-auto">
-      {{#link-to "feeds" tagName="li" classNames="nav-item" activeClass="active"}}
-        <a class="nav-link" href="#">Feeds</a>{{/link-to}}
-    </ul>
+
+    {{#link-to "feeds" tagName="div" classNames="action" activeClass="active"}}
+      <a class="nav-link" href="#">Feeds</a>
+    {{/link-to}}
 
     {{outlet "top-bar-left"}}
+  </div>
 
+  <div class="top nav right">
+    <a class="nav-link" href="#" {{action (route-action "updateAllFeeds")}}>
+      {{fa-icon "refresh"}}
+    </a>
+    {{#link-to "settings" tagName="li" classNames="nav-item"}}
+      <a class="nav-link" href="#">{{fa-icon "cogs"}}</a>
+    {{/link-to}}
+    <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
+      {{fa-icon "sign-out"}}
+    </a>
     {{outlet "top-bar-right"}}
+  </div>
 
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#" {{action (route-action "updateAllFeeds")}}>
-          {{fa-icon "refresh"}}
-        </a>
-      </li>
-      {{#link-to "settings" tagName="li" classNames="nav-item"}}
-        <a class="nav-link" href="#">{{fa-icon "cogs"}}</a>
-      {{/link-to}}
-      <li class="nav-item">
-        <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
-          {{fa-icon "sign-out"}}
-        </a>
-      </li>
-    </ul>
-  </nav>
 </header>
+
+<div id="content">
+  {{outlet}}
+</div>
 
 <div id="side-bar">
   {{outlet "side-bar"}}
 </div>
 
-<div id="content-zone">
-  {{outlet "content"}}
+<div id="column-one">
+  {{outlet "column-one"}}
 </div>
 
-<div id="article">
-  {{outlet "article"}}
+<div id="column-two">
+  {{outlet "column-two"}}
 </div>

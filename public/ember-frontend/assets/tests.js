@@ -37,17 +37,27 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('components/full-article/component.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/full-article/component.js should pass ESLint\n\n10:5 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'components/full-article/component.js should pass ESLint\n\n21:7 - Unexpected console statement. (no-console)');
+  });
+
+  QUnit.test('feeds/feed/articles/article/index/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'feeds/feed/articles/article/index/route.js should pass ESLint\n\n');
   });
 
   QUnit.test('feeds/feed/articles/article/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'feeds/feed/articles/article/route.js should pass ESLint\n\n14:5 - Unexpected console statement. (no-console)\n15:5 - Unexpected console statement. (no-console)');
+    assert.ok(true, 'feeds/feed/articles/article/route.js should pass ESLint\n\n');
   });
 
   QUnit.test('feeds/feed/articles/controller.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'feeds/feed/articles/controller.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('feeds/feed/articles/index/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'feeds/feed/articles/index/route.js should pass ESLint\n\n');
   });
 
   QUnit.test('feeds/feed/articles/route.js', function (assert) {
@@ -58,6 +68,11 @@ define('ember-larafum/tests/app.lint-test', [], function () {
   QUnit.test('feeds/feed/route.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'feeds/feed/route.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('feeds/index/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'feeds/index/route.js should pass ESLint\n\n');
   });
 
   QUnit.test('feeds/route.js', function (assert) {
@@ -446,6 +461,11 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/application/route-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/feeds/feed/articles/article/index/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/feeds/feed/articles/article/index/route-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/feeds/feed/articles/article/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/feeds/feed/articles/article/route-test.js should pass ESLint\n\n');
@@ -456,6 +476,11 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/feeds/feed/articles/controller-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/feeds/feed/articles/index/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/feeds/feed/articles/index/route-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/feeds/feed/articles/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/feeds/feed/articles/route-test.js should pass ESLint\n\n');
@@ -464,6 +489,11 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
   QUnit.test('unit/feeds/feed/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/feeds/feed/route-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/feeds/index/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/feeds/index/route-test.js should pass ESLint\n\n');
   });
 
   QUnit.test('unit/feeds/route-test.js', function (assert) {
@@ -558,6 +588,19 @@ define('ember-larafum/tests/unit/application/route-test', ['ember-qunit'], funct
     assert.ok(route);
   });
 });
+define('ember-larafum/tests/unit/feeds/feed/articles/article/index/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:feeds/feed/articles/article/index', 'Unit | Route | feeds/feed/articles/article/index', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
 define('ember-larafum/tests/unit/feeds/feed/articles/article/route-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
@@ -585,6 +628,19 @@ define('ember-larafum/tests/unit/feeds/feed/articles/controller-test', ['ember-q
     assert.ok(controller);
   });
 });
+define('ember-larafum/tests/unit/feeds/feed/articles/index/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:feeds/feed/articles/index', 'Unit | Route | feeds/feed/articles/index', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
 define('ember-larafum/tests/unit/feeds/feed/articles/route-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
@@ -602,6 +658,19 @@ define('ember-larafum/tests/unit/feeds/feed/route-test', ['ember-qunit'], functi
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:feeds/feed', 'Unit | Route | feeds/feed', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('ember-larafum/tests/unit/feeds/index/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:feeds/index', 'Unit | Route | feeds/index', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });

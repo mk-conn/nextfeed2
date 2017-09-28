@@ -1,6 +1,8 @@
 $main-box-background-color: #003366;
 $header-bg-color: #103034;
 
+$header-height: 4em;
+
 // https://coolors.co/7c6c77-ebf8b8-aaa694-d1d0a3-ffe787
 $color1: rgba(124, 108, 119, 1);
 $color2: rgba(235, 248, 184, 1);
@@ -17,7 +19,7 @@ $color5: rgba(255, 231, 135, 1);
 }
 
 body.ember-application {
-  //font: 100% sans-serif;
+  font: 100% sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -27,13 +29,15 @@ body.ember-application {
     width: inherit;
     height: inherit;
     display: grid;
-    grid-template-areas: "header header" "side-bar content-zone";
+    grid-template-areas: "header header header" "side-bar column-one column-two";
     background: #ccc;
-    grid-template-rows: 4em 1fr;
-    grid-template-columns: 20em 1fr;
+    grid-template-rows: $header-height 1fr;
+    grid-template-columns: 16em 25em 1fr;
   }
 
   header {
+    height: $header-height;
+    background: darken($color1, 15%);
     grid-area: header;
   }
 
@@ -43,14 +47,33 @@ body.ember-application {
     @include overflow-scroll();
   }
 
-  #content-zone {
-    grid-area: content-zone;
+  #column-one {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: lighten($color2, 15%);
+    grid-area: column-one;
     @include overflow-scroll();
   }
 
-  #article {
-
+  #column-two {
+    display: flex;
+    flex-direction: column;
+    padding: .5em;
+    background: lighten($color4, 25%);
+    grid-area: column-two;
+    @include overflow-scroll();
   }
+}
+
+blockquote {
+  padding-top:.5rem;
+  padding-left: .5rem;
+  border-left: .2rem solid #ccc;
+}
+
+.justify-self-center {
+  align-self: center !important;
 }
 
 .action {
