@@ -5713,6 +5713,8 @@ header {
       padding: .5rem;
       border-top: 1px solid #18304e;
       font-size: .8rem; }
+      .articles #article-list-items .article-list-item:first-child {
+        border-top: none; }
       .articles #article-list-items .article-list-item.unread {
         color: inherit; }
       .articles #article-list-items .article-list-item.read {
