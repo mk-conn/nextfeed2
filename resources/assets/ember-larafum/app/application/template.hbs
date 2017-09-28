@@ -28,14 +28,14 @@
   {{outlet}}
 </div>
 
-<div id="side-bar">
+{{#side-bar id="side-bar"}}
   {{outlet "side-bar"}}
-</div>
+{{/side-bar}}
 
-<div id="column-one">
+{{#grid-column id="column-one"}}
   {{outlet "column-one"}}
-</div>
+{{/grid-column}}
 
-<div id="column-two">
+{{#scrollable-container id="column-two"}}
   {{outlet "column-two"}}
-</div>
+{{/scrollable-container}}

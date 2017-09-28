@@ -1,5 +1,4 @@
-{{#link-to onCloseRoute
-}}
+{{#link-to onCloseRoute}}
   <i class="fa fa-close"></i>
 {{/link-to}}
 
@@ -7,16 +6,14 @@
   {{article.title}}
 </h3>
 
-<div class="article-content">
+<div id="article-content">
   {{content}}
 </div>
 
-<div class="ui divider"></div>
 <a class="btn btn-outline-secondary" href="{{article.url}}" target="_blank" {{action (route-action "originalArticle")
-                                                                            preventDefault=false}}
+                                                                                     preventDefault=false}}
    data-content="Open article in new tab">
   <i class="external icon"></i>
   Open Original Article
 </a>
 
-<div class="ui divider"></div>

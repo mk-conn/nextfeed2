@@ -17,6 +17,7 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 Route::group(['prefix' => 'api'], function () {
     Route::get('auth-user', 'AuthenticateController@getAuthUser');
     Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::post('token-refresh', 'AuthenticateController@tokenRefresh');
     Route::get('article/scrape', 'ArticleController@scrapeContent')
          ->middleware('jwt.auth');
     Route::get('feeds/refresh/{id}?', 'FeedsController@refresh')

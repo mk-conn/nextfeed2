@@ -6,6 +6,11 @@ namespace App\JsonApi\Feeds;
 use App\Models\Feed;
 use CloudCreativity\LaravelJsonApi\Schema\EloquentSchema;
 
+/**
+ * Class Schema
+ *
+ * @package App\JsonApi\Feeds
+ */
 class Schema extends EloquentSchema
 {
 
@@ -79,14 +84,23 @@ class Schema extends EloquentSchema
     public function getPrimaryMeta($resource)
     {
         return [
-            'articles-count' => count($resource->articles)
+            'articles-count'        => $resource->articles->count(),
+            'articles-unread-count' => $resource->articles->where('read', false)
+                                                          ->count()
         ];
     }
 
+    /**
+     * @param object $resource
+     *
+     * @return array
+     */
     public function getInclusionMeta($resource)
     {
         return [
-            'articles-count' => count($resource->articles)
+            'articles-count'        => $resource->articles->count(),
+            'articles-unread-count' => $resource->articles->where('read', false)
+                                                          ->count()
         ];
     }
 }

@@ -1,18 +1,12 @@
 .full-article {
-  width:inherit;
-  color:inherit;
-  //background: #fff;
+  width: inherit;
+  color: inherit;
+  padding: .25rem .25rem 3rem .25rem;
   transition: all .6s ease;
-
-  .full-article {
-    //background: #fff;
-    padding-bottom: 5rem;
-  }
 
   .article-title {
     text-overflow: ellipsis;
   }
 
 }
-
 

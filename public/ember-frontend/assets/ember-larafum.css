@@ -12,17 +12,18 @@ body.ember-application {
     grid-template-areas: "header header header" "side-bar column-one column-two";
     background: #ccc;
     grid-template-rows: 4em 1fr;
-    grid-template-columns: 16em .35fr .65fr; }
+    grid-template-columns: 16em .4fr .6fr; }
   body.ember-application header {
     height: 4em;
     background: #12243b;
     grid-area: header; }
   body.ember-application #side-bar {
+    position: relative;
+    max-height: inherit;
     background: #18304e;
     grid-area: side-bar;
     overflow-y: visible;
-    overflow-x: hidden;
-    overflow-scrolling: touch; }
+    overflow-x: hidden; }
   body.ember-application #column-one {
     display: flex;
     flex-direction: column;
@@ -31,17 +32,17 @@ body.ember-application {
     background: #f5f6f4;
     grid-area: column-one;
     overflow-y: visible;
-    overflow-x: hidden;
-    overflow-scrolling: touch; }
+    overflow-x: hidden; }
   body.ember-application #column-two {
+    max-height: inherit;
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: .5em;
     background: #f5f6f4;
     grid-area: column-two;
     overflow-y: visible;
-    overflow-x: hidden;
-    overflow-scrolling: touch; }
+    overflow-x: hidden; }
     body.ember-application #column-two .article-placeholder {
       align-self: center; }
 
@@ -55,6 +56,9 @@ blockquote {
 
 .action {
   cursor: pointer; }
+
+.infinity-loader div:first-child {
+  padding: 1rem; }
 
 /*!
  * Bootstrap v4.0.0-beta (https://getbootstrap.com)
@@ -5704,9 +5708,9 @@ header {
   flex-direction: column;
   margin-bottom: -4em; }
   .articles #article-list-items {
+    position: relative;
     overflow-y: visible;
     overflow-x: hidden;
-    overflow-scrolling: touch;
     height: inherit;
     max-height: inherit; }
     .articles #article-list-items .article-list-item {
@@ -5733,9 +5737,8 @@ header {
 .full-article {
   width: inherit;
   color: inherit;
+  padding: .25rem .25rem 3rem .25rem;
   transition: all .6s ease; }
-  .full-article .full-article {
-    padding-bottom: 5rem; }
   .full-article .article-title {
     text-overflow: ellipsis; }
 

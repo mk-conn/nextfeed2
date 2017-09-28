@@ -68,13 +68,13 @@ class DatabaseCleaner extends Command
         }
 
         $feeds->each(function (Feed $feed) use ($maxUpatedDate) {
-            $this->info('<info>Cleaning ' . $feed->name . '</info>');
+            $this->info('Cleaning ' . $feed->name);
             $count = Article::where('updated_at', '<', $maxUpatedDate)
                             ->where('feed_id', $feed->id)
                             ->where('read', true)
                             ->where('keep', false)
                             ->delete();
-            $this->info('<success>Cleaned ' . $count . '</success>');
+            $this->output->writeln('<comment>Cleaned ' . $count . '</comment>');
         });
     }
 }

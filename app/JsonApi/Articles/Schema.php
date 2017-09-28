@@ -6,6 +6,11 @@ namespace App\JsonApi\Articles;
 use App\Models\Article;
 use CloudCreativity\LaravelJsonApi\Schema\EloquentSchema;
 
+/**
+ * Class Schema
+ *
+ * @package App\JsonApi\Articles
+ */
 class Schema extends EloquentSchema
 {
 

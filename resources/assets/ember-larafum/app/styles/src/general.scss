@@ -13,7 +13,7 @@ $color1-light: lighten($color1, 20%);
   //overflow: auto;
   overflow-y: visible;
   overflow-x: hidden;
-  overflow-scrolling: touch;
+  //overflow-scrolling: touch;
   //-webkit-overflow-scrolling: touch;
 }
 
@@ -32,7 +32,7 @@ body.ember-application {
     grid-template-areas: "header header header" "side-bar column-one column-two";
     background: #ccc;
     grid-template-rows: $header-height 1fr;
-    grid-template-columns: 16em .35fr .65fr;
+    grid-template-columns: 16em .4fr .6fr;
   }
 
   header {
@@ -42,6 +42,8 @@ body.ember-application {
   }
 
   #side-bar {
+    position: relative;
+    max-height: inherit;
     background: $color1;
     grid-area: side-bar;
     @include overflow-scroll();
@@ -58,6 +60,8 @@ body.ember-application {
   }
 
   #column-two {
+    max-height:inherit;
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: .5em;
@@ -83,5 +87,16 @@ blockquote {
 
 .action {
   cursor: pointer;
+}
+
+.infinity-loader {
+
+  div:first-child {
+    padding:1rem;
+  }
+
+  &.reached-infinity {
+
+  }
 }
 

@@ -5,19 +5,25 @@
     </h4>
     <p class="card-text">{{feed.description}}</p>
 
-    <label for="">
-      {{input type="checkbox" checked=filterUnread}}
-      Show only unread
+    <label for="only-unread">
+      {{input id="only-unread" type="checkbox" checked=filterUnread}}
+      Unread only
+    </label>
+
+    <label for="set-read">
+      {{input id="set-read" type="checkbox" checked=filterUnread}}
+      Set all read
     </label>
 
   </div>
 
-  <div id="article-list-items">
+  {{#scrollable-container id="article-list-items"}}
     {{#each model as |article|}}
       {{article-list-item article=article feed=model.feed classNames="article-list-item"}}
     {{/each}}
-    {{infinity-loader infinityModel=model loadingText="Loading..." scrollable='#article-list-items'}}
-  </div>
+    {{infinity-loader infinityModel=model scrollable='#article-list-items'}}
+  {{/scrollable-container}}
+
 </div>
 
 

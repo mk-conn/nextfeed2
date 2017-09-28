@@ -45,6 +45,21 @@ define('ember-larafum/tests/app.lint-test', [], function () {
     assert.ok(true, 'components/full-article/component.js should pass ESLint\n\n');
   });
 
+  QUnit.test('components/grid-column/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'components/grid-column/component.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('components/scrollable-container/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'components/scrollable-container/component.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('components/side-bar/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'components/side-bar/component.js should pass ESLint\n\n');
+  });
+
   QUnit.test('feeds/feed/articles/article/route.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'feeds/feed/articles/article/route.js should pass ESLint\n\n');
@@ -400,6 +415,93 @@ define('ember-larafum/tests/integration/components/full-article/component-test',
     assert.equal(this.$().text().trim(), 'template block text');
   });
 });
+define('ember-larafum/tests/integration/components/grid-column/component-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForComponent)('grid-column', 'Integration | Component | grid column', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      "id": "llh+0wUo",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"grid-column\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      "id": "RU1RYuYB",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"grid-column\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('ember-larafum/tests/integration/components/scrollable-container/component-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForComponent)('scrollable-container', 'Integration | Component | scrollable container', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      "id": "j5r/9qNG",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"scrollable-container\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      "id": "l/hxqEfJ",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"scrollable-container\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('ember-larafum/tests/integration/components/side-bar/component-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForComponent)('side-bar', 'Integration | Component | side bar', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      "id": "wttvN76V",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"side-bar\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      "id": "gnb6tkZq",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"side-bar\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
 define('ember-larafum/tests/test-helper', ['ember-larafum/tests/helpers/resolver', 'ember-qunit', 'ember-cli-qunit'], function (_resolver, _emberQunit, _emberCliQunit) {
   'use strict';
 
@@ -449,6 +551,21 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
   QUnit.test('integration/components/full-article/component-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'integration/components/full-article/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/components/grid-column/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/grid-column/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/components/scrollable-container/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/scrollable-container/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/components/side-bar/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/side-bar/component-test.js should pass ESLint\n\n');
   });
 
   QUnit.test('test-helper.js', function (assert) {

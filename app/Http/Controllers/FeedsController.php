@@ -43,4 +43,9 @@ class FeedsController extends Controller
     {
 
     }
+
+    public function read($feedId)
+    {
+
+    }
 }
