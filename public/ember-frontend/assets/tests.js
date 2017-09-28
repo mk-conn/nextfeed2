@@ -20,9 +20,14 @@ define('ember-larafum/tests/app.lint-test', [], function () {
     assert.ok(true, 'application/route.js should pass ESLint\n\n');
   });
 
+  QUnit.test('application/serializer.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'application/serializer.js should pass ESLint\n\n');
+  });
+
   QUnit.test('components/article-list-item/component.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/article-list-item/component.js should pass ESLint\n\n19:17 - Empty block statement. (no-empty)');
+    assert.ok(false, 'components/article-list-item/component.js should pass ESLint\n\n23:17 - Empty block statement. (no-empty)');
   });
 
   QUnit.test('components/feed-item/component.js', function (assert) {

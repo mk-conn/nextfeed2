@@ -4,7 +4,11 @@ const {Component, computed, get, String, $} = Ember;
 
 
 export default Component.extend({
-  classNameBindings: [ 'read:read:unread' ],
+  classNameBindings: [ 'isRead:read:unread' ],
+
+  isRead: computed('article.read', function () {
+    return get(this, 'article.read');
+  }),
 
   articleDescription: computed('article.description', function () {
     const stripAt = 240;
@@ -28,4 +32,5 @@ export default Component.extend({
       $(this).addClass('img-fluid');
     });
   }
+
 });

@@ -10,6 +10,13 @@ export default Route.extend({
     return this.get('store').findRecord('article', params.article_id);
   },
 
+  afterModel(model) {
+    if (!model.get('read')) {
+      model.set('read', true);
+      model.save();
+    }
+  },
+
   renderTemplate() {
     this.render('feeds/feed/articles/article', {
       into: 'application',
@@ -21,5 +28,6 @@ export default Route.extend({
     originalArticle() {
 
     },
+
   }
 });

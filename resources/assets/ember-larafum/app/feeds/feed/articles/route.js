@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import InfinityRoute from "ember-infinity/mixins/route";
 
-const {Route, RSVP, set} = Ember;
+const {Route, RSVP, set, $} = Ember;
 
 export default Route.extend(InfinityRoute, {
 
@@ -17,6 +17,10 @@ export default Route.extend(InfinityRoute, {
     }
   },
 
+  beforeModel() {
+    $('#article-list-items').animate({scrollTop: 0, duration: 400});
+  },
+
   renderTemplate() {
     this.render('feeds.feed.articles', {
       into: 'application',
@@ -29,6 +33,7 @@ export default Route.extend(InfinityRoute, {
 
     params[ 'filter' ] = {feed: feed.id};
     params[ 'fields' ] = {articles: 'title,description,author,keep,read,url,updated-date,categories'};
+    params[ 'page' ] = {size: 10};
 
     return this.infinityModel('article', params);
 
@@ -47,7 +52,12 @@ export default Route.extend(InfinityRoute, {
   actions: {
 
     read(article) {
-      article.set('read', true);
+      article.toggleProperty('read');
+      article.save();
+    },
+
+    keep(article) {
+      article.toggleProperty('keep');
       article.save();
     },
 

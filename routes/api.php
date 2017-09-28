@@ -14,16 +14,15 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 |
 */
 
-//Route::middleware('auth:api')
-//     ->get('/user', function (Request $request) {
-//         return $request->user();
-//     });
-
-
 Route::group(['prefix' => 'api'], function () {
     Route::get('auth-user', 'AuthenticateController@getAuthUser');
     Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::get('article/scrape', 'ArticleController@scrapeContent')
+         ->middleware('jwt.auth');
+    Route::get('feeds/refresh/{id}?', 'FeedsController@refresh')
+         ->middleware('jwt.auth');
 });
+
 
 JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'jwt.auth'], function (ApiGroup $api) {
     $api->resource('feeds');

@@ -12,5 +12,7 @@ export default Model.extend({
   publishDate: attr('date'),
   updatedDate: attr('date'),
   feed: belongsTo('feed'),
-  url: attr('string')
+  url: attr('string'),
+  read: attr('boolean'),
+  keep: attr('boolean')
 });

@@ -1,14 +1,13 @@
-$main-box-background-color: #003366;
-$header-bg-color: #103034;
-
 $header-height: 4em;
 
 // https://coolors.co/7c6c77-ebf8b8-aaa694-d1d0a3-ffe787
-$color1: rgba(124, 108, 119, 1);
-$color2: rgba(235, 248, 184, 1);
-$color3: rgba(170, 166, 148, 1);
-$color4: rgba(209, 208, 163, 1);
-$color5: rgba(255, 231, 135, 1);
+$color5: rgba(51, 158, 53, 1);
+$color3: rgba(224, 219, 108, 1);
+$color2: rgba(89, 97, 87, 1);
+$color4: rgba(103, 119, 108, 1);
+$color1: rgba(24, 48, 78, 1);
+
+$color1-light: lighten($color1, 20%);
 
 @mixin overflow-scroll() {
   //overflow: auto;
@@ -24,6 +23,7 @@ body.ember-application {
   padding: 0;
   height: 100vh;
   width: 100vw;
+  color: $color1;
 
   > div.ember-view {
     width: inherit;
@@ -32,12 +32,12 @@ body.ember-application {
     grid-template-areas: "header header header" "side-bar column-one column-two";
     background: #ccc;
     grid-template-rows: $header-height 1fr;
-    grid-template-columns: 16em 25em 1fr;
+    grid-template-columns: 16em .35fr .65fr;
   }
 
   header {
     height: $header-height;
-    background: darken($color1, 15%);
+    background: darken($color1, 5%);
     grid-area: header;
   }
 
@@ -50,8 +50,9 @@ body.ember-application {
   #column-one {
     display: flex;
     flex-direction: column;
+    color: $color1;
     justify-content: flex-start;
-    background: lighten($color2, 15%);
+    background: lighten($color2, 60%);
     grid-area: column-one;
     @include overflow-scroll();
   }
@@ -60,19 +61,18 @@ body.ember-application {
     display: flex;
     flex-direction: column;
     padding: .5em;
-    background: lighten($color4, 25%);
+    background: lighten($color2, 60%);
     grid-area: column-two;
     @include overflow-scroll();
 
     .article-placeholder {
       align-self: center;
-      //background: url('/ember-frontend/img/feed-icon.png') no-repeat cover;
     }
   }
 }
 
 blockquote {
-  padding-top:.5rem;
+  padding-top: .5rem;
   padding-left: .5rem;
   border-left: .2rem solid #ccc;
 }

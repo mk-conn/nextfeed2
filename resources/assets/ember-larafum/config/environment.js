@@ -18,6 +18,12 @@ module.exports = function (environment) {
       }
     },
 
+    changeTracker: {
+      trackHasMany: false,
+      auto: true,
+      enableIsDirty: true
+    },
+
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created

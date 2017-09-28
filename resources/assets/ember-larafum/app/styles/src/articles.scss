@@ -5,40 +5,47 @@
   justify-content: center;
   align-items: center;
 
-}
+  img {
+    width:10%;
+    filter:opacity(20%);
+  }
 
-.article-placeholder:before {
-  position: fixed;
-  left:0;
-  top:0;
-  content: "";
-  background-image: url("/ember-frontend/img/feed-icon.png");
-  background-repeat: no-repeat;
-  background-size: 50%;
-  filter: opacity(20%);
 }
 
 .articles {
-  height: 100vh;
+  height: inherit;
   max-height: 100%;
   display: flex;
   justify-self: flex-start !important;
   flex-direction: column;
-  margin-bottom: -6rem;
-  padding-bottom: 6rem;
+  margin-bottom: -$header-height;
+  //padding-bottom: $header-height;
 
   #article-list-items {
     @include overflow-scroll();
-
+    height:inherit;
+    max-height: inherit;
     .article-list-item {
       padding: .5rem;
-      border-top: 1px solid #ccc;
+      border-top: 1px solid $color1;
       font-size: .8rem;
+
+      &.unread {
+        color:inherit;
+      }
+
+      &.read {
+        color:$color2;
+      }
 
       .article-title {
         font-size: .9rem;
+        font-weight:bold;
       }
 
+      .actions {
+        color: $color1;
+      }
     }
 
   }

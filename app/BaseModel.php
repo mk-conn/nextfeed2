@@ -33,4 +33,15 @@ class BaseModel extends Model
 
         parent::__construct($attributes);
     }
+
+    /**
+     * @return string
+     */
+    public static function dateFormat()
+    {
+        $self = new self();
+
+        return $self->getDateFormat();
+    }
+
 }

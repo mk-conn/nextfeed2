@@ -148,8 +148,5 @@ class Feed extends BaseModel
             $this->etag = $resource->getEtag();
             $this->save();
         }
-
-
     }
-
 }
