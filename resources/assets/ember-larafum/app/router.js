@@ -15,6 +15,7 @@ Router.map(function () {
       this.route('articles', function () {
         this.route('article', {path: '/:article_id'});
       });
+      this.route('settings');
     });
   });
 });

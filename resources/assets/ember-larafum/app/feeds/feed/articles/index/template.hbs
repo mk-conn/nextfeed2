@@ -5,4 +5,9 @@
     <img src="/ember-frontend/img/feed-icon.png" class="img-fluid" alt="">
   {{/if}}
   <span class="text-muted">Select an article on the left to start reading.</span>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-secondary" {{action (route-action "cleanup")}}>Cleanup</button>
+    <button type="button" class="btn btn-secondary">Settings</button>
+  </div>
 </div>
+

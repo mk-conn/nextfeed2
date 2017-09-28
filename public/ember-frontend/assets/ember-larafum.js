@@ -1064,7 +1064,8 @@ define('ember-larafum/feeds/feed/articles/controller', ['exports'], function (ex
   });
   var Controller = Ember.Controller;
   exports.default = Controller.extend({
-    queryParams: ['sort'],
+    queryParams: ['sort', 'filterUnread'],
+    filterUnread: false,
     sort: '-updated-date,-id'
   });
 });
@@ -1085,7 +1086,13 @@ define('ember-larafum/feeds/feed/articles/index/route', ['exports'], function (e
       this._super(controller, model);
 
       controller.set('feed', this.modelFor('feeds.feed'));
+    },
+
+
+    actions: {
+      cleanup: function cleanup() {}
     }
+
   });
 });
 define("ember-larafum/feeds/feed/articles/index/template", ["exports"], function (exports) {
@@ -1094,7 +1101,7 @@ define("ember-larafum/feeds/feed/articles/index/template", ["exports"], function
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "1igA8VOt", "block": "{\"symbols\":[],\"statements\":[[6,\"div\"],[9,\"class\",\"article-placeholder\"],[7],[0,\"\\n\"],[4,\"if\",[[19,0,[\"feed\",\"logo\"]]],null,{\"statements\":[[0,\"    \"],[6,\"img\"],[10,\"src\",[26,[[20,[\"feed\",\"logo\"]]]]],[9,\"alt\",\"\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"    \"],[6,\"img\"],[9,\"src\",\"/ember-frontend/img/feed-icon.png\"],[9,\"class\",\"img-fluid\"],[9,\"alt\",\"\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[6,\"span\"],[9,\"class\",\"text-muted\"],[7],[0,\"Select an article on the left to start reading.\"],[8],[0,\"\\n\"],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/feed/articles/index/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "iL5QGu6Z", "block": "{\"symbols\":[],\"statements\":[[6,\"div\"],[9,\"class\",\"article-placeholder\"],[7],[0,\"\\n\"],[4,\"if\",[[19,0,[\"feed\",\"logo\"]]],null,{\"statements\":[[0,\"    \"],[6,\"img\"],[10,\"src\",[26,[[20,[\"feed\",\"logo\"]]]]],[9,\"alt\",\"\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"    \"],[6,\"img\"],[9,\"src\",\"/ember-frontend/img/feed-icon.png\"],[9,\"class\",\"img-fluid\"],[9,\"alt\",\"\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[6,\"span\"],[9,\"class\",\"text-muted\"],[7],[0,\"Select an article on the left to start reading.\"],[8],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"btn-group\"],[9,\"role\",\"group\"],[7],[0,\"\\n    \"],[6,\"button\"],[9,\"type\",\"button\"],[9,\"class\",\"btn btn-secondary\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"cleanup\"],null]]],[7],[0,\"Cleanup\"],[8],[0,\"\\n    \"],[6,\"button\"],[9,\"type\",\"button\"],[9,\"class\",\"btn btn-secondary\"],[7],[0,\"Settings\"],[8],[0,\"\\n  \"],[8],[0,\"\\n\"],[8],[0,\"\\n\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/feed/articles/index/template.hbs" } });
 });
 define('ember-larafum/feeds/feed/articles/route', ['exports', 'ember-infinity/mixins/route'], function (exports, _route) {
   'use strict';
@@ -1117,6 +1124,9 @@ define('ember-larafum/feeds/feed/articles/route', ['exports', 'ember-infinity/mi
     queryParams: {
       sort: {
         refreshModel: true
+      },
+      filterUnread: {
+        refreshModel: true
       }
     },
 
@@ -1132,7 +1142,17 @@ define('ember-larafum/feeds/feed/articles/route', ['exports', 'ember-infinity/mi
     model: function model(params) {
       var feed = this.modelFor('feeds.feed');
 
-      params['filter'] = { feed: feed.id };
+      var filter = {
+        feed: feed.id
+      };
+
+      if (params.filterUnread === true) {
+        filter['read'] = false;
+      }
+
+      delete params.filterUnread;
+
+      params['filter'] = filter;
       params['fields'] = { articles: 'title,description,author,keep,read,url,updated-date,categories' };
       params['page'] = { size: 10 };
 
@@ -1169,7 +1189,7 @@ define("ember-larafum/feeds/feed/articles/template", ["exports"], function (expo
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "v99nUPFC", "block": "{\"symbols\":[\"article\"],\"statements\":[[6,\"div\"],[9,\"class\",\"articles\"],[7],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"feed-header\"],[9,\"id\",\"articles-header\"],[7],[0,\"\\n    \"],[6,\"h4\"],[7],[0,\"\\n      \"],[6,\"a\"],[10,\"href\",[26,[[20,[\"feed\",\"siteUrl\"]]]]],[9,\"target\",\"_blank\"],[7],[1,[20,[\"feed\",\"name\"]],false],[8],[0,\"\\n    \"],[8],[0,\"\\n    \"],[6,\"p\"],[9,\"class\",\"card-text\"],[7],[1,[20,[\"feed\",\"description\"]],false],[8],[0,\"\\n  \"],[8],[0,\"\\n\\n  \"],[6,\"div\"],[9,\"id\",\"article-list-items\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\"]]],null,{\"statements\":[[0,\"      \"],[1,[25,\"article-list-item\",null,[[\"article\",\"feed\",\"classNames\"],[[19,1,[]],[19,0,[\"model\",\"feed\"]],\"article-list-item\"]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[8],[0,\"\\n  \"],[1,[25,\"infinity-loader\",null,[[\"infinityModel\",\"loadingText\",\"scrollable\"],[[19,0,[\"model\"]],\"Loading...\",\"#article-list-items\"]]],false],[0,\"\\n\"],[8],[0,\"\\n\\n\\n\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/feed/articles/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "0WNjo0dS", "block": "{\"symbols\":[\"article\"],\"statements\":[[6,\"div\"],[9,\"class\",\"articles\"],[7],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"feed-header\"],[9,\"id\",\"articles-header\"],[7],[0,\"\\n    \"],[6,\"h4\"],[7],[0,\"\\n      \"],[6,\"a\"],[10,\"href\",[26,[[20,[\"feed\",\"siteUrl\"]]]]],[9,\"target\",\"_blank\"],[7],[1,[20,[\"feed\",\"name\"]],false],[8],[0,\"\\n    \"],[8],[0,\"\\n    \"],[6,\"p\"],[9,\"class\",\"card-text\"],[7],[1,[20,[\"feed\",\"description\"]],false],[8],[0,\"\\n\\n    \"],[6,\"label\"],[9,\"for\",\"\"],[7],[0,\"\\n      \"],[1,[25,\"input\",null,[[\"type\",\"checked\"],[\"checkbox\",[19,0,[\"filterUnread\"]]]]],false],[0,\"\\n      Show only unread\\n    \"],[8],[0,\"\\n\\n  \"],[8],[0,\"\\n\\n  \"],[6,\"div\"],[9,\"id\",\"article-list-items\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\"]]],null,{\"statements\":[[0,\"      \"],[1,[25,\"article-list-item\",null,[[\"article\",\"feed\",\"classNames\"],[[19,1,[]],[19,0,[\"model\",\"feed\"]],\"article-list-item\"]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[1,[25,\"infinity-loader\",null,[[\"infinityModel\",\"loadingText\",\"scrollable\"],[[19,0,[\"model\"]],\"Loading...\",\"#article-list-items\"]]],false],[0,\"\\n  \"],[8],[0,\"\\n\"],[8],[0,\"\\n\\n\\n\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/feed/articles/template.hbs" } });
 });
 define('ember-larafum/feeds/feed/route', ['exports'], function (exports) {
   'use strict';
@@ -1184,13 +1204,29 @@ define('ember-larafum/feeds/feed/route', ['exports'], function (exports) {
     }
   });
 });
+define('ember-larafum/feeds/feed/settings/route', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.Route.extend({});
+});
+define("ember-larafum/feeds/feed/settings/template", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.HTMLBars.template({ "id": "7wRXaos/", "block": "{\"symbols\":[],\"statements\":[[1,[18,\"outlet\"],false]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/feed/settings/template.hbs" } });
+});
 define("ember-larafum/feeds/feed/template", ["exports"], function (exports) {
   "use strict";
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "Tb3sZzBA", "block": "{\"symbols\":[],\"statements\":[[6,\"div\"],[9,\"class\",\"full-article\"],[7],[0,\"\\n  full:\\n  \"],[1,[25,\"outlet\",[\"full-article\"],null],false],[0,\"\\n\"],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/feed/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "ctS/gbOn", "block": "{\"symbols\":[],\"statements\":[],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/feed/template.hbs" } });
 });
 define('ember-larafum/feeds/index/route', ['exports'], function (exports) {
   'use strict';
@@ -1263,7 +1299,7 @@ define("ember-larafum/feeds/template", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "GSgHlKni", "block": "{\"symbols\":[\"feed\",\"folder\"],\"statements\":[[6,\"div\"],[9,\"class\",\"list-group folder-list\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\",\"folders\"]]],null,{\"statements\":[[0,\"    \"],[1,[25,\"folder-item\",null,[[\"folder\",\"classNames\"],[[19,2,[]],\"folder-item list-group-item\"]]],false],[0,\"\\n\"]],\"parameters\":[2]},null],[8],[0,\"\\n\"],[6,\"div\"],[9,\"class\",\"folder-item\"],[7],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"folder\"],[7],[0,\"\\n    \"],[6,\"span\"],[9,\"class\",\"border border-left-0 border-right-0 border-top-0\"],[7],[0,\"Feeds\"],[8],[0,\"\\n  \"],[8],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"list-group feed-list\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\",\"feeds\"]]],null,{\"statements\":[[0,\"      \"],[1,[25,\"feed-item\",null,[[\"feed\",\"classNames\"],[[19,1,[]],\"list-group-item feed-item\"]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[8],[0,\"\\n\"],[8],[0,\"\\n\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "GiDs0UqB", "block": "{\"symbols\":[\"feed\",\"folder\"],\"statements\":[[0,\"Folders\\n\"],[6,\"div\"],[9,\"class\",\"list-group folder-list\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\",\"folders\"]]],null,{\"statements\":[[0,\"    \"],[1,[25,\"folder-item\",null,[[\"folder\",\"classNames\"],[[19,2,[]],\"folder-item list-group-item\"]]],false],[0,\"\\n\"]],\"parameters\":[2]},null],[8],[0,\"\\n\"],[6,\"div\"],[9,\"class\",\"folder-item\"],[7],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"folder\"],[7],[0,\"\\n    \"],[6,\"span\"],[9,\"class\",\"border border-left-0 border-right-0 border-top-0\"],[7],[0,\"Feeds\"],[8],[0,\"\\n  \"],[8],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"list-group feed-list\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\",\"feeds\"]]],null,{\"statements\":[[0,\"      \"],[1,[25,\"feed-item\",null,[[\"feed\",\"classNames\"],[[19,1,[]],\"list-group-item feed-item\"]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[8],[0,\"\\n\"],[8],[0,\"\\n\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/template.hbs" } });
 });
 define('ember-larafum/helpers/app-version', ['exports', 'ember-larafum/config/environment', 'ember-cli-app-version/utils/regexp'], function (exports, _environment, _regexp) {
   'use strict';
@@ -2065,6 +2101,7 @@ define('ember-larafum/router', ['exports', 'ember-larafum/config/environment'], 
         this.route('articles', function () {
           this.route('article', { path: '/:article_id' });
         });
+        this.route('settings');
       });
     });
   });

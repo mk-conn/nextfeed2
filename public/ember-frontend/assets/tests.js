@@ -70,6 +70,11 @@ define('ember-larafum/tests/app.lint-test', [], function () {
     assert.ok(true, 'feeds/feed/route.js should pass ESLint\n\n');
   });
 
+  QUnit.test('feeds/feed/settings/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'feeds/feed/settings/route.js should pass ESLint\n\n');
+  });
+
   QUnit.test('feeds/index/route.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'feeds/index/route.js should pass ESLint\n\n');
@@ -486,6 +491,11 @@ define('ember-larafum/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/feeds/feed/route-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/feeds/feed/settings/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/feeds/feed/settings/route-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/feeds/index/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/feeds/index/route-test.js should pass ESLint\n\n');
@@ -640,6 +650,19 @@ define('ember-larafum/tests/unit/feeds/feed/route-test', ['ember-qunit'], functi
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:feeds/feed', 'Unit | Route | feeds/feed', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('ember-larafum/tests/unit/feeds/feed/settings/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:feeds/feed/settings', 'Unit | Route | feeds/feed/settings', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });

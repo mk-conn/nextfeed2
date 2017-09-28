@@ -14,6 +14,9 @@ export default Route.extend(InfinityRoute, {
   queryParams: {
     sort: {
       refreshModel: true
+    },
+    filterUnread: {
+      refreshModel: true
     }
   },
 
@@ -31,7 +34,17 @@ export default Route.extend(InfinityRoute, {
   model(params) {
     const feed = this.modelFor('feeds.feed');
 
-    params[ 'filter' ] = {feed: feed.id};
+    let filter = {
+      feed: feed.id
+    };
+
+    if (params.filterUnread === true) {
+      filter[ 'read' ] = false;
+    }
+
+    delete params.filterUnread;
+
+    params[ 'filter' ] = filter;
     params[ 'fields' ] = {articles: 'title,description,author,keep,read,url,updated-date,categories'};
     params[ 'page' ] = {size: 10};
 

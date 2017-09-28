@@ -33,6 +33,14 @@ class Adapter extends EloquentAdapter
         if ($filters->has('feed')) {
             $query->where('feed_id', $filters->get('feed'));
         }
+
+        if ($filters->has('read')) {
+            $query->where('read', $filters->get('read'));
+        }
+
+        if ($filters->has('keep')) {
+            $query->where('keep', $filters->get('keep'));
+        }
     }
 
     /**

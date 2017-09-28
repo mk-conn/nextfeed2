@@ -4,14 +4,20 @@
       <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
     </h4>
     <p class="card-text">{{feed.description}}</p>
+
+    <label for="">
+      {{input type="checkbox" checked=filterUnread}}
+      Show only unread
+    </label>
+
   </div>
 
   <div id="article-list-items">
     {{#each model as |article|}}
       {{article-list-item article=article feed=model.feed classNames="article-list-item"}}
     {{/each}}
+    {{infinity-loader infinityModel=model loadingText="Loading..." scrollable='#article-list-items'}}
   </div>
-  {{infinity-loader infinityModel=model loadingText="Loading..." scrollable='#article-list-items'}}
 </div>
 
 

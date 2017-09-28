@@ -15,17 +15,17 @@ use Illuminate\Support\Facades\Auth;
 class FeedsController extends Controller
 {
     /**
-     * @param $id
+     * @param $feedId
      */
-    public function refresh($id)
+    public function refresh($feedId)
     {
         $feeds = collect([]);
 
-        if (!$id) {
+        if (!$feedId) {
             $feeds = Feed::all()
                          ->where('user_id', Auth::user()->id);
         } else {
-            $feed = Feed::find($id);
+            $feed = Feed::find($feedId);
             if ($feed) {
                 $feeds->push($feed);
             }
@@ -34,5 +34,13 @@ class FeedsController extends Controller
         $feeds->each(function (Feed $feed) {
             $feed->fetchNewArticles();
         });
+    }
+
+    /**
+     * @param $feedId
+     */
+    public function cleanup($feedId)
+    {
+
     }
 }
