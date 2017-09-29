@@ -13,9 +13,8 @@ class AppController
 {
     public function index()
     {
-        $baseUrl = request()->getSchemeAndHttpHost();
 
-        $indexHtml = file_get_contents(public_path('ember-frontend/index.html'));
+        $indexHtml = file_get_contents(public_path('frontend/index.html'));
 
         $pattern = [
             '~assets/vendor.css~',
@@ -26,10 +25,10 @@ class AppController
         ];
 
         $replacements = [
-            'ember-frontend/assets/vendor.css',
-            'ember-frontend/assets/ember-larafum.css',
-            'ember-frontend/assets/vendor.js',
-            'ember-frontend/assets/ember-larafum.js',
+            'frontend/assets/vendor.css',
+            'frontend/assets/ember-larafum.css',
+            'frontend/assets/vendor.js',
+            'frontend/assets/ember-larafum.js',
             "http://127.0.0.1:4200/ember-cli-live-reload.js"
         ];
 
@@ -37,6 +36,5 @@ class AppController
 
 
         return view('app', ['app' => $indexHtml]);
-
     }
 }
