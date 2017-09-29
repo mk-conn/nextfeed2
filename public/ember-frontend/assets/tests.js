@@ -127,7 +127,7 @@ define('ember-larafum/tests/app.lint-test', [], function () {
 
   QUnit.test('models/feed.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'models/feed.js should pass ESLint\n\n3:8 - \'Model\' is assigned a value but never used. (no-unused-vars)');
+    assert.ok(false, 'models/feed.js should pass ESLint\n\n29:14 - \'val\' is defined but never used. (no-unused-vars)');
   });
 
   QUnit.test('models/folder.js', function (assert) {

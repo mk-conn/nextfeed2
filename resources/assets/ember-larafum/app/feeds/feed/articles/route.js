@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import InfinityRoute from "ember-infinity/mixins/route";
 
-const {Route, RSVP, set, $} = Ember;
+const {Route, RSVP, set, $, inject: {service}} = Ember;
 
 export default Route.extend(InfinityRoute, {
+
+  session: service(),
 
   perPageParam: 'page[size]',
 
@@ -48,12 +50,7 @@ export default Route.extend(InfinityRoute, {
     params[ 'fields' ] = {articles: 'title,description,author,keep,read,url,updated-date,categories'};
     params[ 'page' ] = {size: 10};
 
-    return this.infinityModel('article', params);
-
-    // return RSVP.hash({
-    //   articles: this.get('store').query('article', params),
-    //   feed: feed
-    // });
+    return this.infinityModel('article', params, {});
   },
 
   setupController(controller, model) {
@@ -63,19 +60,57 @@ export default Route.extend(InfinityRoute, {
   },
 
   actions: {
-
+    /**
+     *
+     * @param article
+     */
     read(article) {
-      article.toggleProperty('read');
-      article.save();
-    },
+      const feed = this.modelFor('feeds.feed');
 
+      let unreadCount = feed.get('unreadCount');
+      const decrement = article.toggleProperty('read');
+      article.save();
+
+      if (decrement) {
+        unreadCount--;
+      } else {
+        unreadCount++;
+      }
+
+      feed.set('unreadCount', unreadCount);
+    },
+    /**
+     *
+     * @param article
+     */
     keep(article) {
       article.toggleProperty('keep');
       article.save();
     },
+    /**
+     *
+     * @param feed
+     */
+    readAll(feed) {
+      const adapter = this.get('store').adapterFor('application');
+      const host = adapter.get('host') || '';
+      // const namespace = adapter.get('namespace');
+      const token = this.get('session.session.content.authenticated.token');
+      let url = `${host}/api/feeds/${feed.get('id')}/articles/mark-read`;
+      // let url = `${host}/${namespace}/feeds/${feed.get('id')}/relationships/articles`; -- does not work
 
-    readAll() {
-
+      $.ajax(url, {
+        method: 'GET',
+        dataType: 'json',
+        contentType: 'application/vnd.api+json',
+        headers: {
+          Accept: 'application/vnd.api+json',
+          Authorization: 'Bearer ' + token
+        }
+      }).then(() => {
+        feed.set('unreadCount', 0);
+        this.refresh();
+      });
     }
   }
 });

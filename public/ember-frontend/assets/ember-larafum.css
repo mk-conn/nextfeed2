@@ -5723,6 +5723,8 @@ header {
         color: inherit; }
       .articles #article-list-items .article-list-item.read {
         color: #596157; }
+        .articles #article-list-items .article-list-item.read h5 {
+          font-weight: normal; }
       .articles #article-list-items .article-list-item .article-title {
         font-size: .9rem;
         font-weight: bold; }

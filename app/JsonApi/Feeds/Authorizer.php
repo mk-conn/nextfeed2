@@ -138,7 +138,7 @@ class Authorizer extends BaseAuthorizer
 
     /**
      * @param string                      $relationshipKey
-     * @param object                      $record
+     * @param Feed                        $record
      * @param RelationshipInterface       $relationship
      * @param EncodingParametersInterface $parameters
      *
@@ -151,7 +151,10 @@ class Authorizer extends BaseAuthorizer
         EncodingParametersInterface $parameters
     )
     {
-        return false;
+
+        $user = $this->currentUser();
+
+        return $user->id === $record->user->id;
     }
 
 }

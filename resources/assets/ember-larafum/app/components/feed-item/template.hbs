@@ -10,8 +10,8 @@
       </span>
       {{feed.name}}
     </div>
-    {{#if feed.meta.articles-unread-count}}
-      <span class="badge badge-secondary">{{feed.meta.articles-unread-count}}</span>
+    {{#if feed.unreadCount}}
+      <span class="badge badge-secondary">{{feed.unreadCount}}</span>
     {{/if}}
   </div>
 {{/link-to}}

@@ -909,7 +909,7 @@ define("ember-larafum/components/feed-item/template", ["exports"], function (exp
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "IcFEDNji", "block": "{\"symbols\":[],\"statements\":[[4,\"link-to\",[\"feeds.feed.articles\",[19,0,[\"feed\",\"id\"]]],null,{\"statements\":[[0,\"  \"],[6,\"div\"],[9,\"class\",\"d-flex justify-content-between\"],[7],[0,\"\\n    \"],[6,\"div\"],[7],[0,\"\\n      \"],[6,\"span\"],[9,\"class\",\"feed-icon\"],[7],[0,\"\\n\"],[4,\"if\",[[19,0,[\"feed\",\"icon\"]]],null,{\"statements\":[[0,\"          \"],[6,\"img\"],[10,\"src\",[26,[[20,[\"feed\",\"icon\"]]]]],[9,\"alt\",\"feed icon\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"          \"],[6,\"img\"],[9,\"src\",\"/ember-frontend/img/feed-icon.png\"],[9,\"alt\",\"feed icon\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]}],[0,\"      \"],[8],[0,\"\\n      \"],[1,[20,[\"feed\",\"name\"]],false],[0,\"\\n    \"],[8],[0,\"\\n\"],[4,\"if\",[[19,0,[\"feed\",\"meta\",\"articles-unread-count\"]]],null,{\"statements\":[[0,\"      \"],[6,\"span\"],[9,\"class\",\"badge badge-secondary\"],[7],[1,[20,[\"feed\",\"meta\",\"articles-unread-count\"]],false],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"  \"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/components/feed-item/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "vGrHvkm2", "block": "{\"symbols\":[],\"statements\":[[4,\"link-to\",[\"feeds.feed.articles\",[19,0,[\"feed\",\"id\"]]],null,{\"statements\":[[0,\"  \"],[6,\"div\"],[9,\"class\",\"d-flex justify-content-between\"],[7],[0,\"\\n    \"],[6,\"div\"],[7],[0,\"\\n      \"],[6,\"span\"],[9,\"class\",\"feed-icon\"],[7],[0,\"\\n\"],[4,\"if\",[[19,0,[\"feed\",\"icon\"]]],null,{\"statements\":[[0,\"          \"],[6,\"img\"],[10,\"src\",[26,[[20,[\"feed\",\"icon\"]]]]],[9,\"alt\",\"feed icon\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"          \"],[6,\"img\"],[9,\"src\",\"/ember-frontend/img/feed-icon.png\"],[9,\"alt\",\"feed icon\"],[7],[8],[0,\"\\n\"]],\"parameters\":[]}],[0,\"      \"],[8],[0,\"\\n      \"],[1,[20,[\"feed\",\"name\"]],false],[0,\"\\n    \"],[8],[0,\"\\n\"],[4,\"if\",[[19,0,[\"feed\",\"unreadCount\"]]],null,{\"statements\":[[0,\"      \"],[6,\"span\"],[9,\"class\",\"badge badge-secondary\"],[7],[1,[20,[\"feed\",\"unreadCount\"]],false],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"  \"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/components/feed-item/template.hbs" } });
 });
 define('ember-larafum/components/folder-item/component', ['exports'], function (exports) {
   'use strict';
@@ -1169,8 +1169,11 @@ define('ember-larafum/feeds/feed/articles/route', ['exports', 'ember-infinity/mi
   var Route = Ember.Route,
       RSVP = Ember.RSVP,
       set = Ember.set,
-      $ = Ember.$;
+      $ = Ember.$,
+      service = Ember.inject.service;
   exports.default = Route.extend(_route.default, {
+
+    session: service(),
 
     perPageParam: 'page[size]',
 
@@ -1213,12 +1216,7 @@ define('ember-larafum/feeds/feed/articles/route', ['exports', 'ember-infinity/mi
       params['fields'] = { articles: 'title,description,author,keep,read,url,updated-date,categories' };
       params['page'] = { size: 10 };
 
-      return this.infinityModel('article', params);
-
-      // return RSVP.hash({
-      //   articles: this.get('store').query('article', params),
-      //   feed: feed
-      // });
+      return this.infinityModel('article', params, {});
     },
     setupController: function setupController(controller, model) {
       this._super(controller, model);
@@ -1228,15 +1226,62 @@ define('ember-larafum/feeds/feed/articles/route', ['exports', 'ember-infinity/mi
 
 
     actions: {
+      /**
+       *
+       * @param article
+       */
       read: function read(article) {
-        article.toggleProperty('read');
+        var feed = this.modelFor('feeds.feed');
+
+        var unreadCount = feed.get('unreadCount');
+        var decrement = article.toggleProperty('read');
         article.save();
+
+        if (decrement) {
+          unreadCount--;
+        } else {
+          unreadCount++;
+        }
+
+        feed.set('unreadCount', unreadCount);
       },
+
+      /**
+       *
+       * @param article
+       */
       keep: function keep(article) {
         article.toggleProperty('keep');
         article.save();
       },
-      readAll: function readAll() {}
+
+      /**
+       *
+       * @param feed
+       */
+      readAll: function readAll(feed) {
+        var _this = this;
+
+        var adapter = this.get('store').adapterFor('application');
+        var host = adapter.get('host') || '';
+        // const namespace = adapter.get('namespace');
+        var token = this.get('session.session.content.authenticated.token');
+        var url = host + '/api/feeds/' + feed.get('id') + '/articles/mark-read';
+        // let url = `${host}/${namespace}/feeds/${feed.get('id')}/relationships/articles`; -- does not work
+
+        $.ajax(url, {
+          method: 'GET',
+          dataType: 'json',
+          contentType: 'application/vnd.api+json',
+          headers: {
+            Accept: 'application/vnd.api+json',
+            Authorization: 'Bearer ' + token
+          }
+        }).then(function () {
+          feed.set('unreadCount', 0);
+          _this.refresh();
+        });
+      }
     }
   });
 });
@@ -1246,7 +1291,7 @@ define("ember-larafum/feeds/feed/articles/template", ["exports"], function (expo
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "9o7+a86Q", "block": "{\"symbols\":[\"article\"],\"statements\":[[6,\"div\"],[9,\"class\",\"articles\"],[7],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"feed-header\"],[9,\"id\",\"articles-header\"],[7],[0,\"\\n    \"],[6,\"h4\"],[9,\"class\",\"d-flex justify-content-between\"],[7],[0,\"\\n      \"],[6,\"a\"],[10,\"href\",[26,[[20,[\"feed\",\"siteUrl\"]]]]],[9,\"target\",\"_blank\"],[7],[1,[20,[\"feed\",\"name\"]],false],[8],[0,\"\\n      \"],[6,\"div\"],[7],[0,\"\\n        \"],[6,\"span\"],[9,\"title\",\"Unread\"],[9,\"class\",\"badge badge-secondary\"],[7],[1,[20,[\"feed\",\"meta\",\"articles-unread-count\"]],false],[8],[0,\" /\\n        \"],[6,\"span\"],[9,\"title\",\"Total\"],[9,\"class\",\"badge badge-dark\"],[7],[1,[20,[\"feed\",\"meta\",\"articles-count\"]],false],[8],[0,\"\\n      \"],[8],[0,\"\\n    \"],[8],[0,\"\\n    \"],[6,\"p\"],[9,\"class\",\"card-text\"],[7],[1,[20,[\"feed\",\"description\"]],false],[8],[0,\"\\n\\n    \"],[6,\"label\"],[9,\"for\",\"only-unread\"],[7],[0,\"\\n      \"],[1,[25,\"input\",null,[[\"id\",\"type\",\"checked\"],[\"only-unread\",\"checkbox\",[19,0,[\"filterUnread\"]]]]],false],[0,\"\\n      Unread only\\n    \"],[8],[0,\"\\n\\n    \"],[6,\"label\"],[9,\"for\",\"set-read\"],[7],[0,\"\\n      \"],[1,[25,\"input\",null,[[\"id\",\"type\",\"checked\"],[\"set-read\",\"checkbox\",[19,0,[\"filterUnread\"]]]]],false],[0,\"\\n      Set all read\\n    \"],[8],[0,\"\\n\\n  \"],[8],[0,\"\\n\\n\"],[4,\"scrollable-container\",null,[[\"id\"],[\"article-list-items\"]],{\"statements\":[[4,\"each\",[[19,0,[\"model\"]]],null,{\"statements\":[[0,\"      \"],[1,[25,\"article-list-item\",null,[[\"article\",\"feed\",\"classNames\"],[[19,1,[]],[19,0,[\"model\",\"feed\"]],\"article-list-item\"]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[1,[25,\"infinity-loader\",null,[[\"infinityModel\",\"scrollable\"],[[19,0,[\"model\"]],\"#article-list-items\"]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[8],[0,\"\\n\\n\\n\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/feed/articles/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "28H/o+im", "block": "{\"symbols\":[\"article\"],\"statements\":[[6,\"div\"],[9,\"class\",\"articles\"],[7],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"feed-header\"],[9,\"id\",\"articles-header\"],[7],[0,\"\\n    \"],[6,\"h4\"],[9,\"class\",\"d-flex justify-content-between\"],[7],[0,\"\\n      \"],[6,\"a\"],[10,\"href\",[26,[[20,[\"feed\",\"siteUrl\"]]]]],[9,\"target\",\"_blank\"],[7],[1,[20,[\"feed\",\"name\"]],false],[8],[0,\"\\n      \"],[6,\"div\"],[7],[0,\"\\n        \"],[6,\"span\"],[9,\"title\",\"Unread\"],[9,\"class\",\"badge badge-secondary\"],[7],[1,[20,[\"feed\",\"unreadCount\"]],false],[8],[0,\" /\\n        \"],[6,\"span\"],[9,\"title\",\"Total\"],[9,\"class\",\"badge badge-dark\"],[7],[1,[20,[\"feed\",\"articlesCount\"]],false],[8],[0,\"\\n      \"],[8],[0,\"\\n    \"],[8],[0,\"\\n    \"],[6,\"p\"],[9,\"class\",\"card-text\"],[7],[1,[20,[\"feed\",\"description\"]],false],[8],[0,\"\\n\\n    \"],[6,\"div\"],[9,\"class\",\"btn-group btn-group-sm\"],[7],[0,\"\\n\"],[4,\"if\",[[19,0,[\"filterUnread\"]]],null,{\"statements\":[[0,\"        \"],[6,\"button\"],[9,\"type\",\"button\"],[9,\"class\",\"btn btn-secondary\"],[3,\"action\",[[19,0,[]],[25,\"action\",[[19,0,[]],[25,\"mut\",[[19,0,[\"filterUnread\"]]],null]],null]]],[7],[0,\"\\n          Include Read\\n        \"],[8],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[6,\"button\"],[9,\"type\",\"button\"],[9,\"class\",\"btn btn-secondary\"],[3,\"action\",[[19,0,[]],[25,\"action\",[[19,0,[]],[25,\"mut\",[[19,0,[\"filterUnread\"]]],null]],null]]],[7],[0,\"\\n          Hide Read\\n        \"],[8],[0,\"\\n\"]],\"parameters\":[]}],[0,\"\\n      \"],[6,\"button\"],[9,\"type\",\"button\"],[9,\"class\",\"btn btn-secondary\"],[3,\"action\",[[19,0,[]],[25,\"route-action\",[\"readAll\",[19,0,[\"feed\"]]],null]]],[7],[0,\"\\n        Mark all read\\n      \"],[8],[0,\"\\n    \"],[8],[0,\"\\n\\n  \"],[8],[0,\"\\n\\n\"],[4,\"scrollable-container\",null,[[\"id\"],[\"article-list-items\"]],{\"statements\":[[4,\"each\",[[19,0,[\"model\"]]],null,{\"statements\":[[0,\"      \"],[1,[25,\"article-list-item\",null,[[\"article\",\"feed\",\"classNames\"],[[19,1,[]],[19,0,[\"model\",\"feed\"]],\"article-list-item\"]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[1,[25,\"infinity-loader\",null,[[\"infinityModel\",\"scrollable\"],[[19,0,[\"model\"]],\"#article-list-items\"]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[8],[0,\"\\n\\n\\n\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "ember-larafum/feeds/feed/articles/template.hbs" } });
 });
 define('ember-larafum/feeds/feed/route', ['exports'], function (exports) {
   'use strict';
@@ -2068,7 +2113,8 @@ define('ember-larafum/models/feed', ['exports', 'ember-data'], function (exports
       attr = _emberData.default.attr,
       belongsTo = _emberData.default.belongsTo,
       hasMany = _emberData.default.hasMany;
-  exports.default = _emberData.default.Model.extend({
+  var computed = Ember.computed;
+  exports.default = Model.extend({
     name: attr('string'),
     url: attr('string'),
     feedUrl: attr('string'),
@@ -2085,7 +2131,24 @@ define('ember-larafum/models/feed', ['exports', 'ember-data'], function (exports
     user: belongsTo('user'),
     folder: belongsTo('folder'),
     articles: hasMany('article'),
-    meta: attr()
+    meta: attr(),
+    articlesCount: computed('meta.articles-count', {
+      get: function get() {
+        return this.get('meta.articles-count');
+      },
+      set: function set(key, val) {
+        Ember.assert('You can not set the articles counter.', true);
+      }
+    }),
+    unreadCount: computed('meta.articles-unread-count', {
+      get: function get() {
+        return this.get('meta.articles-unread-count');
+      },
+      set: function set(prop, value) {
+        this.set('meta.articles-unread-count', value);
+        return value;
+      }
+    })
   });
 });
 define('ember-larafum/models/folder', ['exports', 'ember-data'], function (exports, _emberData) {
@@ -2413,6 +2476,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("ember-larafum/app")["default"].create({"name":"ember-larafum","version":"0.0.0+9307136d"});
+  require("ember-larafum/app")["default"].create({"name":"ember-larafum","version":"0.0.0+009fb6ca"});
 }
 //# sourceMappingURL=ember-larafum.map

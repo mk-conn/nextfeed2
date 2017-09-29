@@ -3,21 +3,27 @@
     <h4 class="d-flex justify-content-between">
       <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
       <div>
-        <span title="Unread" class="badge badge-secondary">{{feed.meta.articles-unread-count}}</span> /
-        <span title="Total" class="badge badge-dark">{{feed.meta.articles-count}}</span>
+        <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span> /
+        <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
       </div>
     </h4>
     <p class="card-text">{{feed.description}}</p>
 
-    <label for="only-unread">
-      {{input id="only-unread" type="checkbox" checked=filterUnread}}
-      Unread only
-    </label>
+    <div class="btn-group btn-group-sm">
+      {{#if filterUnread}}
+        <button type="button" class="btn btn-secondary" {{action (action (mut filterUnread))}}>
+          Include Read
+        </button>
+      {{else}}
+        <button type="button" class="btn btn-secondary" {{action (action (mut filterUnread))}}>
+          Hide Read
+        </button>
+      {{/if}}
 
-    <label for="set-read">
-      {{input id="set-read" type="checkbox" checked=filterUnread}}
-      Set all read
-    </label>
+      <button type="button" class="btn btn-secondary" {{action (route-action 'readAll' feed)}}>
+        Mark all read
+      </button>
+    </div>
 
   </div>
 

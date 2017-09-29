@@ -43,6 +43,9 @@
 
       &.read {
         color: $color2;
+        h5 {
+          font-weight: normal;
+        }
       }
 
       .article-title {

@@ -1,8 +1,10 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 const {Model, attr, belongsTo, hasMany} = DS;
+const {computed} = Ember;
 
-export default DS.Model.extend({
+export default Model.extend({
   name: attr('string'),
   url: attr('string'),
   feedUrl: attr('string'),
@@ -19,5 +21,22 @@ export default DS.Model.extend({
   user: belongsTo('user'),
   folder: belongsTo('folder'),
   articles: hasMany('article'),
-  meta: attr()
+  meta: attr(),
+  articlesCount: computed('meta.articles-count', {
+    get() {
+      return this.get('meta.articles-count')
+    },
+    set(key, val) {
+      Ember.assert('You can not set the articles counter.', true);
+    }
+  }),
+  unreadCount: computed('meta.articles-unread-count', {
+    get() {
+      return this.get('meta.articles-unread-count');
+    },
+    set(prop, value) {
+      this.set('meta.articles-unread-count', value);
+      return value;
+    }
+  })
 });
