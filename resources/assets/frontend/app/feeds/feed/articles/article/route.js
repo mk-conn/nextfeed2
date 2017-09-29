@@ -1,8 +1,12 @@
 import Ember from 'ember';
 
-const {Route, inject} = Ember;
+const {Route, $} = Ember;
 
 export default Route.extend({
+
+  beforeModel() {
+    $('#column-two').animate({scrollTop: 0, duration: 400});
+  },
 
   /**
    *
