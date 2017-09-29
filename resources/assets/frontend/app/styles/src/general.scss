@@ -65,6 +65,7 @@ body.ember-application {
     display: flex;
     flex-direction: column;
     padding: .5em;
+    border-left:1px solid #ccc;
     background: lighten($color2, 60%);
     grid-area: column-two;
     @include overflow-scroll();
