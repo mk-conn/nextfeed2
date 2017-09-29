@@ -2,8 +2,8 @@
   <div class="top nav left">
     <a class="navbar-brand" href="/">Nextfeed</a>
 
-    {{#link-to "feeds" tagName="div" classNames="action" activeClass="active"}}
-      <a class="nav-link" href="#">Feeds</a>
+    {{#link-to "feeds" classNames="nav-link" activeClass="active"}}
+      Feeds
     {{/link-to}}
 
     {{outlet "top-bar-left"}}
@@ -13,8 +13,8 @@
     <a class="nav-link" href="#" {{action (route-action "updateAllFeeds")}}>
       {{fa-icon "refresh"}}
     </a>
-    {{#link-to "settings" tagName="li" classNames="nav-item"}}
-      <a class="nav-link" href="#">{{fa-icon "cogs"}}</a>
+    {{#link-to "settings" classNames="nav-link"}}
+      {{fa-icon "cogs"}}
     {{/link-to}}
     <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
       {{fa-icon "sign-out"}}

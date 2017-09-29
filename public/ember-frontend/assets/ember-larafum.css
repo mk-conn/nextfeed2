@@ -5644,6 +5644,11 @@ header {
     padding-left: 1rem; }
   header:last-child {
     padding-right: 1rem; }
+  header .nav-link {
+    color: #eee; }
+    header .nav-link.active {
+      color: #222222;
+      background: #ccc; }
 
 #side-bar .list-group {
   width: 100%;
@@ -5733,7 +5738,7 @@ header {
 
 #articles-header {
   padding: .5rem;
-  background: #77a1d5;
+  background: #c5d7ed;
   color: #333; }
 
 .full-article {

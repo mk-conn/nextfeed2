@@ -67,17 +67,14 @@ export default Route.extend(InfinityRoute, {
     read(article) {
       const feed = this.modelFor('feeds.feed');
 
-      let unreadCount = feed.get('unreadCount');
       const decrement = article.toggleProperty('read');
       article.save();
 
       if (decrement) {
-        unreadCount--;
+        feed.decrementUnread();
       } else {
-        unreadCount++;
+        feed.incrementUnread();
       }
-
-      feed.set('unreadCount', unreadCount);
     },
     /**
      *

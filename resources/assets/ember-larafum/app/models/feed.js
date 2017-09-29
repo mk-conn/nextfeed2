@@ -22,6 +22,25 @@ export default Model.extend({
   folder: belongsTo('folder'),
   articles: hasMany('article'),
   meta: attr(),
+  /**
+   *
+   */
+  decrementUnread() {
+    let unreadCount = this.get('unreadCount');
+    unreadCount--;
+
+    this.set('unreadCount', unreadCount);
+  },
+  /**
+   *
+   */
+  incrementUnread() {
+    let unreadCount = this.get('unreadCount');
+    unreadCount++;
+
+    this.set('unreadCount', unreadCount);
+  },
+
   articlesCount: computed('meta.articles-count', {
     get() {
       return this.get('meta.articles-count')

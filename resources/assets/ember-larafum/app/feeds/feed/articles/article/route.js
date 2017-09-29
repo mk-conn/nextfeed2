@@ -4,14 +4,22 @@ const {Route, inject} = Ember;
 
 export default Route.extend({
 
-  gui: inject.service(),
-
+  /**
+   *
+   * @param params
+   * @returns {*|Promise}
+   */
   model(params) {
     return this.get('store').findRecord('article', params.article_id);
   },
-
+  /**
+   *
+   * @param model
+   */
   afterModel(model) {
     if (!model.get('read')) {
+      const feed = this.modelFor('feeds.feed');
+      feed.decrementUnread();
       model.set('read', true);
       model.save();
     }

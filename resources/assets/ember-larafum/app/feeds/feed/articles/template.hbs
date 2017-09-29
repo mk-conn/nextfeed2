@@ -1,25 +1,22 @@
 <div class="articles">
   <div class="feed-header" id="articles-header">
-    <h4 class="d-flex justify-content-between">
+    <h5 class="d-flex justify-content-between">
       <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
       <div>
-        <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span> /
+        <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span>
         <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
       </div>
-    </h4>
+    </h5>
     <p class="card-text">{{feed.description}}</p>
 
     <div class="btn-group btn-group-sm">
-      {{#if filterUnread}}
-        <button type="button" class="btn btn-secondary" {{action (action (mut filterUnread))}}>
-          Include Read
-        </button>
-      {{else}}
-        <button type="button" class="btn btn-secondary" {{action (action (mut filterUnread))}}>
-          Hide Read
-        </button>
-      {{/if}}
-
+      <button type="button" class="btn btn-secondary" {{action (action toggleProperty "filterUnread")}}>
+        {{#if filterUnread}}
+          Show all
+        {{else}}
+          Hide read
+        {{/if}}
+      </button>
       <button type="button" class="btn btn-secondary" {{action (route-action 'readAll' feed)}}>
         Mark all read
       </button>

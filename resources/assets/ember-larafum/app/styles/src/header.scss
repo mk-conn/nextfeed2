@@ -12,4 +12,14 @@ header {
     padding-right:1rem;
   }
 
+  .nav-link {
+    color:#eee;
+
+    &.active {
+      color:darken(#eee, 80%);
+      background:#ccc;
+    }
+  }
+
+
 }
