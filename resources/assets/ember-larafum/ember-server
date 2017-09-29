@@ -10,7 +10,7 @@ echo 'Running in ', $current_path . PHP_EOL;
 if ($current_path && $pub_path) {
     $commands = [
         'Delete tmp'         => "rm -rf {$current_path}/tmp",
-        'Delete dist'        => "rm -rf {$pub_path}/ember-frontend",
+        'Delete dist'        => "rm -rf {$pub_path}/frontend",
         'Ember version is:'  => "ember version",
         'Start ember server' => 'ember serve'
     ];
