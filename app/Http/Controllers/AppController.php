@@ -18,17 +18,17 @@ class AppController
 
         $pattern = [
             '~assets/vendor.css~',
-            '~assets/ember-larafum.css~',
+            '~assets/frontend.css~',
             '~assets/vendor.js~',
-            '~assets/ember-larafum.js~',
+            '~assets/frontend.js~',
             '~/ember-cli-live-reload.js~'
         ];
 
         $replacements = [
             'frontend/assets/vendor.css',
-            'frontend/assets/ember-larafum.css',
+            'frontend/assets/frontend.css',
             'frontend/assets/vendor.js',
-            'frontend/assets/ember-larafum.js',
+            'frontend/assets/frontend.js',
             "http://127.0.0.1:4200/ember-cli-live-reload.js"
         ];
 
