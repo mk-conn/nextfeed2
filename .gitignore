@@ -203,3 +203,5 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
+
+/public/frontend
