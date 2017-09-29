@@ -3,7 +3,7 @@
 
 module.exports = function (environment) {
   let ENV = {
-    modulePrefix: 'ember-larafum',
+    modulePrefix: 'frontend',
     environment,
     rootURL: '/',
     locationType: 'auto',
