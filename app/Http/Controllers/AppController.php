@@ -17,10 +17,10 @@ class AppController
         $indexHtml = file_get_contents(public_path('frontend/index.html'));
 
         $pattern = [
-            '~/assets/vendor.css~',
-            '~/assets/frontend.css~',
-            '~/assets/vendor.js~',
-            '~/assets/frontend.js~',
+            '~/assets/vendor(.*).css~',
+            '~/assets/frontend(.*).css~',
+            '~/assets/vendor(.*).js~',
+            '~/assets/frontend(.*).js~',
             '~/ember-cli-live-reload.js~'
         ];
 
