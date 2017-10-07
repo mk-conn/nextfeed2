@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 
-use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,8 +25,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // we don't have the idehelper stuff in production package (and we dont want it there)
-        if ($this->app->environment() === 'local' && class_exists(IdeHelperServiceProvider::class)) {
-            $this->app->register(IdeHelperServiceProvider::class);
+        if ($this->app->environment() === 'local' && class_exists
+            (\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class)) {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
 }
