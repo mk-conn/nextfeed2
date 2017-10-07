@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "675552e6b371446c2df18797b71f7d39",
+    "content-hash": "3f819d5ecae97c9f7d626c4cd071eead",
     "packages": [
         {
             "name": "cloudcreativity/json-api",
@@ -70,16 +70,16 @@
         },
         {
             "name": "cloudcreativity/laravel-json-api",
-            "version": "v0.11.0",
+            "version": "v0.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudcreativity/laravel-json-api.git",
-                "reference": "0430b11fd2e77566f260b52f5ef73d41d9e03538"
+                "reference": "5aab3ddd8da4c98bb214437e9555fb9212aa7c5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudcreativity/laravel-json-api/zipball/0430b11fd2e77566f260b52f5ef73d41d9e03538",
-                "reference": "0430b11fd2e77566f260b52f5ef73d41d9e03538",
+                "url": "https://api.github.com/repos/cloudcreativity/laravel-json-api/zipball/5aab3ddd8da4c98bb214437e9555fb9212aa7c5c",
+                "reference": "5aab3ddd8da4c98bb214437e9555fb9212aa7c5c",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +147,7 @@
                 "jsonapi.org",
                 "laravel"
             ],
-            "time": "2017-09-02T13:53:09+00:00"
+            "time": "2017-09-26T16:41:17+00:00"
         },
         {
             "name": "cloudcreativity/utils-object",
@@ -952,16 +952,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.11",
+            "version": "v5.5.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a"
+                "reference": "26c700eb79e5bb55b59df2c495c9c71f16f43302"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a",
-                "reference": "56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/26c700eb79e5bb55b59df2c495c9c71f16f43302",
+                "reference": "26c700eb79e5bb55b59df2c495c9c71f16f43302",
                 "shasum": ""
             },
             "require": {
@@ -1080,7 +1080,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-09-21T18:59:13+00:00"
+            "time": "2017-10-03T17:41:03+00:00"
         },
         {
             "name": "laravel/scout",
@@ -1352,12 +1352,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mk-conn/shellax.git",
-                "reference": "7dd447ae46424eea5863e1be8a96370bd68d13dc"
+                "reference": "e805fe5aaf2a0a8aedace0ab6521bef6cf4783ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mk-conn/shellax/zipball/7dd447ae46424eea5863e1be8a96370bd68d13dc",
-                "reference": "7dd447ae46424eea5863e1be8a96370bd68d13dc",
+                "url": "https://api.github.com/repos/mk-conn/shellax/zipball/e805fe5aaf2a0a8aedace0ab6521bef6cf4783ab",
+                "reference": "e805fe5aaf2a0a8aedace0ab6521bef6cf4783ab",
                 "shasum": ""
             },
             "require": {
@@ -1752,16 +1752,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.10",
+            "version": "v2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
                 "shasum": ""
             },
             "require": {
@@ -1796,7 +1796,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2017-09-27T21:40:39+00:00"
         },
         {
             "name": "psr/container",
@@ -2067,16 +2067,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.7.0",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e"
+                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/45cffe822057a09e05f7bd09ec5fb88eeecd2334",
+                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334",
                 "shasum": ""
             },
             "require": {
@@ -2145,20 +2145,20 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2017-08-04T13:39:04+00:00"
+            "time": "2017-09-22T20:46:04+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.0.1",
+            "version": "v6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "008f088d535ed3333af5ad804dd4c0eaf97c2805"
+                "reference": "412333372fb6c8ffb65496a2bbd7321af75733fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/008f088d535ed3333af5ad804dd4c0eaf97c2805",
-                "reference": "008f088d535ed3333af5ad804dd4c0eaf97c2805",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/412333372fb6c8ffb65496a2bbd7321af75733fc",
+                "reference": "412333372fb6c8ffb65496a2bbd7321af75733fc",
                 "shasum": ""
             },
             "require": {
@@ -2194,13 +2194,13 @@
                 }
             ],
             "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "http://swiftmailer.org",
+            "homepage": "http://swiftmailer.symfony.com",
             "keywords": [
                 "email",
                 "mail",
                 "mailer"
             ],
-            "time": "2017-05-20T06:20:27+00:00"
+            "time": "2017-09-30T22:39:41+00:00"
         },
         {
             "name": "symfony/console",
@@ -3170,12 +3170,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tymondesigns/jwt-auth.git",
-                "reference": "035fd9d53d64816dd782cded5f114560f686c535"
+                "reference": "b8115781dee8dc30552871ca534feae052a2c800"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tymondesigns/jwt-auth/zipball/035fd9d53d64816dd782cded5f114560f686c535",
-                "reference": "035fd9d53d64816dd782cded5f114560f686c535",
+                "url": "https://api.github.com/repos/tymondesigns/jwt-auth/zipball/b8115781dee8dc30552871ca534feae052a2c800",
+                "reference": "b8115781dee8dc30552871ca534feae052a2c800",
                 "shasum": ""
             },
             "require": {
@@ -3236,7 +3236,7 @@
                 "jwt",
                 "laravel"
             ],
-            "time": "2017-09-07T14:13:53+00:00"
+            "time": "2017-09-27T20:59:23+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -4389,16 +4389,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.3.0",
+            "version": "6.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9501bab711403a1ab5b8378a8adb4ec3db3debdb"
+                "reference": "c0ff817b36a827e64bf5f57bc72278150cf30a77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9501bab711403a1ab5b8378a8adb4ec3db3debdb",
-                "reference": "9501bab711403a1ab5b8378a8adb4ec3db3debdb",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c0ff817b36a827e64bf5f57bc72278150cf30a77",
+                "reference": "c0ff817b36a827e64bf5f57bc72278150cf30a77",
                 "shasum": ""
             },
             "require": {
@@ -4469,7 +4469,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-08-04T05:20:39+00:00"
+            "time": "2017-09-24T07:25:54+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
