@@ -7,12 +7,12 @@ return [
     // post install tasks - e.g. cache clearing, running migrations, etc...
     'postinstall' => [
         'artisan' => [
-            'shellax:setup-cron'          => [
-                '--name'     => 'larafum',
-                '--command'  => 'php ' . $dir . '/artisan schedule:run',
-                '--schedule' => 'every-minute',
-                '--as'       => 'www',
-            ],
+//            'shellax:setup-cron'          => [
+//                '--name'     => 'larafum',
+//                '--command'  => 'php ' . $dir . '/artisan schedule:run',
+//                '--schedule' => 'every-minute',
+//                '--as'       => 'www',
+//            ],
 //            'shellax:supervisor-register' => [
 //                '--name'     => '',
 //                '--user'     => '',
