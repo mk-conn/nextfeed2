@@ -25,7 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment() === 'local') {
+        // we don't have the idehelper stuff in production package (and we dont want it there)
+        if ($this->app->environment() === 'local' && class_exists(IdeHelperServiceProvider::class)) {
             $this->app->register(IdeHelperServiceProvider::class);
         }
     }
