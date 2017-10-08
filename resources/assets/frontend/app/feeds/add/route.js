@@ -1,27 +1,18 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const {Route, inject: {service}, $} = Ember;
+const {Route, RSVP, set, get} = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
 
-  session: service(),
-
-  init() {
-    this._super(...arguments);
-
-    this.sessionToken = null;
-  },
-
-  beforeModel() {
-    const token = this.get('session.data.authenticated.token');
-    let sessionToken = this.get('session.session.content.authenticated');
-  },
-
   model() {
-    return Ember.Object.create({
-      url: null,
-      feeds: null
+    return RSVP.hash({
+      discover: Ember.Object.create({
+        url: null,
+        errors: null
+      }),
+      feed: this.get('store').createRecord('feed'),
+      feedAction: null
     })
   },
 
@@ -38,17 +29,18 @@ export default Route.extend(AuthenticatedRouteMixin, {
      * @param siteUrl
      */
     discover() {
-      if (this.currentModel.get('url')) {
-        const feedAction = this.store.createRecord('feedAction', {
-          type: 'discover',
-          filter: {
-            url: this.currentModel.get('url')
+      const discover = this.get('currentModel').discover;
+      if (discover.get('url')) {
+        this.store.queryRecord('feed-action', {
+          action: 'discover',
+          params: {
+            url: discover.get('url')
           }
+        }).then(feedAction => {
+          set(get(this, 'currentModel'), 'feedAction', feedAction);
+        }, error => {
+          set(discover, 'errors', error.errors)
         });
-
-        feedAction.save().then(feedAction => {
-          let results = feedAction.get('results');
-        })
 
       }
     }

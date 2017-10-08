@@ -1,12 +1,23 @@
 <h2>Add a feed</h2>
 <div class="form-group">
   <label for="url">Url</label>
-  {{input type="text" class="form-control" value=model.url}}
+  {{input type="text" class="form-control" value=model.discover.url}}
+  {{#if model.discover.errors}}
+    <div class="alert alert-warning">
+      {{#each model.discover.errors as |error|}}
+        <p>{{error.title}}</p>
+      {{/each}}
+    </div>
+  {{/if}}
 </div>
 <button class="btn btn-secondary" type="button" {{action (route-action "discover")}}>Discover</button>
 
-{{#if model.feeds}}
-  {{#each model.feeds as |feed|}}
-    <div>{{feed.url}}</div>
+{{#if model.feedAction.result.feeds}}
+  {{#each model.feedAction.result.feeds as |feed|}}
+    <div class="form-group">
+      <label for="">{{feed}}</label>
+      {{input type="checkbox" class="checkbox"}}
+    </div>
   {{/each}}
 {{/if}}
+
