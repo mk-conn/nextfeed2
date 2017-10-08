@@ -6,11 +6,10 @@
  *
  */
 
-namespace App\JsonApi\Feeds;
+namespace App\JsonApi\FeedActions;
 
 
 use App\JsonApi\BaseAuthorizer;
-use App\Models\Feed;
 use CloudCreativity\JsonApi\Contracts\Object\RelationshipInterface;
 use CloudCreativity\JsonApi\Contracts\Object\ResourceObjectInterface;
 use Neomerx\JsonApi\Contracts\Encoder\Parameters\EncodingParametersInterface;
@@ -31,13 +30,9 @@ class Authorizer extends BaseAuthorizer
      */
     public function canReadMany($resourceType, EncodingParametersInterface $parameters)
     {
+        $user = $this->currentUser();
 
-        if (isset($parameters->getFilteringParameters()['user'])) {
-            $user = $this->currentUser();
-            if ($user->name === $parameters->getFilteringParameters()['user']) {
-                return true;
-            }
-
+        if (!$user) {
             return $this->forbidden();
         }
 
@@ -54,16 +49,13 @@ class Authorizer extends BaseAuthorizer
      */
     public function canCreate($resourceType, ResourceObjectInterface $resource, EncodingParametersInterface $parameters)
     {
-        $relationships = $resource->getRelationships();
-
         $user = $this->currentUser();
-        $forUser = $relationships->user;
-        // weak type shit
-        if ($user->id == $forUser->data->id) {
-            return true;
+
+        if (!$user) {
+            return $this->forbidden();
         }
 
-        return $this->forbidden();
+        return true;
     }
 
 
@@ -77,11 +69,11 @@ class Authorizer extends BaseAuthorizer
     {
         $user = $this->currentUser();
 
-        if ($record->user->id === $user->id) {
-            return true;
+        if (!$user) {
+            return $this->forbidden();
         }
 
-        return $this->forbidden();
+        return true;
     }
 
 
@@ -94,7 +86,13 @@ class Authorizer extends BaseAuthorizer
      */
     public function canUpdate($record, ResourceObjectInterface $resource, EncodingParametersInterface $parameters)
     {
-        return false;
+        $user = $this->currentUser();
+
+        if (!$user) {
+            return $this->forbidden();
+        }
+
+        return true;
     }
 
 
@@ -152,9 +150,7 @@ class Authorizer extends BaseAuthorizer
     )
     {
 
-        $user = $this->currentUser();
-
-        return $user->id === $record->user->id;
+        return false;
     }
 
 }

@@ -1,27 +1,21 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const {Route, inject: {service}, $} = Ember;
+const {Route, RSVP, set, get, A} = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
 
-  session: service(),
-
-  init() {
-    this._super(...arguments);
-
-    this.sessionToken = null;
-  },
-
-  beforeModel() {
-    const token = this.get('session.data.authenticated.token');
-    let sessionToken = this.get('session.session.content.authenticated');
-  },
-
   model() {
-    return Ember.Object.create({
-      url: null,
-      feeds: null
+    return RSVP.hash({
+      discover: Ember.Object.create({
+        url: null,
+        errors: null,
+        feeds: null
+      }),
+      feed: this.get('store').createRecord('feed'),
+      folders: this.get('store').findAll('folder'),
+
+      feedAction: null
     })
   },
 
@@ -35,22 +29,53 @@ export default Route.extend(AuthenticatedRouteMixin, {
   actions: {
     /**
      *
+     * @param feed
+     */
+    toggleSelectFeed(feed) {
+      feed.toggleProperty('selected');
+    },
+
+    /**
+     *
      * @param siteUrl
      */
     discover() {
-      if (this.currentModel.get('url')) {
-        const feedAction = this.store.createRecord('feedAction', {
-          type: 'discover',
-          filter: {
-            url: this.currentModel.get('url')
+      const discover = this.get('currentModel').discover;
+      if (discover.get('url')) {
+        this.store.queryRecord('feed-action', {
+          action: 'discover',
+          params: {
+            url: discover.get('url')
           }
+        }).then(feedAction => {
+          let feeds = new A();
+          let items = get(feedAction, 'result.feeds');
+
+          items.forEach(item => {
+            feeds.pushObject(Ember.Object.create({
+              url: item,
+              folder: null,
+              selected: false
+            }));
+          });
+          set(get(this, 'currentModel'), 'discover.feeds', feeds);
+        }, error => {
+          set(discover, 'errors', error.errors)
         });
-
-        feedAction.save().then(feedAction => {
-          let results = feedAction.get('results');
-        })
-
       }
+    },
+
+    subscribe() {
+      const discover = get(this, 'currentModel').discover;
+      const selectedFeeds = get(discover, 'feeds').filterBy('selected', true);
+
+      selectedFeeds.forEach(feed => {
+        this.store.createRecord('feed', {
+          url: feed.get('url'),
+          folder: feed.get('folder'),
+          user: this.get('currentUser.user')
+        }).save();
+      });
     }
   }
 

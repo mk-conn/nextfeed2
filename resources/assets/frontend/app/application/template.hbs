@@ -19,6 +19,7 @@
     <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
       {{fa-icon "sign-out"}}
     </a>
+    <div class="nav-link">{{currentUser.user.fullname}}</div>
     {{outlet "top-bar-right"}}
   </div>
 
