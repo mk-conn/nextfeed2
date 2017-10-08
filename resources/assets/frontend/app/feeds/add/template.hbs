@@ -1,4 +1,5 @@
 <h2>Add a feed</h2>
+
 <div class="form-group">
   <label for="url">Url</label>
   {{input type="text" class="form-control" value=model.discover.url}}
@@ -10,14 +11,51 @@
     </div>
   {{/if}}
 </div>
-<button class="btn btn-secondary" type="button" {{action (route-action "discover")}}>Discover</button>
 
-{{#if model.feedAction.result.feeds}}
-  {{#each model.feedAction.result.feeds as |feed|}}
-    <div class="form-group">
-      <label for="">{{feed}}</label>
-      {{input type="checkbox" class="checkbox"}}
+<button class="btn btn-outline-secondary" type="button" {{action (route-action "discover")}}>Discover</button>
+
+
+{{#if model.discover.feeds}}
+  <br>
+  <br>
+  <h4>Discovered Feeds</h4>
+  <div class="card">
+    <div class="card-header">
+      Select the feed(s) to subscribe
     </div>
-  {{/each}}
+
+    <div class="list-group">
+      {{#each model.discover.feeds as |feed|}}
+        <div class="list-group-item">
+          <div class="form-group">
+            {{#if feed.selected}}
+              <i class="fa grey fa-check"></i>
+            {{else}}
+              <i class="fa grey fa-minus"></i>
+            {{/if}}
+            <span class="action" {{action "toggleSelectFeed" feed}}>{{feed.url}}</span>
+          </div>
+          <div class="form-group">
+            {{#power-select
+              placeholder="Folder"
+              classNames="form-control"
+              options=model.folders
+              selected=feed.folder
+              onchange=(action (mut feed.folder)) as |folder|}}
+              {{folder.name}}
+            {{/power-select}}
+          </div>
+
+        </div>
+      {{/each}}
+    </div>
+    <div class="card-text">
+
+    </div>
+
+    <button type="button" class="btn btn-secondary" {{action "subscribe"}}>Subscribe</button>
+
+  </div>
+
 {{/if}}
 

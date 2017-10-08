@@ -58,8 +58,8 @@ class Authorizer extends BaseAuthorizer
 
         $user = $this->currentUser();
         $forUser = $relationships->user;
-
-        if ($user->id === $forUser->data->id) {
+        // weak type shit
+        if ($user->id == $forUser->data->id) {
             return true;
         }
 

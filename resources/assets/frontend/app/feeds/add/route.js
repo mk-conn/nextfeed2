@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const {Route, RSVP, set, get} = Ember;
+const {Route, RSVP, set, get, A} = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
 
@@ -9,9 +9,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return RSVP.hash({
       discover: Ember.Object.create({
         url: null,
-        errors: null
+        errors: null,
+        feeds: null
       }),
       feed: this.get('store').createRecord('feed'),
+      folders: this.get('store').findAll('folder'),
+
       feedAction: null
     })
   },
@@ -26,6 +29,14 @@ export default Route.extend(AuthenticatedRouteMixin, {
   actions: {
     /**
      *
+     * @param feed
+     */
+    toggleSelectFeed(feed) {
+      feed.toggleProperty('selected');
+    },
+
+    /**
+     *
      * @param siteUrl
      */
     discover() {
@@ -37,12 +48,33 @@ export default Route.extend(AuthenticatedRouteMixin, {
             url: discover.get('url')
           }
         }).then(feedAction => {
-          set(get(this, 'currentModel'), 'feedAction', feedAction);
+          let feeds = new A();
+          let items = get(feedAction, 'result.feeds');
+
+          items.forEach(item => {
+            feeds.pushObject(Ember.Object.create({
+              url: item,
+              folder: null,
+              selected: false
+            }));
+          });
+          set(get(this, 'currentModel'), 'discover.feeds', feeds);
         }, error => {
           set(discover, 'errors', error.errors)
         });
-
       }
+    },
+
+    subscribe() {
+      const discover = get(this, 'currentModel').discover;
+      const selectedFeeds = get(discover, 'feeds').filterBy('selected', true);
+
+      selectedFeeds.forEach(feed => {
+        this.store.createRecord('feed', {
+          url: feed.get('url'),
+          user: this.get('currentUser.user')
+        }).save();
+      });
     }
   }
 
