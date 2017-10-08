@@ -72,6 +72,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       selectedFeeds.forEach(feed => {
         this.store.createRecord('feed', {
           url: feed.get('url'),
+          folder: feed.get('folder'),
           user: this.get('currentUser.user')
         }).save();
       });
