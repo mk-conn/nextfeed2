@@ -24,10 +24,13 @@ Route::group(['prefix' => 'api'], function () {
          ->middleware('jwt.auth');
     Route::get('feeds/{id}/articles/mark-read', 'FeedsController@readAllArticles')
          ->middleware('jwt.auth');
+    Route::get('feeds/discover/{url}', 'FeedsController@discover')
+         ->middleware('jwt.auth');
 });
 
 JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'jwt.auth'], function (ApiGroup $api) {
     $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
+    $api->resource('feed-actions');
     $api->resource('folders', ['has-many' => 'feeds', 'has-one' => 'user']);
     $api->resource('articles');
     $api->resource('settings');

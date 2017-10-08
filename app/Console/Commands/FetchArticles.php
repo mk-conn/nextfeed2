@@ -10,15 +10,15 @@ use Illuminate\Console\Command;
  *
  * @package App\Console\Commands
  */
-class FetchFeedArticles extends Command
+class FetchArticles extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'feeds:articles
-        {--id=* : ID of feed to update}
+    protected $signature = 'articles:fetch
+        {--id=* : ID of feed to update [defaults to all]}
     ';
 
     /**

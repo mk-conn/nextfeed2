@@ -14,15 +14,15 @@ use Illuminate\Console\Command;
  *
  * @package App\Console\Commands
  */
-class DatabaseCleaner extends Command
+class CleanArticles extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'feeds:clean 
-        {--id=* : ID of feed to clean (Empty for all)}
+    protected $signature = 'articles:clean 
+        {--id=* : ID of feed to clean [defaults to all]}
         {--days=10 : Articles older than [--days]}
     ';
 

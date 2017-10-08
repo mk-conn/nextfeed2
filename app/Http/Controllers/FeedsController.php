@@ -13,6 +13,7 @@ use App\Models\Article;
 use App\Models\Feed;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use PicoFeed\Reader\Reader;
 
 class FeedsController extends Controller
 {
@@ -36,6 +37,24 @@ class FeedsController extends Controller
         $feeds->each(function (Feed $feed) {
             $feed->fetchNewArticles();
         });
+    }
+
+    /**
+     * @param $url
+     */
+    public function discover($url)
+    {
+        if (!Auth::check()) {
+            return response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $reader = new Reader;
+        $resource = $reader->download($url);
+
+        $feeds = $reader->find($resource->getUrl(), $resource->getContent());
+
+        return response()->json($feeds);
+
     }
 
     /**
