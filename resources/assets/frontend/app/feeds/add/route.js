@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const {Route, RSVP, set, get, A} = Ember;
+const {Route, RSVP, set, get, A, getOwner} = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
 
@@ -74,7 +74,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
           url: feed.get('url'),
           folder: feed.get('folder'),
           user: this.get('currentUser.user')
-        }).save();
+        }).save().then(() => {
+          getOwner(this).lookup('route:' + 'feeds').refresh();
+        });
       });
     }
   }
