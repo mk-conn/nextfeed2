@@ -4,6 +4,10 @@
   padding: .25rem .25rem 3rem .25rem;
   transition: all .6s ease;
 
+  .article-header {
+    margin-bottom:2rem;
+  }
+
   .article-title {
     text-overflow: ellipsis;
   }

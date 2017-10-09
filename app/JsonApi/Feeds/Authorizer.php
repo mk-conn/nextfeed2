@@ -112,7 +112,13 @@ class Authorizer extends BaseAuthorizer
      */
     public function canDelete($record, EncodingParametersInterface $parameters)
     {
-        return false;
+        $user = $this->currentUser();
+
+        if ($record->user->id === $user->id) {
+            return true;
+        }
+
+        return $this->forbidden();
     }
 
 

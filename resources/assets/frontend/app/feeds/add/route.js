@@ -25,6 +25,17 @@ export default Route.extend(AuthenticatedRouteMixin, {
       outlet: 'column-two'
     })
   },
+  /**
+   *
+   * @param controller
+   * @param model
+   */
+  setupController(controller, model) {
+    this._super(controller, model);
+
+    controller.set('processed', false);
+    controller.set('processing', false);
+  },
 
   actions: {
     /**
@@ -42,6 +53,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     discover() {
       const discover = this.get('currentModel').discover;
       if (discover.get('url')) {
+        this.controller.set('processing', true);
         this.store.queryRecord('feed-action', {
           action: 'discover',
           params: {
@@ -59,7 +71,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
             }));
           });
           set(get(this, 'currentModel'), 'discover.feeds', feeds);
+          this.controller.set('processing', false);
+          this.controller.set('processed', true);
         }, error => {
+          this.controller.set('processing', false);
           set(discover, 'errors', error.errors)
         });
       }

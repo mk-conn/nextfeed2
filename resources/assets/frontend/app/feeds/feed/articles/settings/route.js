@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const {Route} = Ember;
+const {Route, getOwner} = Ember;
 
 export default Route.extend({
   model(params) {
@@ -19,6 +19,13 @@ export default Route.extend({
 
       feed.save().then(feed => {
 
+      });
+    },
+    deleteFeed() {
+      const feed = this.get('currentModel');
+      feed.destroyRecord().then(() => {
+        this.transitionTo('feeds');
+        getOwner(this).lookup('route:' + 'feeds').refresh();
       });
     }
   }

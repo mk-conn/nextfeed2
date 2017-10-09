@@ -4,22 +4,26 @@ header {
   justify-content: space-between;
   align-items: center;
 
+  a.navbar-brand {
+    color: $lightblue;
+    font-weight: bold;
+  }
+
   &:first-child {
-    padding-left:1rem;
+    padding-left: 1rem;
   }
 
   &:last-child {
-    padding-right:1rem;
+    padding-right: 1rem;
   }
 
   .nav-link {
-    color:#eee;
+    color: #eee;
 
     &.active {
-      color:darken(#eee, 80%);
-      background:#ccc;
+      color: darken(#eee, 80%);
+      background: #ccc;
     }
   }
-
 
 }
