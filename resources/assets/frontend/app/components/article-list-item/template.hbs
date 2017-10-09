@@ -1,9 +1,8 @@
 <div class="d-flex w-100 justify-content-between">
   <h5 class="article-title mb-1">{{article.title}}</h5>
-  <small>{{moment-format article.updatedDate 'Y-MM-DD HH:mm'}}</small>
 </div>
 <p>{{articleDescription}}</p>
-<div class="actions">
+<div class="btn-group">
   {{#link-to "feeds.feed.articles.article" article.id classNames="btn btn-sm btn-outline-secondary"}}
     {{fa-icon "expand"}}
   {{/link-to}}
@@ -31,3 +30,4 @@
     {{/if}}
   </a>
 </div>
+<small>{{moment-format article.updatedDate 'Y-MM-DD HH:mm'}}</small>
