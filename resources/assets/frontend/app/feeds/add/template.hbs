@@ -29,9 +29,9 @@
         <div class="list-group-item">
           <div class="form-group">
             {{#if feed.selected}}
-              <i class="fa grey fa-check"></i>
+              {{fa-icon "check" fixedWith=true}}
             {{else}}
-              <i class="fa grey fa-minus"></i>
+              {{fa-icon "minus" fixedWith=true}}
             {{/if}}
             <span class="action" {{action "toggleSelectFeed" feed}}>{{feed.url}}</span>
           </div>
