@@ -4,26 +4,26 @@
 </div>
 <p>{{articleDescription}}</p>
 <div class="actions">
-  {{#link-to "feeds.feed.articles.article" article.id classNames="btn btn-outline-secondary"}}
+  {{#link-to "feeds.feed.articles.article" article.id classNames="btn btn-sm btn-outline-secondary"}}
     {{fa-icon "expand"}}
   {{/link-to}}
-  <a class="btn btn-outline-secondary" href={{article.url}} target="_blank" {{action "originalArticle"
+  <a class="btn btn-sm btn-outline-secondary" href={{article.url}} target="_blank" {{action "originalArticle"
                                                                                      preventDefault=false}}
      data-content="Open article in new tab">
     {{fa-icon "external-link"}}
   </a>
-  <a class="btn btn-outline-secondary"
+  <a class="btn btn-sm btn-outline-secondary"
      href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}%0A%0A{{article.url}}">
     {{fa-icon "share"}}
   </a>
-  <a class="btn btn-outline-secondary" data-content="{{readUnreadHint}}" {{action (route-action "read" article)}}>
+  <a class="btn btn-sm btn-outline-secondary" data-content="{{readUnreadHint}}" {{action (route-action "read" article)}}>
     {{#if article.read}}
       {{fa-icon "check-circle-o"}}
     {{else}}
       {{fa-icon "circle-o"}}
     {{/if}}
   </a>
-  <a class="btn btn-outline-secondary" {{action (route-action "keep" article)}}>
+  <a class="btn btn-sm btn-outline-secondary" {{action (route-action "keep" article)}}>
     {{#if article.keep}}
       {{fa-icon "star"}}
     {{else}}

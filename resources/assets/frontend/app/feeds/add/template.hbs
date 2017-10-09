@@ -12,8 +12,15 @@
   {{/if}}
 </div>
 
-<button class="btn btn-outline-secondary" type="button" {{action (route-action "discover")}}>Discover</button>
+<button class="btn btn-outline-secondary" type="button" {{action (route-action "discover")}} disabled={{processin}}>
+  Discover
+</button>
 
+{{#if processing}}
+  <div class="d-flex justify-content-center h-25">
+    {{fa-icon "circle-o-notch" spin=true size=2 fixedWith=true}}
+  </div>
+{{/if}}
 
 {{#if model.discover.feeds}}
   <br>
@@ -56,6 +63,12 @@
     <button type="button" class="btn btn-secondary" {{action "subscribe"}}>Subscribe</button>
 
   </div>
+{{else}}
+  {{#if processed}}
+    <div class="alert alert-light" role="alert">
+      No feeds could be discovered for the given url.
+    </div>
+  {{/if}}
 
 {{/if}}
 
