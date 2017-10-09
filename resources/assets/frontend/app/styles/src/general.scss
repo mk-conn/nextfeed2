@@ -35,7 +35,7 @@ body.ember-application {
     grid-template-areas: "header header header" "side-bar column-one column-two";
     background: #ccc;
     grid-template-rows: $header-height 1fr;
-    grid-template-columns: 20em .3fr .7fr;
+    grid-template-columns: 20em .35fr .65fr;
   }
 
   header {
