@@ -12,10 +12,16 @@
 </div>
 
 {{#if folder.open}}
-  <div class="list-group">
-    {{#each folder.feeds as |feed|}}
-      {{feed-item feed=feed}}
-    {{/each}}
+  <div class="list-group feeds">
+
+    {{#sortable-objects sortableObjectList=folder.feeds sortEndAction=(route-action "sort" folder.feeds)
+                        sortingScope="feedsSorting" useSwap=false}}
+      {{#each folder.feeds as |feed|}}
+        {{#draggable-object content=feed isSortable=true sortingScope="feedsSorting"}}
+          {{feed-item feed=feed classNames="list-group-item feed-item"}}
+        {{/draggable-object}}
+      {{/each}}
+    {{/sortable-objects}}
   </div>
 {{/if}}
 

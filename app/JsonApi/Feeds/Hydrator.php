@@ -22,6 +22,7 @@ class Hydrator extends EloquentHydrator
         'icon',
         'feed-url',
         'site-url',
+        'order'
     ];
 
     /**

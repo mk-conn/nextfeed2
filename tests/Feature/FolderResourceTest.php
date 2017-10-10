@@ -30,10 +30,10 @@ class FolderResourceTest extends TestResource
     {
         $user = $this->createUser();
         $this->be($user);
-        $this->createFolder($user, [], 5);
+        $this->createFolder([], 5);
 
         $differentUser = $this->createUser();
-        $this->createFolder($differentUser, [], 10);
+        $this->createFolder([], 10);
 
         $response = $this->getJson('api/v1/folders')
                          ->assertStatus(Response::HTTP_OK)
@@ -53,7 +53,7 @@ class FolderResourceTest extends TestResource
         $user = $this->createUser(['name' => 'anthony']);
         $this->be($user);
 
-        $this->createFolder($user, [], 5);
+        $this->createFolder([], 5);
 
         $response = $this->getJson('api/v1/folders?filter[user]=anthony')
                          ->assertStatus(Response::HTTP_OK)
@@ -71,7 +71,7 @@ class FolderResourceTest extends TestResource
         $this->be($userBadGuy);
 
         $user = $this->createUser(['name' => 'anthony']);
-        $this->createFolder($user, [], 5);
+        $this->createFolder([], 5);
 
         $this->getJson('api/v1/folders?filter[user]=anthony')
              ->assertStatus(Response::HTTP_FORBIDDEN);
@@ -85,7 +85,7 @@ class FolderResourceTest extends TestResource
         $user = $this->createUser();
         $this->be($user);
 
-        $folder = $this->createFolder($user, ['name' => 'News']);
+        $folder = $this->createFolder(['name' => 'News']);
 
         $response = $this->getJson('api/v1/folders/' . $folder->id)
                          ->assertStatus(Response::HTTP_OK)

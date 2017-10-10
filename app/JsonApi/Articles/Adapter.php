@@ -8,6 +8,7 @@ use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class Adapter extends EloquentAdapter
 {
@@ -39,7 +40,11 @@ class Adapter extends EloquentAdapter
         }
 
         if ($filters->has('keep')) {
-            $query->where('keep', $filters->get('keep'));
+            $user = Auth::user();
+            $feeds = $user->feeds;
+
+            $query->where('keep', $filters->get('keep'))
+                  ->whereIn('feed_id', $feeds->pluck('id'));
         }
     }
 

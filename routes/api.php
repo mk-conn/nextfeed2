@@ -15,15 +15,17 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 */
 
 Route::group(['prefix' => 'api'], function () {
+
     Route::get('auth-user', 'AuthenticateController@getAuthUser');
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::post('token-refresh', 'AuthenticateController@tokenRefresh');
+
     Route::get('article/scrape', 'ArticleController@scrapeContent')
          ->middleware('jwt.auth');
-    Route::get('feeds/refresh/{id}?', 'FeedsController@refresh')
-         ->middleware('jwt.auth');
+
     Route::get('feeds/{id}/articles/mark-read', 'FeedsController@readAllArticles')
          ->middleware('jwt.auth');
+
     Route::get('feeds/discover/{url}', 'FeedsController@discover')
          ->middleware('jwt.auth');
 });
@@ -32,7 +34,7 @@ JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'jwt.auth'], func
     $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
     $api->resource('feed-actions');
     $api->resource('folders', ['has-many' => 'feeds', 'has-one' => 'user']);
-    $api->resource('articles');
+    $api->resource('articles', ['has-one' => 'feed']);
     $api->resource('settings');
     $api->resource('users', ['has-many' => ['folders', 'feeds', 'settings']]);
 });

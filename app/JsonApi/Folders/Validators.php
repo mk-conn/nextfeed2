@@ -52,7 +52,7 @@ class Validators extends AbstractValidatorProvider
         $allowEmpty = false;
         $required = is_null($record);
 
-        $relationships->hasOne('user', 'users', $required, $allowEmpty);
+//        $relationships->hasOne('user', 'users', $required, $allowEmpty);
     }
 
 }

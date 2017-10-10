@@ -24,13 +24,13 @@ abstract class TestCase extends BaseTestCase
     {
         $content = $data ? json_encode($data) : null;
 
-        $headers = [
+        $headers = array_merge($headers, [
             'CONTENT-TYPE'     => MediaTypeInterface::JSON_API_MEDIA_TYPE,
             'ACCEPT'           => MediaTypeInterface::JSON_API_MEDIA_TYPE,
             'CONTENT_LENGTH'   => mb_strlen($content, '8bit'),
             'X-Requested-With' => 'XMLHttpRequest',
             'X-CSRF-TOKEN'     => csrf_token(),
-        ];
+        ]);
 
         return parent::json($method, $uri, $data, $headers);
     }

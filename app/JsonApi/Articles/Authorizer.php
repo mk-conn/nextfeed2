@@ -35,9 +35,14 @@ class Authorizer extends BaseAuthorizer
         if (isset($parameters->getFilteringParameters()['feed'])) {
             $user = $this->currentUser();
             $feed = Feed::find($parameters->getFilteringParameters()['feed']);
+
             if ($feed->user_id === $user->id) {
                 return true;
             }
+        }
+
+        if (isset($parameters->getFilteringParameters()['keep'])) {
+            return true;
         }
 
         return $this->forbidden();

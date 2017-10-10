@@ -9,6 +9,7 @@
 namespace App;
 
 
+use App\Observers\BaseObserver;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -18,7 +19,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class BaseModel extends Model
 {
+    /**
+     * @var array
+     */
     protected $guarded = ['id', 'updated_at', 'created_at'];
+
+    /**
+     * @var bool
+     */
+    protected static $baseObserver = true;
 
     /**
      * BaseModel constructor.
@@ -32,6 +41,18 @@ class BaseModel extends Model
         }
 
         parent::__construct($attributes);
+    }
+
+    /**
+     *
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        if (static::$baseObserver) {
+            static::observe(BaseObserver::class);
+        }
     }
 
     /**

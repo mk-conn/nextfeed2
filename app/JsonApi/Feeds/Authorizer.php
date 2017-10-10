@@ -54,12 +54,9 @@ class Authorizer extends BaseAuthorizer
      */
     public function canCreate($resourceType, ResourceObjectInterface $resource, EncodingParametersInterface $parameters)
     {
-        $relationships = $resource->getRelationships();
-
         $user = $this->currentUser();
-        $forUser = $relationships->user;
-        // weak type shit
-        if ($user->id == $forUser->data->id) {
+
+        if ($user) {
             return true;
         }
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\BaseModel;
+use App\Traits\Model\HasOrder;
 use PicoFeed\Reader\Favicon;
 use PicoFeed\Reader\Reader;
 
@@ -58,6 +59,13 @@ use PicoFeed\Reader\Reader;
  */
 class Feed extends BaseModel
 {
+    use HasOrder;
+
+    /**
+     * @var bool
+     */
+    protected static $baseObserver = false;
+
     /**
      *
      */
@@ -87,6 +95,9 @@ class Feed extends BaseModel
         return $this->hasMany(Article::class);
     }
 
+    /**
+     *
+     */
     public function fetchIcon()
     {
         $favicon = new Favicon();

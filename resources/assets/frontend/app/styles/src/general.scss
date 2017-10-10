@@ -21,7 +21,7 @@ $color1-light: lighten($color1, 20%);
 }
 
 body.ember-application {
-  //font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -48,7 +48,7 @@ body.ember-application {
     position: relative;
     max-height: inherit;
     background: $color1;
-    font-size:.8rem;
+    font-size:.85rem;
     grid-area: side-bar;
     @include overflow-scroll();
   }
@@ -59,7 +59,7 @@ body.ember-application {
     color: $color1;
     justify-content: flex-start;
     background: lighten($color2, 60%);
-    font-size:.8rem;
+    font-size:.85rem;
     grid-area: column-one;
     @include overflow-scroll();
   }

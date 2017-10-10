@@ -89,7 +89,7 @@ class FeedResourceTest extends TestResource
                        ->andReturn('en');
         $parsedFeedMock->shouldReceive('getLogo')
                        ->andReturn('http://example.com/logo.png');
-        $parsedFeedMock->shouldReceive('icon')
+        $parsedFeedMock->shouldReceive('getIcon')
                        ->andReturn('http://example.com/favicon.ico');
         $parsedFeedMock->shouldReceive('getItems')
                        ->andReturn([]);
@@ -120,12 +120,6 @@ class FeedResourceTest extends TestResource
                             'type' => 'folders',
                             'id'   => "$folder->id"
                         ]
-                    ],
-                    'user'   => [
-                        'data' => [
-                            'type' => 'users',
-                            'id'   => "$user->id"
-                        ]
                     ]
                 ]
             ]
@@ -136,6 +130,7 @@ class FeedResourceTest extends TestResource
                          ->decodeResponseJson();
 
         $this->assertEquals('Feed Title', array_get($response, 'data.attributes.name'));
+        $this->assertEquals($user->id, array_get($response, 'data.relationships.user.data.id'));
     }
 
     /**
@@ -144,7 +139,7 @@ class FeedResourceTest extends TestResource
     public function testCreateForbidden()
     {
         $user = $this->createUser();
-        $folder = $this->createFolder($user);
+        $folder = $this->createFolder();
         $differentUser = $this->createUser();
 
         $this->be($differentUser);

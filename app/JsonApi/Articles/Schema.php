@@ -49,16 +49,17 @@ class Schema extends EloquentSchema
      */
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
-        return [
+        $included = [];
+
+        return array_merge($included, [
             'feed' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::SHOW_DATA    => true,
-                self::DATA         => isset($includeRelationships['feed']) ?
-                    $resource->feed :
+                self::DATA         => isset($includeRelationships['feed']) ? $resource->feed :
                     $this->createBelongsToIdentity($resource, 'feed')
             ]
-        ];
+        ]);
     }
 }
 
