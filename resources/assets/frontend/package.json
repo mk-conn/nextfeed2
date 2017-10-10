@@ -37,6 +37,7 @@
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "~2.15.0",
     "ember-data-change-tracker": "^0.6.2",
+    "ember-drag-drop": "^0.4.6",
     "ember-export-application-global": "^2.0.0",
     "ember-font-awesome": "^4.0.0-alpha.10",
     "ember-infinity": "^0.2.8",

@@ -11,16 +11,15 @@ Router.map(function () {
   this.route('settings');
 
   this.route('feeds', {path: '/feeds'}, function () {
+    this.route('folders', function() {
+      this.route('add');
+    });
     this.route('feed', {path: '/:feed_id'}, function () {
       this.route('articles', function () {
         this.route('settings');
         this.route('article', {path: '/:article_id'});
       });
     });
-    this.route('add');
-  });
-
-  this.route('folders', function() {
     this.route('add');
   });
 });
