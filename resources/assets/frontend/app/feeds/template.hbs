@@ -1,8 +1,13 @@
 <div class="folder-item">
-  <div class="folder d-flex">
-    <span class="text-muted">
+  <div class="folder d-flex justify-content-start align-items-center">
+    <div class="text-muted p-2">
       Folders
-    </span>
+    </div>
+    <div class="ml-auto p-2">
+      {{#link-to "folders.add"}}
+        {{fa-icon "plus-circle"}}
+      {{/link-to}}
+    </div>
   </div>
 </div>
 <div class="list-group folder-list">

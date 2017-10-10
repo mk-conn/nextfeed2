@@ -19,6 +19,10 @@ Router.map(function () {
     });
     this.route('add');
   });
+
+  this.route('folders', function() {
+    this.route('add');
+  });
 });
 
 export default Router;
