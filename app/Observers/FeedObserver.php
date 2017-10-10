@@ -9,9 +9,11 @@
 namespace App\Observers;
 
 
+use App\BaseModel;
 use App\Helpers\ParsedFeed;
 use App\Models\Article;
 use App\Models\Feed;
+use Illuminate\Support\Collection;
 use PicoFeed\Parser\Item;
 use PicoFeed\Reader\Reader;
 
@@ -20,7 +22,7 @@ use PicoFeed\Reader\Reader;
  *
  * @package App\Observers
  */
-class FeedObserver
+class FeedObserver extends BaseObserver
 {
     /**
      * @var Reader
@@ -43,11 +45,14 @@ class FeedObserver
     }
 
     /**
-     * @param Feed $feed
+     * @param BaseModel $model
+     *
+     * @return BaseModel
      */
-    public function creating(Feed $feed)
+    public function creating(BaseModel $model)
     {
-        $resource = $this->feedReader->discover($feed->url);
+        /** @var Feed $model */
+        $resource = $this->feedReader->discover($model->url);
         $etag = $resource->getEtag();
 
         $feedParser = $this->feedReader->getParser(
@@ -58,18 +63,18 @@ class FeedObserver
 
         $parsedFeed = $feedParser->execute();
 
-        $feed->guid = $parsedFeed->getId();
-        $feed->description = $parsedFeed->getDescription();
-        $feed->site_url = $parsedFeed->getSiteUrl();
-        $feed->feed_url = $parsedFeed->getFeedUrl();
-        $feed->language = $parsedFeed->getLanguage();
-        $feed->logo = $parsedFeed->getLogo();
-        $feed->icon = $parsedFeed->getIcon();
-        $feed->name = $parsedFeed->getTitle();
-        $feed->etag = $etag;
+        $model->guid = $parsedFeed->getId();
+        $model->description = $parsedFeed->getDescription();
+        $model->site_url = $parsedFeed->getSiteUrl();
+        $model->feed_url = $parsedFeed->getFeedUrl();
+        $model->language = $parsedFeed->getLanguage();
+        $model->logo = $parsedFeed->getLogo();
+        $model->icon = $parsedFeed->getIcon();
+        $model->name = $parsedFeed->getTitle();
+        $model->etag = $etag;
 
-        if (!$feed->icon) {
-            $feed->fetchIcon();
+        if (!$model->icon) {
+            $model->fetchIcon();
         }
 
         if (!empty($items = $parsedFeed->getItems())) {
@@ -78,35 +83,43 @@ class FeedObserver
 
             app()->instance(ParsedFeed::class, $parsedFeedHelper);
         }
+
+        return parent::creating($model);
     }
 
     /**
-     * @param Feed $feed
+     * @param BaseModel $model
+     *
+     * @return BaseModel
      */
-    public function created(Feed $feed)
+    public function created(BaseModel $model)
     {
+        /** @var Feed $model */
         /** @var ParsedFeed $parsedFeedHelper */
         $parsedFeedHelper = resolve(ParsedFeed::class);
-        $items = $parsedFeedHelper->items->unique('id');
-        $articles = collect([]);
+        if ($parsedFeedHelper->items instanceof Collection) {
+            $items = $parsedFeedHelper->items->unique('id');
+            $articles = collect([]);
 
-        /** @var Item $item */
-        foreach ($items as $item) {
+            /** @var Item $item */
+            foreach ($items as $item) {
 
-            $article = new Article();
-            $article->createFromFeedItem($item);
+                $article = new Article();
+                $article->createFromFeedItem($item);
 
-            $article->feed()
-                    ->associate($feed);
+                $article->feed()
+                        ->associate($model);
 
-            $articles->push($article);
+                $articles->push($article);
+            }
+
+            if ($articles->count()) {
+                $model->articles()
+                      ->saveMany($articles);
+            }
         }
 
-        if ($articles->count()) {
-            $feed->articles()
-                 ->saveMany($articles);
-        }
-
+        return parent::saving($model);
     }
 
 }

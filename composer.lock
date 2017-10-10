@@ -1591,16 +1591,16 @@
         },
         {
             "name": "neomerx/json-api",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neomerx/json-api.git",
-                "reference": "6d49cef67181c0976e943337135ab639224e955a"
+                "reference": "b397822bafe41a9b4570e87a768f0d3e04937df2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neomerx/json-api/zipball/6d49cef67181c0976e943337135ab639224e955a",
-                "reference": "6d49cef67181c0976e943337135ab639224e955a",
+                "url": "https://api.github.com/repos/neomerx/json-api/zipball/b397822bafe41a9b4570e87a768f0d3e04937df2",
+                "reference": "b397822bafe41a9b4570e87a768f0d3e04937df2",
                 "shasum": ""
             },
             "require": {
@@ -1642,7 +1642,7 @@
                 "jsonapi.org",
                 "neomerx"
             ],
-            "time": "2017-09-13T11:23:47+00:00"
+            "time": "2017-10-08T15:11:02+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -3168,12 +3168,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tymondesigns/jwt-auth.git",
-                "reference": "b8115781dee8dc30552871ca534feae052a2c800"
+                "reference": "fb0d1b1d9383f098ce259924df12572f54597dbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tymondesigns/jwt-auth/zipball/b8115781dee8dc30552871ca534feae052a2c800",
-                "reference": "b8115781dee8dc30552871ca534feae052a2c800",
+                "url": "https://api.github.com/repos/tymondesigns/jwt-auth/zipball/fb0d1b1d9383f098ce259924df12572f54597dbb",
+                "reference": "fb0d1b1d9383f098ce259924df12572f54597dbb",
                 "shasum": ""
             },
             "require": {
@@ -3234,7 +3234,7 @@
                 "jwt",
                 "laravel"
             ],
-            "time": "2017-09-27T20:59:23+00:00"
+            "time": "2017-10-09T19:07:36+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

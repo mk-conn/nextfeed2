@@ -62,6 +62,11 @@ class Feed extends BaseModel
     use HasOrder;
 
     /**
+     * @var bool
+     */
+    protected static $baseObserver = false;
+
+    /**
      *
      */
     const TABLE = 'feeds';
@@ -90,6 +95,9 @@ class Feed extends BaseModel
         return $this->hasMany(Article::class);
     }
 
+    /**
+     *
+     */
     public function fetchIcon()
     {
         $favicon = new Favicon();
