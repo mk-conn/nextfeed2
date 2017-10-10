@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\BaseModel;
+use App\Traits\Model\HasOrder;
 use PicoFeed\Reader\Favicon;
 use PicoFeed\Reader\Reader;
 
@@ -58,6 +59,8 @@ use PicoFeed\Reader\Reader;
  */
 class Feed extends BaseModel
 {
+    use HasOrder;
+
     /**
      *
      */

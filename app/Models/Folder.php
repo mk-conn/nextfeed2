@@ -5,6 +5,7 @@ namespace App\Models;
 
 
 use App\BaseModel;
+use App\Traits\Model\HasOrder;
 
 /**
  * Class Folder
@@ -32,6 +33,8 @@ use App\BaseModel;
  */
 class Folder extends BaseModel
 {
+    use HasOrder;
+
     /**
      *
      */
