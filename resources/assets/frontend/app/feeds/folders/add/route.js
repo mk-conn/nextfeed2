@@ -17,9 +17,12 @@ export default Route.extend({
 
   actions: {
     save(folder) {
-
-      folder.set('user', this.get('currentUser.user'));
       folder.save().then(folder => {
+        getOwner(this).lookup('route:' + 'feeds').refresh();
+      });
+    },
+    delete(folder) {
+      folder.destroyRecord().then(() => {
         getOwner(this).lookup('route:' + 'feeds').refresh();
       });
     }

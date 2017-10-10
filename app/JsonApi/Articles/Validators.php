@@ -17,6 +17,11 @@ class Validators extends AbstractValidatorProvider
         'id'
     ];
 
+    protected $allowedFilteringParameters = [
+        'feed',
+        'keep'
+    ];
+
     /**
      * @var string
      */

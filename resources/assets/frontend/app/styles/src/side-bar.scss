@@ -2,6 +2,10 @@
 
   $list-group-action-color: #ccc;
 
+  .sidebar-item {
+    padding-left:1em;
+  }
+
   .list-group {
     width: 100%;
     padding: 0;
@@ -21,6 +25,10 @@
     .folder {
       color: #eee;
       padding: 1em;
+
+    }
+    .feeds {
+      background: darken($color1, 4%);
     }
 
     .feed-item {

@@ -88,7 +88,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
         this.store.createRecord('feed', {
           url: feed.get('url'),
           folder: feed.get('folder'),
-          user: this.get('currentUser.user')
         }).save().then(() => {
           getOwner(this).lookup('route:' + 'feeds').refresh();
         });

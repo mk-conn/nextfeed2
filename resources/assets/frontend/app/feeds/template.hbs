@@ -1,9 +1,30 @@
 <div class="folder-item">
-  <div class="folder d-flex justify-content-start align-items-center">
-    <div class="text-muted p-2">
-      Folders
+  <div class="folder">
+    <span class="text-muted">Articles</span>
+  </div>
+  <div class="list-group feeds">
+    <div class="list-group-item feed-item">
+      {{#link-to "feeds.articles.starred"}}
+        <div class="d-flex justify-content-between">
+          <div>
+            <span class="feed-icon">
+              {{fa-icon "star"}}
+            </span>
+            Starred
+          </div>
+          <span class="badge badge-secondary">{{starred}}</span>
+        </div>
+      {{/link-to}}
     </div>
-    <div class="ml-auto p-2">
+  </div>
+</div>
+
+<div class="sidebar-item">
+  <div class="d-flex justify-content-start align-items-center">
+    <span class="text-muted">
+      Folders
+    </span>
+    <div class="ml-auto">
       {{#link-to "feeds.folders.add" activeClass=""}}
         {{fa-icon "plus-circle"}}
       {{/link-to}}
@@ -11,9 +32,16 @@
   </div>
 </div>
 <div class="list-group folder-list">
-  {{#each model.folders as |folder|}}
-    {{folder-item folder=folder classNames="folder-item list-group-item"}}
-  {{/each}}
+  {{#sortable-objects sortableObjectList=folders sortEndAction=(route-action "sort" folders)
+                      sortingScope="foldersSorting" useSwap=false}}
+    {{#each folders as |folder|}}
+      {{#draggable-object-target action=(route-action "addFeedToFolder" folder)}}
+        {{#draggable-object content=feed isSortable=true sortingScope="foldersSorting"}}
+          {{folder-item folder=folder classNames="folder-item list-group-item"}}
+        {{/draggable-object}}
+      {{/draggable-object-target}}
+    {{/each}}
+  {{/sortable-objects}}
 </div>
 <div class="folder-item">
   <div class="folder">
@@ -21,10 +49,15 @@
       Feeds
     </span>
   </div>
-  <div class="list-group feed-list">
-    {{#each model.feeds as |feed|}}
-      {{feed-item feed=feed classNames="list-group-item feed-item"}}
-    {{/each}}
+  <div class="list-group feeds">
+    {{#sortable-objects sortableObjectList=feeds sortEndAction=(route-action "sort" feeds)
+                        sortingScope="feedsSorting" useSwap=false}}
+      {{#each feeds as |feed|}}
+        {{#draggable-object content=feed isSortable=true sortingScope="feedsSorting"}}
+          {{feed-item feed=feed classNames="list-group-item feed-item"}}
+        {{/draggable-object}}
+      {{/each}}
+    {{/sortable-objects}}
   </div>
 </div>
 
