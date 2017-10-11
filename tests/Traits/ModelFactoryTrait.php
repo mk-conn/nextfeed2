@@ -30,8 +30,9 @@ trait ModelFactoryTrait
      *
      * @return Feed|Feed[]
      */
-    public function createFeed(User $user = null, Folder $folder = null, $attrs = [], $amount = 1, callable $mock_function = null)
-    {
+    public function createFeed(
+        User $user = null, Folder $folder = null, $attrs = [], $amount = 1, callable $mock_function = null
+    ) {
         if (!$user) {
             $user = $this->createUser();
         }
@@ -85,8 +86,11 @@ trait ModelFactoryTrait
 
         if ($amount === 1) {
             $folder = $folders->first();
-            $user->folders()
-                 ->save($folder);
+            $folder->user()
+                   ->associate($user);
+            $folder->save();
+//            $user->folders()
+//                 ->save($folder);
 
             return $folder;
         }

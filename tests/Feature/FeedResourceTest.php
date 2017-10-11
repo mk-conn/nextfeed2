@@ -105,8 +105,8 @@ class FeedResourceTest extends TestResource
         $this->mockIt();
 
         $folder = $this->createFolder();
-        $user = $folder->user;
-        $this->be($user);
+//        $user = $folder->user;
+//        $this->be($user);
 
         $create = [
             'data' => [
