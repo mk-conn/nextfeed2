@@ -11,6 +11,7 @@ namespace Tests;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 /**
@@ -34,7 +35,6 @@ class TestResource extends TestCase
         $content = json_decode($response->getContent());
 
         $this->token = $content->token;
-
     }
 
 
@@ -45,18 +45,27 @@ class TestResource extends TestCase
     {
         parent::setUp();
 
-        $user = new User([
-            'username' => 'holla_die_waldfee',
-            'password' => Hash::make('1234'),
-            'fullname' => 'Holla die Waldfee',
-            'email'    => 'holla@localhost'
-        ]);
+        $user = new User(
+            [
+                'username' => 'holla_die_waldfee',
+                'password' => Hash::make('1234'),
+                'fullname' => 'Holla die Waldfee',
+                'email'    => 'holla@localhost'
+            ]
+        );
         $user->save();
-
-        $this->login();
-
+        $this->be($user);
+        $this->token = JWTAuth::fromUser($user);
     }
 
+    /**
+     * @param string $method
+     * @param string $uri
+     * @param array  $data
+     * @param array  $headers
+     *
+     * @return \Illuminate\Foundation\Testing\TestResponse
+     */
     public function json($method, $uri, array $data = [], array $headers = [])
     {
         $headers = [
