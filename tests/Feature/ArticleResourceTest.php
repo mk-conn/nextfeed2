@@ -9,19 +9,57 @@
 namespace Tests\Feature;
 
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Tests\TestResource;
+use Tests\Traits\FeedReaderMock;
+use Tests\Traits\ModelFactoryTrait;
 
 class ArticleResourceTest extends TestResource
 {
+    use RefreshDatabase, ModelFactoryTrait, FeedReaderMock;
+
+    public function setup()
+    {
+        parent::setUp();
+    }
+
 
     public function testIndex()
     {
-        
+
     }
 
     public function testRead()
     {
-        
+
     }
-    
+
+    public function testStarredArticles()
+    {
+
+        $this->mockFeedReader();
+        $feed = $this->createFeed();
+
+        $this->createArticle($feed, [], 4);
+        $this->createArticle($feed, ['keep' => true], 6);
+
+        // http://localhost:8500/api/v1/articles?fields%5Barticles%5D=title%2Cdescription%2Cauthor%2Ckeep%2Cread%2Curl%2Cupdated-date%2Ccategories&filter%5Bkeep%5D=true&page%5Bsize%5D=10&page%5Bnumber%5D=1&page%5Bsize%5D=25&sort=-updated-date%2C-id
+        $query_data = [
+            'filter' => [
+                'keep' => true,
+            ],
+            'fields' => [
+                'article' => 'title,description,author,read,url'
+            ]
+        ];
+        $query = http_build_query($query_data);
+
+        $response = $this->getJson('api/v1/articles?' . $query)
+                         ->assertStatus(Response::HTTP_OK)
+                         ->decodeResponseJson();
+
+        $this->assertCount(6, $response['data']);
+    }
+
 }

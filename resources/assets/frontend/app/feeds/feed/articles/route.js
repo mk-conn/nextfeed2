@@ -27,7 +27,7 @@ export default Route.extend(InfinityRoute, {
   },
 
   renderTemplate() {
-    this.render('feeds.feed.articles', {
+    this.render('feeds/feed/articles', {
       into: 'application',
       outlet: 'column-one'
     })

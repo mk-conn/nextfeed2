@@ -9,6 +9,7 @@
 namespace Tests\Traits;
 
 
+use App\Models\Article;
 use App\Models\Feed;
 use App\Models\Folder;
 use App\Models\User;
@@ -89,8 +90,6 @@ trait ModelFactoryTrait
             $folder->user()
                    ->associate($user);
             $folder->save();
-//            $user->folders()
-//                 ->save($folder);
 
             return $folder;
         }
@@ -117,5 +116,33 @@ trait ModelFactoryTrait
 
         return $users;
     }
+
+    /**
+     * @param Feed|null $feed
+     * @param array     $attrs
+     * @param int       $amount
+     *
+     * @return mixed
+     */
+    public function createArticle(Feed $feed = null, $attrs = [], $amount = 1)
+    {
+        $articles = factory(Article::class, $amount)->make($attrs);
+
+        if (!$feed) {
+            $feed = $this->createFeed();
+        }
+
+        if ($amount === 1) {
+            $article = $articles->first();
+            $article->feed()
+                    ->associate($feed);
+        }
+
+        $feed->articles()
+             ->saveMany($articles);
+
+        return $articles;
+    }
+
 
 }

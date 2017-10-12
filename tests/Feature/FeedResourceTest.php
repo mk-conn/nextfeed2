@@ -9,13 +9,10 @@
 namespace Tests\Feature;
 
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use PicoFeed\Client\Client;
-use PicoFeed\Parser\Feed;
-use PicoFeed\Parser\Parser;
-use PicoFeed\Reader\Reader;
 use Tests\TestResource;
+use Tests\Traits\FeedReaderMock;
 use Tests\Traits\ModelFactoryTrait;
 
 /**
@@ -25,76 +22,12 @@ use Tests\Traits\ModelFactoryTrait;
  */
 class FeedResourceTest extends TestResource
 {
-    use DatabaseMigrations, ModelFactoryTrait;
+    use RefreshDatabase, ModelFactoryTrait, FeedReaderMock;
 
     /**
      * @var
      */
     protected $feedReaderMock;
-
-
-    /**
-     *
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->feedReaderMock = \Mockery::mock(Reader::class);
-
-        $this->app->instance(Reader::class, $this->feedReaderMock);
-    }
-
-    /**
-     * Mock everything feed fetching/parsing related
-     */
-    protected function mockIt()
-    {
-        $clientMock = \Mockery::mock(Client::class);
-        $clientMock->shouldReceive('getUrl')
-                   ->andReturn('http://example.com/feed.rss');
-        $clientMock->shouldReceive('getContent')
-                   ->andReturn('<xml></xml>');
-        $clientMock->shouldReceive('getEncoding')
-                   ->andReturn('utf8');
-        $clientMock->shouldReceive('getEtag')
-                   ->andReturn('somerubbishgoesoutfromhere');
-
-        $parserMock = \Mockery::mock(Parser::class);
-        $parsedFeedMock = \Mockery::mock(Feed::class);
-
-        $this->feedReaderMock->shouldReceive('discover')
-                             ->once()
-                             ->with(\Mockery::any())
-                             ->andReturn($clientMock);
-        $this->feedReaderMock->shouldReceive('getParser')
-                             ->once()
-                             ->andReturn($parserMock);
-
-
-        $parserMock->shouldReceive('execute')
-                   ->andReturn($parsedFeedMock);
-
-        $parsedFeedMock->shouldReceive('getId')
-                       ->andReturn(str_random(52));
-        $parsedFeedMock->shouldReceive('getTitle')
-                       ->andReturn('Feed Title');
-        $parsedFeedMock->shouldReceive('getDescription')
-                       ->andReturn('Feed Description');
-        $parsedFeedMock->shouldReceive('getSiteUrl')
-                       ->andReturn('http://example.com');
-        $parsedFeedMock->shouldReceive('getFeedUrl')
-                       ->andReturn('http://example.com/feed.rss');
-        $parsedFeedMock->shouldReceive('getLanguage')
-                       ->andReturn('en');
-        $parsedFeedMock->shouldReceive('getLogo')
-                       ->andReturn('http://example.com/logo.png');
-        $parsedFeedMock->shouldReceive('getIcon')
-                       ->andReturn('http://example.com/favicon.ico');
-        $parsedFeedMock->shouldReceive('getItems')
-                       ->andReturn([]);
-    }
-
 
     /**
      * Test creation of a feed
@@ -102,7 +35,7 @@ class FeedResourceTest extends TestResource
     public function testCreate()
     {
 
-        $this->mockIt();
+        $this->mockFeedReader();
 
         $folder = $this->createFolder();
 //        $user = $folder->user;
@@ -130,7 +63,7 @@ class FeedResourceTest extends TestResource
                          ->decodeResponseJson();
 
         $this->assertEquals('Feed Title', array_get($response, 'data.attributes.name'));
-        $this->assertEquals($user->id, array_get($response, 'data.relationships.user.data.id'));
+        $this->assertEquals($this->user->id, array_get($response, 'data.relationships.user.data.id'));
     }
 
     /**
@@ -138,6 +71,8 @@ class FeedResourceTest extends TestResource
      */
     public function testCreateForbidden()
     {
+        $this->mockFeedReader(false);
+
         $user = $this->createUser();
         $folder = $this->createFolder();
         $differentUser = $this->createUser();
@@ -184,7 +119,6 @@ class FeedResourceTest extends TestResource
                          ->decodeResponseJson();
 
         $this->assertCount(5, $response['data']);
-
     }
 
 

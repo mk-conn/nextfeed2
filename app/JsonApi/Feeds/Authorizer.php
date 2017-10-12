@@ -54,7 +54,18 @@ class Authorizer extends BaseAuthorizer
      */
     public function canCreate($resourceType, ResourceObjectInterface $resource, EncodingParametersInterface $parameters)
     {
+
         $user = $this->currentUser();
+        $relationships = $resource->getRelationships();
+
+        // todo: slick this
+        if ($relationships->has('user')) {
+            $feedUser = $relationships->get('user');
+
+            if ($feedUser->get('data')->id !== $user->id) {
+                return $this->forbidden();
+            }
+        }
 
         if ($user) {
             return true;
@@ -158,8 +169,7 @@ class Authorizer extends BaseAuthorizer
         $record,
         RelationshipInterface $relationship,
         EncodingParametersInterface $parameters
-    )
-    {
+    ) {
 
         $user = $this->currentUser();
 

@@ -56,7 +56,7 @@ body.ember-application {
   #column-one {
     display: flex;
     flex-direction: column;
-    color: $color1;
+    //color: $color1;
     justify-content: flex-start;
     background: lighten($color2, 60%);
     font-size:.85rem;

@@ -1,7 +1,15 @@
 <div class="d-flex w-100 justify-content-between">
   <h5 class="article-title mb-1">{{article.title}}</h5>
 </div>
-<p>{{articleDescription}}</p>
+<p>
+{{#if article.categories}}
+  <div class="article-categories text-muted">
+    [{{join ", " article.categories}}]
+  </div>
+{{/if}}
+
+{{articleDescription}}
+</p>
 <div class="btn-group">
   {{#link-to "feeds.feed.articles.article" article.id classNames="btn btn-outline-secondary"}}
     {{fa-icon "expand"}}

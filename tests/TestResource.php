@@ -26,6 +26,8 @@ class TestResource extends TestCase
      */
     public $token;
 
+    public $user;
+
     /**
      * @param array $data
      */
@@ -54,6 +56,7 @@ class TestResource extends TestCase
             ]
         );
         $user->save();
+        $this->user = $user;
         $this->be($user);
         $this->token = JWTAuth::fromUser($user);
     }
