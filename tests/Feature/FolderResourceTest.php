@@ -23,26 +23,22 @@ class FolderResourceTest extends TestResource
 {
     use DatabaseMigrations, ModelFactoryTrait;
 
+    public function setUp()
+    {
+        parent::setup();
+    }
+
     /**
      *
      */
     public function testIndex()
     {
-        $user = $this->createUser();
-        $this->be($user);
-        $this->createFolder([], 5);
-
-        $differentUser = $this->createUser();
-        $this->createFolder([], 10);
+        $this->createFolder(null, [], 10);
 
         $response = $this->getJson('api/v1/folders')
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
-        $this->assertCount(5, $response['data']);
-
-        foreach ($response['data'] as $folder) {
-            $this->assertEquals($user->id, array_get($folder, 'relationships.user.data.id'));
-        }
+        $this->assertCount(10, $response['data']);
     }
 
     /**
@@ -50,16 +46,13 @@ class FolderResourceTest extends TestResource
      */
     public function testIndexFilterByUser()
     {
-        $user = $this->createUser(['name' => 'anthony']);
-        $this->be($user);
+        $this->createFolder($this->user, [], 5);
 
-        $this->createFolder([], 5);
-
-        $response = $this->getJson('api/v1/folders?filter[user]=anthony')
+        $response = $this->getJson('api/v1/folders')
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
-        $this->assertCount(5, $response['data']);
 
+        $this->assertCount(5, $response['data']);
     }
 
     /**
@@ -67,11 +60,8 @@ class FolderResourceTest extends TestResource
      */
     public function testIndexWithFilterForbiddenForUser()
     {
-        $userBadGuy = $this->createUser(['name' => 'karlheinzdeutschmann']);
-        $this->be($userBadGuy);
-
-        $user = $this->createUser(['name' => 'anthony']);
-        $this->createFolder([], 5);
+        $user = $this->createUser(['username' => 'anthony']);
+        $this->createFolder($user, [], 5);
 
         $this->getJson('api/v1/folders?filter[user]=anthony')
              ->assertStatus(Response::HTTP_FORBIDDEN);
@@ -82,19 +72,13 @@ class FolderResourceTest extends TestResource
      */
     public function testRead()
     {
-        $user = $this->createUser();
-        $this->be($user);
-
-        $folder = $this->createFolder(['name' => 'News']);
+        $folder = $this->createFolder(null, ['name' => 'News']);
 
         $response = $this->getJson('api/v1/folders/' . $folder->id)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
 
         $this->assertEquals('News', array_get($response, 'data.attributes.name'));
-
-
-
     }
 
 }
