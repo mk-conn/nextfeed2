@@ -38,8 +38,6 @@ class FeedResourceTest extends TestResource
         $this->mockFeedReader();
 
         $folder = $this->createFolder();
-//        $user = $folder->user;
-//        $this->be($user);
 
         $create = [
             'data' => [
@@ -111,7 +109,7 @@ class FeedResourceTest extends TestResource
      */
     public function testIndex()
     {
-        $mock_function = [$this, 'mockIt'];
+        $mock_function = [$this, 'mockFeedReader'];
         $this->createFeed(null, null, [], 5, $mock_function);
 
         $response = $this->getJson('api/v1/feeds')

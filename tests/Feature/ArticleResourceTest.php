@@ -24,10 +24,8 @@ class ArticleResourceTest extends TestResource
         parent::setUp();
     }
 
-
     public function testIndex()
     {
-
     }
 
     public function testRead()
