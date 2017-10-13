@@ -43,14 +43,22 @@ class ArticleResourceTest extends TestResource
         $this->createArticle($feed, ['keep' => true], 6);
 
         // http://localhost:8500/api/v1/articles?fields%5Barticles%5D=title%2Cdescription%2Cauthor%2Ckeep%2Cread%2Curl%2Cupdated-date%2Ccategories&filter%5Bkeep%5D=true&page%5Bsize%5D=10&page%5Bnumber%5D=1&page%5Bsize%5D=25&sort=-updated-date%2C-id
+        // filter[keep]=1&fields[article]=title,description,author,keep,read,url,updated-date,categories&page[size]=10&page[number]=1&sort[0]=-updated-date,-id
         $query_data = [
             'filter' => [
                 'keep' => true,
             ],
             'fields' => [
-                'article' => 'title,description,author,read,url'
-            ]
+                'article' => 'title,description,author,keep,read,url,updated-date,categories'
+            ],
+            'page'   => [
+                'size'   => 10,
+                'number' => 1
+            ],
+            'sort'   => '-updated-date,-id'
+
         ];
+
         $query = http_build_query($query_data);
 
         $response = $this->getJson('api/v1/articles?' . $query)

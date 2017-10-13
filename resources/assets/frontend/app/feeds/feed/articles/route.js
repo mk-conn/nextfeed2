@@ -30,33 +30,38 @@ export default Route.extend(InfinityRoute, {
     this.render('feeds/feed/articles', {
       into: 'application',
       outlet: 'column-one'
-    })
+    });
   },
 
   model(params) {
-    const feed = this.modelFor('feeds.feed');
 
-    let filter = {
-      feed: feed.id
-    };
+    const feed = this.modelFor('feeds.feed');
+    let filter = {};
+
+    if (feed.get('id') === 'archived') {
+      filter['keep'] = true;
+    } else {
+      filter['feed'] = feed.id;
+    }
 
     if (params.filterUnread === true) {
-      filter[ 'read' ] = false;
+      filter['read'] = false;
     }
 
     delete params.filterUnread;
 
-    params[ 'filter' ] = filter;
-    params[ 'fields' ] = {articles: 'title,description,author,keep,read,url,updated-date,categories'};
-    params[ 'page' ] = {size: 10};
+    params['filter'] = filter;
+    params['fields'] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
 
     return this.infinityModel('article', params, {});
   },
 
   setupController(controller, model) {
     this._super(controller, model);
+    console.log('setupController.articles');
 
     controller.set('feed', this.modelFor('feeds.feed'));
+    controller.set('articleRoute', 'feeds.feed.articles.article');
   },
 
   actions: {

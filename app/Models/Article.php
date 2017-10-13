@@ -17,8 +17,8 @@ use PicoFeed\Parser\Item;
  * @property string                $title
  * @property string                $author
  * @property string|null           $language
- * @property string|null           $publish_date
- * @property string|null           $updated_date
+ * @property string                $publish_date
+ * @property string                $updated_date
  * @property string|null           $content
  * @property string|null           $description
  * @property string                $url
@@ -27,16 +27,11 @@ use PicoFeed\Parser\Item;
  * @property bool                  $keep
  * @property \Carbon\Carbon|null   $created_at
  * @property \Carbon\Carbon|null   $updated_at
- * @property string|null           $deleted_at
  * @property-read \App\Models\Feed $feed
- * @method bool|null forceDelete()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Article onlyTrashed()
- * @method static bool|null restore()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereAuthor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereCategories($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereFeedId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereGuid($value)
@@ -49,8 +44,6 @@ use PicoFeed\Parser\Item;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUpdatedDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUrl($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Article withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Article withoutTrashed()
  * @mixin \Eloquent
  */
 class Article extends BaseModel
@@ -67,6 +60,8 @@ class Article extends BaseModel
     protected $casts = [
         'categories' => 'array'
     ];
+
+    protected $with = ['feed'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

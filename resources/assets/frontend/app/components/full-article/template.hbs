@@ -5,7 +5,13 @@
 </div>
 
 <h3 class="article-header">
-  {{article.title}}
+  <div>{{article.title}}</div>
+  <div class="text-muted">
+    <small>{{article.feed.name}}</small>
+    {{#if article.author}}
+      <small>by {{article.author}}</small>
+    {{/if}}
+  </div>
 </h3>
 
 <div id="article-content">

@@ -11,12 +11,12 @@
 {{articleDescription}}
 </p>
 <div class="btn-group">
-  {{#link-to "feeds.feed.articles.article" article.id classNames="btn btn-outline-secondary"}}
+  {{#link-to articleRoute article.id classNames="btn btn-outline-secondary"}}
     {{fa-icon "expand"}}
   {{/link-to}}
-  <a class="btn btn-outline-secondary" href={{article.url}} target="_blank" {{action "originalArticle"
-                                                                                     preventDefault=false}}
-     data-content="Open article in new tab">
+  <a class="btn btn-outline-secondary"
+     href="{{article.url}}" data-content="Open article in new tab"
+     target="_blank" {{action "originalArticle" preventDefault=false}}>
     {{fa-icon "external-link"}}
   </a>
   <a class="btn btn-outline-secondary"

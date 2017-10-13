@@ -1,3 +1,5 @@
+{{log 'feeds.feed.articles template'}}
+
 <div class="articles">
   <div class="feed-header" id="articles-header">
     <div class="d-flex justify-content-between">
@@ -28,7 +30,7 @@
 
   {{#scrollable-container id="article-list-items"}}
     {{#each model as |article|}}
-      {{article-list-item article=article feed=model.feed classNames="article-list-item"}}
+      {{article-list-item article=article articleRoute=articleRoute feed=model.feed classNames="article-list-item"}}
     {{/each}}
     {{infinity-loader infinityModel=model scrollable='#article-list-items'}}
   {{/scrollable-container}}

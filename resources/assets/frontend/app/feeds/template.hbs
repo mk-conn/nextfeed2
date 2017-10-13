@@ -4,13 +4,13 @@
   </div>
   <div class="list-group feeds">
     <div class="list-group-item feed-item">
-      {{#link-to "feeds.articles.starred"}}
+      {{#link-to "feeds.feed.articles" 'archived'}}
         <div class="d-flex justify-content-between">
           <div>
             <span class="feed-icon">
               {{fa-icon "star"}}
             </span>
-            Starred
+            Archived
           </div>
           <span class="badge badge-secondary">{{starred}}</span>
         </div>

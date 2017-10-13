@@ -3,10 +3,10 @@
 namespace App\JsonApi\Articles;
 
 
+use App\JsonApi\BaseValidator;
 use CloudCreativity\JsonApi\Contracts\Validators\RelationshipsValidatorInterface;
-use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
 
-class Validators extends AbstractValidatorProvider
+class Validators extends BaseValidator
 {
 
     protected $allowedSortParameters = [
@@ -17,10 +17,14 @@ class Validators extends AbstractValidatorProvider
         'id'
     ];
 
+    protected $allowedFieldSetTypes = null;
+
     protected $allowedFilteringParameters = [
         'feed',
         'keep'
     ];
+
+    protected $allowedIncludePaths = ['feed'];
 
     /**
      * @var string

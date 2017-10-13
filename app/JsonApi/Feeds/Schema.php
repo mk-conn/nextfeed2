@@ -86,6 +86,8 @@ class Schema extends EloquentSchema
         return [
             'articles-count'        => $resource->articles->count(),
             'articles-unread-count' => $resource->articles->where('read', false)
+                                                          ->count(),
+            'articles-starred'      => $resource->articles->where('keep', true)
                                                           ->count()
         ];
     }
@@ -100,6 +102,8 @@ class Schema extends EloquentSchema
         return [
             'articles-count'        => $resource->articles->count(),
             'articles-unread-count' => $resource->articles->where('read', false)
+                                                          ->count(),
+            'articles-starred'      => $resource->articles->where('keep', true)
                                                           ->count()
         ];
     }
