@@ -78,6 +78,7 @@ class FeedsController extends Controller
 
         if ($feed->user->id === $user->id) {
             Article::where('feed_id', $feedId)
+                   ->where('read', false)
                    ->update(['read' => true]);
         }
 
