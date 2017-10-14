@@ -21,6 +21,7 @@ export default Model.extend({
   user: belongsTo('user'),
   folder: belongsTo('folder'),
   articles: hasMany('article'),
+  settings: attr(),
   meta: attr(),
   /**
    *
@@ -56,6 +57,21 @@ export default Model.extend({
     set(prop, value) {
       this.set('meta.articles-unread-count', value);
       return value;
+    }
+  }),
+  feedSettings: computed('settings', {
+    get() {
+      let settings = this.get('settings');
+      if (!settings) {
+        this.set('settings', {articles: {keep: null}});
+      }
+
+      return this.get('settings');
+    },
+    set(key, val) {
+      // let settings = this.get('settings');
+      // console.log('val:', val);
+      // seems not to be called
     }
   })
 });

@@ -31,6 +31,7 @@ class Schema extends EloquentSchema
         'logo',
         'icon',
         'order',
+        'settings',
         'update_error',
         'created_at',
         'updated_at'

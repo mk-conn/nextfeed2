@@ -30,6 +30,16 @@ class FeedResourceTest extends TestResource
     protected $feedReaderMock;
 
     /**
+     *
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->url = $this->apiUrl . '/feeds';
+    }
+
+    /**
      * Test creation of a feed
      */
     public function testCreate()
@@ -119,5 +129,36 @@ class FeedResourceTest extends TestResource
         $this->assertCount(5, $response['data']);
     }
 
+
+    /**
+     *
+     */
+    public function testSaveFeedSettings()
+    {
+        $this->mockFeedReader();
+        $feed = $this->createFeed();
+
+        $settings = [
+            'articles' => [
+                'keep' => 20
+            ]
+        ];
+
+        $update = [
+            'data' => [
+                'type'       => 'feeds',
+                'id'         => "$feed->id",
+                'attributes' => [
+                    'settings' => $settings
+                ]
+            ]
+        ];
+
+        $response = $this->patchJson($this->url . '/' . $feed->id, $update)
+                         ->assertStatus(Response::HTTP_OK)
+                         ->decodeResponseJson();
+
+        $this->assertEquals(20, array_get($response, 'data.attributes.settings.articles.keep'));
+    }
 
 }

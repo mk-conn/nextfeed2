@@ -3,7 +3,7 @@
 namespace App\Console;
 
 
-use App\Console\Commands\CleanArticles;
+use App\Console\Commands\FeedCleanup;
 use App\Console\Commands\FetchArticles;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(FetchArticles::class)
                  ->everyFifteenMinutes();
 
-        $schedule->command(CleanArticles::class)
+        $schedule->command(FeedCleanup::class)
                  ->dailyAt('03:00');
     }
 

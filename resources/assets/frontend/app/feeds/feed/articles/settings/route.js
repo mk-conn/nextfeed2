@@ -3,7 +3,8 @@ import Ember from 'ember';
 const {Route, getOwner} = Ember;
 
 export default Route.extend({
-  model(params) {
+
+  model() {
     return this.modelFor('feeds.feed');
   },
 

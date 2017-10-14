@@ -3,10 +3,7 @@
 namespace App\Console\Commands;
 
 
-use App\BaseModel;
-use App\Models\Article;
 use App\Models\Feed;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 /**
@@ -14,14 +11,14 @@ use Illuminate\Console\Command;
  *
  * @package App\Console\Commands
  */
-class CleanArticles extends Command
+class FeedCleanup extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'articles:clean 
+    protected $signature = 'feed:cleanup 
         {--id=* : ID of feed to clean [defaults to all]}
         {--days=10 : Articles older than [--days]}
     ';
@@ -53,10 +50,6 @@ class CleanArticles extends Command
         $feeds = collect([]);
         $id = $this->option('id');
         $days = $this->option('days');
-        $dateFormat = BaseModel::dateFormat();
-        $maxUpatedDate = Carbon::create()
-                               ->subDays($days)
-                               ->format($dateFormat);
 
         if (!$id) {
             $feeds = Feed::all();
@@ -67,13 +60,9 @@ class CleanArticles extends Command
             }
         }
 
-        $feeds->each(function (Feed $feed) use ($maxUpatedDate) {
+        $feeds->each(function (Feed $feed) use ($days) {
             $this->info('Cleaning ' . $feed->name);
-            $count = Article::where('updated_at', '<', $maxUpatedDate)
-                            ->where('feed_id', $feed->id)
-                            ->where('read', true)
-                            ->where('keep', false)
-                            ->delete();
+            $count = $feed->cleanup($days);
             $this->output->writeln('<comment>Cleaned ' . $count . '</comment>');
         });
     }

@@ -28,9 +28,11 @@ class Validators extends AbstractValidatorProvider
     {
         $rules = [];
 
+        $required = $record ? 'sometimes|required' : 'required';
+
         if ($record) {
             $rules = [
-                'url' => 'required'
+                'feed-url' => $required . '|url'
             ];
         }
 

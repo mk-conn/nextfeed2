@@ -5,6 +5,7 @@ namespace App\Models;
 
 use App\BaseModel;
 use App\Traits\Model\HasOrder;
+use Carbon\Carbon;
 use PicoFeed\Reader\Favicon;
 use PicoFeed\Reader\Reader;
 
@@ -28,14 +29,13 @@ use PicoFeed\Reader\Reader;
  * @property string|null                                                         $auth_user
  * @property string|null                                                         $auth_password
  * @property int|null                                                            $order
- * @property int|null                                                            $articles_per_update
  * @property string|null                                                         $update_error
  * @property \Carbon\Carbon|null                                                 $created_at
  * @property \Carbon\Carbon|null                                                 $updated_at
+ * @property array                                                               $settings
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
  * @property-read \App\Models\Folder|null                                        $folder
  * @property-read \App\Models\User                                               $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereArticlesPerUpdate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereAuthPassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereAuthUser($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereCreatedAt($value)
@@ -50,6 +50,7 @@ use PicoFeed\Reader\Reader;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereLogo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereSettings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereSiteUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereUpdateError($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feed whereUpdatedAt($value)
@@ -65,6 +66,13 @@ class Feed extends BaseModel
      * @var bool
      */
     protected static $baseObserver = false;
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'settings' => 'array'
+    ];
 
     /**
      *
@@ -157,5 +165,29 @@ class Feed extends BaseModel
             $this->etag = $resource->getEtag();
             $this->save();
         }
+    }
+
+    /**
+     * @param int $days
+     */
+    public function cleanup(int $days = 10)
+    {
+        if (isset($this->settings)) {
+            $settings = $this->settings;
+            $days = array_get($settings, 'articles.keep');
+        }
+
+        $dateFormat = self::dateFormat();
+        $maxUpatedDate = Carbon::create()
+                               ->subDays($days)
+                               ->format($dateFormat);
+
+        $count = Article::where('updated_at', '<', $maxUpatedDate)
+                        ->where('feed_id', $this->id)
+                        ->where('read', true)
+                        ->where('keep', false)
+                        ->delete();
+
+        return $count;
     }
 }

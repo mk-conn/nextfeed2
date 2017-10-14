@@ -21,6 +21,9 @@ use Tymon\JWTAuth\Facades\JWTAuth;
  */
 class TestResource extends TestCase
 {
+
+    public $apiUrl;
+
     /**
      * @var
      */
@@ -46,6 +49,9 @@ class TestResource extends TestCase
     public function setUp()
     {
         parent::setUp();
+
+        $namespace = config('json-api-v1.url.namespace');
+        $this->apiUrl = 'http://localhost' . $namespace;
 
         $user = new User(
             [
