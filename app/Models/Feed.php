@@ -169,12 +169,19 @@ class Feed extends BaseModel
 
     /**
      * @param int $days
+     *
+     * @return int
      */
-    public function cleanup(int $days = 10)
+    public function cleanup(int $days = 0)
     {
         if (isset($this->settings)) {
             $settings = $this->settings;
             $days = array_get($settings, 'articles.keep');
+        }
+
+        if ((int)$days === 0) {
+            // no setting means, to keep em all
+            return 0;
         }
 
         $dateFormat = self::dateFormat();
