@@ -21,7 +21,8 @@ class Validators extends BaseValidator
 
     protected $allowedFilteringParameters = [
         'feed',
-        'keep'
+        'keep',
+        'read'
     ];
 
     protected $allowedIncludePaths = ['feed'];

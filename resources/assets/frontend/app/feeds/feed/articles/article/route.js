@@ -21,9 +21,11 @@ export default Route.extend({
    * @param model
    */
   afterModel(model) {
+
     if (!model.get('read')) {
       const feed = this.modelFor('feeds.feed');
       feed.decrementUnread();
+
       model.set('read', true);
       model.save();
     }
@@ -37,6 +39,9 @@ export default Route.extend({
   },
 
   actions: {
+    scrapeArticle() {
+
+    },
     originalArticle() {
 
     },

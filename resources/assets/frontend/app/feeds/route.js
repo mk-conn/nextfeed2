@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const {Route, RSVP, get, set, getOwner} = Ember;
+const {Route, RSVP} = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
 

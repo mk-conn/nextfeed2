@@ -58,7 +58,6 @@ export default Route.extend(InfinityRoute, {
 
   setupController(controller, model) {
     this._super(controller, model);
-    console.log('setupController.articles');
 
     controller.set('feed', this.modelFor('feeds.feed'));
     controller.set('articleRoute', 'feeds.feed.articles.article');
@@ -72,7 +71,6 @@ export default Route.extend(InfinityRoute, {
     read(article) {
       article.save().then(article => {
         const feed = this.modelFor('feeds.feed');
-
         const decrement = article.toggleProperty('read');
         if (decrement) {
           feed.decrementUnread();
@@ -80,7 +78,6 @@ export default Route.extend(InfinityRoute, {
           feed.incrementUnread();
         }
       });
-
     },
     /**
      *
