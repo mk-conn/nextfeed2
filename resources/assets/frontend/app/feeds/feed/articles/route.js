@@ -39,19 +39,19 @@ export default Route.extend(InfinityRoute, {
     let filter = {};
 
     if (feed.get('id') === 'archived') {
-      filter['keep'] = true;
+      filter[ 'keep' ] = true;
     } else {
-      filter['feed'] = feed.id;
+      filter[ 'feed' ] = feed.id;
     }
 
     if (params.filterUnread === true) {
-      filter['read'] = false;
+      filter[ 'read' ] = false;
     }
 
     delete params.filterUnread;
 
-    params['filter'] = filter;
-    params['fields'] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
+    params[ 'filter' ] = filter;
+    params[ 'fields' ] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
 
     return this.infinityModel('article', params, {});
   },
@@ -70,16 +70,17 @@ export default Route.extend(InfinityRoute, {
      * @param article
      */
     read(article) {
-      const feed = this.modelFor('feeds.feed');
+      article.save().then(article => {
+        const feed = this.modelFor('feeds.feed');
 
-      const decrement = article.toggleProperty('read');
-      article.save();
+        const decrement = article.toggleProperty('read');
+        if (decrement) {
+          feed.decrementUnread();
+        } else {
+          feed.incrementUnread();
+        }
+      });
 
-      if (decrement) {
-        feed.decrementUnread();
-      } else {
-        feed.incrementUnread();
-      }
     },
     /**
      *
