@@ -15,24 +15,42 @@ use Tests\TestResource;
 use Tests\Traits\FeedReaderMock;
 use Tests\Traits\ModelFactoryTrait;
 
+/**
+ * Class ArticleResourceTest
+ *
+ * @package Tests\Feature
+ */
 class ArticleResourceTest extends TestResource
 {
     use RefreshDatabase, ModelFactoryTrait, FeedReaderMock;
 
+    /**
+     *
+     */
     public function setup()
     {
         parent::setUp();
     }
 
+    /**
+     *
+     */
     public function testIndex()
     {
+        $this->markTestIncomplete('Not yet implemented');
     }
 
+    /**
+     *
+     */
     public function testRead()
     {
-
+        $this->markTestIncomplete('Not yet implemented');
     }
 
+    /**
+     *
+     */
     public function testStarredArticles()
     {
 

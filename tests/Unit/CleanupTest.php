@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 use Tests\Traits\FeedReaderMock;
@@ -17,7 +17,15 @@ use Tests\Traits\ModelFactoryTrait;
  */
 class CleanupTest extends TestCase
 {
-    use FeedReaderMock, RefreshDatabase, ModelFactoryTrait;
+    use DatabaseMigrations, ModelFactoryTrait, FeedReaderMock;
+
+    /**
+     *
+     */
+    public function setup()
+    {
+        parent::setUp();
+    }
 
     /**
      *

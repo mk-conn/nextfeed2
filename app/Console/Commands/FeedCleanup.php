@@ -20,7 +20,7 @@ class FeedCleanup extends Command
      */
     protected $signature = 'feed:cleanup 
         {--id=* : ID of feed to clean [defaults to all]}
-        {--days=10 : Articles older than [--days]}
+        {--days=0 : Articles older than [--days]}
     ';
 
     /**

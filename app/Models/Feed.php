@@ -168,15 +168,19 @@ class Feed extends BaseModel
     }
 
     /**
-     * @param int $days
+     *
+     * @param int  $days
+     * @param bool $force
      *
      * @return int
      */
-    public function cleanup(int $days = 0)
+    public function cleanup(int $days = 0, $force = false)
     {
-        if (isset($this->settings)) {
-            $settings = $this->settings;
-            $days = array_get($settings, 'articles.keep');
+        if (!$force) {
+            if (isset($this->settings)) {
+                $settings = $this->settings;
+                $days = array_get($settings, 'articles.keep');
+            }
         }
 
         if ((int)$days === 0) {

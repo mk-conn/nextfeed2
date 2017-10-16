@@ -53,15 +53,13 @@ class TestResource extends TestCase
         $namespace = config('json-api-v1.url.namespace');
         $this->apiUrl = 'http://localhost' . $namespace;
 
-        $user = new User(
-            [
-                'username' => 'holla_die_waldfee',
-                'password' => Hash::make('1234'),
-                'fullname' => 'Holla die Waldfee',
-                'email'    => 'holla@localhost'
-            ]
-        );
-        $user->save();
+        $user = User::firstOrCreate([
+                                        'username' => 'holla_die_waldfee',
+                                        'password' => Hash::make('1234'),
+                                        'fullname' => 'Holla die Waldfee',
+                                        'email'    => 'holla@localhost'
+                                    ]);
+
         $this->user = $user;
         $this->be($user);
         $this->token = JWTAuth::fromUser($user);
