@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', null),
+    'driver' => env('SCOUT_DRIVER', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,6 +69,12 @@ return [
     | in your application ID and admin API key to get started searching.
     |
     */
+
+    'pgsql' => [
+        'connection'     => 'pgsql',
+        'maintain_index' => true,
+        'config'         => 'simple',
+    ],
 
     'algolia' => [
         'id'     => env('ALGOLIA_APP_ID', ''),

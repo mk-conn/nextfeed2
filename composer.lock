@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f819d5ecae97c9f7d626c4cd071eead",
+    "content-hash": "9095f763ff5b994c78bbf7c9cc56ae28",
     "packages": [
         {
             "name": "cloudcreativity/json-api",
@@ -1795,6 +1795,68 @@
                 "random"
             ],
             "time": "2017-09-27T21:40:39+00:00"
+        },
+        {
+            "name": "pmatseykanets/laravel-scout-postgres",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pmatseykanets/laravel-scout-postgres.git",
+                "reference": "c10b6adc305d2360ba4d3542972ebc52f8bece43"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pmatseykanets/laravel-scout-postgres/zipball/c10b6adc305d2360ba4d3542972ebc52f8bece43",
+                "reference": "c10b6adc305d2360ba4d3542972ebc52f8bece43",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.3.*|5.4.*|5.5.*",
+                "illuminate/database": "5.3.*|5.4.*|5.5.*",
+                "illuminate/support": "5.3.*|5.4.*|5.5.*",
+                "laravel/scout": "2.*|3.*",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.5",
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ScoutEngines\\Postgres\\PostgresEngineServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ScoutEngines\\Postgres\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Matseykanets",
+                    "email": "pmatseykanets@gmail.com",
+                    "homepage": "https://github.com/pmatseykanets",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PostgreSQL Full Text Search Driver for Laravel Scout",
+            "homepage": "https://github.com/pmatseykanets/laravel-scout-postgres",
+            "keywords": [
+                "fts",
+                "full text search",
+                "laravel",
+                "laravel scout",
+                "postgresql",
+                "search"
+            ],
+            "time": "2017-09-03T17:41:46+00:00"
         },
         {
             "name": "psr/container",

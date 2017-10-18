@@ -33,6 +33,7 @@ Route::group(['prefix' => 'api'], function () {
 JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'jwt.auth'], function (ApiGroup $api) {
     $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
     $api->resource('feed-actions');
+    $api->resource('article-actions');
     $api->resource('folders', ['has-many' => 'feeds', 'has-one' => 'user']);
     $api->resource('articles', ['has-one' => 'feed']);
     $api->resource('settings');

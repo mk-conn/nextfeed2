@@ -16,8 +16,9 @@
     "laravel/scout": "^3.0",
     "laravel/tinker": "~1.0",
     "miniflux/picofeed": "0.1.*",
-    "tymon/jwt-auth": "dev-develop",
-    "mk-conn/shellax": "0.3.*"
+    "mk-conn/shellax": "0.3.*",
+    "pmatseykanets/laravel-scout-postgres": "^1.0",
+    "tymon/jwt-auth": "dev-develop"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.4",

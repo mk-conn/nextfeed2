@@ -16,18 +16,8 @@ use PicoFeed\Reader\Reader;
  *
  * @package App\Models
  */
-class FeedAction
+class FeedAction extends BaseAction
 {
-    /**
-     * @var array*
-     */
-    public $result = [];
-    /**
-     * @var array
-     */
-    protected $params = [];
-
-
     /**
      * @return $this
      */
@@ -36,9 +26,7 @@ class FeedAction
         try {
             $reader = new Reader;
             $resource = $reader->download($this->params['url']);
-
             $feeds = $reader->find($resource->getUrl(), $resource->getContent());
-
             $this->result['feeds'] = $feeds;
         } catch (InvalidUrlException $e) {
             $errors = new ErrorCollection();
@@ -50,20 +38,8 @@ class FeedAction
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function result()
+    public function read()
     {
-        return $this->result;
-    }
 
-    /**
-     * @param $params
-     */
-    public function setParams($params)
-    {
-        $this->params = array_dot($params);
     }
-
 }

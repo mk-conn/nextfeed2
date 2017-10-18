@@ -5,6 +5,7 @@ namespace App\Models;
 
 use App\BaseModel;
 use Carbon\Carbon;
+use Laravel\Scout\Searchable;
 use PicoFeed\Parser\Item;
 
 /**
@@ -48,6 +49,7 @@ use PicoFeed\Parser\Item;
  */
 class Article extends BaseModel
 {
+    use Searchable;
 
     /**
      *
@@ -61,6 +63,9 @@ class Article extends BaseModel
         'categories' => 'array'
     ];
 
+    /**
+     * @var array
+     */
     protected $with = ['feed'];
 
     /**
@@ -69,14 +74,6 @@ class Article extends BaseModel
     public function feed()
     {
         return $this->belongsTo(Feed::class);
-    }
-
-    /**
-     * @return string
-     */
-    public function searchableAs()
-    {
-        return 'articles_index';
     }
 
     /**
@@ -153,5 +150,39 @@ class Article extends BaseModel
         }
 
         return $value;
+    }
+
+    public function searchableOptions()
+    {
+        // pgsql related
+        return [
+            'external'       => true,
+            // If you don't want scout to maintain the index for you
+            // You can turn it off either for a Model or globally
+            'maintain_index' => true,
+            'config'         => 'simple'
+        ];
+    }
+
+    public function searchableAs()
+    {
+        return 'article_index';
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'title'   => $this->title,
+            'content' => $this->content,
+            'author'  => $this->author,
+            'feed'    => $this->feed,
+        ];
+    }
+
+    public function searchableAdditionalArray()
+    {
+        return [
+            'user_id' => $this->feed->user_id,
+        ];
     }
 }

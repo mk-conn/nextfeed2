@@ -51,7 +51,7 @@ class ArticleResourceTest extends TestResource
     /**
      *
      */
-    public function testStarredArticles()
+    public function testArchivedArticles()
     {
 
         $this->mockFeedReader();
@@ -85,5 +85,24 @@ class ArticleResourceTest extends TestResource
 
         $this->assertCount(6, $response['data']);
     }
+
+    public function testSearchArticles()
+    {
+        $this->mockFeedReader();
+        $feed = $this->createFeed();
+
+        $this->createArticle($feed, ['title' => 'Eine Artikel Überschrift']);
+        $this->createArticle($feed, [], 10);
+
+        $query = ['action' => 'search', 'params' => ['q' => 'Überschrift']];
+        $q = http_build_query($query);
+
+        $response = $this->getJson('api/v1/article-actions?' . $q)
+                         ->assertStatus(200)
+                         ->decodeResponseJson();
+
+        $this->assertCount(1, array_get($response, 'data.attributes.result.articles'));
+    }
+
 
 }
