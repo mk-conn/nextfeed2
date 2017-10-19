@@ -35,7 +35,9 @@ export default Controller.extend({
      * @param article
      */
     goToArticle(article) {
-      this.transitionToRoute('feeds.feed.articles.article', article.feed.id, article.id);
+      if (article) {
+        this.transitionToRoute('feeds.feed.articles.article', article.feed.id, article.id);
+      }
     }
   }
 });

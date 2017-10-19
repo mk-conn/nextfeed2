@@ -5,6 +5,10 @@
       loadingMessage='Searching articles...'
       search=(perform searchArticle)
       selected=selected
+      triggerClass="bootstrap-theme-trigger"
+      dropdownClass="slide-fade bootstrap-theme-dropdown"
+      class="form-group"
+      closeOnSelect=false
       allowClear=true
       renderInPlace=true
       onchange=(action "goToArticle") as |article|}}

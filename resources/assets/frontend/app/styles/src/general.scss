@@ -1,17 +1,5 @@
 $header-height: 4em;
 
-// https://coolors.co/7c6c77-ebf8b8-aaa694-d1d0a3-ffe787
-$color5: rgba(51, 158, 53, 1);
-$color3: rgba(224, 219, 108, 1);
-$color2: rgba(89, 97, 87, 1);
-$color4: rgba(103, 119, 108, 1);
-$color1: rgba(24, 48, 78, 1);
-
-$lightblue : #5099d0;
-$orange : #f54907;
-
-$color1-light: lighten($color1, 20%);
-
 @mixin overflow-scroll() {
   //overflow: auto;
   overflow-y: visible;
