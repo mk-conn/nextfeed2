@@ -54,6 +54,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       const discover = this.get('currentModel').discover;
       if (discover.get('url')) {
         this.controller.set('processing', true);
+
         this.store.queryRecord('feed-action', {
           action: 'discover',
           params: {

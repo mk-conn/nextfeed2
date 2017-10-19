@@ -61,7 +61,8 @@ class FeedCleanup extends Command
         }
 
         $feeds->each(function (Feed $feed) use ($days) {
-            $this->info('Cleaning ' . $feed->name);
+            $settings = $feed->settings;
+            $this->info('Cleaning ' . $feed->name . ' older than ' . $settings['articles']['keep']);
             $count = $feed->cleanup($days);
             $this->output->writeln('<comment>Cleaned ' . $count . '</comment>');
         });

@@ -1,3 +1,23 @@
+<div class="sidebar-item search">
+  <div class="inner-addon right-addon">
+    <i class="glyphicon glyphicon-search"></i>
+    {{#power-select
+      loadingMessage='Searching articles...'
+      search=(perform searchArticle)
+      selected=selected
+      allowClear=true
+      renderInPlace=true
+      onchange=(action "goToArticle") as |article|}}
+      <div>
+        <h5 class="text-muted">{{article.feed.name}}</h5>
+        <div>{{moment-format article.updated_date 'YYYY-MM-DD H:m'}}</div>
+        <div>{{article.title}}</div>
+      </div>
+    {{/power-select}}
+  </div>
+</div>
+
+
 <div class="folder-item">
   <div class="folder">
     <span class="text-muted">Articles</span>

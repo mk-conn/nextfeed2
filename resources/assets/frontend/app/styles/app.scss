@@ -8,10 +8,6 @@ $h6-font-size:1.1rem;
 @import "font-awesome";
 //noinspection CssUnknownTarget
 @import "ember-bootstrap/bootstrap";
-//noinspection CssUnknownTarget
-@import 'ember-power-select/themes/bootstrap';
-//noinspection CssUnknownTarget
-@import "ember-power-select";
 @import 'src/general';
 @import "src/buttons";
 @import "src/login";
@@ -20,3 +16,10 @@ $h6-font-size:1.1rem;
 @import "src/feed";
 @import "src/articles";
 @import "src/article";
+
+//noinspection CssUnknownTarget
+@import 'ember-power-select/themes/bootstrap';
+//noinspection CssUnknownTarget
+@import "ember-power-select";
+//noinspection CssUnknownTarget
+@import 'ember-power-select-typeahead';

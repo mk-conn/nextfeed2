@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 
-const {Route, inject: {service}} = Ember;
+const {Route, inject: {service}, get} = Ember;
 
 export default Route.extend(ApplicationRouteMixin, {
   currentUser: service('current-user'),
@@ -20,7 +20,7 @@ export default Route.extend(ApplicationRouteMixin, {
 
   _loadCurrentUser() {
     return this.get('currentUser').load()
-               .catch(() => this.get('session').invalidate());
+      .catch(() => this.get('session').invalidate());
   },
 
   setupController(controller, model) {
@@ -32,6 +32,25 @@ export default Route.extend(ApplicationRouteMixin, {
   actions: {
     updateAllFeeds() {
 
+    },
+
+    searchArticle(q) {
+      console.log('route searchArticle', q);
+
+      this.store.queryRecord('article-action', {
+        action: 'search',
+        params: {
+          q: q
+        }
+      }).then(articleAction => {
+        let articles = get(articleAction, 'result.articles');
+        this.controller.set('articlesSearchResult', articles);
+        this.controller.set('processing', false);
+        this.controller.set('processed', true);
+      }, error => {
+        this.controller.set('processing', false);
+        // set(discover, 'errors', error.errors)
+      });
     },
 
     invalidateSession() {
