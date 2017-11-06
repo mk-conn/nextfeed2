@@ -11,9 +11,9 @@
 {{articleDescription}}
 </p>
 <div class="btn-group">
-  {{#link-to articleRoute article.id classNames="btn btn-outline-secondary"}}
+  <a href="#" class="btn btn-outline-secondary" {{action (route-action "readAndOpenArticle" article)}}>
     {{fa-icon "expand"}}
-  {{/link-to}}
+  </a>
   <a class="btn btn-outline-secondary"
      href="{{article.url}}" data-content="Open article in new tab"
      target="_blank" {{action "originalArticle" preventDefault=false}}>

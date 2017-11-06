@@ -1,11 +1,16 @@
 import Ember from 'ember';
+import Gui from 'frontend/mixins/gui';
 
 const {Route, $} = Ember;
 
-export default Route.extend({
+export default Route.extend(Gui, {
+  displayIn: '#column-two',
 
   beforeModel() {
-    $('#column-two').animate({scrollTop: 0, duration: 400});
+    this.debug('route %s::beforeModel()', this.routeName);
+    $(this.get('displayIn')).animate({scrollTop: 0, duration: 400});
+
+    this._super(...arguments);
   },
 
   /**
@@ -29,6 +34,7 @@ export default Route.extend({
       model.set('read', true);
       model.save();
     }
+    this._super(...arguments);
   },
 
   renderTemplate() {

@@ -1,9 +1,12 @@
 import Ember from 'ember';
 import InfinityRoute from "ember-infinity/mixins/route";
+import Gui from 'frontend/mixins/gui';
 
-const {Route, RSVP, set, $, inject: {service}} = Ember;
+const {Route, get, $, inject: {service}} = Ember;
 
-export default Route.extend(InfinityRoute, {
+export default Route.extend(InfinityRoute, Gui, {
+
+  displayIn: '#column-one',
 
   session: service(),
 
@@ -24,6 +27,8 @@ export default Route.extend(InfinityRoute, {
 
   beforeModel() {
     $('#article-list-items').animate({scrollTop: 0, duration: 400});
+
+    this._super(...arguments);
   },
 
   renderTemplate() {
@@ -68,17 +73,31 @@ export default Route.extend(InfinityRoute, {
      *
      * @param article
      */
-    read(article) {
-      article.save().then(article => {
+    read(article, callback) {
+      return article.save().then(article => {
         const feed = this.modelFor('feeds.feed');
         const decrement = article.toggleProperty('read');
-        if (decrement) {
-          feed.decrementUnread();
-        } else {
-          feed.incrementUnread();
+        if (feed) {
+          if (decrement) {
+            feed.decrementUnread();
+          } else {
+            feed.incrementUnread();
+          }
+        }
+
+        if (callback) {
+          callback();
         }
       });
     },
+
+    readAndOpenArticle(article) {
+      let _this = this;
+      this.send('read', article, function () {
+        _this.transitionTo('feeds.feed.articles.article', get(article, 'id'));
+      });
+    },
+
     /**
      *
      * @param article

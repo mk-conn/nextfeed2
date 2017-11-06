@@ -18,32 +18,32 @@ export default Service.extend({
    *
    * @param layoutComponent
    */
-  activate(layoutComponent) {
-    Ember.debug(`service: gui::activate(${layoutComponent})`);
+  enable(layoutComponent) {
+    Ember.debug(`service: gui::enable(${layoutComponent})`);
 
     run.scheduleOnce('afterRender', this, () => {
-      let component = `#${layoutComponent}`;
-      let isActivated = $(component).hasClass('activated');
-      Ember.debug(`service: gui::activate() ${component}.isActivated=${isActivated}`);
+      let component = `${layoutComponent}`;
+      let isEnabled = $(component).hasClass('enabled');
+      Ember.debug(`service: gui::activate() ${component}.isActivated=${isEnabled}`);
 
-      if (isActivated === false) {
-        Ember.debug(`service: gui::activate() activate ${component}`);
-        $(component).addClass('activated');
+      if (isEnabled === false) {
+        Ember.debug(`\tenable: ${component}`);
+        $(component).addClass('enabled');
       }
 
-      isActivated = $(component).hasClass('activated');
-      Ember.debug(`service: gui::activate() ${component}.isActivated=${isActivated}`);
+      isEnabled = $(component).hasClass('enabled');
+      Ember.debug(`\t${component}.isEnabled=${isEnabled}`);
     });
   },
   /**
    *
    * @param layoutComponent
    */
-  deactivate(layoutComponent) {
-    Ember.debug(`service: activate-deactivate::deactivate(${layoutComponent}) `);
+  disable(layoutComponent) {
+    Ember.debug(`service: gui::disable(${layoutComponent}) `);
 
-    let component = `#${layoutComponent}`;
-    $(component).removeClass('activated');
+    let component = `${layoutComponent}`;
+    $(component).removeClass('enabled');
   }
 
 });
