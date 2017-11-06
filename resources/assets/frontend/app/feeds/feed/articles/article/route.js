@@ -27,13 +27,12 @@ export default Route.extend(Gui, {
    */
   afterModel(model) {
 
-    if (!model.get('read')) {
-      const feed = this.modelFor('feeds.feed');
-      feed.decrementUnread();
+    const feed = this.modelFor('feeds.feed');
+    feed.decrementUnread();
 
-      model.set('read', true);
-      model.save();
-    }
+    model.set('read', true);
+    model.save();
+
     this._super(...arguments);
   },
 
