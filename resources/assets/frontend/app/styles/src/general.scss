@@ -41,26 +41,21 @@ body {
     #column-one {
       z-index: 2;
       background: #fff;
-      //height: 100vh;
-      //max-height: 100vh;
-      //overflow-y: scroll;
     }
 
     #column-two {
       background: #fff;
       z-index: 3;
 
-      //.full-article {
-      //  height: 100vh;
-      //  max-height: 100vh;
-      //  background: #fff;
-      //  overflow-y: scroll;
-      //}
     }
   }
 
   // bigger -> grid
   @include media-breakpoint-up(md) {
+
+    .mobi-close {
+      display: none;
+    }
 
     > div.ember-view {
       width: inherit;
