@@ -9,7 +9,7 @@
 namespace Tests\Feature;
 
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Article;
 use Illuminate\Http\Response;
 use Tests\TestResource;
 use Tests\Traits\FeedReaderMock;
@@ -22,7 +22,7 @@ use Tests\Traits\ModelFactoryTrait;
  */
 class FeedResourceTest extends TestResource
 {
-    use RefreshDatabase, ModelFactoryTrait, FeedReaderMock;
+    use ModelFactoryTrait, FeedReaderMock;
 
     /**
      * @var
@@ -160,5 +160,36 @@ class FeedResourceTest extends TestResource
 
         $this->assertEquals(20, array_get($response, 'data.attributes.settings.articles.keep'));
     }
+
+    /**
+     *
+     */
+    public function testMarkAllRead()
+    {
+        $this->mockFeedReader();
+        $feed = $this->createFeed();
+        $articles = $this->createArticle($feed, [], 10);
+        $newerArticles = $this->createArticle($feed, [], 2);
+        $lastId = $articles->max('id');
+        $query = [
+            'action' => 'read',
+            'params' => [
+                'feed_id'         => $feed->id,
+                'last_article_id' => $lastId
+            ]
+        ];
+        $q = http_build_query($query);
+
+        $this->getJson($this->apiUrl . '/feed-actions?' . $q)
+             ->assertSuccessful()
+             ->decodeResponseJson();
+
+        $articles = Article::whereFeedId($feed->id)
+                           ->where('read', false)
+                           ->get();
+
+        $this->assertEquals($newerArticles->count(), $articles->count());
+    }
+
 
 }

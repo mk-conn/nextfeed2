@@ -38,8 +38,19 @@ class FeedAction extends BaseAction
         return $this;
     }
 
+    /**
+     *
+     */
     public function read()
     {
+        $feedId = $this->params['feed_id'];
+        $lastArticleId = $this->params['last_article_id'];
+        /** @var Feed $feed */
+        $feed = Feed::findOrFail($feedId);
+        $success = $feed->read($lastArticleId);
 
+        $this->result['success'] = $success;
+
+        return $this;
     }
 }

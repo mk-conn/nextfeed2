@@ -5,5 +5,5 @@ const {Controller} = Ember;
 export default Controller.extend({
   queryParams: [ 'sort', 'filterUnread' ],
   filterUnread: false,
-  sort: '-updated-date,-id'
+  sort: '-id,-updated-date'
 });

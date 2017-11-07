@@ -2,11 +2,13 @@ import Ember from 'ember';
 import InfinityRoute from "ember-infinity/mixins/route";
 import Gui from 'frontend/mixins/gui';
 
-const {Route, get, $, inject: {service}} = Ember;
+const {Route, get, set, $, inject: {service}} = Ember;
 
 export default Route.extend(InfinityRoute, Gui, {
 
   displayIn: '#column-one',
+
+  lastId: null,
 
   session: service(),
 
@@ -66,6 +68,16 @@ export default Route.extend(InfinityRoute, Gui, {
 
     controller.set('feed', this.modelFor('feeds.feed'));
     controller.set('articleRoute', 'feeds.feed.articles.article');
+
+  },
+  /**
+   *
+   * @param articles
+   */
+  afterInfinityModel(articles) {
+    const latestArticleId = articles.get('firstObject.id');
+
+    this.set('lastId', latestArticleId);
   },
 
   actions: {
@@ -73,29 +85,22 @@ export default Route.extend(InfinityRoute, Gui, {
      *
      * @param article
      */
-    read(article, callback) {
-      return article.save().then(article => {
-        const feed = this.modelFor('feeds.feed');
-        const decrement = article.toggleProperty('read');
-        if (feed.id !== 'archived') {
-          if (decrement) {
-            feed.decrementUnread();
-          } else {
-            feed.incrementUnread();
-          }
-        }
+    read(article) {
 
-        if (callback) {
-          callback();
+      const feed = this.modelFor('feeds.feed');
+
+      const decrement = article.toggleProperty('read');
+      article.save().then(() => {
+        if (decrement) {
+          feed.decrementUnread();
+        } else {
+          feed.incrementUnread();
         }
       });
     },
 
-    readAndOpenArticle(article) {
-      let _this = this;
-      this.send('read', article, function () {
-        _this.transitionTo('feeds.feed.articles.article', get(article, 'id'));
-      });
+    openArticle(article) {
+      this.transitionTo('feeds.feed.articles.article', get(article, 'id'));
     },
 
     /**
@@ -111,24 +116,19 @@ export default Route.extend(InfinityRoute, Gui, {
      * @param feed
      */
     readAll(feed) {
-      const adapter = this.get('store').adapterFor('application');
-      const host = adapter.get('host') || '';
-      // const namespace = adapter.get('namespace');
-      const token = this.get('session.session.content.authenticated.token');
-      let url = `${host}/api/feeds/${feed.get('id')}/articles/mark-read`;
-      // let url = `${host}/${namespace}/feeds/${feed.get('id')}/relationships/articles`; -- does not work
+      this.debug(`route %s::readAll() `, this.routeName);
 
-      $.ajax(url, {
-        method: 'GET',
-        dataType: 'json',
-        contentType: 'application/vnd.api+json',
-        headers: {
-          Accept: 'application/vnd.api+json',
-          Authorization: 'Bearer ' + token
+      this.store.queryRecord('feed-action', {
+        action: 'read',
+        params: {
+          feed_id: get(feed, 'id'),
+          last_article_id: get(this, 'lastId')
         }
-      }).then(() => {
+      }).then(feedAction => {
         feed.set('unreadCount', 0);
         this.refresh();
+      }, error => {
+        console.log('error:', error);
       });
     }
   }

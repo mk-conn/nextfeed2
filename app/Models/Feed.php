@@ -114,6 +114,19 @@ class Feed extends BaseModel
     }
 
     /**
+     * @param $lastArticleId
+     *
+     * @return bool|int
+     */
+    public function read($lastArticleId)
+    {
+        return Article::where('feed_id', $this->id)
+                      ->where('read', false)
+                      ->where('id', '<=', $lastArticleId)
+                      ->update(['read' => true]);
+    }
+
+    /**
      *
      */
     public function fetchNewArticles()

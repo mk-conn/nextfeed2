@@ -86,6 +86,9 @@ class ArticleResourceTest extends TestResource
         $this->assertCount(6, $response['data']);
     }
 
+    /**
+     *
+     */
     public function testSearchArticles()
     {
         $this->mockFeedReader();
@@ -103,6 +106,4 @@ class ArticleResourceTest extends TestResource
 
         $this->assertCount(1, array_get($response, 'data.attributes.result.articles'));
     }
-
-
 }

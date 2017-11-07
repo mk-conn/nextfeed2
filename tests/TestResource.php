@@ -10,6 +10,7 @@ namespace Tests;
 
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -21,6 +22,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
  */
 class TestResource extends TestCase
 {
+    use RefreshDatabase;
+
 
     public $apiUrl;
 
@@ -54,11 +57,11 @@ class TestResource extends TestCase
         $this->apiUrl = 'http://localhost' . $namespace;
 
         $user = User::firstOrCreate([
-                                        'username' => 'holla_die_waldfee',
-                                        'password' => Hash::make('1234'),
-                                        'fullname' => 'Holla die Waldfee',
-                                        'email'    => 'holla@localhost'
-                                    ]);
+            'username' => 'holla_die_waldfee',
+            'password' => Hash::make('1234'),
+            'fullname' => 'Holla die Waldfee',
+            'email'    => 'holla@localhost'
+        ]);
 
         $this->user = $user;
         $this->be($user);
