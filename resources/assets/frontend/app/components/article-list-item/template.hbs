@@ -10,32 +10,32 @@
 
 {{articleDescription}}
 </p>
-<div class="btn-group">
-  <a href="#" class="btn btn-outline-secondary" {{action (route-action "readAndOpenArticle" article)}}>
-    {{fa-icon "expand"}}
-  </a>
-  <a class="btn btn-outline-secondary"
-     href="{{article.url}}" data-content="Open article in new tab"
-     target="_blank" {{action "originalArticle" preventDefault=false}}>
-    {{fa-icon "external-link"}}
-  </a>
-  <a class="btn btn-outline-secondary"
+<div class="btn-group btn-group-sm">
+  <button class="btn btn-outline-secondary" {{action (route-action "readAndOpenArticle" article)}}>
+    <i class="fa fa-expand"></i>
+  </button>
+  <button class="btn btn-outline-secondary"
+          href="{{article.url}}" data-content="Open article in new tab"
+          target="_blank" {{action "originalArticle" preventDefault=false}}>
+    <i class="fa fa-external-link"></i>
+  </button>
+  <a role="button" class="btn btn-outline-secondary"
      href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}%0A%0A{{article.url}}">
-    {{fa-icon "share"}}
+    <i class="fa fa-share"></i>
   </a>
-  <a class="btn btn-outline-secondary" data-content="{{readUnreadHint}}" {{action (route-action "read" article)}}>
+  <button class="btn btn-outline-secondary" data-content="{{readUnreadHint}}" {{action (route-action "read" article)}}>
     {{#if article.read}}
-      {{fa-icon "check-circle-o"}}
+      <i class="fa fa-check-circle-o"></i>
     {{else}}
-      {{fa-icon "circle-o"}}
+      <i class="fa fa-circle-o"></i>
     {{/if}}
-  </a>
-  <a class="btn btn-outline-secondary" {{action (route-action "keep" article)}}>
+  </button>
+  <button class="btn btn-outline-secondary" {{action (route-action "keep" article)}}>
     {{#if article.keep}}
-      {{fa-icon "star"}}
+      <i class="fa fa-star"></i>
     {{else}}
-      {{fa-icon "star-o"}}
+      <i class="fa fa-star-o"></i>
     {{/if}}
-  </a>
+  </button>
 </div>
 <small>{{moment-format article.updatedDate 'Y-MM-DD HH:mm'}}</small>

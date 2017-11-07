@@ -20,8 +20,8 @@ module.exports = function (environment) {
 
     changeTracker: {
       trackHasMany: false,
-      auto: false,
-      enableIsDirty: false
+      auto: true,
+      enableIsDirty: true
     },
 
     APP: {

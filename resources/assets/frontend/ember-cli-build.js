@@ -9,11 +9,13 @@ module.exports = function (defaults) {
       bootstrapVersion: 4,
       importBootstrapFont: false,
       importBootstrapCSS: false
-    },
-    'ember-font-awesome': {
-      useScss: true
     }
   });
+
+  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.ttf', {
+    destDir: 'fonts'
+  });
+
 
   // Use `app.import` to add additional libraries to the generated
   // output files.
