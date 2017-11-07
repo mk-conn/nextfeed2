@@ -28,7 +28,9 @@ export default Route.extend(Gui, {
   afterModel(model) {
 
     const feed = this.modelFor('feeds.feed');
-    feed.decrementUnread();
+    if (feed.id !== 'archived') {
+      feed.decrementUnread();
+    }
 
     model.set('read', true);
     model.save();

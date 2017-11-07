@@ -77,7 +77,7 @@ export default Route.extend(InfinityRoute, Gui, {
       return article.save().then(article => {
         const feed = this.modelFor('feeds.feed');
         const decrement = article.toggleProperty('read');
-        if (feed) {
+        if (feed.id !== 'archived') {
           if (decrement) {
             feed.decrementUnread();
           } else {

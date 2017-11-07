@@ -5,7 +5,8 @@ header {
   align-items: center;
 
   a.navbar-brand {
-    color: $lightblue;
+    color: lighten($color2, 20%);
+    font-size:1.5rem;
     font-weight: bold;
   }
 
@@ -21,8 +22,7 @@ header {
     color: #eee;
 
     &.active {
-      color: darken(#eee, 80%);
-      background: #ccc;
+      color: $orange;
     }
   }
 
