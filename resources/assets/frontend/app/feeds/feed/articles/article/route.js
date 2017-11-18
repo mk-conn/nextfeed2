@@ -31,7 +31,6 @@ export default Route.extend(Gui, {
     if (feed.id !== 'archived') {
       feed.decrementUnread();
     }
-
     model.set('read', true);
     model.save();
 
@@ -52,6 +51,5 @@ export default Route.extend(Gui, {
     originalArticle() {
 
     },
-
   }
 });

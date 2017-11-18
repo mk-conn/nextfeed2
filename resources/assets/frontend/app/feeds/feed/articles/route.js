@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { get, set } from '@ember/object';
+import { getOwner } from '@ember/application';
+import { inject as service } from '@ember/service';
 import InfinityRoute from "ember-infinity/mixins/route";
 import Gui from 'frontend/mixins/gui';
-
-const {Route, get, set, $, inject: {service}} = Ember;
 
 export default Route.extend(InfinityRoute, Gui, {
 
@@ -86,15 +87,18 @@ export default Route.extend(InfinityRoute, Gui, {
      * @param article
      */
     read(article) {
-
+      this.debug(`route: %s::read(%s)`, this.routeName, article);
+      const read = get(article, 'read');
+      this.debug(`\tread: %s -> will set to %s`, read, !read);
       const feed = this.modelFor('feeds.feed');
-
       const decrement = article.toggleProperty('read');
       article.save().then(() => {
-        if (decrement) {
-          feed.decrementUnread();
-        } else {
-          feed.incrementUnread();
+        if (feed) {
+          if (decrement) {
+            feed.decrementUnread();
+          } else {
+            feed.incrementUnread();
+          }
         }
       });
     },
@@ -125,11 +129,17 @@ export default Route.extend(InfinityRoute, Gui, {
           last_article_id: get(this, 'lastId')
         }
       }).then(feedAction => {
-        feed.set('unreadCount', 0);
-        this.refresh();
+        let result = get(feedAction, 'result.success');
+
+        if (result) {
+          let currentUnreadCount = get(feed, 'meta.articles-unread-count');
+          set(feed, 'unreadCount', (currentUnreadCount - result));
+          this.refresh();
+        }
       }, error => {
         console.log('error:', error);
       });
     }
   }
-});
+})
+;
