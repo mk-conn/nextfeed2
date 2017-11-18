@@ -28,9 +28,10 @@ export default Model.extend({
    */
   decrementUnread() {
     let unreadCount = this.get('unreadCount');
-    unreadCount--;
-
-    this.set('unreadCount', unreadCount);
+    if (unreadCount > 0) {
+      unreadCount--;
+      this.set('unreadCount', unreadCount);
+    }
   },
   /**
    *
