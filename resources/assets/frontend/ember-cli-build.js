@@ -5,18 +5,35 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
+    'ember-cli-babel': {
+      includePolyfill: true,
+    },
     'ember-bootstrap': {
       bootstrapVersion: 4,
       importBootstrapFont: false,
       importBootstrapCSS: false,
-      insertEmberWormholeElementToDom: false
+      insertEmberWormholeElementToDom: true
+    },
+    sourcemaps: {
+      enabled: EmberApp.env() === 'production',
+      extensions: [ 'js' ]
     }
   });
-
   app.import('node_modules/font-awesome/fonts/fontawesome-webfont.ttf', {
     destDir: 'fonts'
   });
-
+  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.svg', {
+    destDir: 'fonts'
+  });
+  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff', {
+    destDir: 'fonts'
+  });
+  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff2', {
+    destDir: 'fonts'
+  });
+  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.otf', {
+    destDir: 'fonts'
+  });
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

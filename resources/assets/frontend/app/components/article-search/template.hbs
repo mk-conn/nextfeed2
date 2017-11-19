@@ -1,0 +1,29 @@
+<i class="fa fa-search action" {{action "toggleSearch"}}></i>
+
+{{#if showResults}}
+  {{#if searchArticle.isRunning}}
+    <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+  {{/if}}
+  {{#scrollable-container id="article-search-result"}}
+    <div class="text-right mb-2">
+      <a href="#" class="btn btn-outline-secondary" {{action "toggleSearch"}}>
+        <i class="fa fa-close"></i>
+      </a>
+    </div>
+    <div class="form-group">
+      <input type="text" placeholder="Search articles" class="form-control"
+             oninput={{perform searchArticle value="target.value"}}/>
+    </div>
+    {{#each articles as |article|}}
+      <div class="article-result action" {{action "goToArticle" article}}>
+        <h5 class="text-muted">{{article.feed.name}}</h5>
+        <div>{{moment-format article.updated_date 'YYYY-MM-DD H:m'}}</div>
+        <div>{{article.title}}</div>
+      </div>
+    {{else}}
+      <div class="alert alert info">
+        No articles found.
+      </div>
+    {{/each}}
+  {{/scrollable-container}}
+{{/if}}

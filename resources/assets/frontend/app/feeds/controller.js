@@ -6,6 +6,7 @@ export default Controller.extend({
    *
    */
   searchArticle: task(function* (term) {
+
     yield timeout(600);
 
     return this.get('store').queryRecord('article-action', {

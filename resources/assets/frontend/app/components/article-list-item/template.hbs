@@ -11,31 +11,32 @@
 {{articleDescription}}
 </p>
 <div class="btn-group">
-  <button class="btn btn-outline-secondary" {{action (route-action "openArticle" article)}}>
+  {{#link-to "feeds.feed.articles.article" article.id classNames="btn btn-outline-secondary"}}
     <i class="fa fa-expand"></i>
-  </button>
-  <button class="btn btn-outline-secondary"
-          href="{{article.url}}" data-content="Open article in new tab"
-          target="_blank" {{action "originalArticle" preventDefault=false}}>
+  {{/link-to}}
+  <a class="btn btn-outline-secondary"
+     href="{{article.url}}" data-content="Open article in new tab"
+     target="_blank" {{action "originalArticle" preventDefault=false}}>
     <i class="fa fa-external-link"></i>
-  </button>
+  </a>
   <a role="button" class="btn btn-outline-secondary"
      href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}%0A%0A{{article.url}}">
     <i class="fa fa-share"></i>
   </a>
-  <button class="btn btn-outline-secondary" data-content="{{readUnreadHint}}" {{action (route-action "read" article)}}>
+  <a class="btn btn-outline-secondary" href="#" data-content="{{readUnreadHint}}" {{action
+    (route-action "read" article)}}>
     {{#if article.read}}
       <i class="fa fa-check-circle-o"></i>
     {{else}}
       <i class="fa fa-circle-o"></i>
     {{/if}}
-  </button>
-  <button class="btn btn-outline-secondary" {{action (route-action "keep" article)}}>
+  </a>
+  <a class="btn btn-outline-secondary" href="#" {{action (route-action "keep" article)}}>
     {{#if article.keep}}
       <i class="fa fa-star"></i>
     {{else}}
       <i class="fa fa-star-o"></i>
     {{/if}}
-  </button>
+  </a>
 </div>
 <small>{{moment-format article.updatedDate 'Y-MM-DD HH:mm'}}</small>
