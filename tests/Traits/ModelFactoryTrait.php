@@ -31,9 +31,8 @@ trait ModelFactoryTrait
      *
      * @return Feed|Feed[]
      */
-    public function createFeed(
-        User $user = null, Folder $folder = null, $attrs = [], $amount = 1, callable $mock_function = null
-    ) {
+    public function createFeed(User $user = null, Folder $folder = null, $attrs = [], $amount = 1, callable $mock_function = null)
+    {
         if (!$user) {
             $user = $this->createUser();
         }
@@ -136,7 +135,17 @@ trait ModelFactoryTrait
             $article = $articles->first();
             $article->feed()
                     ->associate($feed);
+            $article->user()
+                    ->associate($feed->user);
+            $article->save();
+
+            return $article;
         }
+
+        $articles->each(function ($article) use ($feed) {
+            $article->user()
+                    ->associate($feed->user);
+        });
 
         $feed->articles()
              ->saveMany($articles);

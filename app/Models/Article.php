@@ -28,7 +28,10 @@ use PicoFeed\Parser\Item;
  * @property bool                  $keep
  * @property \Carbon\Carbon|null   $created_at
  * @property \Carbon\Carbon|null   $updated_at
+ * @property string|null           $searchable
+ * @property int                   $user_id
  * @property-read \App\Models\Feed $feed
+ * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereAuthor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereCategories($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereContent($value)
@@ -41,10 +44,12 @@ use PicoFeed\Parser\Item;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereLanguage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article wherePublishDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereRead($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereSearchable($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUpdatedDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUserId($value)
  * @mixin \Eloquent
  */
 class Article extends BaseModel
@@ -66,6 +71,13 @@ class Article extends BaseModel
     /**
      * @var array
      */
+    protected $hidden = [
+        'searchable',
+    ];
+
+    /**
+     * @var array
+     */
     protected $with = ['feed'];
 
     /**
@@ -74,6 +86,14 @@ class Article extends BaseModel
     public function feed()
     {
         return $this->belongsTo(Feed::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -130,16 +150,6 @@ class Article extends BaseModel
      *
      * @return string
      */
-    public function getUpdatedDateAttribute($value)
-    {
-        return $this->getISODate($value);
-    }
-
-    /**
-     * @param $value
-     *
-     * @return string
-     */
     protected function getISODate($value)
     {
         $time = strtotime($value);
@@ -152,37 +162,52 @@ class Article extends BaseModel
         return $value;
     }
 
-    public function searchableOptions()
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    public function getUpdatedDateAttribute($value)
     {
-        // pgsql related
-        return [
-            'external'       => true,
-            // If you don't want scout to maintain the index for you
-            // You can turn it off either for a Model or globally
-            'maintain_index' => true,
-            'config'         => 'simple'
-        ];
+        return $this->getISODate($value);
     }
 
-    public function searchableAs()
-    {
-        return 'article_index';
-    }
+//    /**
+//     * @return array
+//     */
+//    public function searchableOptions()
+//    {
+//        // pgsql related
+//        return [
+//            'external'       => false,
+//            // If you don't want scout to maintain the index for you
+//            // You can turn it off either for a Model or globally
+//            'maintain_index' => true,
+//            'config'         => 'simple'
+//        ];
+//    }
 
+    /**
+     * @return array
+     */
     public function toSearchableArray()
     {
         return [
             'title'   => $this->title,
             'content' => $this->content,
             'author'  => $this->author,
-            'feed'    => $this->feed,
+            'feed'    => $this->feed->name,
+            'user_id' => $this->user->id
         ];
     }
 
-    public function searchableAdditionalArray()
-    {
-        return [
-            'user_id' => $this->feed->user_id,
-        ];
-    }
+//    /**
+//     * @return array
+//     */
+//    public function searchableAdditionalArray()
+//    {
+//        return [
+//            'user_id' => $this->user->id,
+//        ];
+//    }
 }

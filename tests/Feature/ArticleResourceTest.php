@@ -94,12 +94,11 @@ class ArticleResourceTest extends TestResource
         $this->mockFeedReader();
         $feed = $this->createFeed();
 
-        $this->createArticle($feed, ['title' => 'Eine Artikel Überschrift']);
+        $this->createArticle($feed, ['title' => 'Eine Artikel Überschrift', 'content' => 'Some bloody content godamnit!']);
         $this->createArticle($feed, [], 10);
 
-        $query = ['action' => 'search', 'params' => ['q' => 'Überschrift']];
+        $query = ['action' => 'search', 'params' => ['q' => 'bloody']];
         $q = http_build_query($query);
-
         $response = $this->getJson('api/v1/article-actions?' . $q)
                          ->assertStatus(200)
                          ->decodeResponseJson();

@@ -133,6 +133,7 @@ class Feed extends BaseModel
     {
         $etag = $this->etag;
         $lastModified = $this->updated_at;
+        $user = $this->user;
 
         $reader = new Reader();
         $resource = $reader->download($this->feed_url, $lastModified, $etag);
@@ -172,6 +173,8 @@ class Feed extends BaseModel
                 $article->createFromFeedItem($item);
                 $article->feed()
                         ->associate($this);
+                $article->user()
+                        ->associate($user);
                 $article->save();
             }
 

@@ -17,10 +17,13 @@ class ArticleAction extends BaseAction
      */
     public function search()
     {
+        $userId = Auth::user()
+                      ->getAuthIdentifier();
+
         $results = Article::search($this->params['q'])
-                          ->where('user_id', Auth::user()
-                                                 ->getAuthIdentifier())
+                          ->where('user_id', $userId)
                           ->get();
+
         $this->result['articles'] = $results;
 
         return $this;
