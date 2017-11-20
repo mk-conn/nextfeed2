@@ -1,20 +1,22 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
-import { get, set } from '@ember/object';
-import { isBlank } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
+import {inject as service} from '@ember/service';
+import {get, set} from '@ember/object';
+import {isBlank} from '@ember/utils';
+import {task, timeout} from 'ember-concurrency';
 
 export default Component.extend({
 
   store: service(),
 
-  classNames: [ 'article-search' ],
+  tagName: 'div',
 
-  classNameBindings: [ 'searchActivated' ],
+  classNames: ['nav-item'],
 
   init() {
     this._super(...arguments);
     this.showResults = false;
+    this.articles = [];
+    this.showInput = false;
   },
 
   /**
@@ -40,7 +42,7 @@ export default Component.extend({
 
       for (let key in articlesResult) {
         if (articlesResult.hasOwnProperty(key)) {
-          const article = articlesResult[ key ];
+          const article = articlesResult[key];
           articles.push(article);
         }
       }
