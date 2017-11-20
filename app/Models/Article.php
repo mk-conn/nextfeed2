@@ -172,20 +172,20 @@ class Article extends BaseModel
         return $this->getISODate($value);
     }
 
-//    /**
-//     * @return array
-//     */
-//    public function searchableOptions()
-//    {
-//        // pgsql related
-//        return [
-//            'external'       => false,
-//            // If you don't want scout to maintain the index for you
-//            // You can turn it off either for a Model or globally
-//            'maintain_index' => true,
-//            'config'         => 'simple'
-//        ];
-//    }
+    /**
+     * @return array
+     */
+    public function searchableOptions()
+    {
+        // pgsql related
+        return [
+            'external'       => false,
+            // If you don't want scout to maintain the index for you
+            // You can turn it off either for a Model or globally
+            'maintain_index' => true,
+            'config'         => 'simple'
+        ];
+    }
 
     /**
      * @return array

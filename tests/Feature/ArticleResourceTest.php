@@ -9,7 +9,6 @@
 namespace Tests\Feature;
 
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestResource;
 use Tests\Traits\FeedReaderMock;
@@ -22,7 +21,7 @@ use Tests\Traits\ModelFactoryTrait;
  */
 class ArticleResourceTest extends TestResource
 {
-    use RefreshDatabase, ModelFactoryTrait, FeedReaderMock;
+    use ModelFactoryTrait, FeedReaderMock;
 
     /**
      *
@@ -94,8 +93,9 @@ class ArticleResourceTest extends TestResource
         $this->mockFeedReader();
         $feed = $this->createFeed();
 
-        $this->createArticle($feed, ['title'   => 'Eine Artikel Überschrift',
-                                     'content' => 'Some bloody content godamnit!'
+        $this->createArticle($feed, [
+            'title'   => 'Eine Artikel Überschrift',
+            'content' => 'Some bloody content godamnit!'
         ]);
         $this->createArticle($feed, [], 10);
 

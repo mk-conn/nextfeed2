@@ -5,24 +5,31 @@ namespace Tests\Feature;
 
 use App\Models\Folder;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Class HasOrderTest
+ *
+ * @package Tests\Feature
+ */
 class HasOrderTest extends TestCase
 {
+    use RefreshDatabase;
 
-    use DatabaseMigrations;
-
+    /**
+     *
+     */
     protected function setUp()
     {
         parent::setUp();
 
         $user = new User([
-            'username' => 'unittest',
-            'fullname' => 'Unit Test',
-            'password' => 'some randomn string',
-            'email'    => 'unittest@localhost',
-        ]);
+                             'username' => 'unittest',
+                             'fullname' => 'Unit Test',
+                             'password' => 'some randomn string',
+                             'email'    => 'unittest@localhost',
+                         ]);
         $user->save();
         $this->be($user);
     }
@@ -38,7 +45,6 @@ class HasOrderTest extends TestCase
         $folder->save();
 
         $this->assertEquals(1, $folder->order);
-
     }
 
 

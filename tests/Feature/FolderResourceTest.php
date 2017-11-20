@@ -9,7 +9,6 @@
 namespace Tests\Feature;
 
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Response;
 use Tests\TestResource;
 use Tests\Traits\ModelFactoryTrait;
@@ -21,8 +20,11 @@ use Tests\Traits\ModelFactoryTrait;
  */
 class FolderResourceTest extends TestResource
 {
-    use DatabaseMigrations, ModelFactoryTrait;
+    use  ModelFactoryTrait;
 
+    /**
+     *
+     */
     public function setUp()
     {
         parent::setup();
