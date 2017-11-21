@@ -1,12 +1,15 @@
 // noinspection NpmUsedModulesInstalled
 import Service, {inject as service} from '@ember/service';
+import {get} from '@ember/object';
 // noinspection NpmUsedModulesInstalled
 import {getOwner} from '@ember/application';
 // noinspection NpmUsedModulesInstalled
 import RSVP from 'rsvp';
 
 export default Service.extend({
+
   session: service('session'),
+
   store: service(),
 
   init() {
@@ -16,30 +19,22 @@ export default Service.extend({
   },
 
   load() {
+    let authenticator = getOwner(this).lookup('authenticator:jwt'),
+      session = this.get('session.session.content.authenticated'),
+      tokenData = {};
 
-    const token = this.get('session.data.authenticated.token');
+    if (session && Object.keys(session).length > 0) {
+      tokenData = authenticator.getTokenData(session.access_token);
 
-    if (token) {
-      const authenticator = getOwner(this).lookup('authenticator:jwt');
-      let session = this.get('session.session.content.authenticated');
-      let tokenData;
-
-      tokenData = authenticator.getTokenData(session.token);
-      const user_id = tokenData.sub;
-
-      $.ajax(host + '/auth/me', {
+      $.ajax('/auth/me', {
         method: 'POST',
         headers: {
-          Authorization: 'Bearer' + session.token
+          Authorization: 'Bearer' + session.access_token
         }
       }).then((result) => {
-        this.set('user', result.user);
+        this.set('user', result);
       });
-
-      // return this.get('store').findRecord('user', user_id).then(user => {
-      //   this.set('user', user);
-      // });
+      return RSVP.resolve();
     }
-    return RSVP.resolve();
   }
 });
