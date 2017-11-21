@@ -33,7 +33,8 @@ module.exports = function (environment) {
       authorizer: 'authorizer:token',
       applicationRootUrl: '/',
       authenticationRoute: 'login',
-      routeAfterAuthentification: 'index'
+      routeAfterAuthentification: 'index',
+      routeIfAlreadyAuthenticated: 'feeds',
       // crossOriginWhitelist:
     },
 
