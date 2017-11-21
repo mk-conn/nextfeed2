@@ -42,6 +42,7 @@ ARTISAN="${WORKDIR}/artisan"
 echo "artisan: $ARTISAN"
 PHP=`which php`
 
+${PHP} ${ARTISAN} clear-compiled
 ${PHP} ${ARTISAN} config:clear
 ${PHP} ${ARTISAN} route:clear
 ${PHP} ${ARTISAN} view:clear

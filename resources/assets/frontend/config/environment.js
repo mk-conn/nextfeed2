@@ -38,9 +38,12 @@ module.exports = function (environment) {
     },
 
     'ember-simple-auth-token': {
-      refreshTokenPropertyName: 'token',
-      serverTokenEndpoint: '/api/authenticate',
-      serverTokenRefreshEndpoint: '/api/token-refresh',
+      refreshTokenPropertyName: 'access_token',
+      tokenPropertyName: 'access_token',
+      identificationField: 'username',
+      passwordField: 'password',
+      serverTokenEndpoint: '/auth/login',
+      serverTokenRefreshEndpoint: '/auth/refresh',
       refreshLeeway: 5
     }
 
@@ -65,7 +68,8 @@ module.exports = function (environment) {
     ENV.APP.rootElement = '#ember-testing';
   }
 
-  if (environment === 'production') {}
+  if (environment === 'production') {
+  }
 
   return ENV;
 };

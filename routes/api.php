@@ -14,11 +14,24 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 |
 */
 
-Route::group(['prefix' => 'api'], function () {
+Route::group(
+    [
+        'middleware' => 'api',
+        'prefix'     => 'auth'
+    ],
+    function ($router) {
+        Route::post('login', 'AuthController@login');
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+        Route::post('me', 'AuthController@me');
+    }
+);
 
-    Route::get('auth-user', 'AuthenticateController@getAuthUser');
-    Route::post('authenticate', 'AuthenticateController@authenticate');
-    Route::post('token-refresh', 'AuthenticateController@tokenRefresh');
+Route::group(['prefix' => 'api'], function () {
+//
+//    Route::get('auth-user', 'AuthenticateController@getAuthUser');
+//    Route::post('authenticate', 'AuthenticateController@authenticate');
+//    Route::post('token-refresh', 'AuthenticateController@tokenRefresh');
 
     Route::get('article/scrape', 'ArticleController@scrapeContent')
          ->middleware('jwt.auth');
@@ -30,7 +43,7 @@ Route::group(['prefix' => 'api'], function () {
          ->middleware('jwt.auth');
 });
 
-JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'jwt.auth'], function (ApiGroup $api) {
+JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'auth:api'], function (ApiGroup $api) {
     $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
     $api->resource('feed-actions');
     $api->resource('article-actions');
