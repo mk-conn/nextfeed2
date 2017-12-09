@@ -58,14 +58,14 @@
   </div>
 </div>
 <div class="list-group folder-list">
-  {{#sortable-objects sortableObjectList=folders sortEndAction=(route-action "sort" folders)
+  {{#sortable-objects sortableObjectList=sortedFolders sortEndAction=(route-action "sort" sortedFolders)
+                      enableSort=true
+                      inPlace=true
                       sortingScope="foldersSorting" useSwap=false}}
-    {{#each folders as |folder|}}
-      {{#draggable-object-target action=(route-action "addFeedToFolder" folder)}}
-        {{#draggable-object content=feed isSortable=true sortingScope="foldersSorting"}}
-          {{folder-item folder=folder classNames="folder-item list-group-item"}}
-        {{/draggable-object}}
-      {{/draggable-object-target}}
+    {{#each sortedFolders as |folder|}}
+      {{#draggable-object content=folder isSortable=true sortingScope="foldersSorting"}}
+        {{folder-item folder=folder classNames="folder-item list-group-item"}}
+      {{/draggable-object}}
     {{/each}}
   {{/sortable-objects}}
 </div>
@@ -75,15 +75,5 @@
       Feeds
     </span>
   </div>
-  <div class="list-group feeds">
-    {{#sortable-objects sortableObjectList=feeds sortEndAction=(route-action "sort" feeds)
-                        sortingScope="feedsSorting" useSwap=false}}
-      {{#each feeds as |feed|}}
-        {{#draggable-object content=feed isSortable=true sortingScope="feedsSorting"}}
-          {{feed-item feed=feed classNames="list-group-item feed-item"}}
-        {{/draggable-object}}
-      {{/each}}
-    {{/sortable-objects}}
-  </div>
+  {{feed-items classNames="list-group feeds" feeds=feeds}}
 </div>
-

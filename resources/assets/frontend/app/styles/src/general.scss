@@ -63,7 +63,7 @@ body {
       display: grid;
       grid-template-areas: "header header header" "side-bar column-one column-two";
       grid-template-rows: $header-height 1fr;
-      grid-template-columns: 20em .35fr .65fr;
+      grid-template-columns: 17em .40fr .60fr;
 
       header {
         height: $header-height;
@@ -171,4 +171,8 @@ fieldset {
 
 .right-addon input {
   padding-right: 30px;
+}
+
+.folder-droppable {
+  display:inline-block;
 }

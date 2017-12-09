@@ -9,20 +9,16 @@
     </span>
   {{/if}}
   {{folder.name}}
+  {{#draggable-object-target overrideClass="folder-droppable" dragOverAction=(action toggleProperty "droppable")
+                             action=(route-action "addFeedToFolder" folder)}}
+    {{#if droppable}}
+      <i class="fa fa-hand-o-left"></i>
+    {{/if}}
+  {{/draggable-object-target}}
 </div>
 
 {{#if folder.open}}
-  <div class="list-group feeds">
-
-    {{#sortable-objects sortableObjectList=folder.feeds sortEndAction=(route-action "sort" folder.feeds)
-                        sortingScope="feedsSorting" useSwap=false}}
-      {{#each folder.feeds as |feed|}}
-        {{#draggable-object content=feed isSortable=true sortingScope="feedsSorting"}}
-          {{feed-item feed=feed classNames="list-group-item feed-item"}}
-        {{/draggable-object}}
-      {{/each}}
-    {{/sortable-objects}}
-  </div>
+  {{feed-items feeds=folder.feeds classNames="list-group feeds"}}
 {{/if}}
 
 

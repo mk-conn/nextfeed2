@@ -1,0 +1,11 @@
+{{#sortable-objects sortableObjectList=sortedFeeds sortEndAction=(route-action "sort" sortedFeeds)
+                    enableSort=true
+                    inPlace=true
+                    sortingScope="feedsSorting" useSwap=false}}
+  {{#each sortedFeeds as |feed|}}
+    {{#draggable-object content=feed isSortable=true sortingScope="feedsSorting"}}
+      {{feed-item feed=feed classNames="list-group-item feed-item"}}
+    {{/draggable-object}}
+  {{/each}}
+{{/sortable-objects}}
+

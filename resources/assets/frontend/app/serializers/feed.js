@@ -1,6 +1,6 @@
-import DS from 'ember-data';
+import ApplicationSerializer from 'frontend/application/serializer';
 
-export default DS.JSONAPISerializer.extend({
+export default ApplicationSerializer.extend({
   normalize(modelClass, resourceHash) {
     if (resourceHash.meta) {
       resourceHash.attributes.meta = resourceHash.meta;

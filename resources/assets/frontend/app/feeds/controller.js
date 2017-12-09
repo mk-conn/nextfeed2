@@ -1,7 +1,13 @@
 import Controller from '@ember/controller';
-import {task, timeout} from 'ember-concurrency';
+import { computed } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
 
 export default Controller.extend({
+
+  sortBy: ['order'],
+
+  sortedFolders: computed.sort('folders', 'sortBy'),
+
   /**
    *
    */
@@ -20,7 +26,7 @@ export default Controller.extend({
 
       for (let key in articlesResult) {
         if (articlesResult.hasOwnProperty(key)) {
-          const article = articlesResult[key];
+          const article = articlesResult[ key ];
           articles.push(article);
         }
       }
