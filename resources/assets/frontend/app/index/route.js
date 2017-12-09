@@ -4,9 +4,8 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 const {Route} = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-
-  beforeModel() {
-    return this.transitionTo('feeds');
+  afterModel() {
+    this.debug(`route: %s::afterModel()`, this.routeName);
+    this.transitionTo('feeds');
   }
-
 });

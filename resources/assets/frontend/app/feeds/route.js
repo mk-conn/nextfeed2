@@ -15,7 +15,7 @@ function sortedItems(collection, collectionKey, property) {
 export default Route.extend(AuthenticatedRouteMixin, {
 
   model() {
-
+    this.debug(`route: %s::model()`, this.routeName);
     return RSVP.hash({
       feeds: this.get('store').query(
         'feed', {
@@ -23,10 +23,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
         }
       ),
       folders: this.get('store')
-                   .query('folder', {
-                     sort: 'order',
-                     include: 'feeds'
-                   })
+        .query('folder', {
+          sort: 'order',
+          include: 'feeds'
+        })
     });
   },
 

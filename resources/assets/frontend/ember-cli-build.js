@@ -13,10 +13,6 @@ module.exports = function (defaults) {
       importBootstrapFont: false,
       importBootstrapCSS: false,
       insertEmberWormholeElementToDom: true
-    },
-    sourcemaps: {
-      enabled: EmberApp.env() === 'production',
-      extensions: [ 'js' ]
     }
   });
   app.import('node_modules/font-awesome/fonts/fontawesome-webfont.ttf', {

@@ -1,32 +1,24 @@
-import Ember from 'ember';
-
-const {Service, inject: {service}, isEmpty, RSVP, getOwner} = Ember;
+import Service, {inject as service} from '@ember/service';
+import RSVP from 'rsvp';
 
 export default Service.extend({
+
   session: service('session'),
   store: service(),
 
-  init() {
-    this._super(...arguments);
-
-    this.user = null;
-  },
-
   load() {
+    if (this.get('session.isAuthenticated')) {
 
-    const token = this.get('session.data.authenticated.token');
-
-    if (!isEmpty(token)) {
-      const authenticator = getOwner(this).lookup('authenticator:jwt');
-      let session = this.get('session.session.content.authenticated');
-      let tokenData;
-
-      tokenData = authenticator.getTokenData(session.token);
-      const user_id = tokenData.sub;
-      return this.get('store').findRecord('user', user_id).then(user => {
+      return $.ajax('/auth/me', {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + this.get('session.session.content.authenticated.access_token')
+        }
+      }).then((user) => {
         this.set('user', user);
       });
+    } else {
+      return RSVP.resolve();
     }
-    return RSVP.resolve();
   }
 });
