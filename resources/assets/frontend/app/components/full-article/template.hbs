@@ -15,7 +15,11 @@
 </h3>
 
 <div id="article-content">
-  {{content}}
+  {{#if article.scraped}}
+    {{article.scraped}}
+  {{else}}
+    {{content}}
+  {{/if}}
 </div>
 
 <a class="btn btn-outline-secondary" href="{{article.url}}" target="_blank" {{action (route-action "originalArticle")
@@ -24,4 +28,6 @@
   <i class="external icon"></i>
   Open Original Article
 </a>
-
+<button class="btn btn-outline-secondary" {{action (route-action "scrapeArticle" article)}} disabled={{scrapeDisabled}}>
+  Scrape Article
+</button>

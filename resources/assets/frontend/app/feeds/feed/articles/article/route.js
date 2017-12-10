@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { get, set } from '@ember/object';
 import Gui from 'frontend/mixins/gui';
 
-const {Route, $} = Ember;
 
 export default Route.extend(Gui, {
   displayIn: '#column-two',
@@ -45,8 +45,16 @@ export default Route.extend(Gui, {
   },
 
   actions: {
-    scrapeArticle() {
-
+    scrapeArticle(article) {
+      this.store.queryRecord('article-action', {
+        action: 'scrape',
+        params: {
+          article_id: get(article, 'id')
+        }
+      }).then(articleAction => {
+        const scraped = get(articleAction, 'result.scraped').htmlSafe();
+        article.set('scraped', scraped);
+      })
     },
     originalArticle() {
 

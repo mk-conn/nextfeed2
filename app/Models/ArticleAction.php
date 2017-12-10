@@ -28,4 +28,17 @@ class ArticleAction extends BaseAction
 
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function scrape()
+    {
+        $article = Article::findOrFail($this->params['article_id']);
+
+        $html = $article->scrape();
+        $this->result['scraped'] = $html;
+
+        return $this;
+    }
 }

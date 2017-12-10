@@ -6,6 +6,14 @@ export default Component.extend({
 
   classNames: [ 'full-article' ],
 
+  scrapeDisabled: computed('article.scraped', function () {
+    if (get(this, 'article.scraped')) {
+      return true;
+    }
+
+    return false;
+  }),
+
   content: computed('article.content', function () {
 
     const article = get(this, 'article');

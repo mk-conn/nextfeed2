@@ -120,9 +120,16 @@ class Feed extends BaseModel
      */
     public function read($lastArticleId)
     {
+        // get last articles updated-at, than, set all that are before or equal this date to 'read: true' so new
+        // unread will not be set to read:true - makes sense?
+
+        $lastArticle = Article::find($lastArticleId);
+        $updatedDate = $lastArticle->updated_at;
+
         return Article::where('feed_id', $this->id)
                       ->where('read', false)
-                      ->where('id', '<=', $lastArticleId)
+                      ->where('updated_at', '<=', $updatedDate)
+                      ->orderBy('udpated-date', 'desc')
                       ->update(['read' => true]);
     }
 

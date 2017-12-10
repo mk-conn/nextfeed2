@@ -6,7 +6,9 @@ namespace App\Models;
 use App\BaseModel;
 use Carbon\Carbon;
 use Laravel\Scout\Searchable;
+use PicoFeed\Config\Config;
 use PicoFeed\Parser\Item;
+use PicoFeed\Scraper\Scraper;
 
 /**
  * Class Article
@@ -199,6 +201,27 @@ class Article extends BaseModel
             'feed'    => $this->feed->name,
             'user_id' => $this->user->id
         ];
+    }
+
+    public function scrape()
+    {
+        $config = new Config;
+
+        $grabber = new Scraper($config);
+        $grabber->setUrl($this->url);
+        $grabber->execute();
+
+// Get raw HTML content
+//        $html = $grabber->getRawContent();
+
+//// Get relevant content
+        $html= $grabber->getRelevantContent();
+//
+//// Get filtered relevant content
+//        echo $grabber->getFilteredContent();
+
+// Return true if there is relevant content
+        return $html;
     }
 
 //    /**

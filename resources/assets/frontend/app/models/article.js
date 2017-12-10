@@ -5,6 +5,7 @@ const {Model, attr, belongsTo} = DS;
 export default Model.extend({
   title: attr('string'),
   content: attr('string'),
+  scraped: attr('string'),
   description: attr('string'),
   categories: attr(),
   author: attr('string'),

@@ -1,6 +1,5 @@
 import Route from '@ember/routing/route';
 import { get, set } from '@ember/object';
-import { getOwner } from '@ember/application';
 import { inject as service } from '@ember/service';
 import InfinityRoute from "ember-infinity/mixins/route";
 import Gui from 'frontend/mixins/gui';
@@ -58,6 +57,7 @@ export default Route.extend(InfinityRoute, Gui, {
 
     delete params.filterUnread;
 
+    params[ 'sort' ] = '-updated-date';
     params[ 'filter' ] = filter;
     params[ 'fields' ] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
 
