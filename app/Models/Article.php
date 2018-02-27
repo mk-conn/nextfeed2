@@ -91,14 +91,6 @@ class Article extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
      * @param Item $item
      */
     public function createFromFeedItem(Item $item)
@@ -135,6 +127,14 @@ class Article extends BaseModel
         }
 
         return $description;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -215,7 +215,7 @@ class Article extends BaseModel
 //        $html = $grabber->getRawContent();
 
 //// Get relevant content
-        $html= $grabber->getRelevantContent();
+        $html = $grabber->getRelevantContent();
 //
 //// Get filtered relevant content
 //        echo $grabber->getFilteredContent();

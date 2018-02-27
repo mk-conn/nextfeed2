@@ -63,21 +63,19 @@ class Feed extends BaseModel
     use HasOrder;
 
     /**
+     *
+     */
+    const TABLE = 'feeds';
+    /**
      * @var bool
      */
     protected static $baseObserver = false;
-
     /**
      * @var array
      */
     protected $casts = [
         'settings' => 'array'
     ];
-
-    /**
-     *
-     */
-    const TABLE = 'feeds';
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -175,6 +173,8 @@ class Feed extends BaseModel
             $existingItems = $exisitingArticles->pluck('guid');
             $items = $items->whereNotIn('id', $existingItems);
 
+            $items->sortByDesc('updatedDate');
+
             foreach ($items as $item) {
                 $article = new Article();
                 $article->createFromFeedItem($item);
@@ -206,7 +206,7 @@ class Feed extends BaseModel
             }
         }
 
-        if ((int)$days === 0) {
+        if ((int) $days === 0) {
             // no setting means, to keep em all
             return 0;
         }

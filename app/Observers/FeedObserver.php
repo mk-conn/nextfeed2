@@ -9,12 +9,9 @@
 namespace App\Observers;
 
 
-use App\BaseModel;
 use App\Helpers\ParsedFeed;
-use App\Models\Article;
 use App\Models\Feed;
-use Illuminate\Support\Collection;
-use PicoFeed\Parser\Item;
+use Illuminate\Database\Eloquent\Model;
 use PicoFeed\Reader\Reader;
 
 /**
@@ -45,11 +42,14 @@ class FeedObserver extends BaseObserver
     }
 
     /**
-     * @param BaseModel $model
+     * @param Model $model
      *
-     * @return BaseModel
+     * @return mixed
+     * @throws \PicoFeed\Parser\MalformedXmlException
+     * @throws \PicoFeed\Reader\SubscriptionNotFoundException
+     * @throws \PicoFeed\Reader\UnsupportedFeedFormatException
      */
-    public function creating(BaseModel $model)
+    public function creating(Model $model)
     {
         /** @var Feed $model */
         $resource = $this->feedReader->discover($model->url);
@@ -88,38 +88,16 @@ class FeedObserver extends BaseObserver
     }
 
     /**
-     * @param BaseModel $model
+     * @param Model $model
      *
-     * @return BaseModel
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function created(BaseModel $model)
+    public function created(Model $model)
     {
         /** @var Feed $model */
-        /** @var ParsedFeed $parsedFeedHelper */
-        $parsedFeedHelper = resolve(ParsedFeed::class);
-        if ($parsedFeedHelper->items instanceof Collection) {
-            $items = $parsedFeedHelper->items->unique('id');
-            $articles = collect([]);
+        $model->fetchNewArticles();
 
-            /** @var Item $item */
-            foreach ($items as $item) {
-
-                $article = new Article();
-                $article->createFromFeedItem($item);
-
-                $article->feed()
-                        ->associate($model);
-
-                $articles->push($article);
-            }
-
-            if ($articles->count()) {
-                $model->articles()
-                      ->saveMany($articles);
-            }
-        }
-
-        return parent::saving($model);
+        return parent::created($model);
     }
 
 }

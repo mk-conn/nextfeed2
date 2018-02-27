@@ -12,6 +12,7 @@ namespace App\Observers;
 use App\BaseModel;
 use App\Traits\Model\HasOrder;
 use Auth;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class BaseObserver
@@ -21,24 +22,23 @@ use Auth;
 class BaseObserver
 {
 
+    /**
+     * @param Model $model
+     *
+     * @return Model
+     */
+    public function creating(Model $model)
+    {
+        return $model;
+    }
 
     /**
-     * @param BaseModel $model
+     * @param Model $model
      *
-     * @return BaseModel
+     * @return Model
      */
-    public function creating(BaseModel $model)
+    public function created(Model $model)
     {
-        $modelReflection = new \ReflectionClass($model);
-        if ($modelReflection->hasMethod('user')) {
-            $user = Auth::user();
-
-            if ($user) {
-                $model->user()
-                      ->associate($user);
-            }
-        }
-
         return $model;
     }
 
@@ -56,7 +56,7 @@ class BaseObserver
             $order = $model->getAttribute('order');
 
             if (!$order) {
-                $max = (int)$model->max('order');
+                $max = (int) $model->max('order');
                 $model->setOrderFromMax($max);
             }
         }
