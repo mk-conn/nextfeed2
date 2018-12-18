@@ -34,16 +34,16 @@ Route::group(['prefix' => 'api'], function () {
 //    Route::post('token-refresh', 'AuthenticateController@tokenRefresh');
 
     Route::get('article/scrape', 'ArticleController@scrapeContent')
-         ->middleware('jwt.auth');
+         ->middleware('api.auth');
 
     Route::get('feeds/{id}/articles/mark-read', 'FeedsController@readAllArticles')
-         ->middleware('jwt.auth');
+         ->middleware('api.auth');
 
     Route::get('feeds/discover/{url}', 'FeedsController@discover')
-         ->middleware('jwt.auth');
+         ->middleware('api.auth');
 });
 
-JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'auth:api'], function (ApiGroup $api) {
+JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:default'], function (ApiGroup $api) {
     $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
     $api->resource('feed-actions');
     $api->resource('article-actions');

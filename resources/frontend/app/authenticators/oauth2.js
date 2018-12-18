@@ -2,12 +2,12 @@ import OAuth2PasswordGrant from 'ember-simple-auth/authenticators/oauth2-passwor
 
 /**
  *
- * @returns {number}
+ * @returns {String}
  */
 function apiClientId() {
   const selector = document.querySelector('meta[name="api-client-id"]');
 
-  return parseInt(selector.getAttribute('content'));
+  return selector.getAttribute('content');
 }
 
 export default OAuth2PasswordGrant.extend({
