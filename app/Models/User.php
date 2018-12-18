@@ -33,7 +33,7 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     use Notifiable, HasApiTokens;
 
@@ -86,5 +86,11 @@ class User extends Authenticatable implements JWTSubject
     public function feeds()
     {
         return $this->hasMany(Feed::class);
+    }
+
+    public function findForPassport($username)
+    {
+        return $this->where('username', $username)
+                    ->first();
     }
 }
