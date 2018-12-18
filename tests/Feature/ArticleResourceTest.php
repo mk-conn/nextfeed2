@@ -10,7 +10,7 @@ namespace Tests\Feature;
 
 
 use Illuminate\Http\Response;
-use Tests\TestResource;
+use Tests\ApiRequest;
 use Tests\Traits\FeedReaderMock;
 use Tests\Traits\ModelFactoryTrait;
 
@@ -19,7 +19,7 @@ use Tests\Traits\ModelFactoryTrait;
  *
  * @package Tests\Feature
  */
-class ArticleResourceTest extends TestResource
+class ArticleResourceTest extends ApiRequest
 {
     use ModelFactoryTrait, FeedReaderMock;
 
@@ -78,11 +78,11 @@ class ArticleResourceTest extends TestResource
 
         $query = http_build_query($query_data);
 
-        $response = $this->getJson('api/v1/articles?' . $query)
+        $response = $this->getJsonApi('api/v1/articles?' . $query)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
 
-        $this->assertCount(6, $response['data']);
+        $this->assertCount(6, $response[ 'data' ]);
     }
 
     /**
