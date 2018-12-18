@@ -6,7 +6,7 @@ if (isset($argv[1])) {
   $port = $argv[1];
 }
 $current_path = getcwd();
-$pub_path = realpath($current_path . '/../../../public');
+$pub_path = realpath($current_path . '/../../public');
 
 echo 'Running in ', $current_path . PHP_EOL;
 
