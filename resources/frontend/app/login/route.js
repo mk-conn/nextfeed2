@@ -1,13 +1,4 @@
-import Ember from 'ember';
-import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
+import Route from '@ember/routing/route';
 
-const {Route, inject: {service}} = Ember;
-
-export default Route.extend(UnauthenticatedRouteMixin, {
-  renderTemplate() {
-    this.render('login', {
-      into: 'application',
-      outlet: 'main'
-    });
-  }
+export default Route.extend({
 });

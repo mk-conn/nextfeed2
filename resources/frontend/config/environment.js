@@ -30,24 +30,14 @@ module.exports = function (environment) {
     },
 
     'ember-simple-auth': {
-      authorizer: 'authorizer:token',
+      serverTokenEndpoint: 'oauth/token',
+      tokenPropertyName: 'access_token',
+      authorizer: 'authorizer:oauth2',
       applicationRootUrl: '/',
       authenticationRoute: 'login',
       routeAfterAuthentification: 'index',
-      routeIfAlreadyAuthenticated: 'feeds',
-      // crossOriginWhitelist:
+      routeIfAlreadyAuthenticated: 'feeds'
     },
-
-    'ember-simple-auth-token': {
-      refreshTokenPropertyName: 'access_token',
-      tokenPropertyName: 'access_token',
-      identificationField: 'username',
-      passwordField: 'password',
-      serverTokenEndpoint: '/auth/login',
-      serverTokenRefreshEndpoint: '/auth/refresh',
-      refreshLeeway: 5
-    }
-
   };
 
   if (environment === 'development') {

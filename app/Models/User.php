@@ -5,7 +5,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * Class User
@@ -35,7 +35,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      *
@@ -86,21 +86,5 @@ class User extends Authenticatable implements JWTSubject
     public function feeds()
     {
         return $this->hasMany(Feed::class);
-    }
-
-    /**
-     * @return string
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return ['user_id' => $this->id, 'username' => $this->username];
     }
 }

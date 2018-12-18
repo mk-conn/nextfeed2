@@ -32,13 +32,10 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Report or log an exception.
+     * @param Exception $exception
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception $exception
-     *
-     * @return void
+     * @return mixed|void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -55,7 +52,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($this->isJsonApi()) {
+        if ($this->isJsonApi($request, $exception)) {
             return $this->renderJsonApi($request, $exception);
         }
 

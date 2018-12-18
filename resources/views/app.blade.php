@@ -1,1 +1,1 @@
-{!! $app !!}
+@extends('layouts.app')
