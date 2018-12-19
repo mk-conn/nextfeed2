@@ -169,7 +169,7 @@ class Feed extends BaseModel
         $lastModified = $this->last_modified;
         /** @var AbstractFeed $feed */
         $feed = app()->make(
-            'FeedReader',
+            FeedServiceProvider::FEED_READER,
             ['uri' => $this->feed_url, 'etag' => $lastEtag, 'last_modfied' => $lastModified]
         );
 
