@@ -3,24 +3,30 @@
 namespace App\JsonApi\Articles;
 
 
+use App\JsonApi\DefaultAdapter;
 use App\Models\Article;
-use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
-use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class Adapter extends EloquentAdapter
+/**
+ * Class Adapter
+ *
+ * @package App\JsonApi\Articles
+ */
+class Adapter extends DefaultAdapter
 {
+    /**
+     * Model
+     */
+    const MODEL = Article::class;
 
     /**
-     * Adapter constructor.
-     *
-     * @param StandardStrategy $paging
+     * @return \CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo
      */
-    public function __construct(StandardStrategy $paging)
+    public function feed()
     {
-        parent::__construct(new Article(), $paging);
+        return $this->belongsTo();
     }
 
     /**
@@ -29,7 +35,7 @@ class Adapter extends EloquentAdapter
      *
      * @return void
      */
-    protected function filter(Builder $query, Collection $filters)
+    protected function filter($query, Collection $filters)
     {
         if ($filters->has('feed')) {
             $query->where('feed_id', $filters->get('feed'));

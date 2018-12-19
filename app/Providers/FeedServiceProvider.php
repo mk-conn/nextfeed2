@@ -9,16 +9,19 @@
 namespace App\Providers;
 
 
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
-use PicoFeed\Reader\Reader;
+use Zend\Feed\Reader\Reader;
 
 /**
- * Class PicoFeedServiceProvider
+ * Class FeedServiceProvider
  *
  * @package App\Providers
  */
 class FeedServiceProvider extends ServiceProvider
 {
+    protected $defer = true;
+
     /**
      *
      */
@@ -32,8 +35,22 @@ class FeedServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $reader = new Reader();
-        $this->app->instance(Reader::class, $reader);
+        $this->app->singleton('FeedReader', function ($app, $params = []) {
+            $params = array_merge([
+                'uri'          => null,
+                'etag'         => null,
+                'lastModified' => null
+
+            ], $params);
+            list($uri, $etag, $lastModified) = $params;
+            if ($lastModified instanceof Carbon) {
+                $lastModified = $lastModified->format(Carbon::ISO8601);
+            }
+            $httpClient = Reader::getHttpClient();
+            $app->instance('FeedHttpClient', $httpClient);
+
+            return Reader::import($uri, $etag, $lastModified);
+        });
     }
 
     /**
@@ -42,7 +59,7 @@ class FeedServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            Reader::class
+            'Feed'
         ];
     }
 }

@@ -3,15 +3,15 @@
 namespace App\JsonApi\Feeds;
 
 
+use App\JsonApi\DefaultSchema;
 use App\Models\Feed;
-use CloudCreativity\LaravelJsonApi\Schema\EloquentSchema;
 
 /**
  * Class Schema
  *
  * @package App\JsonApi\Feeds
  */
-class Schema extends EloquentSchema
+class Schema extends DefaultSchema
 {
 
     /**
@@ -48,33 +48,34 @@ class Schema extends EloquentSchema
     {
         $includes = [];
 
-        if (isset($includeRelationships['articles'])) {
-            $includes['articles'] = [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-                self::SHOW_DATA    => true,
-                self::DATA         => $resource->articles
-            ];
-        }
+        $includes[ 'articles' ] = [
+            self::SHOW_SELF    => true,
+            self::SHOW_RELATED => true,
+            self::SHOW_DATA    => isset($includeRelationships[ 'articles' ]),
+            self::DATA         => function () use ($resource) {
+                return $resource->articles;
+            }
+        ];
 
-        return array_merge($includes, [
-            'folder' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-                self::SHOW_DATA    => true,
-                self::DATA         => isset($includeRelationships['folder']) ?
-                    $resource->folder :
-                    $this->createBelongsToIdentity($resource, 'folder')
-            ],
-            'user'   => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-                self::SHOW_DATA    => true,
-                self::DATA         => isset($includeRelationships['user']) ?
-                    $resource->user :
-                    $this->createBelongsToIdentity($resource, 'user')
-            ]
-        ]);
+
+        $includes[ 'folder' ] = [
+            self::SHOW_SELF    => true,
+            self::SHOW_RELATED => true,
+            self::SHOW_DATA    => isset($includeRelationships[ 'folder' ]),
+            self::DATA         => function () use ($resource) {
+                return $resource->folder;
+            }
+        ];
+        $includes  [ 'user' ] = [
+            self::SHOW_SELF    => true,
+            self::SHOW_RELATED => true,
+            self::SHOW_DATA    => isset($includeRelationships[ 'user' ]),
+            self::DATA         => function () use ($resource) {
+                return $resource->user;
+            }
+        ];
+
+        return $includes;
     }
 
     /**

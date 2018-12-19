@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\CustomPassportServiceProvider;
+use App\Providers\FeedServiceProvider;
 
 return [
 
@@ -179,6 +180,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        FeedServiceProvider::class,
         CustomPassportServiceProvider::class,
     ],
 

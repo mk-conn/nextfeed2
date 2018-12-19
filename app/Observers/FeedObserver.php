@@ -12,7 +12,6 @@ namespace App\Observers;
 use App\Helpers\ParsedFeed;
 use App\Models\Feed;
 use Illuminate\Database\Eloquent\Model;
-use PicoFeed\Reader\Reader;
 
 /**
  * Class FeedObserver
@@ -30,16 +29,6 @@ class FeedObserver extends BaseObserver
      * @var
      */
     protected $articles;
-
-    /**
-     * FeedObserver constructor.
-     *
-     * @param Reader $reader
-     */
-    public function __construct(Reader $reader)
-    {
-        $this->feedReader = $reader;
-    }
 
     /**
      * @param Model $model

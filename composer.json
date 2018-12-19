@@ -9,17 +9,18 @@
   "type": "project",
   "require": {
     "php": ">=7.0.0",
+    "ext-dom": "*",
     "cloudcreativity/laravel-json-api": "v1.0.0-beta.5",
     "doctrine/dbal": "2.6.*",
     "fideloper/proxy": "^4.0",
     "laravel/framework": "5.7.*",
+    "laravel/passport": "7.0.*",
     "laravel/scout": "6.1.*",
     "laravel/tinker": "1.0.*",
-    "zendframework/zend-feed": "2.9.*",
     "mk-conn/shellax": "0.3.*",
     "pmatseykanets/laravel-scout-postgres": "4.0.*",
-    "laravel/passport": "7.0.*",
-    "ext-dom": "*"
+    "zendframework/zend-feed": "2.10.*",
+    "zendframework/zend-http": "^2.8"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.4",

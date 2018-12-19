@@ -3,15 +3,15 @@
 namespace App\JsonApi\Articles;
 
 
+use App\Api\V1\DefaultSchema;
 use App\Models\Article;
-use CloudCreativity\LaravelJsonApi\Schema\EloquentSchema;
 
 /**
  * Class Schema
  *
  * @package App\JsonApi\Articles
  */
-class Schema extends EloquentSchema
+class Schema extends DefaultSchema
 {
 
     /**
@@ -53,23 +53,12 @@ class Schema extends EloquentSchema
             'feed' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => true,
-                self::DATA         => isset($includeRelationships['feed']) ? $resource->feed :
-                    $this->createBelongsToIdentity($resource, 'feed')
+                self::SHOW_DATA    => isset($includeRelationships[ 'feed' ]),
+                self::DATA         => function () use ($resource) {
+                    return $resource->feed;
+                }
             ]
         ];
-
-        $data = array_merge($included, [
-            'feed' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-                self::SHOW_DATA    => true,
-                self::DATA         => isset($includeRelationships['feed']) ? $resource->feed :
-                    $this->createBelongsToIdentity($resource, 'feed')
-            ]
-        ]);
-
-        return $data;
     }
 }
 

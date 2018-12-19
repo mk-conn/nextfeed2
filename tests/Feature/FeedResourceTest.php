@@ -11,7 +11,7 @@ namespace Tests\Feature;
 
 use App\Models\Article;
 use Illuminate\Http\Response;
-use Tests\TestResource;
+use Tests\ApiRequest;
 use Tests\Traits\FeedReaderMock;
 use Tests\Traits\ModelFactoryTrait;
 
@@ -20,24 +20,15 @@ use Tests\Traits\ModelFactoryTrait;
  *
  * @package Tests\Feature
  */
-class FeedResourceTest extends TestResource
+class FeedResourceTest extends ApiRequest
 {
     use ModelFactoryTrait, FeedReaderMock;
 
+    const RESOURCE_TYPE = 'feeds';
     /**
      * @var
      */
     protected $feedReaderMock;
-
-    /**
-     *
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->url = $this->apiUrl . '/feeds';
-    }
 
     /**
      * Test creation of a feed
@@ -66,7 +57,7 @@ class FeedResourceTest extends TestResource
             ]
         ];
 
-        $response = $this->postJson('api/v1/feeds', $create)
+        $response = $this->postJsonApi($this->apiUrl, $create)
                          ->assertStatus(Response::HTTP_CREATED)
                          ->decodeResponseJson();
 
@@ -119,14 +110,15 @@ class FeedResourceTest extends TestResource
      */
     public function testIndex()
     {
+        $this->withUser();
         $mock_function = [$this, 'mockFeedReader'];
-        $this->createFeed(null, null, [], 5, $mock_function);
+        $this->createFeed($this->user, null, [], 5, $mock_function);
 
-        $response = $this->getJson('api/v1/feeds')
+        $response = $this->getJsonApi('api/v1/feeds')
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
 
-        $this->assertCount(5, $response['data']);
+        $this->assertCount(5, $response[ 'data' ]);
     }
 
 

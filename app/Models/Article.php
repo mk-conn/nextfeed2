@@ -6,9 +6,7 @@ namespace App\Models;
 use App\BaseModel;
 use Carbon\Carbon;
 use Laravel\Scout\Searchable;
-use PicoFeed\Config\Config;
-use PicoFeed\Parser\Item;
-use PicoFeed\Scraper\Scraper;
+use Zend\Feed\Reader\Entry\EntryInterface;
 
 /**
  * Class Article
@@ -70,6 +68,9 @@ class Article extends BaseModel
         'categories' => 'array'
     ];
 
+    protected $dates = [
+        'publish_date', 'updated_date'
+    ];
     /**
      * @var array
      */
@@ -91,42 +92,23 @@ class Article extends BaseModel
     }
 
     /**
-     * @param Item $item
+     * @param EntryInterface $entry
      */
-    public function createFromFeedItem(Item $item)
+    public function createFromFeedEntry(EntryInterface $entry)
     {
-        $this->title = $item->getTitle();
-        $this->author = $item->getAuthor();
-        $this->content = $item->getContent();
-        $this->guid = $item->getId();
-        $this->url = $item->getUrl();
-        $this->publish_date = $item->getPublishedDate();
-        $this->updated_date = $item->getUpdatedDate();
-        $this->categories = $item->getCategories();
-        $this->description = $this->parseDescription($item);
-    }
-
-    /**
-     * @param $item
-     *
-     * @return null|string
-     */
-    protected function parseDescription($item)
-    {
-        $description = null;
-        $xml = $item->getXml();
-
-        if (isset($xml->description)) {
-            $description = $xml->description;
-        } else if (isset($xml->summary)) {
-            $description = $xml->summary;
+        $this->title = $entry->getTitle();
+        $authors = [];
+        foreach ($entry->getAuthors() as $author) {
+            $authors[] = $author[ 'name' ];
         }
-
-        if (is_array($description)) {
-            $description = implode(' ', $description);
-        }
-
-        return $description;
+        $this->author = implode(', ', $authors);
+        $this->content = $entry->getContent();
+        $this->guid = $entry->getId();
+        $this->url = $entry->getPermalink();
+        $this->publish_date = $entry->getDateCreated();
+        $this->updated_date = $entry->getDateModified();
+        $this->categories = $entry->getCategories();
+        $this->description = $entry->getDescription();
     }
 
     /**
@@ -202,35 +184,4 @@ class Article extends BaseModel
             'user_id' => $this->user->id
         ];
     }
-
-    public function scrape()
-    {
-        $config = new Config;
-
-        $grabber = new Scraper($config);
-        $grabber->setUrl($this->url);
-        $grabber->execute();
-
-// Get raw HTML content
-//        $html = $grabber->getRawContent();
-
-//// Get relevant content
-        $html = $grabber->getRelevantContent();
-//
-//// Get filtered relevant content
-//        echo $grabber->getFilteredContent();
-
-// Return true if there is relevant content
-        return $html;
-    }
-
-//    /**
-//     * @return array
-//     */
-//    public function searchableAdditionalArray()
-//    {
-//        return [
-//            'user_id' => $this->user->id,
-//        ];
-//    }
 }

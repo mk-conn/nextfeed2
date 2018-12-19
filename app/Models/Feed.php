@@ -6,8 +6,9 @@ namespace App\Models;
 use App\BaseModel;
 use App\Traits\Model\HasOrder;
 use Carbon\Carbon;
-use PicoFeed\Reader\Favicon;
-use PicoFeed\Reader\Reader;
+use Zend\Feed\Reader\Entry\EntryInterface;
+use Zend\Feed\Reader\Feed\AbstractFeed;
+use Zend\Http\Client;
 
 /**
  * Class Feed
@@ -32,6 +33,7 @@ use PicoFeed\Reader\Reader;
  * @property string|null                                                         $update_error
  * @property \Carbon\Carbon|null                                                 $created_at
  * @property \Carbon\Carbon|null                                                 $updated_at
+ * @property \Carbon\Carbon|null                                                 $last_modified
  * @property array                                                               $settings
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
  * @property-read \App\Models\Folder|null                                        $folder
@@ -136,58 +138,45 @@ class Feed extends BaseModel
      */
     public function fetchNewArticles()
     {
-        $etag = $this->etag;
-        $lastModified = $this->updated_at;
+        $lastEtag = $this->etag;
+        $lastModified = $this->last_modified;
         $user = $this->user;
+        /** @var AbstractFeed $feed */
+        $feed = app()->make(
+            'FeedReader',
+            [$this->feed_url, $lastEtag, $lastModified]
+        );
 
-        $reader = new Reader();
-        $resource = $reader->download($this->feed_url, $lastModified, $etag);
-
-        if ($resource->isModified()) {
-            $parser = $reader->getParser($resource->getUrl(), $resource->getContent(), $resource->getEncoding());
-            $parsedFeed = $parser->execute();
-
-            $items = collect($parsedFeed->getItems());
-
-            $guids = $items->pluck('id');
-            $exisitingArticles = Article::whereIn('guid', $guids)
-                                        ->get();
-
-            foreach ($exisitingArticles as $article) {
-                $item = $items->where('id', $article->guid)
-                              ->first();
-
-                $updated = false;
-
-                if ($article->content !== $item->content) {
-                    $article->content = $item->content;
-                    $updated = true;
-                }
-
-                if ($updated) {
-                    $article->updated_date = $item->updatedDate;
-                    $article->save();
-                }
-            }
-
-            $existingItems = $exisitingArticles->pluck('guid');
-            $items = $items->whereNotIn('id', $existingItems);
-
-            $items->sortByDesc('updatedDate');
-
-            foreach ($items as $item) {
-                $article = new Article();
-                $article->createFromFeedItem($item);
-                $article->feed()
-                        ->associate($this);
-                $article->user()
-                        ->associate($user);
-                $article->save();
-            }
-
-            $this->etag = $resource->getEtag();
-            $this->save();
+        $receivedLastModified = $feed->getDateModified();
+        /** @var  $httpClient */
+        $httpClient = resolve('FeedHttpClient');
+        /** @var Client $client */
+        if ($etag = $httpClient->getDecoratedClient() !== false) {
+            $this->etag = $etag;
         }
+        $this->last_modified = $receivedLastModified;
+        /** @var EntryInterface $entry */
+        foreach ($feed as $entry) {
+            /** @var Article $article */
+            $article = Article::firstOrNew(['guid' => $entry->getId()]);
+            if ($article->exists) {
+                // see if we really have to update here
+                $entryMD5 = md5($entry->getTitle() . $entry->getDescription() . $entry->getContent());
+                $articleMD5 = md5($article->title . $article->description . $article->content);
+                if ($articleMD5 === $entryMD5) {
+                    continue;
+                }
+            }
+            $article->createFromFeedEntry($entry);
+
+            $article->feed()
+                    ->associate($this);
+            $article->user()
+                    ->associate($user);
+            $article->save();
+        }
+
+        $this->save();
     }
 
     /**
@@ -216,11 +205,13 @@ class Feed extends BaseModel
                                ->subDays($days)
                                ->format($dateFormat);
 
-        $count = Article::where('updated_at', '<', $maxUpatedDate)
-                        ->where('feed_id', $this->id)
-                        ->where('read', true)
-                        ->where('keep', false)
-                        ->delete();
+        $articles = Article::where('updated_date', '<', $maxUpatedDate)
+                           ->where('feed_id', $this->id)
+                           ->where('keep', false);
+        if (!$force) {
+            $articles->where('read', true);
+        };;
+        $count = $articles->delete();
 
         return $count;
     }

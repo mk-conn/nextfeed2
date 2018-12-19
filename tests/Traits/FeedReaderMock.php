@@ -9,10 +9,8 @@
 namespace Tests\Traits;
 
 
-use PicoFeed\Client\Client;
-use PicoFeed\Parser\Feed;
-use PicoFeed\Parser\Parser;
-use PicoFeed\Reader\Reader;
+use Zend\Feed\Reader\Reader;
+use Zend\Http\Client;
 
 /**
  * Trait FeedReaderMock
@@ -32,7 +30,7 @@ trait FeedReaderMock
         $app = parent::createApplication();
 
         $this->feedReaderMock = \Mockery::mock(Reader::class);
-        $app->instance(Reader::class, $this->feedReaderMock);
+        $app->instance('Feed', $this->feedReaderMock);
 
         return $app;
     }
@@ -52,30 +50,31 @@ trait FeedReaderMock
     protected function mockFeedReader(bool $discover = true)
     {
         $clientMock = \Mockery::mock(Client::class);
-        $clientMock->shouldReceive('getUrl')
-                   ->andReturn('http://example.com/feed.rss');
-        $clientMock->shouldReceive('getContent')
+        $clientMock->shouldReceive('get')
                    ->andReturn('<xml></xml>');
-        $clientMock->shouldReceive('getEncoding')
-                   ->andReturn('utf8');
-        $clientMock->shouldReceive('getEtag')
-                   ->andReturn('somerubbishgoesoutfromhere');
 
-        $parserMock = \Mockery::mock(Parser::class);
-        $parsedFeedMock = \Mockery::mock(Feed::class);
+        $this->feedReaderMock->shouldReceive('import')
+                             ->andReturn();
+//        $clientMock->shouldReceive('getEncoding')
+//                   ->andReturn('utf8');
+//        $clientMock->shouldReceive('getEtag')
+//                   ->andReturn('somerubbishgoesoutfromhere');
+
+//        $parserMock = \Mockery::mock(Parser::class);
+//        $parsedFeedMock = \Mockery::mock(Feed::class);
 
         if ($discover) {
             $this->feedReaderMock->shouldReceive('discover')
                                  ->once()
                                  ->with(\Mockery::any())
                                  ->andReturn($clientMock);
-            $this->feedReaderMock->shouldReceive('getParser')
-                                 ->once()
-                                 ->andReturn($parserMock);
+//            $this->feedReaderMock->shouldReceive('getParser')
+//                                 ->once()
+//                                 ->andReturn($parserMock);
 
 
-            $parserMock->shouldReceive('execute')
-                       ->andReturn($parsedFeedMock);
+//            $parserMock->shouldReceive('execute')
+//                       ->andReturn($parsedFeedMock);
 
             $parsedFeedMock->shouldReceive('getId')
                            ->andReturn(str_random(52));

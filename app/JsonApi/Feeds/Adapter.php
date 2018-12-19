@@ -3,52 +3,43 @@
 namespace App\JsonApi\Feeds;
 
 
+use App\JsonApi\DefaultAdapter;
 use App\Models\Feed;
-use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
-use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
-class Adapter extends EloquentAdapter
+/**
+ * Class Adapter
+ *
+ * @package App\JsonApi\Feeds
+ */
+class Adapter extends DefaultAdapter
 {
+    /**
+     * Model
+     */
+    const MODEL = Feed::class;
 
     /**
-     * Adapter constructor.
-     *
-     * @param StandardStrategy $paging
+     * @return \CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo
      */
-    public function __construct(StandardStrategy $paging)
+    public function folder()
     {
-        parent::__construct(new Feed(), $paging);
+        return $this->belongsTo();
     }
 
     /**
-     * @param Builder    $query
-     * @param Collection $filters
-     *
-     * @return void
+     * @return \CloudCreativity\LaravelJsonApi\Eloquent\HasMany
      */
-    protected function filter(Builder $query, Collection $filters)
+    public function articles()
     {
-        $user = Auth::user();
-
-        if (!$user) {
-            throw new UnauthorizedHttpException('jwt-auth', 'Invalid user.');
-        }
-
-        $query->whereNull('folder_id');
+        return $this->hasMany();
     }
 
     /**
-     * @param Collection $filters
-     *
-     * @return mixed
+     * @return \CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo
      */
-    protected function isSearchOne(Collection $filters)
+    public function user()
     {
-        // TODO
+        return $this->belongsTo();
     }
 
 }

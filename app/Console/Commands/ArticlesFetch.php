@@ -2,25 +2,23 @@
 
 namespace App\Console\Commands;
 
-
 use App\Models\Feed;
 use Illuminate\Console\Command;
 
 /**
- * Class DatabaseCleaner
+ * Class UpdateFeeds
  *
  * @package App\Console\Commands
  */
-class FeedCleanup extends Command
+class ArticlesFetch extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'feed:cleanup 
-        {--id=* : ID of feed to clean [defaults to all]}
-        {--days=0 : Articles older than [--days]}
+    protected $signature = 'articles:fetch
+        {--id=* : ID of feed to update [defaults to all]}
     ';
 
     /**
@@ -28,7 +26,7 @@ class FeedCleanup extends Command
      *
      * @var string
      */
-    protected $description = 'Clean old articles';
+    protected $description = 'Update articles of a feed (or all)';
 
     /**
      * Create a new command instance.
@@ -46,10 +44,9 @@ class FeedCleanup extends Command
      */
     public function handle()
     {
-        $this->info('Cleaning feed articles...');
+        $this->info('Updating feeds...');
         $feeds = collect([]);
         $id = $this->option('id');
-        $days = $this->option('days');
 
         if (!$id) {
             $feeds = Feed::all();
@@ -60,11 +57,10 @@ class FeedCleanup extends Command
             }
         }
 
-        $feeds->each(function (Feed $feed) use ($days) {
-            $settings = $feed->settings;
-            $this->info('Cleaning ' . $feed->name . ' older than ' . $settings['articles']['keep']);
-            $count = $feed->cleanup($days);
-            $this->output->writeln('<comment>Cleaned ' . $count . '</comment>');
+        $feeds->each(function (Feed $feed) {
+            $this->info('Updating ' . $feed->name);
+            $feed->fetchNewArticles();
+            $this->info('Updated ' . $feed->name);
         });
     }
 }

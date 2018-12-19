@@ -2,23 +2,25 @@
 
 namespace App\Console\Commands;
 
+
 use App\Models\Feed;
 use Illuminate\Console\Command;
 
 /**
- * Class UpdateFeeds
+ * Class DatabaseCleaner
  *
  * @package App\Console\Commands
  */
-class FetchArticles extends Command
+class ArticlesCleanup extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'articles:fetch
-        {--id=* : ID of feed to update [defaults to all]}
+    protected $signature = 'articles:cleanup 
+        {--id=* : ID of feed to clean [defaults to all]}
+        {--days=0 : Articles older than [--days]}
     ';
 
     /**
@@ -26,7 +28,7 @@ class FetchArticles extends Command
      *
      * @var string
      */
-    protected $description = 'Update articles of a feed (or all)';
+    protected $description = 'Clean old articles';
 
     /**
      * Create a new command instance.
@@ -44,9 +46,10 @@ class FetchArticles extends Command
      */
     public function handle()
     {
-        $this->info('Updating feeds...');
+        $this->info('Cleaning feed articles...');
         $feeds = collect([]);
         $id = $this->option('id');
+        $days = $this->option('days');
 
         if (!$id) {
             $feeds = Feed::all();
@@ -57,10 +60,14 @@ class FetchArticles extends Command
             }
         }
 
-        $feeds->each(function (Feed $feed) {
-            $this->info('Updating ' . $feed->name);
-            $feed->fetchNewArticles();
-            $this->info('Updated ' . $feed->name);
+        $feeds->each(function (Feed $feed) use ($days) {
+            $settings = $feed->settings;
+            if (isset($settings[ 'articles' ][ 'keep' ]) && !$days) {
+                $days = $settings[ 'articles' ][ 'keep' ];
+            }
+            $this->info('Cleaning ' . $feed->name . ' older than ' . $days. ' days');
+            $count = $feed->cleanup($days, $force = true);
+            $this->output->writeln('<comment>Cleaned ' . $count . '</comment>');
         });
     }
 }

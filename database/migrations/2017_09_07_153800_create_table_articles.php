@@ -23,9 +23,9 @@ class CreateTableArticles extends Migration
             $table->string('author', 100);
             $table->string('language', 20)
                   ->nullable();
-            $table->dateTimeTz('publish_date')
+            $table->dateTime('publish_date')
                   ->nullable();
-            $table->dateTimeTz('updated_date')
+            $table->dateTime('updated_date')
                   ->nullable();
             $table->longText('content')
                   ->nullable();

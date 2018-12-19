@@ -15,40 +15,39 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ApiRequest extends TestCase
 {
     use RefreshDatabase, MakesJsonApiRequests;
-    
+
     /**
      *
      */
     const RESOURCE_TYPE = null;
-    
-    
+
+
     /**
      * @var
      */
     public $apiUrl;
-    
+
     /**
      * @var string
      */
     public $baseUrl = '';
-    
+
     /**
      *
      */
     public function setUp()
     {
         parent::setUp();
-        
+
         $namespace = config('json-api-v1.url.namespace');
         $this->baseUrl = 'http://localhost' . $namespace;
         $this->apiUrl = $this->baseUrl;
-        
+
         if (defined('static::RESOURCE_TYPE')) {
             $this->apiUrl = $this->baseUrl . '/' . constant('static::RESOURCE_TYPE');
         }
     }
-    
-    
+
     /**
      * Test read single resource
      */
@@ -56,7 +55,7 @@ class ApiRequest extends TestCase
     {
         $this->markTestSkipped('This test is not implemented');
     }
-    
+
     /**
      * Test read single resource with included relations
      * (compound documents)
@@ -65,7 +64,7 @@ class ApiRequest extends TestCase
     {
         $this->markTestSkipped('This test is not implemented');
     }
-    
+
     /**
      * Test get all resource objects
      */
@@ -73,7 +72,7 @@ class ApiRequest extends TestCase
     {
         $this->markTestSkipped('This test is not implemented');
     }
-    
+
     /**
      * Test get all resource objects with included relations
      */
@@ -81,7 +80,7 @@ class ApiRequest extends TestCase
     {
         $this->markTestSkipped('This test is not implemented');
     }
-    
+
     /**
      * Test create resource
      */
@@ -89,7 +88,7 @@ class ApiRequest extends TestCase
     {
         $this->markTestSkipped('This test is not implemented');
     }
-    
+
     /**
      * Test delete resource
      */
@@ -97,7 +96,7 @@ class ApiRequest extends TestCase
     {
         $this->markTestSkipped('This test is not implemented');
     }
-    
+
     /**
      * Test update resource
      */
@@ -105,7 +104,7 @@ class ApiRequest extends TestCase
     {
         $this->markTestSkipped('This test is not implemented');
     }
-    
+
     /**
      *
      */
@@ -113,7 +112,7 @@ class ApiRequest extends TestCase
     {
         $this->markTestSkipped('This test is not implemented');
     }
-    
+
     /**
      *
      */
