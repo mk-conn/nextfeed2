@@ -4,8 +4,10 @@ namespace App\Models;
 
 
 use App\BaseModel;
+use App\Providers\FeedServiceProvider;
 use App\Traits\Model\HasOrder;
 use Carbon\Carbon;
+use DOMXPath;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Feed\AbstractFeed;
 use Zend\Http\Client;
@@ -104,13 +106,38 @@ class Feed extends BaseModel
     }
 
     /**
-     *
+     * @return bool
      */
     public function fetchIcon()
     {
-        $favicon = new Favicon();
-        $icon_link = $favicon->find($this->site_url);
-        $this->icon = $icon_link;
+        $request = new \Zend\Http\Request();
+        $request->setUri($this->site_url);
+        $request->setMethod('GET');
+        $client = new Client();
+        $response = $client->send($request);
+        $body = $response->getBody();
+
+        if (!empty($body)) {
+
+            try {
+                $dom = new \DOMDocument();
+                libxml_use_internal_errors(true);
+                $dom->loadHtml($body);
+                $xpath = new DOMXpath($dom);
+                $elements = $xpath->query('//link[@rel="icon" or @rel="shortcut icon" or @rel="Shortcut Icon" or @rel="icon shortcut"]');
+                for ($i = 0; $i < $elements->length; ++$i) {
+                    $icons[] = $elements->item($i)
+                                        ->getAttribute('href');
+                }
+                if (!empty($icons)) {
+                    $this->icon = $this->site_url . $icons[ 0 ];
+
+                    return true;
+                }
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
     }
 
     /**
@@ -140,21 +167,39 @@ class Feed extends BaseModel
     {
         $lastEtag = $this->etag;
         $lastModified = $this->last_modified;
-        $user = $this->user;
         /** @var AbstractFeed $feed */
         $feed = app()->make(
             'FeedReader',
-            [$this->feed_url, $lastEtag, $lastModified]
+            ['uri' => $this->feed_url, 'etag' => $lastEtag, 'last_modfied' => $lastModified]
         );
 
+        $this->detectEtagAndLastModified($feed);
+        $this->storeArticles($feed);
+
+        $this->save();
+    }
+
+    /**
+     * @param AbstractFeed $feed
+     */
+    public function detectEtagAndLastModified(AbstractFeed $feed)
+    {
         $receivedLastModified = $feed->getDateModified();
         /** @var  $httpClient */
-        $httpClient = resolve('FeedHttpClient');
+        $httpClient = resolve(FeedServiceProvider::FEED_READER_HTTP_CLIENT);
         /** @var Client $client */
         if ($etag = $httpClient->getDecoratedClient() !== false) {
             $this->etag = $etag;
         }
         $this->last_modified = $receivedLastModified;
+    }
+
+    /**
+     * @param AbstractFeed $feed
+     */
+    public function storeArticles(AbstractFeed $feed)
+    {
+        $user = $this->user;
         /** @var EntryInterface $entry */
         foreach ($feed as $entry) {
             /** @var Article $article */
@@ -175,8 +220,18 @@ class Feed extends BaseModel
                     ->associate($user);
             $article->save();
         }
+    }
 
-        $this->save();
+    public function createFromChannel(AbstractFeed $feed)
+    {
+        $this->guid = $feed->getId();
+        $this->description = $feed->getDescription();
+        $this->site_url = $feed->getLink();
+        $this->feed_url = $feed->getFeedLink();
+        $this->language = $feed->getLanguage();
+        $this->logo = $feed->getImage();
+        $this->name = $feed->getTitle();
+        $this->detectEtagAndLastModified($feed);
     }
 
     /**

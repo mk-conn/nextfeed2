@@ -54,7 +54,7 @@ class CreateFeed extends Command
             throw new InvalidArgumentException("Invalid user.");
         }
 
-        $feed = new Feed(['url' => $url]);
+        $feed = new Feed(['feed_url' => $url]);
         $feed->user()
              ->associate($user);
 

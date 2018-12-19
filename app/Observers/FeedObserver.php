@@ -11,7 +11,10 @@ namespace App\Observers;
 
 use App\Helpers\ParsedFeed;
 use App\Models\Feed;
+use App\Providers\FeedServiceProvider;
 use Illuminate\Database\Eloquent\Model;
+use Zend\Feed\Reader\Feed\AbstractFeed;
+use Zend\Feed\Reader\Reader;
 
 /**
  * Class FeedObserver
@@ -41,36 +44,15 @@ class FeedObserver extends BaseObserver
     public function creating(Model $model)
     {
         /** @var Feed $model */
-        $resource = $this->feedReader->discover($model->url);
-        $etag = $resource->getEtag();
+        /** @var  AbstractFeed $feed */
+        $feed = app()->make(FeedServiceProvider::FEED_READER, ['uri' => $model->feed_url]);
+        app()->instance('Adding_Channel', $feed);
 
-        $feedParser = $this->feedReader->getParser(
-            $resource->getUrl(),
-            $resource->getContent(),
-            $resource->getEncoding()
-        );
-
-        $parsedFeed = $feedParser->execute();
-
-        $model->guid = $parsedFeed->getId();
-        $model->description = $parsedFeed->getDescription();
-        $model->site_url = $parsedFeed->getSiteUrl();
-        $model->feed_url = $parsedFeed->getFeedUrl();
-        $model->language = $parsedFeed->getLanguage();
-        $model->logo = $parsedFeed->getLogo();
-        $model->icon = $parsedFeed->getIcon();
-        $model->name = $parsedFeed->getTitle();
-        $model->etag = $etag;
+        $model->createFromChannel($feed);
+        $model->detectEtagAndLastModified($feed);
 
         if (!$model->icon) {
             $model->fetchIcon();
-        }
-
-        if (!empty($items = $parsedFeed->getItems())) {
-            $parsedFeedHelper = new ParsedFeed();
-            $parsedFeedHelper->items = collect($items);
-
-            app()->instance(ParsedFeed::class, $parsedFeedHelper);
         }
 
         return parent::creating($model);
@@ -83,8 +65,9 @@ class FeedObserver extends BaseObserver
      */
     public function created(Model $model)
     {
+        $feed = resolve('Adding_Channel');
         /** @var Feed $model */
-        $model->fetchNewArticles();
+        $model->storeArticles($feed);
 
         return parent::created($model);
     }

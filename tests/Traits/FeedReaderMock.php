@@ -63,37 +63,39 @@ trait FeedReaderMock
 //        $parserMock = \Mockery::mock(Parser::class);
 //        $parsedFeedMock = \Mockery::mock(Feed::class);
 
-        if ($discover) {
-            $this->feedReaderMock->shouldReceive('discover')
-                                 ->once()
-                                 ->with(\Mockery::any())
-                                 ->andReturn($clientMock);
-//            $this->feedReaderMock->shouldReceive('getParser')
+
+
+//        if ($discover) {
+//            $this->feedReaderMock->shouldReceive('discover')
 //                                 ->once()
-//                                 ->andReturn($parserMock);
-
-
-//            $parserMock->shouldReceive('execute')
-//                       ->andReturn($parsedFeedMock);
-
-            $parsedFeedMock->shouldReceive('getId')
-                           ->andReturn(str_random(52));
-            $parsedFeedMock->shouldReceive('getTitle')
-                           ->andReturn('Feed Title');
-            $parsedFeedMock->shouldReceive('getDescription')
-                           ->andReturn('Feed Description');
-            $parsedFeedMock->shouldReceive('getSiteUrl')
-                           ->andReturn('http://example.com');
-            $parsedFeedMock->shouldReceive('getFeedUrl')
-                           ->andReturn('http://example.com/feed.rss');
-            $parsedFeedMock->shouldReceive('getLanguage')
-                           ->andReturn('en');
-            $parsedFeedMock->shouldReceive('getLogo')
-                           ->andReturn('http://example.com/logo.png');
-            $parsedFeedMock->shouldReceive('getIcon')
-                           ->andReturn('http://example.com/favicon.ico');
-            $parsedFeedMock->shouldReceive('getItems')
-                           ->andReturn([]);
-        }
+//                                 ->with(\Mockery::any())
+//                                 ->andReturn($clientMock);
+////            $this->feedReaderMock->shouldReceive('getParser')
+////                                 ->once()
+////                                 ->andReturn($parserMock);
+//
+//
+////            $parserMock->shouldReceive('execute')
+////                       ->andReturn($parsedFeedMock);
+//
+//            $parsedFeedMock->shouldReceive('getId')
+//                           ->andReturn(str_random(52));
+//            $parsedFeedMock->shouldReceive('getTitle')
+//                           ->andReturn('Feed Title');
+//            $parsedFeedMock->shouldReceive('getDescription')
+//                           ->andReturn('Feed Description');
+//            $parsedFeedMock->shouldReceive('getSiteUrl')
+//                           ->andReturn('http://example.com');
+//            $parsedFeedMock->shouldReceive('getFeedUrl')
+//                           ->andReturn('http://example.com/feed.rss');
+//            $parsedFeedMock->shouldReceive('getLanguage')
+//                           ->andReturn('en');
+//            $parsedFeedMock->shouldReceive('getLogo')
+//                           ->andReturn('http://example.com/logo.png');
+//            $parsedFeedMock->shouldReceive('getIcon')
+//                           ->andReturn('http://example.com/favicon.ico');
+//            $parsedFeedMock->shouldReceive('getItems')
+//                           ->andReturn([]);
+//        }
     }
 }

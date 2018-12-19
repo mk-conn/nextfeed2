@@ -6,7 +6,6 @@ const {computed} = Ember;
 
 export default Model.extend({
   name: attr('string'),
-  url: attr('string'),
   feedUrl: attr('string'),
   siteUrl: attr('string'),
   guid: attr('string'),

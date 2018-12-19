@@ -24,7 +24,6 @@ class Schema extends DefaultSchema
      */
     protected $attributes = [
         'name',
-        'url',
         'description',
         'feed_url',
         'site_url',
