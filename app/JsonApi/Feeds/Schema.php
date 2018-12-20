@@ -27,6 +27,7 @@ class Schema extends DefaultSchema
         'description',
         'feed_url',
         'site_url',
+        'guid',
         'logo',
         'icon',
         'order',
