@@ -37,8 +37,8 @@ class FeedResourceTest extends ApiRequest
     {
 
         $this->mockFeedReader();
-
-        $folder = $this->createFolder();
+        $this->withUser();
+        $folder = $this->createFolder($this->user);
 
         $create = [
             'data' => [
@@ -70,13 +70,12 @@ class FeedResourceTest extends ApiRequest
      */
     public function testCreateForbidden()
     {
-        $this->mockFeedReader(false);
+        $this->mockFeedReader();
 
         $user = $this->createUser();
-        $folder = $this->createFolder();
+        $folder = $this->createFolder($user);
         $differentUser = $this->createUser();
-
-        $this->be($differentUser);
+        $this->withUser($differentUser);
 
         $create = [
             'data' => [
@@ -101,7 +100,7 @@ class FeedResourceTest extends ApiRequest
             ]
         ];
 
-        $this->postJson('api/v1/feeds', $create)
+        $this->postJsonApi($this->apiUrl, $create)
              ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
@@ -110,12 +109,11 @@ class FeedResourceTest extends ApiRequest
      */
     public function testIndex()
     {
-//        $this->mockFeedReader();
+        $this->mockFeedReader();
         $this->withUser();
-//        $mock_function = [$this, 'mockFeedReader'];
         $this->createFeed($this->user, null, [], 5);
 
-        $response = $this->getJsonApi('api/v1/feeds')
+        $response = $this->getJsonApi($this->apiUrl)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
 
@@ -129,7 +127,8 @@ class FeedResourceTest extends ApiRequest
     public function testSaveFeedSettings()
     {
         $this->mockFeedReader();
-        $feed = $this->createFeed();
+        $this->withUser();
+        $feed = $this->createFeed($this->user);
 
         $settings = [
             'articles' => [
@@ -147,7 +146,7 @@ class FeedResourceTest extends ApiRequest
             ]
         ];
 
-        $response = $this->patchJson($this->url . '/' . $feed->id, $update)
+        $response = $this->patchJsonApi($this->apiUrl . '/' . $feed->id, $update)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
 
@@ -160,7 +159,8 @@ class FeedResourceTest extends ApiRequest
     public function testMarkAllRead()
     {
         $this->mockFeedReader();
-        $feed = $this->createFeed();
+        $this->withUser();
+        $feed = $this->createFeed($this->user);
         $articles = $this->createArticle($feed, [], 10);
         $newerArticles = $this->createArticle($feed, [], 2);
         $lastId = $articles->max('id');
@@ -173,7 +173,7 @@ class FeedResourceTest extends ApiRequest
         ];
         $q = http_build_query($query);
 
-        $this->getJson($this->apiUrl . '/feed-actions?' . $q)
+        $this->getJsonApi($this->apiUrl . '/feed-actions?' . $q)
              ->assertSuccessful()
              ->decodeResponseJson();
 
@@ -183,6 +183,4 @@ class FeedResourceTest extends ApiRequest
 
         $this->assertEquals($newerArticles->count(), $articles->count());
     }
-
-
 }

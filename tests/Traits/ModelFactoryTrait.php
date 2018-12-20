@@ -59,9 +59,6 @@ trait ModelFactoryTrait
         }
 
         foreach ($feeds as $feed) {
-//            if ($mock_function) {
-//                call_user_func($mock_function);
-//            }
             $setRelations($feed, $user, $folder);
             $feed->save();
         }

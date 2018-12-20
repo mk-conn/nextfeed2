@@ -10,7 +10,7 @@ namespace Tests\Feature;
 
 
 use Illuminate\Http\Response;
-use Tests\TestResource;
+use Tests\ApiRequest;
 use Tests\Traits\ModelFactoryTrait;
 
 /**
@@ -18,9 +18,11 @@ use Tests\Traits\ModelFactoryTrait;
  *
  * @package Tests\Feature
  */
-class FolderResourceTest extends TestResource
+class FolderResourceTest extends ApiRequest
 {
     use  ModelFactoryTrait;
+
+    const RESOURCE_TYPE = 'folders';
 
     /**
      *
@@ -37,10 +39,10 @@ class FolderResourceTest extends TestResource
     {
         $this->createFolder(null, [], 10);
 
-        $response = $this->getJson('api/v1/folders')
+        $response = $this->getJsonApi($this->apiUrl)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
-        $this->assertCount(10, $response['data']);
+        $this->assertCount(10, $response[ 'data' ]);
     }
 
     /**
@@ -50,11 +52,11 @@ class FolderResourceTest extends TestResource
     {
         $this->createFolder($this->user, [], 5);
 
-        $response = $this->getJson('api/v1/folders')
+        $response = $this->getJsonApi($this->apiUrl)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
 
-        $this->assertCount(5, $response['data']);
+        $this->assertCount(5, $response[ 'data' ]);
     }
 
     /**
@@ -65,7 +67,7 @@ class FolderResourceTest extends TestResource
         $user = $this->createUser(['username' => 'anthony']);
         $this->createFolder($user, [], 5);
 
-        $this->getJson('api/v1/folders?filter[user]=anthony')
+        $this->getJsonApi($this->apiUrl . '?filter[user]=anthony')
              ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
@@ -76,7 +78,7 @@ class FolderResourceTest extends TestResource
     {
         $folder = $this->createFolder(null, ['name' => 'News']);
 
-        $response = $this->getJson('api/v1/folders/' . $folder->id)
+        $response = $this->getJsonApi($this->apiUrl . $folder->id)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
 

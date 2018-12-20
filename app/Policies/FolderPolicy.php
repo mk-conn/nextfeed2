@@ -10,6 +10,12 @@ class FolderPolicy
 {
     use HandlesAuthorization;
 
+
+    public function index(User $user, $request)
+    {
+        return $user->id === $request->user()->id;
+    }
+
     /**
      * Determine whether the user can create folders.
      *

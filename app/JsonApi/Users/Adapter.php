@@ -2,40 +2,44 @@
 
 namespace App\JsonApi\Users;
 
-use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
-use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
+use App\JsonApi\DefaultAdapter;
 use App\Models\User;
 
-class Adapter extends EloquentAdapter
+/**
+ * Class Adapter
+ *
+ * @package App\JsonApi\Users
+ */
+class Adapter extends DefaultAdapter
 {
 
     /**
-     * Adapter constructor.
-     *
-     * @param StandardStrategy $paging
+     * Model
      */
-    public function __construct(StandardStrategy $paging)
+    const MODEL = User::class;
+
+    /**
+     * @return \CloudCreativity\LaravelJsonApi\Eloquent\HasMany
+     */
+    public function feeds()
     {
-        parent::__construct(new User(), $paging);
+        return $this->hasMany();
     }
 
     /**
-     * @param Builder $query
-     * @param Collection $filters
-     * @return void
+     * @return \CloudCreativity\LaravelJsonApi\Eloquent\HasMany
      */
-    protected function filter(Builder $query, Collection $filters)
+    public function folder()
     {
+        return $this->hasMany();
     }
 
     /**
-     * @param Collection $filters
-     * @return mixed
+     * @return \CloudCreativity\LaravelJsonApi\Eloquent\HasMany
      */
-    protected function isSearchOne(Collection $filters)
+    public function settings()
     {
+        return $this->hasMany();
     }
 
 }

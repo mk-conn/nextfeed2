@@ -3,10 +3,11 @@
 namespace App\JsonApi\Feeds;
 
 
+use App\JsonApi\DefaultValidator;
+use App\Models\Feed;
 use CloudCreativity\JsonApi\Contracts\Validators\RelationshipsValidatorInterface;
-use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
 
-class Validators extends AbstractValidatorProvider
+class Validators extends DefaultValidator
 {
 
     protected $allowedSortParameters = ['order', 'name'];
@@ -17,14 +18,12 @@ class Validators extends AbstractValidatorProvider
     protected $resourceType = 'feeds';
 
     /**
-     * Get the validation rules for the resource attributes.
-     *
-     * @param object|null $record
-     *      the record being updated, or null if it is a create request.
+     * @param Feed $record
      *
      * @return array
      */
-    protected function attributeRules($record = null)
+    protected function rules($record = null)
+    : array
     {
         $rules = [];
 
@@ -32,25 +31,11 @@ class Validators extends AbstractValidatorProvider
 
         if ($record) {
             $rules = [
-                'feed-url' => $required . '|url'
+                'feed-url'  => $required . '|url',
+                'folder_id' => 'exists:folders,id'
             ];
         }
 
         return $rules;
     }
-
-    /**
-     * Define the validation rules for the resource relationships.
-     *
-     * @param RelationshipsValidatorInterface $relationships
-     * @param object|null                     $record
-     *      the record being updated, or null if it is a create request.
-     *
-     * @return void
-     */
-    protected function relationshipRules(RelationshipsValidatorInterface $relationships, $record = null)
-    {
-
-    }
-
 }

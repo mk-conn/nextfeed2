@@ -46,7 +46,7 @@ Route::group(['prefix' => 'api'], function () {
 JsonApi::register(
     'v1',
     [
-//        'namespace'  => 'Api',
+        'namespace'  => 'JsonApi',
         'middleware' => 'json-api.auth:default'
     ],
     function (ApiGroup $api) {

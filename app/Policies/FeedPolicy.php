@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Feed;
+use App\Models\Folder;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -12,7 +13,7 @@ class FeedPolicy
 
     public function index(User $user, $request)
     {
-
+        return $user->id === $request->user()->id;
     }
 
     /**
@@ -35,9 +36,24 @@ class FeedPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, $request)
     {
+        $feedOk = true;
+        $folderOk = true;
+        $feedUserId = array_get($request->get('data'), 'relationships.user.data.id');
+        $folderId = array_get($request->get('data'), 'relationships.folder.data.id');
 
+        if ($feedUserId) {
+            $feedOk = $user->id === $feedUserId;
+        }
+
+        if ($folderId) {
+            $folder = Folder::find($folderId);
+            $folderUserId = $folder->user->id;
+            $folderOk = $user->id === $folderUserId;
+        }
+
+        return ($feedOk && $folderOk);
     }
 
     /**

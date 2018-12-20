@@ -68,7 +68,7 @@ class Schema extends DefaultSchema
         $includes  [ 'user' ] = [
             self::SHOW_SELF    => true,
             self::SHOW_RELATED => true,
-            self::SHOW_DATA    => isset($includeRelationships[ 'user' ]),
+            self::SHOW_DATA    => true,
             self::DATA         => function () use ($resource) {
                 return $resource->user;
             }

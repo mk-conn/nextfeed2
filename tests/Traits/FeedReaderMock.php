@@ -10,6 +10,7 @@ namespace Tests\Traits;
 
 
 use App\Readers\FeedReader;
+use Zend\Feed\Reader\Feed\AbstractFeed;
 
 /**
  * Trait FeedReaderMock
@@ -48,61 +49,39 @@ trait FeedReaderMock
 
 
     /**
-     * @param bool $discover
+     *
      */
-    public function mockFeedReader(bool $discover = true)
+    public function mockFeedReader()
     {
-
+        $abstractFeedMock = \Mockery::mock(AbstractFeed::class);
         $feedReaderMock = \Mockery::mock(FeedReader::class);
         $feedReaderMock->shouldReceive('read')
-                       ->andReturn('<xml></xml>');
-
+                       ->andReturn($abstractFeedMock);
+        $feedReaderMock->shouldReceive('getEtag')
+                       ->andReturn(str_random(52));
+        $feedReaderMock->shouldReceive('getLastModified')
+                       ->andReturn(null);
+        $abstractFeedMock->shouldIgnoreMissing();
+        $abstractFeedMock->shouldReceive('getId')
+                         ->andReturnUsing(function () {
+                             return str_random(52);
+                         });
+        $abstractFeedMock->shouldReceive('getTitle')
+                         ->andReturn('Feed Title');
+        $abstractFeedMock->shouldReceive('getDescription')
+                         ->andReturn('Feed Description');
+        $abstractFeedMock->shouldReceive('getLink')
+                         ->andReturn('http://example.com');
+        $abstractFeedMock->shouldReceive('getFeedLink')
+                         ->andReturn('http://example.com/feed.rss');
+        $abstractFeedMock->shouldReceive('getLanguage')
+                         ->andReturn('en');
+        $abstractFeedMock->shouldReceive('getLogo')
+                         ->andReturn('http://example.com/logo.png');
+        $abstractFeedMock->shouldReceive('getIcon')
+                         ->andReturn('http://example.com/favicon.ico');
         app()->bind(FeedReader::class, function () use ($feedReaderMock) {
             return $feedReaderMock;
         });
-
-//        $this->feedReaderMock->shouldReceive('import')
-//                             ->andReturn();
-//        $clientMock->shouldReceive('getEncoding')
-//                   ->andReturn('utf8');
-//        $clientMock->shouldReceive('getEtag')
-//                   ->andReturn('somerubbishgoesoutfromhere');
-
-//        $parserMock = \Mockery::mock(Parser::class);
-//        $parsedFeedMock = \Mockery::mock(Feed::class);
-
-
-//        if ($discover) {
-//            $this->feedReaderMock->shouldReceive('discover')
-//                                 ->once()
-//                                 ->with(\Mockery::any())
-//                                 ->andReturn($clientMock);
-////            $this->feedReaderMock->shouldReceive('getParser')
-////                                 ->once()
-////                                 ->andReturn($parserMock);
-//
-//
-////            $parserMock->shouldReceive('execute')
-////                       ->andReturn($parsedFeedMock);
-//
-//            $parsedFeedMock->shouldReceive('getId')
-//                           ->andReturn(str_random(52));
-//            $parsedFeedMock->shouldReceive('getTitle')
-//                           ->andReturn('Feed Title');
-//            $parsedFeedMock->shouldReceive('getDescription')
-//                           ->andReturn('Feed Description');
-//            $parsedFeedMock->shouldReceive('getSiteUrl')
-//                           ->andReturn('http://example.com');
-//            $parsedFeedMock->shouldReceive('getFeedUrl')
-//                           ->andReturn('http://example.com/feed.rss');
-//            $parsedFeedMock->shouldReceive('getLanguage')
-//                           ->andReturn('en');
-//            $parsedFeedMock->shouldReceive('getLogo')
-//                           ->andReturn('http://example.com/logo.png');
-//            $parsedFeedMock->shouldReceive('getIcon')
-//                           ->andReturn('http://example.com/favicon.ico');
-//            $parsedFeedMock->shouldReceive('getItems')
-//                           ->andReturn([]);
-//        }
     }
 }

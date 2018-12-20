@@ -3,24 +3,38 @@
 namespace App\JsonApi\Folders;
 
 
+use App\JsonApi\DefaultAdapter;
 use App\Models\Folder;
-use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
-use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class Adapter extends EloquentAdapter
+/**
+ * Class Adapter
+ *
+ * @package App\JsonApi\Folders
+ */
+class Adapter extends DefaultAdapter
 {
+    /**
+     *
+     */
+    const MODEL = Folder::class;
 
     /**
-     * Adapter constructor.
-     *
-     * @param StandardStrategy $paging
+     * @return \CloudCreativity\LaravelJsonApi\Eloquent\HasMany
      */
-    public function __construct(StandardStrategy $paging)
+    public function feeds()
     {
-        parent::__construct(new Folder(), $paging);
+        return $this->hasMany();
+    }
+
+    /**
+     * @return \CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo();
     }
 
     /**
@@ -29,23 +43,14 @@ class Adapter extends EloquentAdapter
      *
      * @return void
      */
-    protected function filter(Builder $query, Collection $filters)
+    protected function filter($query, Collection $filters)
     {
-        $user = Auth::user();
+        $user = Auth::guard('api')
+                    ->user();
 
         if ($user) {
             $query->where('user_id', $user->id);
         }
-    }
-
-    /**
-     * @param Collection $filters
-     *
-     * @return mixed
-     */
-    protected function isSearchOne(Collection $filters)
-    {
-        // TODO
     }
 
 }

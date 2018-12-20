@@ -13,6 +13,7 @@ use App\Helpers\ParsedFeed;
 use App\Models\Feed;
 use App\Readers\FeedReader;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Zend\Feed\Reader\Feed\AbstractFeed;
 use Zend\Feed\Reader\Reader;
 
@@ -43,6 +44,8 @@ class FeedObserver extends BaseObserver
      */
     public function creating(Model $model)
     {
+
+
         /** @var Feed $model */
         /** @var  AbstractFeed $feedInterface */
         /** @var FeedReader $feedReader */
@@ -56,6 +59,14 @@ class FeedObserver extends BaseObserver
         if (!$model->icon) {
             $model->fetchIcon();
         }
+
+        if (!$model->user) {
+            $user = Auth::guard('api')
+                        ->user();
+            $model->user()
+                  ->associate($user);
+        }
+
 
         return parent::creating($model);
     }

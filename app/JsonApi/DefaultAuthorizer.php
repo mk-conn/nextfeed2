@@ -50,7 +50,7 @@ class DefaultAuthorizer extends AbstractAuthorizer
      */
     public function create($type, $request)
     {
-        $this->can('create', $type);
+        $this->can('create', $type, $request);
     }
 
     /**
@@ -67,7 +67,7 @@ class DefaultAuthorizer extends AbstractAuthorizer
      */
     public function read($record, $request)
     {
-        $break = true; // no-op, records are available without signing in.
+        $this->can('read', $record, $request);
     }
 
     /**

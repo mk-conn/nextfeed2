@@ -3,10 +3,10 @@
 namespace App\JsonApi\Folders;
 
 
+use App\JsonApi\DefaultSchema;
 use App\Models\Folder;
-use CloudCreativity\LaravelJsonApi\Schema\EloquentSchema;
 
-class Schema extends EloquentSchema
+class Schema extends DefaultSchema
 {
 
     /**
@@ -34,11 +34,14 @@ class Schema extends EloquentSchema
     {
         $included = [];
 
-        if (isset($includeRelationships['feeds'])) {
-            $included['feeds'] = [
+        if (isset($includeRelationships[ 'feeds' ])) {
+            $included[ 'feeds' ] = [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::DATA         => $resource->feeds
+                self::SHOW_DATA    => true,
+                self::DATA         => function () use ($resource) {
+                    return $resource->feeds;
+                }
             ];
         }
 
@@ -47,15 +50,12 @@ class Schema extends EloquentSchema
                     self::SHOW_SELF    => true,
                     self::SHOW_RELATED => true,
                     self::SHOW_DATA    => true,
-                    self::DATA         => isset($includeRelationships['user']) ?
-                        $resource->user :
-                        $this->createBelongsToIdentity($resource, 'user')
+                    self::DATA         => function () use ($resource) {
+                        return $resource->user;
+                    }
                 ]
             ]
         );
-
     }
-
-
 }
 
