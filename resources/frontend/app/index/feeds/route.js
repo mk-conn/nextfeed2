@@ -31,7 +31,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   renderTemplate() {
-    this.render('feeds', {
+    this.render('index.feeds', {
       into: 'application',
       outlet: 'side-bar'
     })

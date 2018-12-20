@@ -15,6 +15,7 @@ module.exports = {
     browser: true
   },
   rules: {
+    'ember/local-modules': 2
   },
   overrides: [
     // node files

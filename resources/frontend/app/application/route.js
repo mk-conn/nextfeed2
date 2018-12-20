@@ -1,7 +1,7 @@
-import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
-
-const {Route, inject: {service}, get} = Ember;
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+import { get } from '@ember/object';
 
 export default Route.extend(ApplicationRouteMixin, {
   currentUser: service(),
@@ -24,8 +24,6 @@ export default Route.extend(ApplicationRouteMixin, {
 
   setupController(controller, model) {
     this._super(controller, model);
-    controller.set('currentUser', this.get('currentUser'));
-    controller.set('session', this.get('session'));
   },
 
   actions: {
@@ -34,8 +32,6 @@ export default Route.extend(ApplicationRouteMixin, {
     },
 
     searchArticle(q) {
-      console.log('route searchArticle', q);
-
       this.store.queryRecord('article-action', {
         action: 'search',
         params: {

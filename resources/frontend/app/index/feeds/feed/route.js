@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const {Route} = Ember;
+import Route from '@ember/routing/route';
+import EmberObject from '@ember/object';
 
 export default Route.extend({
 
@@ -8,7 +7,7 @@ export default Route.extend({
 
     if (params.feed_id === 'archived') {
 
-      return Ember.Object.create({
+      return EmberObject.create({
         id: 'archived',
         name: 'Archived',
         description: 'Your archived articles'

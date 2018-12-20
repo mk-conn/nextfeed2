@@ -13,22 +13,32 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return this.store.findAll('feed');
   },
 
-  renderTemplate() {
-    this.render();
-
-    const folderController = this.controllerFor('index.folders');
-
-    this.render('index/folders', {
-      into: 'application',
-      outlet: 'side-bar',
-      controller: folderController,
-      model: this.store.findAll('folder')
-    })
-
+  afterModel() {
+    this.transitionTo('index.feeds');
   },
 
-  afterModel() {
-    this.debug(`route: %s::afterModel()`, this.routeName);
-    // this.transitionTo('feeds');
+  actions: {
+    /**
+     *
+     * @param sortables
+     */
+    sort(sortables) {
+      this.debug(`route: %s::sort()`, this.routeName);
+      let changed = [];
+      sortables.forEach((model, idx) => {
+        // this.debug(`\t->id: %s idx: %s`, this.get(model, 'id'), idx + 1);
+        let newIdx = idx + 1;
+        const currentIdx = model.get('order');
+
+        if (currentIdx !== newIdx) {
+          // this.debug(`\tsetting order for %s to %s`, model.get('id'), model.get('order'));
+          model.set('order', newIdx);
+          changed.push(model);
+        }
+      });
+
+      changed.invoke('save');
+    }
   }
+
 });

@@ -26,28 +26,6 @@ trait FeedReaderMock
     protected $feedReaderMock;
     protected $httpClientMock;
 
-//    public function createApplication()
-//    {
-//        $app = parent::createApplication();
-//
-//        $this->feedReaderMock = \Mockery::mock(Reader::class);
-//        $this->httpClientMock = \Mockery::mock(Client::class);
-//
-//        $app->instance(FeedServiceProvider::FEED_READER, $this->feedReaderMock);
-//        $app->instance(FeedServiceProvider::FEED_READER_HTTP_CLIENT, $this->httpClientMock);
-//
-//        return $app;
-//    }
-
-//    /**
-//     *
-//     */
-//    public function setup()
-//    {
-//        parent::setup();
-//    }
-
-
     /**
      *
      */

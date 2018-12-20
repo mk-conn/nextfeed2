@@ -1,11 +1,11 @@
 import Route from '@ember/routing/route';
 import { get, set } from '@ember/object';
 import { inject as service } from '@ember/service';
-import InfinityRoute from "ember-infinity/mixins/route";
 import Gui from 'frontend/mixins/gui';
+import $ from 'jquery';
 
-export default Route.extend(InfinityRoute, Gui, {
-
+export default Route.extend(Gui, {
+  infinity: service(),
   displayIn: '#column-one',
 
   lastId: null,
@@ -42,26 +42,26 @@ export default Route.extend(InfinityRoute, Gui, {
 
   model(params) {
 
-    const feed = this.modelFor('feeds.feed');
+    const feed = this.modelFor('index.feeds.feed');
     let filter = {};
 
     if (feed.get('id') === 'archived') {
-      filter[ 'keep' ] = true;
+      filter['keep'] = true;
     } else {
-      filter[ 'feed' ] = feed.id;
+      filter['feed'] = feed.id;
     }
 
     if (params.filterUnread === true) {
-      filter[ 'read' ] = false;
+      filter['read'] = false;
     }
 
     delete params.filterUnread;
 
-    params[ 'sort' ] = '-updated-date';
-    params[ 'filter' ] = filter;
-    params[ 'fields' ] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
+    params['sort'] = '-updated-date';
+    params['filter'] = filter;
+    params['fields'] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
 
-    return this.infinityModel('article', params, {});
+    return this.infinity.model('article', params, {});
   },
 
   setupController(controller, model) {
