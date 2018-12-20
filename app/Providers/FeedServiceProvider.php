@@ -10,7 +10,6 @@ namespace App\Providers;
 
 
 use App\Readers\FeedReader;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -40,7 +39,7 @@ class FeedServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(FeedReader::class, function (Application $app, $params = []) {
+        $this->app->bind(FeedReader::class, function () {
             return new FeedReader();
         });
     }

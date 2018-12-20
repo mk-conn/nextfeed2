@@ -9,9 +9,7 @@
 namespace Tests\Traits;
 
 
-use App\Providers\FeedServiceProvider;
-use Zend\Feed\Reader\Reader;
-use Zend\Http\Client;
+use App\Readers\FeedReader;
 
 /**
  * Trait FeedReaderMock
@@ -27,40 +25,44 @@ trait FeedReaderMock
     protected $feedReaderMock;
     protected $httpClientMock;
 
-    public function createApplication()
-    {
-        $app = parent::createApplication();
+//    public function createApplication()
+//    {
+//        $app = parent::createApplication();
+//
+//        $this->feedReaderMock = \Mockery::mock(Reader::class);
+//        $this->httpClientMock = \Mockery::mock(Client::class);
+//
+//        $app->instance(FeedServiceProvider::FEED_READER, $this->feedReaderMock);
+//        $app->instance(FeedServiceProvider::FEED_READER_HTTP_CLIENT, $this->httpClientMock);
+//
+//        return $app;
+//    }
 
-        $this->feedReaderMock = \Mockery::mock(Reader::class);
-        $this->httpClientMock = \Mockery::mock(Client::class);
-
-        $app->instance(FeedServiceProvider::FEED_READER, $this->feedReaderMock);
-        $app->instance(FeedServiceProvider::FEED_READER_HTTP_CLIENT, $this->httpClientMock);
-
-        return $app;
-    }
-
-    /**
-     *
-     */
-    public function setup()
-    {
-        parent::setup();
-    }
+//    /**
+//     *
+//     */
+//    public function setup()
+//    {
+//        parent::setup();
+//    }
 
 
     /**
      * @param bool $discover
      */
-    protected function mockFeedReader(bool $discover = true)
+    public function mockFeedReader(bool $discover = true)
     {
 
-        $clientMock = \Mockery::mock(Client::class);
-        $clientMock->shouldReceive('get')
-                   ->andReturn('<xml></xml>');
+        $feedReaderMock = \Mockery::mock(FeedReader::class);
+        $feedReaderMock->shouldReceive('read')
+                       ->andReturn('<xml></xml>');
 
-        $this->feedReaderMock->shouldReceive('import')
-                             ->andReturn();
+        app()->bind(FeedReader::class, function () use ($feedReaderMock) {
+            return $feedReaderMock;
+        });
+
+//        $this->feedReaderMock->shouldReceive('import')
+//                             ->andReturn();
 //        $clientMock->shouldReceive('getEncoding')
 //                   ->andReturn('utf8');
 //        $clientMock->shouldReceive('getEtag')

@@ -7,10 +7,11 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\Passport;
+use Tests\Traits\FeedReaderMock;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, FeedReaderMock;
 
     const USER_NAME     = 'holla_die_waldfee';
     const USER_PASSWORT = '1234';
@@ -18,7 +19,6 @@ abstract class TestCase extends BaseTestCase
     const USER_EMAIL    = 'holla@localhost';
 
     public $user = null;
-
 
     /**
      *
@@ -34,5 +34,11 @@ abstract class TestCase extends BaseTestCase
 
         $this->user = $user;
         Passport::actingAs($user);
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->mockFeedReader();
     }
 }

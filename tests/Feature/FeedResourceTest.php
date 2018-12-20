@@ -110,7 +110,7 @@ class FeedResourceTest extends ApiRequest
      */
     public function testIndex()
     {
-        $this->mockFeedReader();
+//        $this->mockFeedReader();
         $this->withUser();
 //        $mock_function = [$this, 'mockFeedReader'];
         $this->createFeed($this->user, null, [], 5);
