@@ -75,6 +75,10 @@ class Feed extends BaseModel
      * @var bool
      */
     protected static $baseObserver = false;
+    /**
+     * @var FeedInterface
+     */
+    protected $feedInterface = null;
 
     /**
      * @var array
@@ -82,6 +86,18 @@ class Feed extends BaseModel
     protected $casts = [
         'settings' => 'array'
     ];
+
+    /**
+     * @param $feedInterface
+     *
+     * @return $this
+     */
+    public function attachFeedInterface(FeedInterface $feedInterface)
+    {
+        $this->feedInterface = $feedInterface;
+
+        return $this;
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -223,6 +239,9 @@ class Feed extends BaseModel
         return $count;
     }
 
+    /**
+     * @param AbstractFeed $feed
+     */
     public function createFromChannel(AbstractFeed $feed)
     {
         $this->guid = $feed->getId();
@@ -232,7 +251,6 @@ class Feed extends BaseModel
         $this->language = $feed->getLanguage();
         $this->logo = $feed->getImage();
         $this->name = $feed->getTitle();
-        $this->detectEtagAndLastModified($feed);
     }
 
     /**
@@ -270,5 +288,13 @@ class Feed extends BaseModel
         $count = $articles->delete();
 
         return $count;
+    }
+
+    /**
+     * @return FeedInterface
+     */
+    public function getFeedInterface()
+    {
+        return $this->feedInterface;
     }
 }

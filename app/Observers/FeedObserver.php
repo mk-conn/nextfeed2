@@ -44,14 +44,15 @@ class FeedObserver extends BaseObserver
     public function creating(Model $model)
     {
         /** @var Feed $model */
-        /** @var  AbstractFeed $feed */
+        /** @var  AbstractFeed $feedInterface */
         /** @var FeedReader $feedReader */
         $feedReader = app()->make(FeedReader::class);
-        $feed = $feedReader->read(['uri' => $model->feed_url]);
+        $feedInterface = $feedReader->read(['uri' => $model->feed_url]);
 
-        $model->createFromChannel($feed);
-        $model->detectEtagAndLastModified($feed, $feedReader->getHttpClient());
-
+        $model->createFromChannel($feedInterface);
+        $model->etag = $feedReader->getEtag($model->feed_url);
+        $model->last_modified = $feedReader->getLastModified($model->feed_url);
+        $model->attachFeedInterface($feedInterface);
         if (!$model->icon) {
             $model->fetchIcon();
         }
@@ -66,9 +67,9 @@ class FeedObserver extends BaseObserver
      */
     public function created(Model $model)
     {
-        $feed = resolve('Adding_Channel');
+
         /** @var Feed $model */
-        $model->storeArticles($feed);
+        $model->storeArticles($model->getFeedInterface());
 
         return parent::created($model);
     }
