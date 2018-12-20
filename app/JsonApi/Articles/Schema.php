@@ -3,7 +3,7 @@
 namespace App\JsonApi\Articles;
 
 
-use App\Api\V1\DefaultSchema;
+use App\JsonApi\DefaultSchema;
 use App\Models\Article;
 
 /**

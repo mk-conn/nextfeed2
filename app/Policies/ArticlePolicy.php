@@ -2,19 +2,26 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Article;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Http\Request;
 
 class ArticlePolicy
 {
     use HandlesAuthorization;
 
+    public function index(User $user, Request $request)
+    {
+        return true;
+    }
+
     /**
      * Determine whether the user can view the article.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\User    $user
+     * @param  \App\Models\Article $article
+     *
      * @return mixed
      */
     public function view(User $user, Article $article)
@@ -25,7 +32,8 @@ class ArticlePolicy
     /**
      * Determine whether the user can create articles.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -36,8 +44,9 @@ class ArticlePolicy
     /**
      * Determine whether the user can update the article.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\User    $user
+     * @param  \App\Models\Article $article
+     *
      * @return mixed
      */
     public function update(User $user, Article $article)
@@ -48,8 +57,9 @@ class ArticlePolicy
     /**
      * Determine whether the user can delete the article.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\User    $user
+     * @param  \App\Models\Article $article
+     *
      * @return mixed
      */
     public function delete(User $user, Article $article)
@@ -60,8 +70,9 @@ class ArticlePolicy
     /**
      * Determine whether the user can restore the article.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\User    $user
+     * @param  \App\Models\Article $article
+     *
      * @return mixed
      */
     public function restore(User $user, Article $article)
@@ -72,8 +83,9 @@ class ArticlePolicy
     /**
      * Determine whether the user can permanently delete the article.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\User    $user
+     * @param  \App\Models\Article $article
+     *
      * @return mixed
      */
     public function forceDelete(User $user, Article $article)

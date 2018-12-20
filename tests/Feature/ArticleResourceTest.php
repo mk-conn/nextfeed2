@@ -23,20 +23,23 @@ class ArticleResourceTest extends ApiRequest
 {
     use ModelFactoryTrait, FeedReaderMock;
 
-    /**
-     *
-     */
-    public function setup()
-    {
-        parent::setUp();
-    }
+    const RESOURCE_TYPE = 'articles';
 
     /**
      *
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not yet implemented');
+        $this->mockFeedReader();
+        $this->withUser();
+        $feed = $this->createFeed($this->user);
+        $this->createArticle($feed, [], 10);
+
+        $response = $this->getJsonApi($this->apiUrl)
+                         ->assertStatus(Response::HTTP_OK)
+                         ->decodeResponseJson();
+
+        $this->assertCount(10, $response[ 'data' ]);
     }
 
     /**

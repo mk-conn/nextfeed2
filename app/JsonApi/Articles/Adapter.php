@@ -37,6 +37,13 @@ class Adapter extends DefaultAdapter
      */
     protected function filter($query, Collection $filters)
     {
+
+        $user = Auth::guard('api')
+                    ->user();
+        $feeds = $user->feeds;
+
+        $query->whereIn('feed_id', $feeds->pluck('id'));
+
         if ($filters->has('feed')) {
             $query->where('feed_id', $filters->get('feed'));
         }
@@ -46,22 +53,7 @@ class Adapter extends DefaultAdapter
         }
 
         if ($filters->has('keep')) {
-            $user = Auth::user();
-            $feeds = $user->feeds;
-
-            $query->where('keep', $filters->get('keep'))
-                  ->whereIn('feed_id', $feeds->pluck('id'));
+            $query->where('keep', $filters->get('keep'));
         }
     }
-
-    /**
-     * @param Collection $filters
-     *
-     * @return mixed
-     */
-    protected function isSearchOne(Collection $filters)
-    {
-        // TODO
-    }
-
 }
