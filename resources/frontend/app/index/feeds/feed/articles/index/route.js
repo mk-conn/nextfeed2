@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
 
   renderTemplate() {
-    this.render('feeds/feed/articles/index', {
+    this.render('index/feeds/feed/articles/index', {
       into: 'application',
       outlet: 'column-two'
     })
@@ -12,10 +12,10 @@ export default Ember.Route.extend({
   setupController(controller, model) {
     this._super(controller, model);
 
-    controller.set('feed', this.modelFor('feeds.feed'));
+    controller.set('feed', this.modelFor('index.feeds.feed'));
   },
 
-  actions : {
+  actions: {
     cleanup() {
 
     }

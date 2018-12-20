@@ -12,10 +12,6 @@ export default Route.extend(Gui, {
 
   session: service(),
 
-  perPageParam: 'page[size]',
-
-  pageParam: 'page[number]',
-
   totalPagesParam: 'meta.page.last-page',
 
   queryParams: {
@@ -34,17 +30,35 @@ export default Route.extend(Gui, {
   },
 
   renderTemplate() {
-    this.render('feeds/feed/articles', {
+    this.render('index/feeds/feed/articles', {
       into: 'application',
       outlet: 'column-one'
     });
   },
 
   model(params) {
-
     const feed = this.modelFor('index.feeds.feed');
-    let filter = {};
 
+    let options = {
+      perPage: 15,
+      pageParam: 'page[number]',
+      perPageParam: 'page[size]',
+      totalPagesParam: 'meta.page.last-page',
+      sort: '-updated-date'
+    };
+    delete params.sort;
+    options['filter'] = {};
+
+    Object.keys(this.get('queryParams')).forEach(queryParam => {
+      if (params[queryParam]) {
+        let param = queryParam.dasherize();
+        options['filter'][param] = params[queryParam];
+      }
+    });
+
+
+
+    let filter = {};
     if (feed.get('id') === 'archived') {
       filter['keep'] = true;
     } else {
@@ -55,20 +69,17 @@ export default Route.extend(Gui, {
       filter['read'] = false;
     }
 
-    delete params.filterUnread;
-
-    params['sort'] = '-updated-date';
     params['filter'] = filter;
     params['fields'] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
 
-    return this.infinity.model('article', params, {});
+    return this.infinity.model('article', options);
   },
 
   setupController(controller, model) {
     this._super(controller, model);
 
-    controller.set('feed', this.modelFor('feeds.feed'));
-    controller.set('articleRoute', 'feeds.feed.articles.article');
+    controller.set('feed', this.modelFor('index.feeds.feed'));
+    controller.set('articleRoute', 'index.feeds.feed.articles.article');
 
   },
   /**

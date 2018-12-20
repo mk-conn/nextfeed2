@@ -67,7 +67,7 @@ class DefaultAuthorizer extends AbstractAuthorizer
      */
     public function read($record, $request)
     {
-        $this->can('read', $record, $request);
+        $this->can('view', $record, $request);
     }
 
     /**

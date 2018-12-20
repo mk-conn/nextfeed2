@@ -2,7 +2,6 @@ import Route from '@ember/routing/route';
 import { get, set } from '@ember/object';
 import Gui from 'frontend/mixins/gui';
 
-
 export default Route.extend(Gui, {
   displayIn: '#column-two',
 
@@ -27,7 +26,7 @@ export default Route.extend(Gui, {
    */
   afterModel(model) {
 
-    const feed = this.modelFor('feeds.feed');
+    const feed = this.modelFor('index.feeds.feed');
     if (feed.id !== 'archived') {
       feed.decrementUnread();
     }
@@ -38,7 +37,7 @@ export default Route.extend(Gui, {
   },
 
   renderTemplate() {
-    this.render('feeds/feed/articles/article', {
+    this.render('index/feeds/feed/articles/article', {
       into: 'application',
       outlet: 'column-two'
     })
