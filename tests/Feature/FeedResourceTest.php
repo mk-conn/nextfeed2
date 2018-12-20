@@ -163,18 +163,11 @@ class FeedResourceTest extends ApiRequest
         $feed = $this->createFeed($this->user);
         $articles = $this->createArticle($feed, [], 10);
         $newerArticles = $this->createArticle($feed, [], 2);
-        $lastId = $articles->max('id');
-        $query = [
-            'action' => 'read',
-            'params' => [
-                'feed_id'         => $feed->id,
-                'last_article_id' => $lastId
-            ]
-        ];
-        $q = http_build_query($query);
 
-        $this->getJsonApi($this->apiUrl . '/feed-actions?' . $q)
-             ->assertSuccessful()
+        $lastId = $articles->max('id');
+
+        $this->postJson($this->rootUrl . '/api/actions/feeds/' . $feed->id . '/read/' . $lastId)
+             ->assertStatus(Response::HTTP_OK)
              ->decodeResponseJson();
 
         $articles = Article::whereFeedId($feed->id)

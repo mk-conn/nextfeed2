@@ -3,11 +3,15 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\Models\ArticleAction;
 use App\Models\Feed;
+use App\Models\FeedAction;
 use App\Models\Folder;
 use App\Models\Setting;
 use App\Models\User;
+use App\Policies\ArticleActionPolicy;
 use App\Policies\ArticlePolicy;
+use App\Policies\FeedActionPolicy;
 use App\Policies\FeedPolicy;
 use App\Policies\FolderPolicy;
 use App\Policies\SettingPolicy;
@@ -23,11 +27,13 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Article::class => ArticlePolicy::class,
-        Feed::class    => FeedPolicy::class,
-        Folder::class  => FolderPolicy::class,
-        Setting::class => SettingPolicy::class,
-        User::class    => UserPolicy::class,
+        Article::class       => ArticlePolicy::class,
+        Feed::class          => FeedPolicy::class,
+        Folder::class        => FolderPolicy::class,
+        Setting::class       => SettingPolicy::class,
+        User::class          => UserPolicy::class,
+        FeedAction::class    => FeedActionPolicy::class,
+        ArticleAction::class => ArticleActionPolicy::class,
     ];
 
     /**

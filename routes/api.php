@@ -14,19 +14,6 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 |
 */
 
-Route::group(
-    [
-        'middleware' => 'api',
-        'prefix'     => 'auth'
-    ],
-    function ($router) {
-        Route::post('login', 'AuthController@login');
-        Route::post('logout', 'AuthController@logout');
-        Route::post('refresh', 'AuthController@refresh');
-        Route::get('me', 'AuthController@me');
-    }
-);
-
 Route::group(['prefix' => 'api'], function () {
 //
 //    Route::get('auth-user', 'AuthenticateController@getAuthUser');
@@ -42,6 +29,9 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('feeds/discover/{url}', 'FeedsController@discover')
          ->middleware('api.auth');
 });
+
+Route::post('api/actions/feeds/{id}/read/{lastId}', 'Api\ActionsController@markFeedRead')
+     ->middleware('auth:api');
 
 JsonApi::register(
     'v1',

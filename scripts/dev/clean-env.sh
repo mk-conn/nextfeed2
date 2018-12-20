@@ -16,4 +16,5 @@ ${PHP} ${ARTISAN} view:clear
 ${PHP} ${ARTISAN} cache:clear
 ${PHP} ${ARTISAN} migrate
 
-composer run-script post-autoload-dump
+composer dump-autoload -o
+#composer run-script post-autoload-dump

@@ -2,10 +2,10 @@
 
 namespace App\JsonApi\Users;
 
+use App\JsonApi\DefaultValidator;
 use CloudCreativity\JsonApi\Contracts\Validators\RelationshipsValidatorInterface;
-use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
 
-class Validators extends AbstractValidatorProvider
+class Validators extends DefaultValidator
 {
 
     /**
@@ -18,6 +18,7 @@ class Validators extends AbstractValidatorProvider
      *
      * @param object|null $record
      *      the record being updated, or null if it is a create request.
+     *
      * @return array
      */
     protected function attributeRules($record = null)
@@ -31,8 +32,9 @@ class Validators extends AbstractValidatorProvider
      * Define the validation rules for the resource relationships.
      *
      * @param RelationshipsValidatorInterface $relationships
-     * @param object|null $record
+     * @param object|null                     $record
      *      the record being updated, or null if it is a create request.
+     *
      * @return void
      */
     protected function relationshipRules(RelationshipsValidatorInterface $relationships, $record = null)

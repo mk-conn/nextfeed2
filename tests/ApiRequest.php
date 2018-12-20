@@ -27,6 +27,8 @@ class ApiRequest extends TestCase
      */
     public $apiUrl;
 
+    public $rootUrl = 'http://localhost';
+
     /**
      * @var string
      */
@@ -40,7 +42,7 @@ class ApiRequest extends TestCase
         parent::setUp();
 
         $namespace = config('json-api-v1.url.namespace');
-        $this->baseUrl = 'http://localhost' . $namespace;
+        $this->baseUrl = $this->rootUrl . $namespace;
         $this->apiUrl = $this->baseUrl;
 
         if (defined('static::RESOURCE_TYPE')) {
