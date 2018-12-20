@@ -59,8 +59,8 @@ class ArticlesFetch extends Command
 
         $feeds->each(function (Feed $feed) {
             $this->info('Updating ' . $feed->name);
-            $feed->fetchNewArticles();
-            $this->info('Updated ' . $feed->name);
+            $saved = $feed->fetchNewArticles();
+            $this->info('Updated ' . $feed->name . ' - ' . $saved . ' new/updated articles');
         });
     }
 }

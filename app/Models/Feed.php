@@ -4,12 +4,13 @@ namespace App\Models;
 
 
 use App\BaseModel;
-use App\Providers\FeedServiceProvider;
+use App\Readers\FeedReader;
 use App\Traits\Model\HasOrder;
 use Carbon\Carbon;
 use DOMXPath;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Feed\AbstractFeed;
+use Zend\Feed\Reader\Feed\FeedInterface;
 use Zend\Http\Client;
 
 /**
@@ -74,6 +75,7 @@ class Feed extends BaseModel
      * @var bool
      */
     protected static $baseObserver = false;
+
     /**
      * @var array
      */
@@ -130,7 +132,7 @@ class Feed extends BaseModel
                                         ->getAttribute('href');
                 }
                 if (!empty($icons)) {
-                    $this->icon = $this->site_url . $icons[ 0 ];
+                    $this->icon = rtrim($this->site_url, "\t\n\r\0\x0B/") . $icons[ 0 ];
 
                     return true;
                 }
@@ -167,39 +169,35 @@ class Feed extends BaseModel
     {
         $lastEtag = $this->etag;
         $lastModified = $this->last_modified;
-        /** @var AbstractFeed $feed */
-        $feed = app()->make(
-            FeedServiceProvider::FEED_READER,
-            ['uri' => $this->feed_url, 'etag' => $lastEtag, 'last_modfied' => $lastModified]
-        );
+        $saved = 0;
+        /** @var FeedReader $feedReader */
+        $feedReader = app()->make(FeedReader::class);
+        $feed = $feedReader->read([
+            FeedReader::URI           => $this->feed_url,
+            FeedReader::ETAG          => $lastEtag,
+            FeedReader::LAST_MODIFIED => $lastModified
+        ]);
 
-        $this->detectEtagAndLastModified($feed);
-        $this->storeArticles($feed);
+        if ($feed) {
+            $saved = $this->storeArticles($feed);
+        }
+        $this->etag = $feedReader->getEtag($this->feed_url);
+        $this->last_modified = $feedReader->getLastModified($this->feed_url);
 
         $this->save();
+
+        return $saved;
     }
 
     /**
-     * @param AbstractFeed $feed
+     * @param FeedInterface $feed
+     *
+     * @return int
      */
-    public function detectEtagAndLastModified(AbstractFeed $feed)
-    {
-        $receivedLastModified = $feed->getDateModified();
-        /** @var  $httpClient */
-        $httpClient = resolve(FeedServiceProvider::FEED_READER_HTTP_CLIENT);
-        /** @var Client $client */
-        if ($etag = $httpClient->getDecoratedClient() !== false) {
-            $this->etag = $etag;
-        }
-        $this->last_modified = $receivedLastModified;
-    }
-
-    /**
-     * @param AbstractFeed $feed
-     */
-    public function storeArticles(AbstractFeed $feed)
+    public function storeArticles(FeedInterface $feed)
     {
         $user = $this->user;
+        $count = 0;
         /** @var EntryInterface $entry */
         foreach ($feed as $entry) {
             /** @var Article $article */
@@ -219,7 +217,10 @@ class Feed extends BaseModel
             $article->user()
                     ->associate($user);
             $article->save();
+            $count++;
         }
+
+        return $count;
     }
 
     public function createFromChannel(AbstractFeed $feed)

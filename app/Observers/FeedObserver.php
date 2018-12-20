@@ -11,7 +11,7 @@ namespace App\Observers;
 
 use App\Helpers\ParsedFeed;
 use App\Models\Feed;
-use App\Providers\FeedServiceProvider;
+use App\Readers\FeedReader;
 use Illuminate\Database\Eloquent\Model;
 use Zend\Feed\Reader\Feed\AbstractFeed;
 use Zend\Feed\Reader\Reader;
@@ -45,11 +45,12 @@ class FeedObserver extends BaseObserver
     {
         /** @var Feed $model */
         /** @var  AbstractFeed $feed */
-        $feed = app()->make(FeedServiceProvider::FEED_READER, ['uri' => $model->feed_url]);
-        app()->instance('Adding_Channel', $feed);
+        /** @var FeedReader $feedReader */
+        $feedReader = app()->make(FeedReader::class);
+        $feed = $feedReader->read(['uri' => $model->feed_url]);
 
         $model->createFromChannel($feed);
-        $model->detectEtagAndLastModified($feed);
+        $model->detectEtagAndLastModified($feed, $feedReader->getHttpClient());
 
         if (!$model->icon) {
             $model->fetchIcon();

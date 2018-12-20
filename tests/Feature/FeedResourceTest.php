@@ -110,9 +110,10 @@ class FeedResourceTest extends ApiRequest
      */
     public function testIndex()
     {
+        $this->mockFeedReader();
         $this->withUser();
-        $mock_function = [$this, 'mockFeedReader'];
-        $this->createFeed($this->user, null, [], 5, $mock_function);
+//        $mock_function = [$this, 'mockFeedReader'];
+        $this->createFeed($this->user, null, [], 5);
 
         $response = $this->getJsonApi('api/v1/feeds')
                          ->assertStatus(Response::HTTP_OK)

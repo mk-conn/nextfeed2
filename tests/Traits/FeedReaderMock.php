@@ -9,6 +9,7 @@
 namespace Tests\Traits;
 
 
+use App\Providers\FeedServiceProvider;
 use Zend\Feed\Reader\Reader;
 use Zend\Http\Client;
 
@@ -24,13 +25,17 @@ trait FeedReaderMock
      * @var
      */
     protected $feedReaderMock;
+    protected $httpClientMock;
 
     public function createApplication()
     {
         $app = parent::createApplication();
 
         $this->feedReaderMock = \Mockery::mock(Reader::class);
-        $app->instance('Feed', $this->feedReaderMock);
+        $this->httpClientMock = \Mockery::mock(Client::class);
+
+        $app->instance(FeedServiceProvider::FEED_READER, $this->feedReaderMock);
+        $app->instance(FeedServiceProvider::FEED_READER_HTTP_CLIENT, $this->httpClientMock);
 
         return $app;
     }
@@ -49,6 +54,7 @@ trait FeedReaderMock
      */
     protected function mockFeedReader(bool $discover = true)
     {
+
         $clientMock = \Mockery::mock(Client::class);
         $clientMock->shouldReceive('get')
                    ->andReturn('<xml></xml>');
@@ -62,7 +68,6 @@ trait FeedReaderMock
 
 //        $parserMock = \Mockery::mock(Parser::class);
 //        $parsedFeedMock = \Mockery::mock(Feed::class);
-
 
 
 //        if ($discover) {

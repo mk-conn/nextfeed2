@@ -9,10 +9,9 @@
 namespace App\Providers;
 
 
-use Carbon\Carbon;
+use App\Readers\FeedReader;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Zend\Feed\Reader\Reader;
 
 /**
  * Class FeedServiceProvider
@@ -41,16 +40,8 @@ class FeedServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(self::FEED_READER, function (Application $app, $params = []) {
-            $params = array_merge(['uri' => null, 'etag' => null, 'last_modified' => null], $params);
-
-            if ($params[ 'last_modified' ] instanceof Carbon) {
-                $params[ 'last_modified' ] = $params[ 'last_modified ' ]->format(Carbon::ISO8601);
-            }
-            $httpClient = Reader::getHttpClient();
-            $app->instance(self::FEED_READER_HTTP_CLIENT, $httpClient);
-
-            return Reader::import($params[ 'uri' ], $params[ 'etag' ], $params[ 'last_modified' ]);
+        $this->app->bind(FeedReader::class, function (Application $app, $params = []) {
+            return new FeedReader();
         });
     }
 
