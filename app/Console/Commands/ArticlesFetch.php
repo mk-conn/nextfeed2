@@ -20,14 +20,14 @@ class ArticlesFetch extends Command
     protected $signature = 'articles:fetch
         {--id=* : ID of feed to update [defaults to all]}
     ';
-
+    
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Update articles of a feed (or all)';
-
+    
     /**
      * Create a new command instance.
      *
@@ -36,7 +36,7 @@ class ArticlesFetch extends Command
     {
         parent::__construct();
     }
-
+    
     /**
      * Execute the console command.
      *
@@ -45,22 +45,20 @@ class ArticlesFetch extends Command
     public function handle()
     {
         $this->info('Updating feeds...');
-        $feeds = collect([]);
         $id = $this->option('id');
-
-        if (!$id) {
-            $feeds = Feed::all();
+        
+        if ($id) {
+            $feeds = Feed::whereIn('id', [$id])
+                         ->get();
         } else {
-            $feed = Feed::find($id);
-            if ($feed) {
-                $feeds->push($feed);
-            }
+            $feeds = Feed::all();
         }
-
-        $feeds->each(function (Feed $feed) {
-            $this->info('Updating ' . $feed->name);
-            $saved = $feed->fetchNewArticles();
-            $this->info('Updated ' . $feed->name . ' - ' . $saved . ' new/updated articles');
-        });
+        
+        $feeds->each(
+            function (Feed $feed) {
+                $this->info('Updating ' . $feed->name);
+                $saved = $feed->fetchNewArticles();
+                $this->info('Updated ' . $feed->name . ' - ' . $saved . ' new/updated articles');
+            });
     }
 }

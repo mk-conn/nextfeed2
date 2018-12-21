@@ -66,7 +66,7 @@ use Zend\Http\Client;
 class Feed extends BaseModel
 {
     use HasOrder;
-
+    
     /**
      *
      */
@@ -79,14 +79,18 @@ class Feed extends BaseModel
      * @var FeedInterface
      */
     protected $feedInterface = null;
-
+    
     /**
      * @var array
      */
     protected $casts = [
         'settings' => 'array'
     ];
-
+    /**
+     * @var array
+     */
+    protected $fetchErrors = [];
+    
     /**
      * @param $feedInterface
      *
@@ -95,10 +99,10 @@ class Feed extends BaseModel
     public function attachFeedInterface(FeedInterface $feedInterface)
     {
         $this->feedInterface = $feedInterface;
-
+        
         return $this;
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -106,7 +110,7 @@ class Feed extends BaseModel
     {
         return $this->belongsTo(User::class);
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -114,7 +118,7 @@ class Feed extends BaseModel
     {
         return $this->belongsTo(Folder::class);
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -122,7 +126,7 @@ class Feed extends BaseModel
     {
         return $this->hasMany(Article::class);
     }
-
+    
     /**
      * @return bool
      */
@@ -134,22 +138,23 @@ class Feed extends BaseModel
         $client = new Client();
         $response = $client->send($request);
         $body = $response->getBody();
-
+        
         if (!empty($body)) {
-
+            
             try {
                 $dom = new \DOMDocument();
                 libxml_use_internal_errors(true);
                 $dom->loadHtml($body);
                 $xpath = new DOMXpath($dom);
-                $elements = $xpath->query('//link[@rel="icon" or @rel="shortcut icon" or @rel="Shortcut Icon" or @rel="icon shortcut"]');
+                $elements = $xpath->query(
+                    '//link[@rel="icon" or @rel="shortcut icon" or @rel="Shortcut Icon" or @rel="icon shortcut"]');
                 for ($i = 0; $i < $elements->length; ++$i) {
                     $icons[] = $elements->item($i)
                                         ->getAttribute('href');
                 }
                 if (!empty($icons)) {
-                    $this->icon = rtrim($this->site_url, "\t\n\r\0\x0B/") . $icons[ 0 ];
-
+                    $this->icon = rtrim($this->site_url, "\t\n\r\0\x0B/") . $icons[0];
+                    
                     return true;
                 }
             } catch (\Exception $e) {
@@ -157,7 +162,7 @@ class Feed extends BaseModel
             }
         }
     }
-
+    
     /**
      * @param $lastArticleId
      *
@@ -167,17 +172,17 @@ class Feed extends BaseModel
     {
         // get last articles updated-at, than, set all that are before or equal this date to 'read: true' so new
         // unread will not be set to read:true - makes sense?
-
+        
         $lastArticle = Article::find($lastArticleId);
         $updatedDate = $lastArticle->updated_at;
-
+        
         return Article::where('feed_id', $this->id)
                       ->where('read', false)
                       ->where('id', '<=', $lastArticleId)
 //                      ->orderBy('udpated-date', 'desc')
                       ->update(['read' => true]);
     }
-
+    
     /**
      *
      */
@@ -188,23 +193,31 @@ class Feed extends BaseModel
         $saved = 0;
         /** @var FeedReader $feedReader */
         $feedReader = app()->make(FeedReader::class);
-        $feed = $feedReader->read([
-            FeedReader::URI           => $this->feed_url,
-            FeedReader::ETAG          => $lastEtag,
-            FeedReader::LAST_MODIFIED => $lastModified
-        ]);
-
+        $feed = $feedReader->read(
+            [
+                FeedReader::URI           => $this->feed_url,
+                FeedReader::ETAG          => $lastEtag,
+                FeedReader::LAST_MODIFIED => $lastModified
+            ]);
+        
         if ($feed) {
             $saved = $this->storeArticles($feed);
         }
         $this->etag = $feedReader->getEtag($this->feed_url);
         $this->last_modified = $feedReader->getLastModified($this->feed_url);
-
+        
+        if (!empty($this->fetchErrors)) {
+            $this->update_error = implode("\n\n", $this->fetchErrors);
+            $this->fetchErrors = [];
+        } else {
+            $this->update_error = null;
+        }
+        
         $this->save();
-
+        
         return $saved;
     }
-
+    
     /**
      * @param FeedInterface $feed
      *
@@ -226,19 +239,23 @@ class Feed extends BaseModel
                     continue;
                 }
             }
-            $article->createFromFeedEntry($entry);
-
-            $article->feed()
-                    ->associate($this);
-            $article->user()
-                    ->associate($user);
-            $article->save();
-            $count++;
+            
+            try {
+                $article->createFromFeedEntry($entry);
+                $article->feed()
+                        ->associate($this);
+                $article->user()
+                        ->associate($user);
+                $article->save();
+                $count++;
+            } catch (\Exception $e) {
+                $this->addFetchError($e->getMessage() . "\n" . $e->getTraceAsString());
+            }
         }
-
+        
         return $count;
     }
-
+    
     /**
      * @param AbstractFeed $feed
      */
@@ -252,7 +269,7 @@ class Feed extends BaseModel
         $this->logo = $feed->getImage();
         $this->name = $feed->getTitle();
     }
-
+    
     /**
      *
      * @param int  $days
@@ -268,17 +285,17 @@ class Feed extends BaseModel
                 $days = array_get($settings, 'articles.keep');
             }
         }
-
-        if ((int) $days === 0) {
+        
+        if ((int)$days === 0) {
             // no setting means, to keep em all
             return 0;
         }
-
+        
         $dateFormat = self::dateFormat();
         $maxUpatedDate = Carbon::create()
                                ->subDays($days)
                                ->format($dateFormat);
-
+        
         $articles = Article::where('updated_date', '<', $maxUpatedDate)
                            ->where('feed_id', $this->id)
                            ->where('keep', false);
@@ -286,15 +303,23 @@ class Feed extends BaseModel
             $articles->where('read', true);
         };;
         $count = $articles->delete();
-
+        
         return $count;
     }
-
+    
     /**
      * @return FeedInterface
      */
     public function getFeedInterface()
     {
         return $this->feedInterface;
+    }
+    
+    /**
+     * @param $error
+     */
+    protected function addFetchError($error)
+    {
+        $this->fetchErrors[] = $error;
     }
 }

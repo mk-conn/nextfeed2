@@ -13,9 +13,13 @@ function sortedItems(collection, collectionKey, property) {
 }
 
 export default Route.extend(AuthenticatedRouteMixin, {
-
+  /**
+   * Model
+   * @returns {*}
+   */
   model() {
     this.debug(`route: %s::model()`, this.routeName);
+
     return RSVP.hash({
       feeds: this.get('store').query(
         'feed', {

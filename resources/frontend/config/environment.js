@@ -34,9 +34,7 @@ module.exports = function (environment) {
       tokenPropertyName: 'access_token',
       authorizer: 'authorizer:oauth2',
       applicationRootUrl: '/',
-      authenticationRoute: 'login',
-      routeAfterAuthentification: 'index',
-      routeIfAlreadyAuthenticated: 'feeds'
+      authenticationRoute: 'login'
     },
   };
 
