@@ -9,11 +9,15 @@ export default Controller.extend({
      *
      */
     authenticate() {
-      let {identification, password} = this.getProperties('identification', 'password');
+      let { identification, password } = this.getProperties('identification', 'password');
       this.session.authenticate(
         'authenticator:oauth2',
         identification,
-        password, [], {Authorization: 'Basic ' + window.base64.encode(identification + ':' + password)}).catch((reason) => {
+        password,
+        [],
+        {
+          Authorization: 'Basic ' + window.base64.encode(identification + ':' + password)
+        }).catch((reason) => {
         this.set('errorMessage', reason.error || reason);
       });
     }

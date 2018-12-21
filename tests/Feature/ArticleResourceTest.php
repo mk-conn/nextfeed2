@@ -190,7 +190,8 @@ class ArticleResourceTest extends ApiRequest
         $data = [
             'q' => 'Überschrift'
         ];
-        $response = $this->postJson($this->rootUrl . '/api/actions/articles/search', $data)
+        $query = http_build_query($data);
+        $response = $this->getJson($this->apiUrl . '/search?' . $query)
                          ->assertStatus(200)
                          ->decodeResponseJson();
         $this->assertCount(1, $response);

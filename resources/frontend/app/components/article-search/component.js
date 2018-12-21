@@ -1,11 +1,14 @@
 import Component from '@ember/component';
-import {inject as service} from '@ember/service';
-import {get, set} from '@ember/object';
-import {isBlank} from '@ember/utils';
-import {task, timeout} from 'ember-concurrency';
+import { get, set } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { isBlank, isPresent } from '@ember/utils';
+import { task, timeout } from 'ember-concurrency';
+import $ from 'jquery';
+
+const DEBOUNCE_MS = 700;
 
 export default Component.extend({
-
+  session: service(),
   store: service(),
 
   tagName: 'div',
@@ -25,31 +28,51 @@ export default Component.extend({
   searchArticle: task(function* (term) {
     this.debug(`component: search-articles::searchArticle(%s)`, term);
 
+    const appAdapter = this.get('store').adapterFor('application');
+    const host = appAdapter.getWithDefault('host', null);
+    const namespace = appAdapter.get('namespace');
+    let url = `${ host ? host : '' }/${ namespace }/articles/search`;
+    let data = {
+      q: term
+    };
     if (isBlank(term)) {
       set(this, 'articles', []);
+      return [];
     }
 
-    yield timeout(700);
+    yield timeout(DEBOUNCE_MS);
 
-    return this.get('store').queryRecord('article-action', {
-      action: 'search',
-      params: {q: term}
-    }).then(articleAction => {
-      // this.set('articleSearchResults', articleAction.get('result.articles'));
-      let articles = [];
+    let json = yield this.get('getResults').perform(url, data);
 
-      const articlesResult = articleAction.get('result.articles');
-
-      for (let key in articlesResult) {
-        if (articlesResult.hasOwnProperty(key)) {
-          const article = articlesResult[key];
-          articles.push(article);
-        }
-      }
-      set(this, 'articles', articles);
-      set(this, 'showResults', true);
-    });
+    return json;
   }).restartable(),
+  /**
+   *
+   */
+  getResults: task(function* (url, data) {
+    let xhr;
+    let { access_token } = this.session.data.authenticated;
+    try {
+
+      xhr = $.getJSON({
+        url: url,
+        data: data,
+        headers: {
+          Authorization: `Bearer ${ access_token }`
+        },
+        // beforeSend(xhr) {
+        //   xhr.setRequestHeader('Authorization', `Bearer ${ access_token }`);
+        // }
+      });
+
+      return yield xhr.promise();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.debug('search aborted');
+      xhr.abort();
+    }
+  }),
   /**
    * actions
    */
@@ -62,19 +85,12 @@ export default Component.extend({
       if (article) {
         this.toggleProperty('showInput');
         this.toggleProperty('showResults');
-        this.get('router').transitionTo('feeds.feed.articles.article', article.feed.id, article.id)
+        this.get('router').transitionTo('index.feed.articles.article', article.feed.id, article.id)
       }
     },
     toggleSearch() {
       this.toggleProperty('showInput');
       this.toggleProperty('showResults');
     },
-
-    // showSearch() {
-    //   if (get(this, 'articles')) {
-    //     set(this, 'showResults', true);
-    //   }
-    //   set(this, 'showInput', true);
-    // }
   }
 });
