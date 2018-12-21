@@ -22,9 +22,9 @@ use Tests\Traits\ModelFactoryTrait;
 class ArticleResourceTest extends ApiRequest
 {
     use ModelFactoryTrait, FeedReaderMock;
-
+    
     const RESOURCE_TYPE = 'articles';
-
+    
     /**
      *
      */
@@ -34,34 +34,67 @@ class ArticleResourceTest extends ApiRequest
         $this->withUser();
         $feed = $this->createFeed($this->user);
         $this->createArticle($feed, [], 10);
-
+        
         $response = $this->getJsonApi($this->apiUrl)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
-
-        $this->assertCount(10, $response[ 'data' ]);
+        
+        $this->assertCount(10, $response['data']);
     }
-
+    
     /**
      *
      */
     public function testRead()
     {
-        $this->markTestIncomplete('Not yet implemented');
+        $this->mockFeedReader();
+        $this->withUser();
+        $feed = $this->createFeed($this->user);
+        $article = $this->createArticle($feed);
+        
+        $response = $this->getJsonApi($this->apiUrl . '/' . $article->id)
+                         ->assertStatus(Response::HTTP_OK)
+                         ->decodeResponseJson();
     }
-
+    
+    public function testUpdate()
+    {
+        $this->mockFeedReader();
+        $this->withUser();
+        $feed = $this->createFeed($this->user);
+        $article = $this->createArticle($feed);
+        
+        $update = [
+            'data' => [
+                'type'       => 'articles',
+                'id'         => "{$article->id}",
+                'attributes' => [
+                    'read' => true,
+                    'keep' => true
+                ]
+            ]
+        ];
+        
+        $response = $this->patchJsonApi($this->apiUrl . '/' . $article->id, $update)
+                         ->assertStatus(Response::HTTP_OK)
+                         ->decodeResponseJson();
+        
+    }
+    
+    
     /**
      *
      */
     public function testArchivedArticles()
     {
-
+        
         $this->mockFeedReader();
-        $feed = $this->createFeed();
-
+        $this->withUser();
+        $feed = $this->createFeed($this->user);
+        
         $this->createArticle($feed, [], 4);
         $this->createArticle($feed, ['keep' => true], 6);
-
+        
         // http://localhost:8500/api/v1/articles?fields%5Barticles%5D=title%2Cdescription%2Cauthor%2Ckeep%2Cread%2Curl%2Cupdated-date%2Ccategories&filter%5Bkeep%5D=true&page%5Bsize%5D=10&page%5Bnumber%5D=1&page%5Bsize%5D=25&sort=-updated-date%2C-id
         // filter[keep]=1&fields[article]=title,description,author,keep,read,url,updated-date,categories&page[size]=10&page[number]=1&sort[0]=-updated-date,-id
         $query_data = [
@@ -76,39 +109,41 @@ class ArticleResourceTest extends ApiRequest
                 'number' => 1
             ],
             'sort'   => '-updated-date,-id'
-
+        
         ];
-
+        
         $query = http_build_query($query_data);
-
+        
         $response = $this->getJsonApi('api/v1/articles?' . $query)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
-
-        $this->assertCount(6, $response[ 'data' ]);
+        
+        $this->assertCount(6, $response['data']);
     }
-
+    
     /**
      *
      */
     public function testSearchArticles()
     {
         $this->mockFeedReader();
-        $feed = $this->createFeed();
-
-        $this->createArticle($feed, [
+        $this->withUser();
+        $feed = $this->createFeed($this->user);
+        
+        $this->createArticle(
+            $feed, [
             'title'   => 'Eine Artikel Überschrift',
             'content' => 'Some bloody content godamnit!'
         ]);
         $this->createArticle($feed, [], 10);
-
+        
         $query = ['action' => 'search', 'params' => ['q' => 'Überschrift']];
         $q = http_build_query($query);
         $response = $this->getJson('api/v1/article-actions?' . $q)
                          ->assertStatus(200)
                          ->decodeResponseJson();
         $this->assertCount(1, array_get($response, 'data.attributes.result.articles'));
-
+        
         $query = ['action' => 'search', 'params' => ['q' => 'bloody']];
         $q = http_build_query($query);
         $response = $this->getJson('api/v1/article-actions?' . $q)

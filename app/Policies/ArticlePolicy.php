@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 class ArticlePolicy
 {
     use HandlesAuthorization;
-
+    
     public function index(User $user, Request $request)
     {
         return true;
     }
-
+    
     /**
      * Determine whether the user can view the article.
      *
@@ -26,9 +26,9 @@ class ArticlePolicy
      */
     public function view(User $user, Article $article)
     {
-        //
+        return $user->id === $article->feed->user->id;
     }
-
+    
     /**
      * Determine whether the user can create articles.
      *
@@ -40,7 +40,7 @@ class ArticlePolicy
     {
         //
     }
-
+    
     /**
      * Determine whether the user can update the article.
      *
@@ -51,9 +51,9 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article)
     {
-        //
+        return $user->id === $article->feed->user->id;
     }
-
+    
     /**
      * Determine whether the user can delete the article.
      *
@@ -66,7 +66,7 @@ class ArticlePolicy
     {
         //
     }
-
+    
     /**
      * Determine whether the user can restore the article.
      *
@@ -79,7 +79,7 @@ class ArticlePolicy
     {
         //
     }
-
+    
     /**
      * Determine whether the user can permanently delete the article.
      *
