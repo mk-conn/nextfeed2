@@ -193,7 +193,7 @@ class ArticleResourceTest extends ApiRequest
         $response = $this->postJson($this->rootUrl . '/api/actions/articles/search', $data)
                          ->assertStatus(200)
                          ->decodeResponseJson();
-        $this->assertCount(1, array_get($response, 'data.attributes.result.articles'));
+        $this->assertCount(1, $response);
 
 //        $q = 'bloody';
 //        $response = $this->getJson($this->rootUrl . '/api/actions/articles/search/' . $q)

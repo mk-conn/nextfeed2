@@ -30,12 +30,14 @@ Route::group(['prefix' => 'api'], function () {
          ->middleware('api.auth');
 });
 
-Route::post('api/actions/feeds/{id}/read/{lastId}', 'Api\ActionsController@markFeedRead')
+Route::post('api/actions/feeds/{id}/read/{lastId}', 'Api\FeedsController@read')
      ->middleware('auth:api');
-Route::post('api/actions/articles/search', 'Api\ActionsController@searchArticles')
+Route::get('api/actions/feeds/discover', 'Api\FeedsController@discover')
      ->middleware('auth:api');
-Route::get('api/actions/articles/scrape/{articleId}', 'Api\ActionsController@scrapeArticle')
+Route::post('api/actions/articles/search', 'Api\ArticlesController@search')
      ->middleware('auth:api');
+//Route::get('api/actions/articles/scrape/{articleId}', 'Api\ActionsController@scrapeArticle')
+//     ->middleware('auth:api');
 
 JsonApi::register(
     'v1',

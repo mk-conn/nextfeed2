@@ -55,19 +55,19 @@ use Zend\Feed\Reader\Entry\EntryInterface;
 class Article extends BaseModel
 {
     use Searchable;
-    
+
     /**
      *
      */
     const TABLE = 'articles';
-    
+
     /**
      * @var array
      */
     protected $casts = [
         'categories' => 'array'
     ];
-    
+
     protected $dates = [
         'publish_date', 'updated_date'
     ];
@@ -77,12 +77,12 @@ class Article extends BaseModel
     protected $hidden = [
         'searchable',
     ];
-    
+
     /**
      * @var array
      */
     protected $with = ['feed'];
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -90,7 +90,7 @@ class Article extends BaseModel
     {
         return $this->belongsTo(Feed::class);
     }
-    
+
     /**
      * @param EntryInterface $entry
      */
@@ -100,7 +100,7 @@ class Article extends BaseModel
         $authors = [];
         $entryAuthors = $entry->getAuthors() ?? [];
         foreach ($entryAuthors as $author) {
-            $authors[] = $author['name'];
+            $authors[] = $author[ 'name' ];
         }
         $this->author = implode(', ', $authors);
         $this->content = $entry->getContent();
@@ -111,7 +111,7 @@ class Article extends BaseModel
         $this->categories = $entry->getCategories();
         $this->description = $entry->getDescription();
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -119,7 +119,7 @@ class Article extends BaseModel
     {
         return $this->belongsTo(User::class);
     }
-    
+
     /**
      * @param $value
      *
@@ -129,7 +129,24 @@ class Article extends BaseModel
     {
         return $this->getISODate($value);
     }
-    
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    protected function getISODate($value)
+    {
+        $time = strtotime($value);
+
+        if ($time) {
+            return Carbon::createFromTimestamp($time)
+                         ->format(Carbon::ISO8601);
+        }
+
+        return $value;
+    }
+
     /**
      * @param $value
      *
@@ -139,7 +156,7 @@ class Article extends BaseModel
     {
         return $this->getISODate($value);
     }
-    
+
     /**
      * @return array
      */
@@ -154,7 +171,7 @@ class Article extends BaseModel
             'config'         => 'simple'
         ];
     }
-    
+
     /**
      * @return array
      */
@@ -164,25 +181,7 @@ class Article extends BaseModel
             'title'   => $this->title,
             'content' => $this->content,
             'author'  => $this->author,
-            'feed'    => $this->feed->name,
-            'user_id' => $this->user->id
+            'feed'    => $this->feed->name
         ];
-    }
-    
-    /**
-     * @param $value
-     *
-     * @return string
-     */
-    protected function getISODate($value)
-    {
-        $time = strtotime($value);
-        
-        if ($time) {
-            return Carbon::createFromTimestamp($time)
-                         ->format(Carbon::ISO8601);
-        }
-        
-        return $value;
     }
 }
