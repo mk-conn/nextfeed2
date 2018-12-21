@@ -1,7 +1,6 @@
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-
 export default Route.extend(AuthenticatedRouteMixin, {
 
   init() {
@@ -14,7 +13,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   afterModel() {
-    this.transitionTo('index.feeds');
+    // this.transitionTo('index.feeds');
   },
 
   actions: {

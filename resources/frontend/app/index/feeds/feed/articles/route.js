@@ -1,5 +1,6 @@
-import Route from '@ember/routing/route';
+import { debug } from '@ember/debug';
 import { get, set } from '@ember/object';
+import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import Gui from 'frontend/mixins/gui';
 import $ from 'jquery';
@@ -12,8 +13,6 @@ export default Route.extend(Gui, {
 
   session: service(),
 
-  totalPagesParam: 'meta.page.last-page',
-
   queryParams: {
     sort: {
       refreshModel: true
@@ -24,7 +23,7 @@ export default Route.extend(Gui, {
   },
 
   beforeModel() {
-    $('#article-list-items').animate({scrollTop: 0, duration: 400});
+    $('#article-list-items').animate({ scrollTop: 0, duration: 400 });
 
     this._super(...arguments);
   },
@@ -44,20 +43,9 @@ export default Route.extend(Gui, {
       pageParam: 'page[number]',
       perPageParam: 'page[size]',
       totalPagesParam: 'meta.page.last-page',
-      sort: '-updated-date'
+      sort: '-updated-date',
+      feed: feed.id
     };
-    delete params.sort;
-    options['filter'] = {};
-
-    Object.keys(this.get('queryParams')).forEach(queryParam => {
-      if (params[queryParam]) {
-        let param = queryParam.dasherize();
-        options['filter'][param] = params[queryParam];
-      }
-    });
-
-
-
     let filter = {};
     if (feed.get('id') === 'archived') {
       filter['keep'] = true;
@@ -69,8 +57,8 @@ export default Route.extend(Gui, {
       filter['read'] = false;
     }
 
-    params['filter'] = filter;
-    params['fields'] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
+    options['filter'] = filter;
+    options['fields'] = { article: 'title,description,author,keep,read,url,updated-date,categories' };
 
     return this.infinity.model('article', options);
   },
@@ -101,7 +89,7 @@ export default Route.extend(Gui, {
       this.debug(`route: %s::read(%s)`, this.routeName, article);
       const read = get(article, 'read');
       this.debug(`\tread: %s -> will set to %s`, read, !read);
-      const feed = this.modelFor('feeds.feed');
+      const feed = this.modelFor('index.feeds.feed');
       const decrement = article.toggleProperty('read');
       article.save().then(() => {
         if (feed) {

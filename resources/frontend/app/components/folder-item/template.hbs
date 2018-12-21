@@ -9,8 +9,11 @@
     </span>
   {{/if}}
   {{folder.name}}
-  {{#draggable-object-target overrideClass="folder-droppable" dragOverAction=(action toggleProperty "droppable")
-                             action=(route-action "addFeedToFolder" folder)}}
+  {{#draggable-object-target
+    overrideClass="folder-droppable"
+    dragOverAction=(action toggleProperty "droppable")
+    action=(route-action "addFeedToFolder" folder)
+  }}
     {{#if droppable}}
       <i class="fa fa-hand-o-left"></i>
 

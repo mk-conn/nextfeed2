@@ -42,10 +42,11 @@ class Adapter extends DefaultAdapter
                     ->user();
         $feeds = $user->feeds;
 
-        $query->whereIn('feed_id', $feeds->pluck('id'));
 
         if ($filters->has('feed')) {
             $query->where('feed_id', $filters->get('feed'));
+        } else {
+            $query->whereIn('feed_id', $feeds->pluck('id'));
         }
 
         if ($filters->has('read')) {

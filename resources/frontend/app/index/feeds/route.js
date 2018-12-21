@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import { debug } from '@ember/debug';
 import { computed, get } from '@ember/object';
+import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-
-const {Route, RSVP} = Ember;
+import RSVP from 'rsvp';
 
 function sortedItems(collection, collectionKey, property) {
-  return computed(`${collectionKey}.@each.${property}`, {
+  return computed(`${ collectionKey }.@each.${ property }`, {
     get() {
       return collection.sortBy(property);
     }
@@ -29,15 +29,20 @@ export default Route.extend(AuthenticatedRouteMixin, {
         })
     });
   },
-
+  /**
+   *
+   */
   renderTemplate() {
     this.render('index.feeds', {
       into: 'application',
       outlet: 'side-bar'
     })
   },
-
-
+  /**
+   *
+   * @param controller
+   * @param model
+   */
   setupController(controller, model) {
 
     controller.set('folders', model.folders);
@@ -75,8 +80,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
       feed.save().then(() => {
         this.refresh();
       });
-
-
     },
     /**
      *
