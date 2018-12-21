@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 export default Route.extend({
 
   renderTemplate() {
-    this.render('index/feeds/feed/articles/index', {
+    this.render('index/feed/articles/index', {
       into: 'application',
       outlet: 'column-two'
     })
@@ -12,7 +12,7 @@ export default Route.extend({
   setupController(controller, model) {
     this._super(controller, model);
 
-    controller.set('feed', this.modelFor('index.feeds.feed'));
+    controller.set('feed', this.modelFor('index'));
   },
 
   actions: {

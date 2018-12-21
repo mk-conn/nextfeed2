@@ -13,12 +13,6 @@ class FolderPolicy
 
     public function index(User $user, $request)
     {
-//        $filter = $request->get('filter');
-//
-//        if (isset($filter[ 'user' ])) {
-//            return false;
-//        }
-
         return true;
     }
 

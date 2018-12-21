@@ -26,7 +26,7 @@ export default Route.extend(Gui, {
    */
   afterModel(model) {
 
-    const feed = this.modelFor('index.feeds.feed');
+    const feed = this.modelFor('index.feed');
     if (feed.id !== 'archived') {
       feed.decrementUnread();
     }
@@ -37,7 +37,7 @@ export default Route.extend(Gui, {
   },
 
   renderTemplate() {
-    this.render('index/feeds/feed/articles/article', {
+    this.render('index/feed/articles/article', {
       into: 'application',
       outlet: 'column-two'
     })

@@ -29,14 +29,14 @@ export default Route.extend(Gui, {
   },
 
   renderTemplate() {
-    this.render('index/feeds/feed/articles', {
+    this.render('index/feed/articles', {
       into: 'application',
       outlet: 'column-one'
     });
   },
 
   model(params) {
-    const feed = this.modelFor('index.feeds.feed');
+    const feed = this.modelFor('index.feed');
 
     let options = {
       perPage: 15,
@@ -66,8 +66,8 @@ export default Route.extend(Gui, {
   setupController(controller, model) {
     this._super(controller, model);
 
-    controller.set('feed', this.modelFor('index.feeds.feed'));
-    controller.set('articleRoute', 'index.feeds.feed.articles.article');
+    controller.set('feed', this.modelFor('index'));
+    controller.set('articleRoute', 'index.feed.articles.article');
 
   },
   /**
@@ -89,7 +89,7 @@ export default Route.extend(Gui, {
       this.debug(`route: %s::read(%s)`, this.routeName, article);
       const read = get(article, 'read');
       this.debug(`\tread: %s -> will set to %s`, read, !read);
-      const feed = this.modelFor('index.feeds.feed');
+      const feed = this.modelFor('index.feed');
       const decrement = article.toggleProperty('read');
       article.save().then(() => {
         if (feed) {

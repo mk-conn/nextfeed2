@@ -4,7 +4,9 @@ namespace App\Providers;
 
 
 use App\Models\Feed;
+use App\Models\Folder;
 use App\Observers\FeedObserver;
+use App\Observers\FolderObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -14,11 +16,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
-        ],
-    ];
+    protected $listen = [];
 
     /**
      * Register any events for your application.
@@ -30,5 +28,6 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         Feed::observe(FeedObserver::class);
+        Folder::observe(FolderObserver::class);
     }
 }

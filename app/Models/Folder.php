@@ -39,7 +39,13 @@ class Folder extends BaseModel
      *
      */
     const TABLE = 'folders';
-
+    /**
+     * @var bool
+     */
+    protected static $baseObserver = false;
+    protected $attributes = [
+        'open' => false
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

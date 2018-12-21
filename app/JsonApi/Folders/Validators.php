@@ -4,10 +4,13 @@ namespace App\JsonApi\Folders;
 
 
 use App\JsonApi\DefaultValidator;
-use CloudCreativity\JsonApi\Contracts\Validators\RelationshipsValidatorInterface;
 
 class Validators extends DefaultValidator
 {
+    /**
+     * @var string
+     */
+    protected $resourceType = 'folders';
 
     protected $allowedIncludePaths = [
         'feeds'
@@ -19,11 +22,6 @@ class Validators extends DefaultValidator
         'order',
         'name'
     ];
-
-    /**
-     * @var string
-     */
-    protected $resourceType = 'folders';
 
 
 }

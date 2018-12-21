@@ -10,7 +10,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   renderTemplate() {
-    this.render('feeds/folders/add', {
+    this.render('index/folders/add', {
       into: 'application',
       outlet: 'column-two'
     })

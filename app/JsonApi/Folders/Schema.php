@@ -34,28 +34,26 @@ class Schema extends DefaultSchema
     {
         $included = [];
 
-        if (isset($includeRelationships[ 'feeds' ])) {
-            $included[ 'feeds' ] = [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-                self::SHOW_DATA    => true,
-                self::DATA         => function () use ($resource) {
-                    return $resource->feeds;
-                }
-            ];
-        }
 
-        return array_merge($included, [
-                'user' => [
-                    self::SHOW_SELF    => true,
-                    self::SHOW_RELATED => true,
-                    self::SHOW_DATA    => true,
-                    self::DATA         => function () use ($resource) {
-                        return $resource->user;
-                    }
-                ]
-            ]
-        );
+        $included[ 'feeds' ] = [
+            self::SHOW_SELF    => true,
+            self::SHOW_RELATED => true,
+            self::SHOW_DATA    => isset($includeRelationships[ 'feeds' ]),
+            self::DATA         => function () use ($resource) {
+                return $resource->feeds;
+            }
+        ];
+
+        $included[ 'user' ] = [
+            self::SHOW_SELF    => true,
+            self::SHOW_RELATED => true,
+            self::SHOW_DATA    => true,
+            self::DATA         => function () use ($resource) {
+                return $resource->user;
+            }
+        ];
+
+        return $included;
     }
 }
 

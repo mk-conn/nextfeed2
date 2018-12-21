@@ -27,14 +27,6 @@ class FolderResourceTest extends ApiRequest
     /**
      *
      */
-    public function setUp()
-    {
-        parent::setup();
-    }
-
-    /**
-     *
-     */
     public function testIndex()
     {
         $this->withUser();
@@ -88,4 +80,25 @@ class FolderResourceTest extends ApiRequest
 
         $this->assertEquals('News', array_get($response, 'data.attributes.name'));
     }
+
+    public function testCreate()
+    {
+        $this->withUser();
+        $create = [
+            'data' => [
+                'type'       => 'folders',
+                'attributes' => [
+                    'name' => 'Siri, create me a folder'
+                ]
+            ]
+        ];
+
+        $response = $this->postJsonApi($this->apiUrl, $create)
+                         ->assertStatus(Response::HTTP_CREATED)
+                         ->decodeResponseJson();
+
+        $this->assertFalse(array_get($response, 'data.attributes.open'));
+    }
+
+
 }

@@ -15,7 +15,6 @@ use App\Readers\FeedReader;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Zend\Feed\Reader\Feed\AbstractFeed;
-use Zend\Feed\Reader\Reader;
 
 /**
  * Class FeedObserver
@@ -24,23 +23,11 @@ use Zend\Feed\Reader\Reader;
  */
 class FeedObserver extends BaseObserver
 {
-    /**
-     * @var Reader
-     */
-    protected $feedReader;
-
-    /**
-     * @var
-     */
-    protected $articles;
 
     /**
      * @param Model $model
      *
-     * @return mixed
-     * @throws \PicoFeed\Parser\MalformedXmlException
-     * @throws \PicoFeed\Reader\SubscriptionNotFoundException
-     * @throws \PicoFeed\Reader\UnsupportedFeedFormatException
+     * @return Model
      */
     public function creating(Model $model)
     {

@@ -3,7 +3,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
   renderTemplate() {
-    this.render('index/feeds/index', {
+    this.render('index/index', {
       into: 'application',
       outlet: 'column-one'
     })
