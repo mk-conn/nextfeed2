@@ -37,7 +37,8 @@ class FolderResourceTest extends ApiRequest
      */
     public function testIndex()
     {
-        $this->createFolder(null, [], 10);
+        $this->withUser();
+        $this->createFolder($this->user, [], 10);
 
         $response = $this->getJsonApi($this->apiUrl)
                          ->assertStatus(Response::HTTP_OK)
@@ -50,6 +51,7 @@ class FolderResourceTest extends ApiRequest
      */
     public function testIndexFilterByUser()
     {
+        $this->withUser();
         $this->createFolder($this->user, [], 5);
 
         $response = $this->getJsonApi($this->apiUrl)
@@ -64,11 +66,12 @@ class FolderResourceTest extends ApiRequest
      */
     public function testIndexWithFilterForbiddenForUser()
     {
+        $this->withUser();
         $user = $this->createUser(['username' => 'anthony']);
         $this->createFolder($user, [], 5);
 
         $this->getJsonApi($this->apiUrl . '?filter[user]=anthony')
-             ->assertStatus(Response::HTTP_FORBIDDEN);
+             ->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
     /**
@@ -76,13 +79,13 @@ class FolderResourceTest extends ApiRequest
      */
     public function testRead()
     {
-        $folder = $this->createFolder(null, ['name' => 'News']);
+        $this->withUser();
+        $folder = $this->createFolder($this->user, ['name' => 'News']);
 
-        $response = $this->getJsonApi($this->apiUrl . $folder->id)
+        $response = $this->getJsonApi($this->apiUrl . '/' . $folder->id)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
 
         $this->assertEquals('News', array_get($response, 'data.attributes.name'));
     }
-
 }

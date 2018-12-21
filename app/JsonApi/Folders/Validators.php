@@ -13,6 +13,8 @@ class Validators extends DefaultValidator
         'feeds'
     ];
 
+    protected $allowedFilteringParameters = [];
+
     protected $allowedSortParameters = [
         'order',
         'name'
