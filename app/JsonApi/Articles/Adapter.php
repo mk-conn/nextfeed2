@@ -20,6 +20,10 @@ class Adapter extends DefaultAdapter
      * Model
      */
     const MODEL = Article::class;
+    /**
+     * @var array
+     */
+    protected $fillable = ['keep', 'read'];
 
     /**
      * @return \CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo
@@ -37,17 +41,13 @@ class Adapter extends DefaultAdapter
      */
     protected function filter($query, Collection $filters)
     {
-
         $user = Auth::guard('api')
                     ->user();
-        $feeds = $user->feeds;
-
 
         if ($filters->has('feed')) {
             $query->where('feed_id', $filters->get('feed'));
-        } else {
-            $query->whereIn('feed_id', $feeds->pluck('id'));
         }
+        $query->where('user_id', $user->id);
 
         if ($filters->has('read')) {
             $query->where('read', $filters->get('read'));

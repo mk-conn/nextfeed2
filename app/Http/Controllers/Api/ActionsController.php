@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Feed;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class ActionsController extends Controller
@@ -31,5 +31,23 @@ class ActionsController extends Controller
         ];
 
         return response()->json($result);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function searchArticles(Request $request)
+    {
+        $userId = $request->user()->id;
+        $q = $request->get('q');
+
+        $results = Article::search($q)
+                          ->where('user_id', $userId)
+                          ->get();
+
+        return response()->json($results);
     }
 }
