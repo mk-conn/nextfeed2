@@ -55,19 +55,19 @@ use Zend\Feed\Reader\Entry\EntryInterface;
 class Article extends BaseModel
 {
     use Searchable;
-
+    
     /**
      *
      */
     const TABLE = 'articles';
-
+    
     /**
      * @var array
      */
     protected $casts = [
         'categories' => 'array'
     ];
-
+    
     protected $dates = [
         'publish_date', 'updated_date'
     ];
@@ -77,12 +77,12 @@ class Article extends BaseModel
     protected $hidden = [
         'searchable',
     ];
-
+    
     /**
      * @var array
      */
     protected $with = ['feed'];
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -90,7 +90,7 @@ class Article extends BaseModel
     {
         return $this->belongsTo(Feed::class);
     }
-
+    
     /**
      * @param EntryInterface $entry
      */
@@ -100,18 +100,18 @@ class Article extends BaseModel
         $authors = [];
         $entryAuthors = $entry->getAuthors() ?? [];
         foreach ($entryAuthors as $author) {
-            $authors[] = $author[ 'name' ];
+            $authors[] = $author['name'];
         }
         $this->author = implode(', ', $authors);
         $this->content = $entry->getContent();
         $this->guid = $entry->getId();
         $this->url = $entry->getPermalink();
-        $this->publish_date = $entry->getDateCreated();
-        $this->updated_date = $entry->getDateModified();
+        $this->publish_date = $entry->getDateCreated() ?? date($this->getDateFormat());
+        $this->updated_date = $entry->getDateModified() ?? date($this->getDateFormat());
         $this->categories = $entry->getCategories();
         $this->description = $entry->getDescription();
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -119,7 +119,7 @@ class Article extends BaseModel
     {
         return $this->belongsTo(User::class);
     }
-
+    
     /**
      * @param $value
      *
@@ -129,24 +129,7 @@ class Article extends BaseModel
     {
         return $this->getISODate($value);
     }
-
-    /**
-     * @param $value
-     *
-     * @return string
-     */
-    protected function getISODate($value)
-    {
-        $time = strtotime($value);
-
-        if ($time) {
-            return Carbon::createFromTimestamp($time)
-                         ->format(Carbon::ISO8601);
-        }
-
-        return $value;
-    }
-
+    
     /**
      * @param $value
      *
@@ -156,7 +139,7 @@ class Article extends BaseModel
     {
         return $this->getISODate($value);
     }
-
+    
     /**
      * @return array
      */
@@ -171,7 +154,7 @@ class Article extends BaseModel
             'config'         => 'simple'
         ];
     }
-
+    
     /**
      * @return array
      */
@@ -183,5 +166,22 @@ class Article extends BaseModel
             'author'  => $this->author,
             'feed'    => $this->feed->name
         ];
+    }
+    
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    protected function getISODate($value)
+    {
+        $time = strtotime($value);
+        
+        if ($time) {
+            return Carbon::createFromTimestamp($time)
+                         ->format(Carbon::ISO8601);
+        }
+        
+        return $value;
     }
 }

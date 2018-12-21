@@ -207,3 +207,5 @@ typings/
 
 /public/frontend
 
+/.phpstorm.meta.php
+/_ide_helper.php

@@ -29,9 +29,8 @@ export default Component.extend({
     this.debug(`component: search-articles::searchArticle(%s)`, term);
 
     const appAdapter = this.get('store').adapterFor('application');
-    const host = appAdapter.getWithDefault('host', null);
-    const namespace = appAdapter.get('namespace');
-    let url = `${ host ? host : '' }/${ namespace }/articles/search`;
+    const urlPrefix = appAdapter.getUrlPrefix();
+    let url = `${urlPrefix}/articles/search`;
     let data = {
       q: term
     };
@@ -51,18 +50,15 @@ export default Component.extend({
    */
   getResults: task(function* (url, data) {
     let xhr;
-    let { access_token } = this.session.data.authenticated;
+    let {access_token} = this.session.data.authenticated;
     try {
 
       xhr = $.getJSON({
         url: url,
         data: data,
         headers: {
-          Authorization: `Bearer ${ access_token }`
+          Authorization: `Bearer ${access_token}`
         },
-        // beforeSend(xhr) {
-        //   xhr.setRequestHeader('Authorization', `Bearer ${ access_token }`);
-        // }
       });
 
       return yield xhr.promise();

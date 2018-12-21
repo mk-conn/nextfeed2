@@ -4,6 +4,22 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import Gui from 'frontend/mixins/gui';
 import $ from 'jquery';
+import { task } from 'ember-concurrency';
+import InfinityModel from 'ember-infinity/lib/infinity-model';
+
+const meta = {
+  lastArticleId: null
+};
+
+const ExtendedInfinityModel = InfinityModel.extend({
+  /**
+   *
+   * @param articles
+   */
+  afterInfinityModel(articles) {
+    meta.lastArticleId = articles.get('firstObject.id');
+  }
+});
 
 export default Route.extend(Gui, {
   infinity: service(),
@@ -23,7 +39,7 @@ export default Route.extend(Gui, {
   },
 
   beforeModel() {
-    $('#article-list-items').animate({ scrollTop: 0, duration: 400 });
+    $('#article-list-items').animate({scrollTop: 0, duration: 400});
 
     this._super(...arguments);
   },
@@ -58,9 +74,9 @@ export default Route.extend(Gui, {
     }
 
     options['filter'] = filter;
-    options['fields'] = { article: 'title,description,author,keep,read,url,updated-date,categories' };
+    options['fields'] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
 
-    return this.infinity.model('article', options);
+    return this.infinity.model('article', options, ExtendedInfinityModel);
   },
 
   setupController(controller, model) {
@@ -70,15 +86,29 @@ export default Route.extend(Gui, {
     controller.set('articleRoute', 'index.feed.articles.article');
 
   },
-  /**
-   *
-   * @param articles
-   */
-  afterInfinityModel(articles) {
-    const latestArticleId = articles.get('firstObject.id');
 
-    this.set('lastId', latestArticleId);
-  },
+  /**
+   * Mark all articles known until now (thats why the lastArticleId) as read
+   */
+  markAllRead: task(function* (feedId, lastArticleId) {
+    this.store.adapterFor('application');
+    const appAdapter = this.get('store').adapterFor('application');
+    const urlPrefix = appAdapter.getUrlPrefix();
+    let {access_token} = this.session.data.authenticated;
+    let url = `/${urlPrefix}/feeds/${feedId}/mark-read/${lastArticleId}`;
+    let xhr;
+    try {
+      xhr = $.getJSON({
+        url: url,
+        headers: {
+          Authorization: `Bearer ${access_token}`
+        },
+      });
+      return yield xhr.promise();
+    } finally {
+      xhr.abort();
+    }
+  }),
 
   actions: {
     /**
@@ -103,7 +133,7 @@ export default Route.extend(Gui, {
     },
 
     openArticle(article) {
-      this.transitionTo('feeds.feed.articles.article', get(article, 'id'));
+      this.transitionTo('index.feed.articles.article', get(article, 'id'));
     },
 
     /**
@@ -118,27 +148,14 @@ export default Route.extend(Gui, {
      *
      * @param feed
      */
-    readAll(feed) {
+    markAllRead() {
       this.debug(`route %s::readAll() `, this.routeName);
-
-      this.store.queryRecord('feed-action', {
-        action: 'read',
-        params: {
-          feed_id: get(feed, 'id'),
-          last_article_id: get(this, 'lastId')
-        }
-      }).then(feedAction => {
-        let result = get(feedAction, 'result.success');
-
-        if (result) {
-          let currentUnreadCount = get(feed, 'meta.articles-unread-count');
-          set(feed, 'unreadCount', (currentUnreadCount - result));
-          this.refresh();
-        }
-      }, error => {
-        console.log('error:', error);
+      const feed = this.modelFor('index.feed');
+      this.get('markAllRead').perform(feed.id, meta.lastArticleId).then((result) => {
+        let currentUnreadCount = get(feed, 'meta.articles-unread-count');
+        set(feed, 'unreadCount', (currentUnreadCount - result));
+        this.refresh();
       });
     }
   }
-})
-;
+});

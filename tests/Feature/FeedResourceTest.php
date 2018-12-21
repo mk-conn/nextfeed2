@@ -180,7 +180,7 @@ class FeedResourceTest extends ApiRequest
 
         $lastId = $articles->max('id');
 
-        $this->postJson($this->apiUrl . '/' . $feed->id . '/read/' . $lastId)
+        $this->getJson($this->apiUrl . '/' . $feed->id . '/mark-read/' . $lastId)
              ->assertStatus(Response::HTTP_OK)
              ->decodeResponseJson();
 
