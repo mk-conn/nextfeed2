@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Feed;
+use App\Readers\FeedReader;
 use Illuminate\Http\Request;
-use Zend\Feed\Reader\Reader;
 
 class FeedsController extends Controller
 {
@@ -24,29 +24,29 @@ class FeedsController extends Controller
         /** @var Feed $feed */
         $feed = Feed::findOrFail($feedId);
         $this->authorize('update', $feed, $request);
-
+        
         $success = $feed->read($lastArticleId);
         $result = [
             'success' => $success
         ];
-
+        
         return response()->json($result);
     }
-
+    
     /**
-     * @param $url
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function discover($url)
+    public function discover(Request $request)
     {
-        $rssFeed = null;
-        $feedLinks = Reader::findFeedLinks($url);
-        $result = [];
-        foreach ($feedLinks as $link) {
-            $result[] = $link[ 'href' ];
-        }
-
-        return response()->json($result);
+        $this->authorize('create', [Feed::class, $request]);
+        $url = $request->get('url');
+        $feedReader = app()->make(FeedReader::class);
+        
+        $feedLinks = $feedReader->discover($url);
+        
+        return response()->json(['links' => $feedLinks->getArrayCopy()]);
     }
 }

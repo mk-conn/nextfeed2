@@ -58,7 +58,7 @@ export default Component.extend({
         data: data,
         headers: {
           Authorization: `Bearer ${access_token}`
-        },
+        }
       });
 
       return yield xhr.promise();

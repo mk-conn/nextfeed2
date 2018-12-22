@@ -1,0 +1,24 @@
+<div class="form-group">
+  <label for="url">Url</label>
+  {{input type="text" class="form-control" value=url}}
+</div>
+<button class="btn btn-outline-secondary" type="button" onclick={{perform discover}}>
+  Discover
+  {{#if discover.isRunning}}
+    <i class="fa fa-circle-o-notch fa-spinn fa-fw"></i>
+  {{/if}}
+</button>
+
+{{#if result}}
+  <div class="mt-3">
+    {{#each result.links as |link|}}
+      <div class="list-group">
+        <div class="list-group-item">
+          <div>{{link.title}}</div>
+          <div>{{link.href}}</div>
+          <div>{{link.type}}</div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+{{/if}}

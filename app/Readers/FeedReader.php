@@ -23,9 +23,9 @@ class FeedReader
      * @var ZendHttpClientDecorator
      */
     protected $httpClient;
-
+    
     protected $meta = [];
-
+    
     /**
      * Self implemented since zend_feed's reader only works with etag and last modified when zenc_cache is enabled,
      * which is to much of requirments here
@@ -44,38 +44,38 @@ class FeedReader
             ],
             $params
         );
-
+        
         if ($params[ self::LAST_MODIFIED ] instanceof Carbon) {
             $params[ self::LAST_MODIFIED ] = $params[ self::LAST_MODIFIED ]->format(Carbon::ISO8601);
         }
         $this->httpClient = Reader::getHttpClient();
         $headers = [];
         if ($params[ self::ETAG ]) {
-            $headers[ 'If-None-Match' ] = [$params[ self::ETAG ]];
+            $headers['If-None-Match'] = [$params[ self::ETAG ]];
         }
         if ($params[ self::LAST_MODIFIED ]) {
-            $headers[ 'If-Modified-Since' ] = [$params[ self::LAST_MODIFIED ]];
+            $headers['If-Modified-Since'] = [$params[ self::LAST_MODIFIED ]];
         }
-
+        
         $response = $this->httpClient->get($params[ self::URI ], $headers);
         if ($response->getStatusCode() !== Response::HTTP_NOT_MODIFIED) {
             $body = $response->getBody();
             if ($body) {
                 $reader = Reader::importString($body);
                 $reader->setOriginalSourceUri($params[ self::URI ]);
-
+                
                 return $reader;
             }
         }
-
+        
         $etag = $response->getHeaderLine('ETag');
         $lastModified = $response->getHeaderLine('last-modified');
         $this->meta[ $params[ self::URI ] ][ self::LAST_MODIFIED ] = $lastModified;
         $this->meta[ $params[ self::URI ] ][ self::ETAG ] = $etag;
-
+        
         return null;
     }
-
+    
     /**
      * @return Client
      */
@@ -83,7 +83,7 @@ class FeedReader
     {
         return $this->httpClient->getDecoratedClient();
     }
-
+    
     /**
      * @param $uri
      *
@@ -95,7 +95,7 @@ class FeedReader
             return $this->meta[ $uri ][ self::LAST_MODIFIED ];
         }
     }
-
+    
     /**
      * @param $uri
      *
@@ -106,5 +106,10 @@ class FeedReader
         if (isset($this->meta[ $uri ][ self::ETAG ])) {
             return $this->meta[ $uri ][ self::ETAG ];
         }
+    }
+    
+    public function discover($url)
+    {
+        return Reader::findFeedLinks($url);
     }
 }

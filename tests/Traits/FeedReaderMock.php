@@ -19,13 +19,13 @@ use Zend\Feed\Reader\Feed\AbstractFeed;
  */
 trait FeedReaderMock
 {
-
+    
     /**
      * @var
      */
     protected $feedReaderMock;
     protected $httpClientMock;
-
+    
     /**
      *
      */
@@ -33,6 +33,7 @@ trait FeedReaderMock
     {
         $abstractFeedMock = \Mockery::mock(AbstractFeed::class);
         $feedReaderMock = \Mockery::mock(FeedReader::class);
+        
         $feedReaderMock->shouldReceive('read')
                        ->andReturn($abstractFeedMock);
         $feedReaderMock->shouldReceive('getEtag')
@@ -41,9 +42,10 @@ trait FeedReaderMock
                        ->andReturn(null);
         $abstractFeedMock->shouldIgnoreMissing();
         $abstractFeedMock->shouldReceive('getId')
-                         ->andReturnUsing(function () {
-                             return str_random(52);
-                         });
+                         ->andReturnUsing(
+                             function () {
+                                 return str_random(52);
+                             });
         $abstractFeedMock->shouldReceive('getTitle')
                          ->andReturn('Feed Title');
         $abstractFeedMock->shouldReceive('getDescription')
@@ -58,7 +60,12 @@ trait FeedReaderMock
                          ->andReturn('http://example.com/logo.png');
         $abstractFeedMock->shouldReceive('getIcon')
                          ->andReturn('http://example.com/favicon.ico');
-        app()->bind(FeedReader::class, function () use ($feedReaderMock) {
+        
+        $feedReaderMock->shouldReceive('discover')
+                       ->andReturn([new \ArrayObject(), new \ArrayObject(), new \ArrayObject()]);
+        
+        app()->bind(
+            FeedReader::class, function () use ($feedReaderMock) {
             return $feedReaderMock;
         });
     }

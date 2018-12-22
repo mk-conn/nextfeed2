@@ -6,16 +6,17 @@ use App\Models\Feed;
 use App\Models\Folder;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Http\Request;
 
 class FeedPolicy
 {
     use HandlesAuthorization;
-
+    
     public function index(User $user, $request)
     {
         return $user->id === $request->user()->id;
     }
-
+    
     /**
      * Determine whether the user can view the feed.
      *
@@ -28,7 +29,7 @@ class FeedPolicy
     {
         return ($user->id === $feed->user->id);
     }
-
+    
     /**
      * Determine whether the user can create feeds.
      *
@@ -36,26 +37,26 @@ class FeedPolicy
      *
      * @return mixed
      */
-    public function create(User $user, $request)
+    public function create(User $user, Request $request)
     {
         $feedOk = true;
         $folderOk = true;
         $feedUserId = array_get($request->get('data'), 'relationships.user.data.id');
         $folderId = array_get($request->get('data'), 'relationships.folder.data.id');
-
+        
         if ($feedUserId) {
             $feedOk = $user->id === $feedUserId;
         }
-
+        
         if ($folderId) {
             $folder = Folder::find($folderId);
             $folderUserId = $folder->user->id;
             $folderOk = $user->id === $folderUserId;
         }
-
+        
         return ($feedOk && $folderOk);
     }
-
+    
     /**
      * Determine whether the user can update the feed.
      *
@@ -68,7 +69,7 @@ class FeedPolicy
     {
         return ($user->id === $feed->user->id);
     }
-
+    
     /**
      * Determine whether the user can delete the feed.
      *
@@ -81,7 +82,7 @@ class FeedPolicy
     {
         return ($user->id === $feed->user->id);
     }
-
+    
     /**
      * Determine whether the user can restore the feed.
      *
@@ -94,7 +95,7 @@ class FeedPolicy
     {
         //
     }
-
+    
     /**
      * Determine whether the user can permanently delete the feed.
      *
