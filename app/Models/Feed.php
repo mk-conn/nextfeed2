@@ -23,7 +23,6 @@ use Zend\Http\Client;
  * @property int|null                                                            $folder_id
  * @property int                                                                 $user_id
  * @property string|null                                                         $description
- * @property string                                                              $url
  * @property string                                                              $feed_url
  * @property string                                                              $site_url
  * @property string|null                                                         $icon
@@ -267,15 +266,15 @@ class Feed extends BaseModel
         $this->feed_url = $feed->getFeedLink();
         $this->language = $feed->getLanguage();
         $this->logo = $feed->getImage();
-        $this->name = $feed->getTitle();
+        $this->name = trim($feed->getTitle());
     }
     
     /**
-     *
      * @param int  $days
      * @param bool $force
      *
-     * @return int
+     * @return bool|int|null
+     * @throws \Exception
      */
     public function cleanup(int $days = 0, $force = false)
     {

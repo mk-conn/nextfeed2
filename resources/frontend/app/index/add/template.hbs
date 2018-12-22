@@ -6,15 +6,21 @@
     placeholder="Folder"
     classNames="form-control"
     options=model.folders
-    selected=feed.folder
-    onchange=(action (mut feed.folder)) as |folder|}}
+    selected=model.feed.folder
+    onchange=(action (mut model.feed.folder)) as |folder|}}
     {{folder.name}}
   {{/power-select}}
 </div>
 
 <div class="mb-3">
   {{discover-feed
-    feed=model
+    feed=model.feed
     onSelect=(route-action "subscribe")
   }}
 </div>
+
+{{#if model.feed.feedUrl}}
+  <button class="btn btn-primary" onclick={{action (route-action "subscribe")}}>
+    Subscribe
+  </button>
+{{/if}}

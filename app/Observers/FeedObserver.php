@@ -54,7 +54,6 @@ class FeedObserver extends BaseObserver
                   ->associate($user);
         }
 
-
         return parent::creating($model);
     }
 
@@ -65,7 +64,6 @@ class FeedObserver extends BaseObserver
      */
     public function created(Model $model)
     {
-
         /** @var Feed $model */
         $model->storeArticles($model->getFeedInterface());
 

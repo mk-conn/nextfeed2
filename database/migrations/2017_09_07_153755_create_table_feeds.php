@@ -16,7 +16,8 @@ class CreateTableFeeds extends Migration
      */
     public function up()
     {
-        Schema::create(Feed::TABLE, function (Blueprint $table) {
+        Schema::create(
+            Feed::TABLE, function (Blueprint $table) {
             $table->increments('id');
             $table->string('guid');
             $table->string('name');
@@ -25,7 +26,6 @@ class CreateTableFeeds extends Migration
             $table->integer('user_id');
             $table->string('description')
                   ->nullable();
-            $table->string('url');
             $table->string('feed_url');
             $table->string('site_url');
             $table->string('icon')
@@ -47,21 +47,21 @@ class CreateTableFeeds extends Migration
             $table->string('update_error')
                   ->nullable();
             $table->timestamps();
-
+            
             $table->foreign('user_id')
                   ->references('id')
                   ->on(User::TABLE)
                   ->onDelete('cascade');
-
+            
             $table->foreign('folder_id')
                   ->references('id')
                   ->on(Folder::TABLE)
                   ->onDelete('cascade');
-
+            
             $table->unique(['guid', 'user_id']);
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

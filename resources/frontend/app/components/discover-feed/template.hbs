@@ -1,6 +1,20 @@
 <div class="form-group">
   <label for="url">Url</label>
-  {{input type="text" class="form-control" value=url}}
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <!--suppress HtmlFormInputWithoutLabel -->
+      <select name="protocol" class="custom-select" onchange={{action "setProtocol"}}>
+        {{#each protocols as |protocol idx|}}
+          {{#if (eq idx selectedProtocol)}}
+            <option value={{idx}} selected>{{protocol}}</option>
+          {{else}}
+            <option value={{idx}}>{{protocol}}</option>
+          {{/if}}
+        {{/each}}
+      </select>
+    </div>
+    {{input type="text" enter=(perform discover) class="form-control" value=url}}
+  </div>
 </div>
 <button class="btn btn-outline-secondary" type="button" onclick={{perform discover}}>
   Discover
@@ -13,12 +27,25 @@
   <div class="mt-3">
     {{#each result.links as |link|}}
       <div class="list-group">
-        <div class="list-group-item">
+        <div class="list-group-item list-group-item-action action" {{action "selectLink" link}}>
           <div>{{link.title}}</div>
           <div>{{link.href}}</div>
           <div>{{link.type}}</div>
+          {{#if (eq feed.feedUrl link.href)}}
+            <i class="fa fa-check"></i>
+          {{/if}}
         </div>
       </div>
+    {{else}}
+      <div class="alert alert-warning">No feed urls could be found...</div>
+    {{/each}}
+  </div>
+{{/if}}
+
+{{#if errors}}
+  <div class="alert alert-danger">
+    {{#each errors as |error|}}
+      <p>{{error.message}}</p>
     {{/each}}
   </div>
 {{/if}}

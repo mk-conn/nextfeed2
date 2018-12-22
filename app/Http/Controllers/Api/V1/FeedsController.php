@@ -43,6 +43,11 @@ class FeedsController extends Controller
     {
         $this->authorize('create', [Feed::class, $request]);
         $url = $request->get('url');
+        
+        $request->validate([
+           'url' => 'required|url'
+        ]);
+        
         $feedReader = app()->make(FeedReader::class);
         
         $feedLinks = $feedReader->discover($url);
