@@ -1,8 +1,16 @@
 <div class="btn-group">
-  {{#link-to "index.add" tagName="button" classNames="btn btn-secondary"}}
-    Add Feed
+  {{#link-to
+    "index.add"
+    tagName="button"
+    classNames="btn btn-secondary"
+    title="Add feed"
+  }}
+    <i class="fa fa-plus"></i>
+    <i class="fa fa-feed"></i>
   {{/link-to}}
-  <a href="#" class="btn btn-secondary">Fetch Articles</a>
+  <a href="#" class="btn btn-secondary" title="Fetch new articles">
+    <i class="fa fa-download"></i>
+  </a>
 </div>
 
 <div class="align-self-center justify-self-center">

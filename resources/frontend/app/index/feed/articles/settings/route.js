@@ -5,11 +5,11 @@ const {Route, getOwner} = Ember;
 export default Route.extend({
 
   model() {
-    return this.modelFor('feeds.feed');
+    return this.modelFor('index.feed');
   },
 
   renderTemplate() {
-    this.render('feeds/feed/articles/settings', {
+    this.render('index/feed/articles/settings', {
       into: 'application',
       outlet: 'column-two'
     })
