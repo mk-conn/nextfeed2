@@ -82,7 +82,7 @@ export default Route.extend(Gui, {
   setupController(controller, model) {
     this._super(controller, model);
 
-    controller.set('feed', this.modelFor('index'));
+    controller.set('feed', this.modelFor('index.feed'));
     controller.set('articleRoute', 'index.feed.articles.article');
 
   },
