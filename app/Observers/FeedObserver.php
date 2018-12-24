@@ -14,6 +14,8 @@ use App\Models\Feed;
 use App\Readers\FeedReader;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Neomerx\JsonApi\Document\Error;
+use Neomerx\JsonApi\Exceptions\JsonApiException;
 use Zend\Feed\Reader\Feed\AbstractFeed;
 
 /**
@@ -23,7 +25,7 @@ use Zend\Feed\Reader\Feed\AbstractFeed;
  */
 class FeedObserver extends BaseObserver
 {
-
+    
     /**
      * @param Model $model
      *
@@ -31,14 +33,17 @@ class FeedObserver extends BaseObserver
      */
     public function creating(Model $model)
     {
-
-
         /** @var Feed $model */
         /** @var  AbstractFeed $feedInterface */
         /** @var FeedReader $feedReader */
         $feedReader = app()->make(FeedReader::class);
-        $feedInterface = $feedReader->read(['uri' => $model->feed_url]);
-
+        try {
+            $feedInterface = $feedReader->read(['uri' => $model->feed_url]);
+        } catch (\Exception $e) {
+            $error = new Error(null, null, null, null, 'Feed creation failed', $e->getMessage());
+            throw new JsonApiException($error);
+        }
+        
         $model->createFromChannel($feedInterface);
         $model->etag = $feedReader->getEtag($model->feed_url);
         $model->last_modified = $feedReader->getLastModified($model->feed_url);
@@ -46,17 +51,17 @@ class FeedObserver extends BaseObserver
         if (!$model->icon) {
             $model->fetchIcon();
         }
-
+        
         if (!$model->user) {
             $user = Auth::guard('api')
                         ->user();
             $model->user()
                   ->associate($user);
         }
-
+        
         return parent::creating($model);
     }
-
+    
     /**
      * @param Model $model
      *
@@ -66,8 +71,8 @@ class FeedObserver extends BaseObserver
     {
         /** @var Feed $model */
         $model->storeArticles($model->getFeedInterface());
-
+        
         return parent::created($model);
     }
-
+    
 }

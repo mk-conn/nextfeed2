@@ -1,15 +1,22 @@
 <h2>Feed Settings</h2>
 
 <fieldset>
-  <div class="row">
-    <div class="form-group col-8">
-      <label for="name">Name</label>
-      {{input type="text" id="name" value=model.name class="form-control"}}
-    </div>
+  <div class="form-group">
+    <label for="name">Name</label>
+    {{input type="text" id="name" value=model.name class="form-control"}}
+  </div>
 
+  <div class="row">
     <div class="form-group col">
       <label for="cleanup-days">Keep articles (days)</label>
       {{input value=model.feedSettings.articles.keep class="form-control" type="number"  }}
+    </div>
+    <div class="form-group col">
+      <div class="custom-control custom-switch">
+        {{input type="checkbox" classNames="custom-control-input" id="keep-unread" checked=false}}
+        <label for="keep-unread" class="custom-control-label">Keep unread during cleanup</label>
+
+      </div>
     </div>
   </div>
   <button type="button" class="btn btn-secondary" {{action (route-action "updateFeed")}} disabled={{model.isSaving}}>

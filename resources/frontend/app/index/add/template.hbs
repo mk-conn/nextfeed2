@@ -1,22 +1,31 @@
 <h2>Add a feed</h2>
 
 <div class="form-group">
-  <label for="">Create in folder (optional)</label>
-  {{#power-select
-    placeholder="Folder"
-    classNames="form-control"
-    options=model.folders
-    selected=model.feed.folder
-    onchange=(action (mut model.feed.folder)) as |folder|}}
-    {{folder.name}}
-  {{/power-select}}
+  <label for="feed-folder-select">Create in folder (optional)</label>
+  <select name="folder" id="feed-folder-select" class="custom-select" onchange={{action (route-action "setFolder" )}}>
+    <option value={{null}}></option>
+    {{#each model.folders as |folder|}}
+      <option value={{folder}}>{{folder.name}}</option>
+    {{/each}}
+  </select>
+</div>
+<div>
+  Folder selected:{{model.feed.folder.name}}
 </div>
 
 <div class="mb-3">
+  <div>
+    Discover feed urls from a web site and select the feed-url
+  </div>
   {{discover-feed
     feed=model.feed
     onSelect=(route-action "subscribe")
   }}
+</div>
+
+<div class="mb-3">
+  <label for="feed-url">Feed Url</label>
+  {{input type="text" value=model.feed.feedUrl classNames="form-control" id="feed-url"}}
 </div>
 
 {{#if model.feed.feedUrl}}

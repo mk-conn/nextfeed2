@@ -6,7 +6,7 @@ import { get } from '@ember/object';
 export default Route.extend(ApplicationRouteMixin, {
   currentUser: service(),
 
-  session: service('session'),
+  session: service(),
 
   beforeModel() {
     return this._loadCurrentUser();

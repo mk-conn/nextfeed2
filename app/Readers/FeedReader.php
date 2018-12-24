@@ -110,6 +110,8 @@ class FeedReader
     
     public function discover($url)
     {
+        $this->httpClient = Reader::getHttpClient();
+        
         return Reader::findFeedLinks($url);
     }
 }

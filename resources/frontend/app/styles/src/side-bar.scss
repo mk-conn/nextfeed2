@@ -1,13 +1,14 @@
 #side-bar {
 
   $list-group-action-color: #ccc;
+  background: lighten($color1, 2%);
 
   .sidebar-item {
-    padding-left:1em;
+    //padding-left:1em;
 
     &.search {
-      margin-top:1em;
-      padding-right:1em;
+      margin-top: 1em;
+      //padding-right:1em;
     }
 
   }
@@ -16,7 +17,7 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    background: inherit;
+    background: $color1;
   }
 
   .list-group-item {
@@ -25,14 +26,19 @@
     background: inherit;
   }
 
+  .folder-list {
+    border-radius:$border-radius;
+  }
+
   .folder-item {
     font-weight: bold;
+    margin-top: 1rem;
 
     .folder {
       color: #eee;
       padding: 1em;
-
     }
+
     .feeds {
       background: darken($color1, 4%);
     }

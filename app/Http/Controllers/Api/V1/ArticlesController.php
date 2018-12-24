@@ -19,7 +19,7 @@ class ArticlesController extends Controller
      */
     public function search(Request $request)
     {
-        $this->authorize('index', Article::class, [$request]);
+        $this->authorize('index', [Article::class, $request]);
         $userId = $request->user()->id;
         $q = $request->get('q');
         

@@ -1,45 +1,46 @@
-<header>
-  <div class="top nav left">
-
-    <a class="navbar-brand" href="/" target="_self">Nextfeed</a>
-
-    {{#link-to "index" classNames="nav-link" activeClass="active"}}
-      Feeds
-    {{/link-to}}
-
-    {{article-search}}
-
-    {{outlet "top-bar-left"}}
+<div class="container-fluid">
+  <header>
+    <div class="top nav left">
+      <a class="navbar-brand" href="/" target="_self">Nextfeed</a>
+      {{#if session.isAuthenticated}}
+        {{article-search}}
+      {{/if}}
+      {{outlet "top-bar-left"}}
+    </div>
+    {{#if session.isAuthenticated}}
+      {{#link-to "index" classNames="nav-link" activeClass="active"}}
+        Feeds
+      {{/link-to}}
+      <div class="top nav right">
+        <a class="nav-link" href="#" {{action (route-action "updateAllFeeds")}}>
+          <i class="fa fa-refresh"></i>
+        </a>
+        {{#link-to "index.settings" classNames="nav-link"}}
+          <i class="fa fa-cogs"></i>
+        {{/link-to}}
+        <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
+          <fa class="fa fa-sign-out"></fa>
+        </a>
+        <div class="nav-link">{{currentUser.user.fullname}}</div>
+        {{outlet "top-bar-right"}}
+      </div>
+    {{/if}}
+  </header>
+  <div id="content" class="col-12">
+    {{outlet}}
   </div>
+  <div class="row">
 
-  <div class="top nav right">
-    <a class="nav-link" href="#" {{action (route-action "updateAllFeeds")}}>
-      <i class="fa fa-refresh"></i>
-    </a>
-    {{#link-to "index.settings" classNames="nav-link"}}
-      <i class="fa fa-cogs"></i>
-    {{/link-to}}
-    <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
-      <fa class="fa fa-sign-out"></fa>
-    </a>
-    <div class="nav-link">{{currentUser.user.fullname}}</div>
-    {{outlet "top-bar-right"}}
+    {{#side-bar id="side-bar" classNames="col-sm-3 col-12"}}
+      {{outlet "side-bar"}}
+    {{/side-bar}}
+
+    {{#grid-column id="column-one" classNames="col-sm-4 col-12"}}
+      {{outlet "column-one"}}
+    {{/grid-column}}
+
+    {{#scrollable-container id="column-two" classNames="col-sm-5 col-12"}}
+      {{outlet "column-two"}}
+    {{/scrollable-container}}
   </div>
-
-</header>
-
-<div id="content">
-  {{outlet}}
 </div>
-
-{{#side-bar id="side-bar"}}
-  {{outlet "side-bar"}}
-{{/side-bar}}
-
-{{#grid-column id="column-one"}}
-  {{outlet "column-one"}}
-{{/grid-column}}
-
-{{#scrollable-container id="column-two"}}
-  {{outlet "column-two"}}
-{{/scrollable-container}}

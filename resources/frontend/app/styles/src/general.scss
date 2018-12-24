@@ -11,103 +11,104 @@ body {
   padding: 0;
   height: 100vh;
   width: 100vw;
-  color: lighten($color1, 15%);
+  //color: lighten($color1, 15%);
+
   // mobile //
 
-  > div.ember-view {
-    display: block;
-    background: #ccc;
-
-    #side-bar {
-      background: $color1;
-      display: none;
-      z-index: 1;
-
-      &.enabled {
-        display: block;
-      }
-    }
-    #column-one, #column-two {
-      display: none;
-
-      &.enabled {
-        display: flex;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-    }
-
-    #column-one {
-      z-index: 2;
-      background: #fff;
-    }
-
-    #column-two {
-      background: #fff;
-      z-index: 3;
-
-    }
-  }
-
-  // bigger -> grid
-  @include media-breakpoint-up(md) {
-
-    .mobi-close {
-      display: none;
-    }
-
-    > div.ember-view {
-      width: inherit;
-      height: inherit;
-      display: grid;
-      grid-template-areas: "header header header" "side-bar column-one column-two";
-      grid-template-rows: $header-height 1fr;
-      grid-template-columns: 17em .40fr .60fr;
-
-      header {
-        height: $header-height;
-        background: darken($color1, 5%);
-        grid-area: header;
-      }
-
-      #side-bar {
-        position: relative;
-        max-height: inherit;
-        font-size: .85rem;
-        grid-area: side-bar;
-        @include overflow-scroll();
-      }
-
-      #column-one {
-        position: relative !important;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        background: lighten($color2, 60%);
-        font-size: .85rem;
-        grid-area: column-one;
-        @include overflow-scroll();
-      }
-
-      #column-two {
-        max-height: inherit;
-        position: relative !important;
-        display: flex;
-        flex-direction: column;
-        padding: .5em;
-        border-left: 1px solid #ccc;
-        background: lighten($color2, 60%);
-        grid-area: column-two;
-        @include overflow-scroll();
-
-        .article-placeholder {
-          align-self: center;
-        }
-      }
-
-    }
-  }
+  //> div.ember-view {
+  //  display: block;
+  //  background: #ccc;
+  //
+  //  #side-bar {
+  //    background: $color1;
+  //    display: none;
+  //    z-index: 1;
+  //
+  //    &.enabled {
+  //      display: block;
+  //    }
+  //  }
+  //  #column-one, #column-two {
+  //    display: none;
+  //
+  //    &.enabled {
+  //      display: flex;
+  //      position: absolute;
+  //      top: 0;
+  //      left: 0;
+  //    }
+  //  }
+  //
+  //  #column-one {
+  //    z-index: 2;
+  //    background: #fff;
+  //  }
+  //
+  //  #column-two {
+  //    background: #fff;
+  //    z-index: 3;
+  //
+  //  }
+  //}
+  //
+  //// bigger -> grid
+  //@include media-breakpoint-up(md) {
+  //
+  //  .mobi-close {
+  //    display: none;
+  //  }
+  //
+  //  > div.ember-view {
+  //    width: inherit;
+  //    height: inherit;
+  //    display: grid;
+  //    grid-template-areas: "header header header" "side-bar column-one column-two";
+  //    grid-template-rows: $header-height 1fr;
+  //    grid-template-columns: 17em .40fr .60fr;
+  //
+  //    header {
+  //      height: $header-height;
+  //      background: darken($color1, 5%);
+  //      grid-area: header;
+  //    }
+  //
+  //    #side-bar {
+  //      position: relative;
+  //      max-height: inherit;
+  //      font-size: .85rem;
+  //      grid-area: side-bar;
+  //      @include overflow-scroll();
+  //    }
+  //
+  //    #column-one {
+  //      position: relative !important;
+  //      display: flex;
+  //      flex-direction: column;
+  //      justify-content: flex-start;
+  //      background: lighten($color2, 60%);
+  //      font-size: .85rem;
+  //      grid-area: column-one;
+  //      @include overflow-scroll();
+  //    }
+  //
+  //    #column-two {
+  //      max-height: inherit;
+  //      position: relative !important;
+  //      display: flex;
+  //      flex-direction: column;
+  //      padding: .5em;
+  //      border-left: 1px solid #ccc;
+  //      background: lighten($color2, 60%);
+  //      grid-area: column-two;
+  //      @include overflow-scroll();
+  //
+  //      .article-placeholder {
+  //        align-self: center;
+  //      }
+  //    }
+  //
+  //  }
+  //}
 }
 
 blockquote {
@@ -175,4 +176,8 @@ fieldset {
 
 .folder-droppable {
   display:inline-block;
+}
+
+.custom-select {
+  background:none;
 }

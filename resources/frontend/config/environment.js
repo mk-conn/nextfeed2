@@ -19,7 +19,7 @@ module.exports = function (environment) {
     },
 
     changeTracker: {
-      trackHasMany: false,
+      trackHasMany: true,
       auto: true,
       enableIsDirty: true
     },

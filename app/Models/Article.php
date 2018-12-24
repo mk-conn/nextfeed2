@@ -6,6 +6,7 @@ namespace App\Models;
 use App\BaseModel;
 use Carbon\Carbon;
 use Laravel\Scout\Searchable;
+use OwenIt\Auditing\Audit;
 use Zend\Feed\Reader\Entry\EntryInterface;
 
 /**
@@ -54,7 +55,7 @@ use Zend\Feed\Reader\Entry\EntryInterface;
  */
 class Article extends BaseModel
 {
-    use Searchable;
+    use Searchable, Audit;
     
     /**
      *

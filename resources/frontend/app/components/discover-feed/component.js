@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
+import { isPresent } from '@ember/utils';
 import $ from 'jquery';
 
 export default Component.extend({
@@ -22,33 +23,39 @@ export default Component.extend({
     this.set('result', null);
     this.set('errors', null);
 
-    const appAdapter = this.store.adapterFor('application');
-    let {access_token} = this.session.data.authenticated;
-    let url = `${appAdapter.getUrlPrefix()}/feeds/discover`;
-    this.validateUrl();
-    let discoverUrl = `${this.protocols[this.selectedProtocol]}${this.get('url') || ''}`;
+    if (this.get('url')) {
 
-    let data = {
-      url: discoverUrl
-    };
-    let result = yield $.getJSON({
-      url: url,
-      data: data,
-      headers: {
-        Authorization: `Bearer ${access_token}`
-      }
-    }).catch(err => {
-      run.next(this, () => {
-        let errors = [];
+      const appAdapter = this.store.adapterFor('application');
+      let {access_token} = this.session.data.authenticated;
+      let url = `${appAdapter.getUrlPrefix()}/feeds/discover`;
+      this.validateUrl();
+      let discoverUrl = `${this.protocols[this.selectedProtocol]}${this.get('url') || ''}`;
 
-        if (err.responseJSON.errors.url !== 'undefined') {
-          let urlError = err.responseJSON.errors.url;
-          errors.push({message: urlError.join("<br />")})
+      let data = {
+        url: discoverUrl
+      };
+      let result = yield $.getJSON({
+        url: url,
+        data: data,
+        headers: {
+          Authorization: `Bearer ${access_token}`
         }
-        this.set('errors', errors);
+      }).catch(err => {
+        run.next(this, () => {
+          let errors = [];
+
+          if (isPresent(err.responseJSON.errors.url)) {
+            let urlError = err.responseJSON.errors.url;
+            errors.push({message: urlError.join("<br />")})
+          } else if (isPresent(err.responseJSON.errors.message)) {
+            let errMessage = err.responseJSON.errors.message;
+            errors.push({message: errMessage})
+          }
+          this.set('errors', errors);
+        });
       });
-    });
-    this.set('result', result);
+      this.set('result', result);
+    }
   }).drop(),
   actions: {
     /**

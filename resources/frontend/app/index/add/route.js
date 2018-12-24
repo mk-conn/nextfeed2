@@ -40,6 +40,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
       feed.toggleProperty('selected');
     },
 
+    setFolder(folder) {
+      this.get('currentModel').feed.set('folder', folder);
+    },
+
     subscribe() {
       const feed = this.get('currentModel').feed;
       feed.save().then(feed => {
