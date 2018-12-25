@@ -11,21 +11,6 @@ module.exports = function (defaults) {
       insertEmberWormholeElementToDom: true
     }
   });
-  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.ttf', {
-    destDir: 'fonts'
-  });
-  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.svg', {
-    destDir: 'fonts'
-  });
-  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff', {
-    destDir: 'fonts'
-  });
-  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff2', {
-    destDir: 'fonts'
-  });
-  app.import('node_modules/font-awesome/fonts/fontawesome-webfont.otf', {
-    destDir: 'fonts'
-  });
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

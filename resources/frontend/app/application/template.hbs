@@ -13,13 +13,13 @@
       {{/link-to}}
       <div class="top nav right">
         <a class="nav-link" href="#" {{action (route-action "updateAllFeeds")}}>
-          <i class="fa fa-refresh"></i>
+          {{fa-icon 'refresh'}}
         </a>
         {{#link-to "index.settings" classNames="nav-link"}}
-          <i class="fa fa-cogs"></i>
+          {{fa-icon 'cogs'}}
         {{/link-to}}
         <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
-          <fa class="fa fa-sign-out"></fa>
+          {{fa-icon 'sign-out'}}
         </a>
         <div class="nav-link">{{currentUser.user.fullname}}</div>
         {{outlet "top-bar-right"}}
@@ -30,7 +30,6 @@
     {{outlet}}
   </div>
   <div class="row">
-
     {{#side-bar id="side-bar" classNames="col-sm-3 col-12"}}
       {{outlet "side-bar"}}
     {{/side-bar}}

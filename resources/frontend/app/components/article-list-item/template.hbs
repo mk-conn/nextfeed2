@@ -13,31 +13,31 @@
 </p>
 <div class="btn-group">
   {{#link-to "index.feed.articles.article" article.id classNames="btn btn-outline-secondary"}}
-    <i class="fa fa-expand"></i>
+    {{fa-icon 'expand'}}
   {{/link-to}}
   <a class="btn btn-outline-secondary"
      href="{{article.url}}" data-content="Open article in new tab"
      target="_blank" {{action "originalArticle" preventDefault=false}}>
-    <i class="fa fa-external-link"></i>
+    {{fa-icon 'link'}}
   </a>
   <a role="button" class="btn btn-outline-secondary"
      href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}
   %0A%0A{{article.url}}">
-  <i class="fa fa-share"></i>
+  {{fa-icon 'share'}}
   </a>
   <a class="btn btn-outline-secondary" href="#" data-content="{{readUnreadHint}}" {{action
     (route-action "read" article)}}>
     {{#if article.read}}
-      <i class="fa fa-check-circle-o"></i>
+      {{fa-icon 'check-circle'}}
     {{else}}
-      <i class="fa fa-circle-o"></i>
+      {{fa-icon 'circle'}}
     {{/if}}
   </a>
   <a class="btn btn-outline-secondary" href="#" {{action (route-action "keep" article)}}>
     {{#if article.keep}}
-      <i class="fa fa-star"></i>
+      {{fa-icon 'star' mask='circle'}}
     {{else}}
-      <i class="fa fa-star-o"></i>
+      {{fa-icon 'star'}}
     {{/if}}
   </a>
 </div>

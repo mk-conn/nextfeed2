@@ -18,8 +18,6 @@ $orange: #f54907;
 $color1-light: lighten($color1, 20%);
 
 //noinspection CssUnknownTarget
-@import "../../node_modules/font-awesome/scss/font-awesome";
-//noinspection CssUnknownTarget
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import 'src/general';
 @import "src/view";
