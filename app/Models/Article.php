@@ -6,7 +6,7 @@ namespace App\Models;
 use App\BaseModel;
 use Carbon\Carbon;
 use Laravel\Scout\Searchable;
-use OwenIt\Auditing\Audit;
+use OwenIt\Auditing\Auditable;
 use Zend\Feed\Reader\Entry\EntryInterface;
 
 /**
@@ -53,9 +53,9 @@ use Zend\Feed\Reader\Entry\EntryInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Article whereUserId($value)
  * @mixin \Eloquent
  */
-class Article extends BaseModel
+class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
 {
-    use Searchable, Audit;
+    use Searchable, Auditable;
     
     /**
      *

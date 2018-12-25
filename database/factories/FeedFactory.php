@@ -13,9 +13,11 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Models\Feed::class, function (Faker $faker) {
-
+$factory->define(
+    App\Models\Feed::class, function (Faker $faker) {
+    
     return [
-        'url' => $faker->url,
+        'feed_url' => $faker->url,
+        'site_url'  => $faker->url
     ];
 });

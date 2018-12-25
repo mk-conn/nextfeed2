@@ -4,10 +4,11 @@
 <p>
 {{#if article.categories}}
   <div class="article-categories text-muted">
-    [{{join ", " article.categories}}]
+    {{#each article.categories as |category|}}
+      <span class="badge badge-secondary">{{category.label}}</span>
+    {{/each}}
   </div>
 {{/if}}
-
 {{articleDescription}}
 </p>
 <div class="btn-group">
@@ -20,8 +21,9 @@
     <i class="fa fa-external-link"></i>
   </a>
   <a role="button" class="btn btn-outline-secondary"
-     href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}%0A%0A{{article.url}}">
-    <i class="fa fa-share"></i>
+     href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}
+  %0A%0A{{article.url}}">
+  <i class="fa fa-share"></i>
   </a>
   <a class="btn btn-outline-secondary" href="#" data-content="{{readUnreadHint}}" {{action
     (route-action "read" article)}}>

@@ -33,7 +33,11 @@
 
   {{#scrollable-container id="article-list-items"}}
     {{#each model as |article|}}
-      {{article-list-item article=article articleRoute=articleRoute feed=feed classNames="article-list-item"}}
+      {{article-list-item
+        article=article
+        articleRoute=articleRoute
+        feed=feed classNames="article-list-item"
+      }}
     {{/each}}
     {{infinity-loader infinityModel=model scrollable='#article-list-items'}}
   {{/scrollable-container}}
