@@ -11,7 +11,6 @@ namespace App\Observers;
 
 use App\BaseModel;
 use App\Traits\Model\HasOrder;
-use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -21,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class BaseObserver
 {
-
+    
     /**
      * @param Model $model
      *
@@ -31,7 +30,7 @@ class BaseObserver
     {
         return $model;
     }
-
+    
     /**
      * @param Model $model
      *
@@ -41,8 +40,8 @@ class BaseObserver
     {
         return $model;
     }
-
-
+    
+    
     /**
      * @param BaseModel $model
      *
@@ -51,16 +50,26 @@ class BaseObserver
     public function saving(BaseModel $model)
     {
         $uses = class_uses($model);
-
+        
         if (array_key_exists(HasOrder::class, $uses)) {
             $order = $model->getAttribute('order');
-
+            
             if (!$order) {
-                $max = (int) $model->max('order');
+                $max = (int)$model->max('order');
                 $model->setOrderFromMax($max);
             }
         }
-
+        
+        return $model;
+    }
+    
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function updating(Model $model)
+    {
         return $model;
     }
 }

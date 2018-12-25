@@ -62,6 +62,14 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
      */
     const TABLE = 'articles';
     
+    protected static $baseObserver = false;
+    /**
+     * @var array
+     */
+    protected $auditEvents = [
+        'updated'
+    ];
+    
     /**
      * @var array
      */
