@@ -18,16 +18,14 @@
   display: flex;
   justify-self: flex-start !important;
   flex-direction: column;
-  margin-bottom: -$header-height;
 
   #article-list-items {
     position: relative;
-    @include overflow-scroll();
+    @include overflow-scroll;
     height: inherit;
     max-height: inherit;
 
     .article-list-item {
-
       &:first-child {
         border-top: none;
       }
@@ -42,6 +40,7 @@
 
       &.read {
         color: $color2;
+
         h5 {
           font-weight: normal;
         }

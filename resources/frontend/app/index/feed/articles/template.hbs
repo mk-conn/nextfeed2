@@ -38,8 +38,9 @@
     {{/each}}
     {{infinity-loader infinityModel=model scrollable='#article-list-items'}}
   {{/scrollable-container}}
-
 </div>
 
-
-
+{{ember-notify
+  messageStyle='bootstrap'
+  closeAfter=5000
+}}
