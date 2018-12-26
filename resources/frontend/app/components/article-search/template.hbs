@@ -1,11 +1,11 @@
 <a href="#" class="nav-link" {{action "toggleSearch"}}>
-  <i class="fa fa-search action"></i>
+  {{fa-icon 'search' classNames='action'}}
 </a>
 {{#if showResults}}
   {{#scrollable-container id="article-search-result"}}
     <div class="mt-2 mb-3 ml-2">
       <a href="#" class="btn btn-sm btn-outline-secondary" {{action "toggleSearch"}}>
-        <i class="fa fa-close"></i>
+        {{fa-icon 'times'}}
       </a>
     </div>
     <div class="form-group ml-2 mr-2">

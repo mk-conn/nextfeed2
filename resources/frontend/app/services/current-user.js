@@ -1,5 +1,6 @@
-import Service, {inject as service} from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
+import $ from 'jquery';
 
 export default Service.extend({
 

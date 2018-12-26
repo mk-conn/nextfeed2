@@ -1,4 +1,8 @@
 #side-bar {
+  height:inherit;
+  max-height: inherit;
+  @include overflow-scroll();
+  position: relative;
 
   $list-group-action-color: #ccc;
   background: lighten($color1, 2%);

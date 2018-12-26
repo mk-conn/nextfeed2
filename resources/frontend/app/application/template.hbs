@@ -18,10 +18,13 @@
         {{#link-to "index.settings" classNames="nav-link"}}
           {{fa-icon 'cogs'}}
         {{/link-to}}
-        <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
-          {{fa-icon 'sign-out'}}
-        </a>
-        <div class="nav-link">{{currentUser.user.fullname}}</div>
+        <div class="nav-link">
+          {{fa-icon 'user'}}
+          {{currentUser.user.fullname}}
+          <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
+            {{fa-icon 'sign-out'}}
+          </a>
+        </div>
         {{outlet "top-bar-right"}}
       </div>
     {{/if}}
@@ -30,9 +33,9 @@
     {{outlet}}
   </div>
   <div class="row">
-    {{#side-bar id="side-bar" classNames="col-sm-3 col-12"}}
+    {{#scrollable-container id="side-bar" classNames="col-sm-3 col-12"}}
       {{outlet "side-bar"}}
-    {{/side-bar}}
+    {{/scrollable-container}}
 
     {{#grid-column id="column-one" classNames="col-sm-4 col-12"}}
       {{outlet "column-one"}}

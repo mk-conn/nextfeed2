@@ -1,8 +1,14 @@
-import Ember from 'ember';
 import { PerfectScrollbarMixin } from 'ember-perfect-scrollbar';
+import Component from '@ember/component';
 
-export default Ember.Component.extend(PerfectScrollbarMixin, {
-  perfectScrollbarOptions: {
-    suppressScrollX: true
-  },
+export default Component.extend(PerfectScrollbarMixin, {
+  /**
+   * Init
+   */
+  init() {
+    this._super(...arguments);
+    this.perfectScrollbarOptions = {
+      suppressScrollX: true
+    };
+  }
 });
