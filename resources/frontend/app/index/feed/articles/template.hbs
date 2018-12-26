@@ -10,27 +10,24 @@
         <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
       </div>
     </div>
-
-
-    <div class="btn-group btn-group-sm">
-      <button type="button" class="btn btn-secondary" {{action (action toggleProperty "filterUnread")}}>
-        {{#if filterUnread}}
-          Show all
-        {{else}}
-          Hide read
-        {{/if}}
-      </button>
-      <button type="button" class="btn btn-secondary" {{action (route-action 'markAllRead')}}>
-        Mark all read
-      </button>
-    </div>
-    <div class="mobi-close pull-right">
+    <div class="btn-toolbar justify-content-between" role="toolbar">
+      <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-secondary" {{action (action toggleProperty "filterUnread")}}>
+          {{#if filterUnread}}
+            Show all
+          {{else}}
+            Hide read
+          {{/if}}
+        </button>
+        <button type="button" class="btn btn-secondary" {{action (route-action 'markAllRead')}}>
+          Mark all read
+        </button>
+      </div>
       {{#link-to "index" tagName="button" activeClass="" classNames="btn-sm btn btn-outline-secondary"}}
         {{fa-icon 'times' fixedWidth=true}}
       {{/link-to}}
     </div>
   </div>
-
   {{#scrollable-container id="article-list-items"}}
     {{#each model as |article|}}
       {{article-list-item
