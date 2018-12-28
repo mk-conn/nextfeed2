@@ -1,21 +1,28 @@
+import { debug } from '@ember/debug';
 import Service, { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
-import $ from 'jquery';
 
 export default Service.extend({
-
-  session: service('session'),
+  session: service(),
   store: service(),
+  /**
+   * Init
+   */
+  init() {
+    this._super(...arguments);
+  },
 
+  /**
+   *
+   * @returns {*}
+   */
   load() {
-    if (this.get('session.isAuthenticated')) {
+    debug('current-user:load()');
 
-      return $.ajax('/auth/me', {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + this.get('session.session.content.authenticated.access_token')
-        }
-      }).then((user) => {
+    if (!this.user && this.get('session').isAuthenticated) {
+      debug('user not set, loading user...');
+
+      return this.get('store').queryRecord('user', {filter: {me: true}}).then((user) => {
         this.set('user', user);
       });
     } else {

@@ -49,6 +49,14 @@ export default Route.extend(Gui, {
       into: 'application',
       outlet: 'column-one'
     });
+
+    const applicationController = this.controllerFor('application');
+    this.render('articles-header', {
+      into: 'application',
+      outlet: 'top-bar-left',
+      controller: applicationController,
+      model: this.modelFor('index.feed')
+    });
   },
 
   model(params) {

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="application">
   <header>
     <div class="top nav left">
       <a class="navbar-brand" href="/" target="_self">Nextfeed</a>
@@ -9,7 +9,7 @@
     </div>
     {{#if session.isAuthenticated}}
       {{#link-to "index" classNames="nav-link" activeClass="active"}}
-        Feeds
+        {{fa-icon 'rss'}}
       {{/link-to}}
       <div class="top nav right">
         <a class="nav-link" href="#" {{action (route-action "updateAllFeeds")}}>
@@ -29,20 +29,23 @@
       </div>
     {{/if}}
   </header>
-  <div id="content" class="col-12">
+
+  <div id="content">
+    <div class="fullpage-container">
+      {{#grid-column id="side-bar" classNames="col-sm-3 col-lg-4 col-12"}}
+        {{outlet "side-bar"}}
+      {{/grid-column}}
+
+      {{#grid-column id="column-one" classNames="col-sm-4 col-lg-4 col-12"}}
+        {{outlet "column-one"}}
+      {{/grid-column}}
+
+      {{#scrollable-container id="column-two" classNames="col-sm-5 col-lg-4 col-12"}}
+        {{outlet "column-two"}}
+      {{/scrollable-container}}
+    </div>
     {{outlet}}
   </div>
-  <div class="row">
-    {{#scrollable-container id="side-bar" classNames="col-sm-3 col-12"}}
-      {{outlet "side-bar"}}
-    {{/scrollable-container}}
 
-    {{#grid-column id="column-one" classNames="col-sm-4 col-12"}}
-      {{outlet "column-one"}}
-    {{/grid-column}}
 
-    {{#scrollable-container id="column-two" classNames="col-sm-5 col-12"}}
-      {{outlet "column-two"}}
-    {{/scrollable-container}}
-  </div>
 </div>

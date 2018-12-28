@@ -26,14 +26,20 @@ JsonApi::register(
     'v1',
     [
         'namespace'  => 'JsonApi',
-        'middleware' => 'json-api.auth:default'
+        //'middleware' => 'json-api.auth:default'
     ],
     function (ApiGroup $api) {
-        $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
-        $api->resource('feed-actions');
-        $api->resource('article-actions');
-        $api->resource('folders', ['has-many' => 'feeds', 'has-one' => 'user']);
-        $api->resource('articles', ['has-one' => 'feed']);
-        $api->resource('settings');
-        $api->resource('users', ['has-many' => ['folders', 'feeds', 'settings']]);
+        Route::group(
+            ['middleware' => 'json-api.auth:default'], function () use ($api) {
+            $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
+            $api->resource('feed-actions');
+            $api->resource('article-actions');
+            $api->resource('folders', ['has-many' => 'feeds', 'has-one' => 'user']);
+            $api->resource('articles', ['has-one' => 'feed']);
+            $api->resource('settings');
+        });
+        $api->resource(
+            'users', [
+            'has-many' => ['folders', 'feeds', 'settings']
+        ]);
     });

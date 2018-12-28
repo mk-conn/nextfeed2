@@ -17,14 +17,38 @@ $orange: #f54907;
 
 $color1-light: lighten($color1, 20%);
 
+// app.scss
+
+// Required
+
 //noinspection CssUnknownTarget
-@import "../../node_modules/bootstrap/scss/bootstrap";
-//@import 'src/general';
-@import "src/view";
+@import "ember-bootstrap/functions";
+//noinspection CssUnknownTarget
+@import "ember-bootstrap/variables";
+//noinspection CssUnknownTarget
+@import "ember-bootstrap/mixins";
+// Optional - Bootstrapping/Resetting
+//noinspection CssUnknownTarget
+@import "ember-bootstrap/root";
+//noinspection CssUnknownTarget
+@import "ember-bootstrap/print";
+//noinspection CssUnknownTarget
+@import "ember-bootstrap/reboot";
+// Optional - Everything else
+//noinspection CssUnknownTarget
+@import "ember-bootstrap/type";
+//noinspection CssUnknownTarget
+@import "ember-bootstrap/buttons";
+//noinspection CssUnknownTarget
+@import "ember-bootstrap/grid";
+
+//noinspection CssUnknownTarget
+//@import "../../node_modules/bootstrap/scss/bootstrap";
+@import 'src/view-layout';
 @import "src/buttons";
 @import "src/login";
 @import "src/header";
-@import "src/side-bar";
-@import "src/feed";
-@import "src/articles";
-@import "src/article";
+//@import "src/side-bar";
+//@import "src/feed";
+//@import "src/articles";
+//@import "src/article";

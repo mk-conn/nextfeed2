@@ -3,9 +3,7 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height:70px;
   background: $color1;
-  margin:0 -1rem;
 
   a.navbar-brand {
     color: lighten($color2, 20%);
@@ -28,5 +26,4 @@ header {
       color: $orange;
     }
   }
-
 }
