@@ -1,21 +1,22 @@
 #column-one {
-  display: none;
-  padding: 1rem;
+  //padding: 1rem;
   z-index: 2;
 
-  &.enabled {
-    display: flex;
-    flex-direction: column;
-    @include absolute-position;
-    //noinspection CssUnknownTarget
-    //background: rgba(0, 0, 0, .94);
+  .feed-header {
+    background: rgba(11, 11, 11, .8)
+  }
 
-    .feed-header {
-      background: rgba(11, 11, 11, .8)
-    }
+  .articles {
+    @include overflow-scroll;
+  }
 
-    .articles {
-      @include overflow-scroll;
+  .article {
+    &.preview {
+      h6 {
+        font-size: 1rem;
+      }
+
+      padding: 1rem;
     }
   }
 }

@@ -3,7 +3,7 @@
   <div id="content" class="scroll-container">
     <div class="fullpage-column-container">
       <div class="background-container blur"></div>
-      <div id="side-bar">
+      <div id="side-bar" class="enabled">
         {{outlet "side-bar"}}
       </div>
       <div id="column-one">
@@ -12,21 +12,6 @@
       <div id="column-two">
         {{outlet "column-two"}}
       </div>
-      {{!--
-      {{#grid-column id="side-bar" classNames="col-sm-3 col-lg-4 col-12"}}
-        {{outlet "side-bar"}}
-      {{/grid-column}}
-      --}}
-      {{!--
-      {{#grid-column id="column-one" classNames="col-sm-4 col-lg-4 col-12"}}
-        {{outlet "column-one"}}
-      {{/grid-column}}
-      --}}
-      {{!--
-      {{#scrollable-container id="column-two" classNames="col-sm-5 col-lg-4 col-12"}}
-        {{outlet "column-two"}}
-      {{/scrollable-container}}
-      --}}
     </div>
     <div class="fullpage-content">
       {{outlet}}

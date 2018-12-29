@@ -1,8 +1,5 @@
 #side-bar {
   z-index: 1;
-  width: 100%;
-  @include absolute-position;
-  @include overflow-scroll;
 
   $list-group-action-color: #ccc;
   //background: lighten($color1, 2%);

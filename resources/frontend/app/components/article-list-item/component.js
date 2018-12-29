@@ -1,10 +1,10 @@
-import Ember from 'ember';
-
-const {Component, computed, get, String, $} = Ember;
-
+import Component from '@ember/component';
+import { computed, get } from '@ember/object';
+import $ from 'jquery';
+import { htmlSafe } from '@ember/template';
 
 export default Component.extend({
-  classNameBindings: [ 'isRead:read:unread' ],
+  classNameBindings: ['isRead:read:unread'],
 
   isRead: computed('article.read', function () {
     return get(this, 'article.read');
@@ -22,7 +22,8 @@ export default Component.extend({
       }
     } catch (e) {
     }
-    return String.htmlSafe(description);
+
+    return htmlSafe(description);
   }),
 
   didRender() {

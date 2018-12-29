@@ -1,14 +1,3 @@
 #column-two {
-  display: none;
-  padding: 1rem;
   z-index: 3;
-
-  &.enabled {
-    display: flex;
-    flex-direction: column;
-    @include absolute-position;
-    //noinspection CssUnknownTarget
-    background: rgba(0, 0, 0, .94);
-    @include overflow-scroll;
-  }
 }

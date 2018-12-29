@@ -19,21 +19,6 @@
 
         </div>
       {{/if}}
-      {{!--
-            <button type="button" class="btn btn-secondary" {{action (action toggleProperty "filterUnread")}}>
-
-              {{#if filterUnread}}
-                Show all
-              {{else}}
-                Hide read
-              {{/if}}
-            </button>
-
-            <button type="button" class="btn btn-secondary" {{action (route-action 'markAllRead')}}>
-        Mark all read
-      </button>
-            --}}
-
     </div>
     {{#link-to "index" tagName="button" classNames="btn-sm btn btn-outline-secondary"}}
       {{fa-icon "times" size="2x"}}
@@ -44,6 +29,7 @@
   {{#each model as |article|}}
     {{article-list-item
       article=article
+      classNames="article preview"
       articleRoute=articleRoute
       feed=feed
     }}

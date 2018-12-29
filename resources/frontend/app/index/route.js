@@ -3,16 +3,18 @@ import { computed, get } from '@ember/object';
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import RSVP from 'rsvp';
+import Gui from 'frontend/mixins/gui';
 
 function sortedItems(collection, collectionKey, property) {
-  return computed(`${ collectionKey }.@each.${ property }`, {
+  return computed(`${collectionKey}.@each.${property}`, {
     get() {
       return collection.sortBy(property);
     }
   })
 }
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default Route.extend(AuthenticatedRouteMixin, Gui, {
+  displayIn: '#side-bar',
   /**
    * Model
    * @returns {*}
