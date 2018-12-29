@@ -1,45 +1,37 @@
 {{article-search}}
-<div class="folder-item">
-  <div class="folder">
-    <span class="text-muted">Articles</span>
-  </div>
-  <div class="list-group feeds">
-    <div class="list-group-item feed-item rounded">
-      {{#link-to "index.feed.articles" "archived"}}
-        <div class="d-flex justify-content-between">
-          <div>
+
+<div class="sidebar-item feed-item">
+  {{#link-to "index.feed.articles" "archived"}}
+    <div class="d-flex justify-content-between feed-item">
+      <div>
             <span class="feed-icon">
               {{fa-icon 'rss'}}
             </span>
-            Archive
-          </div>
-          <span class="badge badge-secondary">{{starred}}</span>
-        </div>
-      {{/link-to}}
+        Archive
+      </div>
+      <span class="badge badge-secondary">{{starred}}</span>
     </div>
-  </div>
+  {{/link-to}}
 </div>
-<div class="sidebar-item">
-  <div class="d-flex justify-content-start align-items-center">
+
+
+<div class="item flex row content-between">
     <span class="text-muted">
       Folders
     </span>
-    <div class="ml-auto">
-      {{#link-to "index.folders.add" activeClass=""}}
-        <i class="fa fa-plus-circle"></i>
-      {{/link-to}}
-    </div>
-  </div>
+  {{#link-to "index.folders.add" activeClass=""}}
+    {{fa-icon "plus-circle"}}
+  {{/link-to}}
 </div>
 
-<div class="list-group folder-list">
+<div class="folders">
   {{#sortable-objects sortableObjectList=sortedFolders sortEndAction=(route-action "sort" sortedFolders)
                       enableSort=true
                       inPlace=true
                       sortingScope="foldersSorting" useSwap=false}}
     {{#each sortedFolders as |folder|}}
       {{#draggable-object content=folder isSortable=true sortingScope="foldersSorting"}}
-        {{folder-item folder=folder classNames="folder-item list-group-item"}}
+        {{folder-item folder=folder classNames="folder-item"}}
       {{/draggable-object}}
     {{/each}}
   {{/sortable-objects}}

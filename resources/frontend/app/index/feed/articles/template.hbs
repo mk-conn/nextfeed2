@@ -1,5 +1,5 @@
 <div class="feed-header" id="articles-header">
-  <div class="d-flex justify-content-between">
+  <div class="flex row content content-between">
     <h5>
       <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
       <small class="text-muted">{{feed.description}}</small>
@@ -9,7 +9,7 @@
       <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
     </div>
   </div>
-  <div class="btn-toolbar justify-content-between" role="toolbar">
+  <div class="btn-toolbar flex row content-between" role="toolbar">
     <div class="btn-group btn-group-sm">
       <button type="button" class="btn btn-secondary" {{action toggleProperty "showFilter"}}>
         {{fa-icon "filter"}}

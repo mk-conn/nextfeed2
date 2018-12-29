@@ -1,5 +1,5 @@
 {{#link-to "index.feed.articles" feed.id}}
-  <div class="d-flex justify-content-between  align-items-baseline">
+  <div class="">
       <span class="feed-icon">
         {{#if feed.icon}}
           <img src="{{feed.icon}}" alt="feed icon">
@@ -7,7 +7,7 @@
           <img src="/frontend/img/feed-icon.png" alt="feed icon">
         {{/if}}
       </span>
-    <span class="align-self-stretch text-left w-100 pl-2">{{feed.name}}</span>
+    <span class="">{{feed.name}}</span>
     {{#if feed.unreadCount}}
       <span class="badge badge-secondary">{{feed.unreadCount}}</span>
     {{/if}}

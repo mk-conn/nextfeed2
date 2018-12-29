@@ -14,7 +14,7 @@ function sortedItems(collection, collectionKey, property) {
 }
 
 export default Route.extend(AuthenticatedRouteMixin, Gui, {
-  displayIn: '#side-bar',
+  displayIn: 'side-bar',
   /**
    * Model
    * @returns {*}

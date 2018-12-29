@@ -3,7 +3,7 @@ import { get, set } from '@ember/object';
 import Gui from 'frontend/mixins/gui';
 
 export default Route.extend(Gui, {
-  displayIn: '#column-two',
+  displayIn: 'column-two',
 
   beforeModel() {
     this.debug('route %s::beforeModel()', this.routeName);

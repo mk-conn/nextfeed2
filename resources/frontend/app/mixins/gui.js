@@ -9,6 +9,7 @@ export default Mixin.create({
   afterModel() {
     const displayIn = this.get('displayIn');
     debug(`displayIn: ${displayIn}`);
+
     if (displayIn) {
       this.get('gui').enable(displayIn);
     }

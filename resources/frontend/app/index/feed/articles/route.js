@@ -23,7 +23,7 @@ const ExtendedInfinityModel = InfinityModel.extend({
 
 export default Route.extend(Gui, {
   infinity: service(),
-  displayIn: '#column-one',
+  displayIn: 'column-one',
 
   lastId: null,
 

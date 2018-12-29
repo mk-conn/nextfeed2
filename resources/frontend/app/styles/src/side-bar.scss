@@ -1,10 +1,11 @@
-#side-bar {
+body > div.application #side-bar {
   z-index: 1;
 
   $list-group-action-color: #ccc;
   //background: lighten($color1, 2%);
-  .sidebar-item {
-    //padding-left:1em;
+  .item {
+    padding: 0;
+    margin: 0;
 
     &.search {
       margin-top: 1em;

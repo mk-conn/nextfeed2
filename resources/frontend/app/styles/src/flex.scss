@@ -1,0 +1,19 @@
+.flex {
+  display: flex;
+
+  &.row {
+    flex-direction: row;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.content-start {
+    justify-content: flex-start;
+  }
+
+  &.content-between {
+    justify-content: space-between;
+  }
+}

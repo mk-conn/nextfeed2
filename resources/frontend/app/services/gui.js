@@ -22,17 +22,28 @@ export default Service.extend({
     debug(`service: gui::enable(${layoutComponent})`);
 
     run.scheduleOnce('afterRender', this, () => {
-      let component = `${layoutComponent}`;
-      let isEnabled = $(component).hasClass('enabled');
-      debug(`service: gui::activate() ${component}.isActivated=${isEnabled}`);
 
-      if (isEnabled === false) {
-        debug(`\tenable: ${component}`);
-        $(component).addClass('enabled');
+      let enabled = document.getElementsByClassName('enabled');
+      if (enabled.length) {
+        for (let i = 0; i < enabled.length; i++) {
+          enabled.item(i).classList.remove('enabled');
+        }
       }
 
-      isEnabled = $(component).hasClass('enabled');
-      debug(`\t${component}.isEnabled=${isEnabled}`);
+      let toEnable = document.getElementById(layoutComponent);
+      toEnable.classList.add('enabled');
+
+      // let component = `${layoutComponent}`;
+      // let isEnabled = $(component).hasClass('enabled');
+      // debug(`service: gui::activate() ${component}.isActivated=${isEnabled}`);
+      //
+      // if (isEnabled === false) {
+      //   debug(`\tenable: ${component}`);
+      //   $(component).addClass('enabled');
+      // }
+      //
+      // isEnabled = $(component).hasClass('enabled');
+      debug(`\t${layoutComponent} enabled`);
     });
   },
   /**

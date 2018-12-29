@@ -81,12 +81,12 @@ body {
       width: 0;
       @include absolute-position;
       @include overflow-scroll;
-      transition: width 1s ease-in-out;
+      transition: width 1s;
+      display: flex;
+      flex-direction: column;
 
       &.enabled {
         width: 100%;
-        display: flex;
-        flex-direction: column;
       }
     }
 
