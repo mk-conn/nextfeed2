@@ -1,23 +1,21 @@
-<form>
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
       <span class="input-group-text">
         {{fa-icon "search"}}
       </span>
-    </div>
-    <input
-      type="text"
-      placeholder="Search articles"
-      class="form-control"
-      oninput={{perform searchArticle value="target.value"}}
-    />
-    <div class="input-group-append">
+  </div>
+  <input
+    type="text"
+    placeholder="Search articles"
+    class="form-control"
+    oninput={{perform searchArticle value="target.value"}}
+  />
+  <div class="input-group-append">
       <span class="input-group-text">
         {{fa-icon "circle-notch" spin=searchArticle.isRunning}}
       </span>
-    </div>
   </div>
-</form>
+</div>
 
 {{#if showResults}}
   {{#scrollable-container id="article-search-result"}}
