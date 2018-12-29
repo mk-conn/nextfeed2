@@ -23,15 +23,17 @@ export default Service.extend({
 
     run.scheduleOnce('afterRender', this, () => {
 
+      let toEnable = document.getElementById(layoutComponent);
+      if (toEnable && toEnable.classList.contains('enabled') {
+        return;
+      }
+
       let enabled = document.getElementsByClassName('enabled');
       if (enabled.length) {
         for (let i = 0; i < enabled.length; i++) {
           enabled.item(i).classList.remove('enabled');
         }
       }
-
-      let toEnable = document.getElementById(layoutComponent);
-      toEnable.classList.add('enabled');
 
       // let component = `${layoutComponent}`;
       // let isEnabled = $(component).hasClass('enabled');
