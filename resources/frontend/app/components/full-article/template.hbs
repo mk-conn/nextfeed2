@@ -1,12 +1,10 @@
-<div class="pull-right">
-  {{#link-to
-    onCloseRoute
-    tagName="button"
-    classNames="btn-sm btn btn-outline-secondary"
-  }}
-    {{fa-icon "times"}}
-  {{/link-to}}
-</div>
+{{#link-to
+  onCloseRoute
+  tagName="button"
+  classNames="btn-sm btn btn-outline-secondary"
+}}
+  {{fa-icon "times"}}
+{{/link-to}}
 
 <h3 class="article-header">
   <div>{{article.title}}</div>
@@ -26,12 +24,16 @@
   {{/if}}
 </div>
 
-<a class="btn btn-outline-secondary" href="{{article.url}}" target="_blank" {{action (route-action "originalArticle")
-                                                                                     preventDefault=false}}
-   data-content="Open article in new tab">
-  <i class="external icon"></i>
-  Open Original Article
+<a class="btn btn-outline-secondary"
+   href="{{article.url}}"
+   target="_blank"
+   data-content="Open article in new tab"
+  {{action (route-action "originalArticle") preventDefault=false}}
+>
+  Open article on publisher site
 </a>
+{{!--
 <button class="btn btn-outline-secondary" {{action (route-action "scrapeArticle" article)}} disabled={{scrapeDisabled}}>
   Scrape Article
 </button>
+--}}

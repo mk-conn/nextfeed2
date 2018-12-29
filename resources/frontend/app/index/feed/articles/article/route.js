@@ -4,7 +4,7 @@ import Gui from 'frontend/mixins/gui';
 
 export default Route.extend(Gui, {
   displayIn: 'column-two',
-  onClose: 'side-bar',
+  enableOnClose: 'column-one',
 
   beforeModel() {
     this.debug('route %s::beforeModel()', this.routeName);
