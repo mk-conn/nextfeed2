@@ -7,8 +7,10 @@ export default Component.extend(PerfectScrollbarMixin, {
    */
   init() {
     this._super(...arguments);
+
     this.perfectScrollbarOptions = {
       suppressScrollX: true
     };
+
   }
 });

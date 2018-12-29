@@ -1,51 +1,40 @@
 <div class="application">
-  <header>
-    <div class="top nav left">
-      <a class="navbar-brand" href="/" target="_self">Nextfeed</a>
-      {{#if session.isAuthenticated}}
-        {{article-search}}
-      {{/if}}
-      {{outlet "top-bar-left"}}
-    </div>
-    {{#if session.isAuthenticated}}
-      {{#link-to "index" classNames="nav-link" activeClass="active"}}
-        {{fa-icon 'rss'}}
-      {{/link-to}}
-      <div class="top nav right">
-        <a class="nav-link" href="#" {{action (route-action "updateAllFeeds")}}>
-          {{fa-icon 'refresh'}}
-        </a>
-        {{#link-to "index.settings" classNames="nav-link"}}
-          {{fa-icon 'cogs'}}
-        {{/link-to}}
-        <div class="nav-link">
-          {{fa-icon 'user'}}
-          {{currentUser.user.fullname}}
-          <a class="nav-link" href="#" {{action (route-action "invalidateSession")}}>
-            {{fa-icon 'sign-out'}}
-          </a>
-        </div>
-        {{outlet "top-bar-right"}}
+  {{partial "header"}}
+  <div id="content" class="scroll-container">
+    <div class="fullpage-column-container">
+      <div class="background-container"></div>
+      <div id="side-bar">
+        {{outlet "side-bar"}}
       </div>
-    {{/if}}
-  </header>
-
-  <div id="content">
-    <div class="fullpage-container">
+      <div id="column-one">
+        {{outlet "column-one"}}
+      </div>
+      <div id="column-two">
+        {{outlet "column-two"}}
+      </div>
+      {{!--
       {{#grid-column id="side-bar" classNames="col-sm-3 col-lg-4 col-12"}}
         {{outlet "side-bar"}}
       {{/grid-column}}
-
+      --}}
+      {{!--
       {{#grid-column id="column-one" classNames="col-sm-4 col-lg-4 col-12"}}
         {{outlet "column-one"}}
       {{/grid-column}}
-
+      --}}
+      {{!--
       {{#scrollable-container id="column-two" classNames="col-sm-5 col-lg-4 col-12"}}
         {{outlet "column-two"}}
       {{/scrollable-container}}
+      --}}
     </div>
-    {{outlet}}
+    <div class="fullpage-content">
+      {{outlet}}
+    </div>
   </div>
-
-
 </div>
+
+{{ember-notify
+  messageStyle='bootstrap'
+  closeAfter=5000
+}}

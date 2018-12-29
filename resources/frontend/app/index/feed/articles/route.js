@@ -63,7 +63,7 @@ export default Route.extend(Gui, {
     const feed = this.modelFor('index.feed');
 
     let options = {
-      perPage: 15,
+      perPage: 10,
       pageParam: 'page[number]',
       perPageParam: 'page[size]',
       totalPagesParam: 'meta.page.last-page',

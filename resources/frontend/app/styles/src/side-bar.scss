@@ -1,12 +1,11 @@
 #side-bar {
-  height:inherit;
-  max-height: inherit;
-  @include overflow-scroll();
-  position: relative;
+  z-index: 1;
+  width: 100%;
+  @include absolute-position;
+  @include overflow-scroll;
 
   $list-group-action-color: #ccc;
-  background: lighten($color1, 2%);
-
+  //background: lighten($color1, 2%);
   .sidebar-item {
     //padding-left:1em;
 
@@ -14,7 +13,6 @@
       margin-top: 1em;
       //padding-right:1em;
     }
-
   }
 
   .list-group {
@@ -31,7 +29,7 @@
   }
 
   .folder-list {
-    border-radius:$border-radius;
+    border-radius: $border-radius;
   }
 
   .folder-item {

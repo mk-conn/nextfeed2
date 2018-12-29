@@ -3,18 +3,25 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: $color1;
+  background: rgba(0, 0, 0, .15);
 
   a.navbar-brand {
-    color: lighten($color2, 20%);
-    font-size: 1.5rem;
+    //color: lighten($color2, 20%);
+    font-size: 1.2rem;
     font-weight: bold;
+  }
+
+  .user {
+    &.fullname {
+      display: none;
+    }
   }
 
   &:first-child {
     padding-left: 1rem;
   }
 
+  //
   &:last-child {
     padding-right: 1rem;
   }

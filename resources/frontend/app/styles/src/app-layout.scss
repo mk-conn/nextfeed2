@@ -1,0 +1,84 @@
+$header-height: 4em;
+
+@mixin overflow-scroll() {
+  overflow-y: visible;
+  overflow-x: hidden;
+}
+
+@mixin absolute-position() {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #000;
+  font-family: "Open Sans Regular", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  color: #eee;
+  -webkit-font-smoothing: antialiased;
+  // mobile //
+
+  > div.application {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    background: #ccc;
+    height: inherit;
+    z-index: 0;
+
+    .background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      //noinspection CssUnknownTarget
+      background-image: url('img/background-nextfeed.png');
+    }
+
+    #content {
+      position: relative;
+      flex-grow: 1;
+
+      .fullpage-column-container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+        font-size: 13px;
+        display: flex;
+        flex-direction: row;
+        //flex-grow: 1;
+        height: inherit;
+        width: inherit;
+      }
+    }
+
+    .custom-select {
+      background: none;
+    }
+  }
+}
+
+img {
+  max-width: 100%;
+}

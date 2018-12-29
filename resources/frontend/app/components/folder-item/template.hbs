@@ -1,11 +1,11 @@
 <div class="folder">
   {{#if folder.open}}
     <span class="icon action" {{action (route-action "closeFolder" folder)}}>
-      <i class="fa fa-folder-open-o"></i>
+      {{fa-icon "folder-open"}}
     </span>
   {{else}}
     <span class="icon action" {{action (route-action "openFolder" folder)}}>
-      <i class="fa fa-folder-o"></i>
+      {{fa-icon "folder"}}
     </span>
   {{/if}}
   {{folder.name}}

@@ -1,17 +1,17 @@
 <div class="d-flex w-100 justify-content-between">
   <h5 class="article-title mb-1">{{article.title}}</h5>
 </div>
-<p>
-{{#if article.categories}}
-  <div class="article-categories text-muted">
-    {{#each article.categories as |category|}}
-      <span class="badge badge-secondary">{{category.label}}</span>
-    {{/each}}
-  </div>
-{{/if}}
-{{articleDescription}}
-</p>
-<div class="btn-group">
+<div>
+  {{#if article.categories}}
+    <div class="article-categories text-muted">
+      {{#each article.categories as |category|}}
+        <span class="badge badge-secondary">{{category.label}}</span>
+      {{/each}}
+    </div>
+  {{/if}}
+  {{articleDescription}}
+</div>
+<div class="btn-group-sm">
   {{#link-to "index.feed.articles.article" article.id classNames="btn btn-outline-secondary"}}
     {{fa-icon 'expand'}}
   {{/link-to}}

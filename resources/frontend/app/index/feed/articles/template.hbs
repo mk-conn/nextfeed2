@@ -1,33 +1,56 @@
-<div class="articles">
-  <div class="feed-header" id="articles-header">
-    <div class="d-flex justify-content-between">
-      <h5>
-        <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
-        <small class="text-muted">{{feed.description}}</small>
-      </h5>
-      <div>
-        <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span>
-        <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
-      </div>
-    </div>
-    <div class="btn-toolbar justify-content-between" role="toolbar">
-      <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-secondary" {{action (action toggleProperty "filterUnread")}}>
-          {{#if filterUnread}}
-            Show all
-          {{else}}
-            Hide read
-          {{/if}}
-        </button>
-        <button type="button" class="btn btn-secondary" {{action (route-action 'markAllRead')}}>
-          Mark all read
-        </button>
-      </div>
-      {{#link-to "index" tagName="button" activeClass="" classNames="btn-sm btn btn-outline-secondary"}}
-        {{fa-icon 'times' fixedWidth=true}}
-      {{/link-to}}
+<div class="feed-header" id="articles-header">
+  <div class="d-flex justify-content-between">
+    <h5>
+      <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
+      <small class="text-muted">{{feed.description}}</small>
+    </h5>
+    <div>
+      <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span>
+      <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
     </div>
   </div>
+  <div class="btn-toolbar justify-content-between" role="toolbar">
+    <div class="btn-group btn-group-sm">
+      <button type="button" class="btn btn-secondary" {{action toggleProperty "showFilter"}}>
+        {{fa-icon "filter"}}
+      </button>
+      {{#if showFilter}}
+        <div>
+
+        </div>
+      {{/if}}
+      {{!--
+            <button type="button" class="btn btn-secondary" {{action (action toggleProperty "filterUnread")}}>
+
+              {{#if filterUnread}}
+                Show all
+              {{else}}
+                Hide read
+              {{/if}}
+            </button>
+
+            <button type="button" class="btn btn-secondary" {{action (route-action 'markAllRead')}}>
+        Mark all read
+      </button>
+            --}}
+
+    </div>
+    {{#link-to "index" tagName="button" classNames="btn-sm btn btn-outline-secondary"}}
+      {{fa-icon "times"}}
+    {{/link-to}}
+  </div>
+</div>
+<div class="articles list-group list-group-flush" id="article-list">
+  {{#each model as |article|}}
+    {{article-list-item
+      article=article
+      articleRoute=articleRoute
+      classNames="list-group-item-dark list-group-item-action"
+      feed=feed classNames="article-list-item"
+    }}
+  {{/each}}
+  {{infinity-loader infinityModel=model scrollable='#article-list'}}
+  {{!--
   {{#scrollable-container id="article-list-items"}}
     {{#each model as |article|}}
       {{article-list-item
@@ -38,9 +61,5 @@
     {{/each}}
     {{infinity-loader infinityModel=model scrollable='#article-list-items'}}
   {{/scrollable-container}}
+  --}}
 </div>
-
-{{ember-notify
-  messageStyle='bootstrap'
-  closeAfter=5000
-}}
