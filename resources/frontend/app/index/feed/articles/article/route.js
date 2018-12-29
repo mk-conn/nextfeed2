@@ -4,10 +4,11 @@ import Gui from 'frontend/mixins/gui';
 
 export default Route.extend(Gui, {
   displayIn: 'column-two',
+  onClose: 'side-bar',
 
   beforeModel() {
     this.debug('route %s::beforeModel()', this.routeName);
-    $(this.get('displayIn')).animate({scrollTop: 0, duration: 400});
+    $('#' + this.get('displayIn')).animate({scrollTop: 0, duration: 400});
 
     this._super(...arguments);
   },

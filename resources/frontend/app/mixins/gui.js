@@ -21,7 +21,8 @@ export default Mixin.create({
     willTransition() {
       const displayIn = this.get('displayIn');
       if (displayIn) {
-        this.get('gui').disable(displayIn);
+        // this.get('gui').disable(displayIn);
+        this.get('gui').enable(this.get('enableOnClose'));
       }
       this._super(...arguments);
     }

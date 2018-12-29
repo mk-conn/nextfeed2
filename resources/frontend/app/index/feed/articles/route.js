@@ -24,6 +24,7 @@ const ExtendedInfinityModel = InfinityModel.extend({
 export default Route.extend(Gui, {
   infinity: service(),
   displayIn: 'column-one',
+  enableOnClose: 'side-bar',
 
   lastId: null,
 
