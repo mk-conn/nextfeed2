@@ -36,20 +36,19 @@
 
     </div>
     {{#link-to "index" tagName="button" classNames="btn-sm btn btn-outline-secondary"}}
-      {{fa-icon "times"}}
+      {{fa-icon "times" size="2x"}}
     {{/link-to}}
   </div>
 </div>
-<div class="articles list-group list-group-flush" id="article-list">
+<div class="articles" id="article-list">
   {{#each model as |article|}}
     {{article-list-item
       article=article
       articleRoute=articleRoute
-      classNames="list-group-item-dark list-group-item-action"
-      feed=feed classNames="article-list-item"
+      feed=feed
     }}
   {{/each}}
-  {{infinity-loader infinityModel=model scrollable='#article-list'}}
+  {{infinity-loader infinityModel=model scrollable="#article-list"}}
   {{!--
   {{#scrollable-container id="article-list-items"}}
     {{#each model as |article|}}

@@ -1,5 +1,6 @@
 import Mixin from '@ember/object/mixin';
 import { inject as service } from '@ember/service';
+import { debug } from '@ember/debug';
 
 export default Mixin.create({
 
@@ -7,6 +8,7 @@ export default Mixin.create({
 
   afterModel() {
     const displayIn = this.get('displayIn');
+    debug(`displayIn: ${displayIn}`);
     if (displayIn) {
       this.get('gui').enable(displayIn);
     }

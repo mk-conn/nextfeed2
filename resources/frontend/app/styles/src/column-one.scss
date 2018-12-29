@@ -8,15 +8,14 @@
     flex-direction: column;
     @include absolute-position;
     //noinspection CssUnknownTarget
-    background: rgba(0, 0, 0, .94);
+    //background: rgba(0, 0, 0, .94);
 
     .feed-header {
-      background: rgba(11,11,11,.8)
+      background: rgba(11, 11, 11, .8)
     }
 
     .articles {
       @include overflow-scroll;
-
     }
   }
 }

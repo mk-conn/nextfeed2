@@ -1,5 +1,5 @@
 <div class="d-flex w-100 justify-content-between">
-  <h5 class="article-title mb-1">{{article.title}}</h5>
+  <h6 class="article-title mb-1">{{article.title}}</h6>
 </div>
 <div>
   {{#if article.categories}}
@@ -11,33 +11,45 @@
   {{/if}}
   {{articleDescription}}
 </div>
-<div class="btn-group-sm">
-  {{#link-to "index.feed.articles.article" article.id classNames="btn btn-outline-secondary"}}
-    {{fa-icon 'expand'}}
+<div class="article-list-item-action-container">
+  {{#link-to
+    "index.feed.articles.article"
+    article.id
+    classNames="article-list-item-action"
+  }}
+    {{fa-icon "expand" size="2x"}}
   {{/link-to}}
-  <a class="btn btn-outline-secondary"
-     href="{{article.url}}" data-content="Open article in new tab"
-     target="_blank" {{action "originalArticle" preventDefault=false}}>
-    {{fa-icon 'link'}}
+  <a class="article-list-item-action"
+     href="{{article.url}}"
+     data-content="Open article in new tab"
+     target="_blank"
+    {{action "originalArticle" preventDefault=false}}
+  >
+    {{fa-icon "link" size="2x"}}
   </a>
-  <a role="button" class="btn btn-outline-secondary"
+  <a role="button"
+     class="article-list-item-action"
      href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}
-  %0A%0A{{article.url}}">
-  {{fa-icon 'share'}}
+  %0A%0A{{article.url}}"
+  >
+  {{fa-icon "share" size="2x"}}
   </a>
-  <a class="btn btn-outline-secondary" href="#" data-content="{{readUnreadHint}}" {{action
-    (route-action "read" article)}}>
+  <a class="article-list-item-action"
+     href="#"
+     data-content="{{readUnreadHint}}"
+    {{action (route-action "read" article)}}
+  >
     {{#if article.read}}
-      {{fa-icon 'check-circle'}}
+      {{fa-icon "check-circle" size="2x"}}
     {{else}}
-      {{fa-icon 'circle'}}
+      {{fa-icon "circle" size="2x"}}
     {{/if}}
   </a>
-  <a class="btn btn-outline-secondary" href="#" {{action (route-action "keep" article)}}>
+  <a class="article-list-item-action" href="#" {{action (route-action "keep" article)}}>
     {{#if article.keep}}
-      {{fa-icon 'star' mask='circle'}}
+      {{fa-icon "star" mask="circle" size="2x"}}
     {{else}}
-      {{fa-icon 'star'}}
+      {{fa-icon "star" size="2x"}}
     {{/if}}
   </a>
 </div>

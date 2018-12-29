@@ -1,0 +1,31 @@
+<header>
+  <div class="left">
+    <a class=nav-link" href="/" target="_self">Nextfeed</a>
+    {{#if session.isAuthenticated}}
+      {{#link-to "index" classNames="nav-link" activeClass="active"}}
+        {{fa-icon 'rss'}}
+      {{/link-to}}
+    {{/if}}
+    {{outlet "top-bar-left"}}
+  </div>
+  {{#if session.isAuthenticated}}
+    <div class="right">
+      <a href="#" {{action (route-action "updateAllFeeds")}}>
+        {{fa-icon 'refresh'}}
+      </a>
+      {{#link-to "index.settings"}}
+        {{fa-icon 'cogs'}}
+      {{/link-to}}
+      <div class="user">
+        {{fa-icon 'user'}}
+        <span class="user fullname">
+          {{currentUser.user.fullname}}
+        </span>
+        <a href="#" {{action (route-action "invalidateSession")}}>
+          {{fa-icon "sign-out"}}
+        </a>
+      </div>
+      {{outlet "top-bar-right"}}
+    </div>
+  {{/if}}
+</header>
