@@ -50,10 +50,10 @@ body > div.application #side-bar {
 
   .feed-icon {
     margin-right: 1rem;
-    width: 16px;
+    width: 1rem;
     //background: #333;
     padding-left: 1em;
-    max-width: 16px;
+    max-width: 1rem;
 
     img {
       width: inherit;
@@ -66,12 +66,23 @@ body > div.application #side-bar {
   }
 
   a {
-    display: inline-block;
     text-decoration: none;
     width: 100%;
-    padding: 1em 1em 1em 0;
+    padding: .5rem .5rem .5rem 0;
     color: $list-group-action-color;
     font-weight: bold;
+
+    .feed {
+      &.name {
+        margin-left: 1rem;
+        justify-self: start;
+        text-overflow: ellipsis;
+      }
+
+      &.unread-count {
+        margin-left: auto;
+      }
+    }
 
     &:hover {
       background: lighten($color1, 5%);

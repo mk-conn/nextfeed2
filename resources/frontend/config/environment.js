@@ -36,6 +36,9 @@ module.exports = function (environment) {
       applicationRootUrl: '/',
       authenticationRoute: 'login'
     },
+    fontawesome: {
+      defaultPrefix: 'fal' // light icons
+    }
   };
 
   if (environment === 'development') {
