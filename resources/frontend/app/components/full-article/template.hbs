@@ -1,3 +1,4 @@
+{{scroll-top elementToWatch="column-two"}}
 {{#link-to
   onCloseRoute
   tagName="button"
@@ -24,14 +25,24 @@
   {{/if}}
 </div>
 
-<a class="btn btn-outline-secondary"
-   href="{{article.url}}"
-   target="_blank"
-   data-content="Open article in new tab"
-  {{action (route-action "originalArticle") preventDefault=false}}
->
-  Open article on publisher site
-</a>
+<div class="flex column">
+  <a class="btn btn-outline-secondary mb-2"
+     href="{{article.url}}"
+     target="_blank"
+     data-content="Open article in new tab"
+    {{action (route-action "originalArticle") preventDefault=false}}
+  >
+    Open article on publisher site
+  </a>
+
+  {{#link-to
+    onCloseRoute
+    classNames="btn btn-outline-secondary"
+  }}
+    {{fa-icon "arrow-left"}}
+  {{/link-to}}
+</div>
+
 {{!--
 <button class="btn btn-outline-secondary" {{action (route-action "scrapeArticle" article)}} disabled={{scrapeDisabled}}>
   Scrape Article

@@ -1,17 +1,15 @@
-import Ember from 'ember';
-
-const {Component, computed, get, String, $, typeOf} = Ember;
+import Component from '@ember/component';
+import { computed, get } from '@ember/object';
+import $ from 'jquery';
+import { typeOf } from '@ember/utils';
+import { htmlSafe } from '@ember/template';
 
 export default Component.extend({
 
-  classNames: [ 'full-article' ],
+  classNames: ['full-article'],
 
   scrapeDisabled: computed('article.scraped', function () {
-    if (get(this, 'article.scraped')) {
-      return true;
-    }
-
-    return false;
+    return !!get(this, 'article.scraped');
   }),
 
   content: computed('article.content', function () {
@@ -19,8 +17,13 @@ export default Component.extend({
     const article = get(this, 'article');
     const content = get(article, 'content');
 
-    return String.htmlSafe(content);
+    return htmlSafe(content);
   }),
+
+  init() {
+    this._super(...arguments);
+    this.set('elementId', 'full-article');
+  },
 
   didRender() {
     const _self = this;
