@@ -13,43 +13,10 @@
   </div>
   <div class="btn-toolbar flex row content-between" role="toolbar">
     <div class="btn-group-sm">
-      {{!--
       <button type="button" class="btn btn-sm btn-outline-secondary" {{action toggleProperty "showFilter"}}>
-        {{fa-icon "filter" prefix="fas"}}
-      </button>
-      {{#if showFilter}}
-      --}}
-
-      <button type="button"
-              class="btn btn-sm btn-outline-secondary"
-        {{action (action toggleProperty "filterUnread")}}
-      >
-        {{#if filterUnread}}
-          Show all
-        {{else}}
-
-          <div>
-            <span class="fa-layers fa-fw">
-            {{fa-icon "rss" prefix="fas"}}
-              {{fa-icon
-                class="fas fa-inverse check"
-                transform="shrink-2 up-2"
-                prefix="fas"
-                style="color:red"
-              }}
-            </span>
-          </div>
-        {{/if}}
-
-      </button>
-      {{!--
-                {{/if}}
-                --}}
-      <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action 'markAllRead' feed)}}>
-        Mark all read
+        {{fa-icon "ellipsis-v" prefix="fas"}}
       </button>
     </div>
-
     {{#link-to
       "index"
       tagName="button"
@@ -59,6 +26,21 @@
       {{fa-icon "times" prefix="fas"}}
     {{/link-to}}
   </div>
+  {{#if showFilter}}
+    <button type="button"
+            class="btn btn-sm btn-outline-secondary"
+      {{action (action toggleProperty "filterUnread")}}
+    >
+      {{#if filterUnread}}
+        {{fa-icon "rss" prefix="fas"}} Show all
+      {{else}}
+        {{fa-icon "rss" prefix="fas"}} Hide read
+      {{/if}}
+    </button>
+    <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action 'markAllRead' feed)}}>
+      Mark all read
+    </button>
+  {{/if}}
 </div>
 <div class="articles" id="article-list">
   {{scroll-top elementToWatch="article-list"}}
