@@ -1,11 +1,12 @@
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Route from '@ember/routing/route';
-import { get } from '@ember/object';
 import RSVP from 'rsvp';
+import Gui from 'frontend/mixins/gui';
 import { getOwner } from '@ember/application';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-
+export default Route.extend(AuthenticatedRouteMixin, Gui, {
+  displayIn: 'fullpage-content',
+  enableOnClose: 'side-bar',
   model() {
     return RSVP.hash({
       feed: this.get('store').createRecord('feed'),
@@ -16,7 +17,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   renderTemplate() {
     this.render('index/add', {
       into: 'application',
-      outlet: 'column-two'
+      outlet: 'main'
     })
   },
   /**

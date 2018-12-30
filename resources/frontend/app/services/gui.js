@@ -23,8 +23,7 @@ export default Service.extend({
   enable(layoutComponent) {
     debug(`gui::enable(${layoutComponent})`);
 
-    run.scheduleOnce('afterRender', this, () => {
-
+    const enableElement = function () {
       let toEnable = document.getElementById(layoutComponent);
       if (toEnable && toEnable.classList.contains(ENABLED_CLASS)) {
         return;
@@ -37,9 +36,10 @@ export default Service.extend({
         }
       }
       toEnable.classList.add('enabled');
-
       debug(`gui: ${layoutComponent} enabled`);
-    });
+    };
+
+    run.scheduleOnce('afterRender', this, enableElement);
   },
   /**
    *

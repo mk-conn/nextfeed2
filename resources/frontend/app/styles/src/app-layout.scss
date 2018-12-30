@@ -77,7 +77,7 @@ body {
       }
     }
 
-    #side-bar, #column-one, #column-two {
+    #side-bar, #column-one, #column-two, #fullpage-content {
       width: 0;
       @include absolute-position;
       @include overflow-scroll;
@@ -89,6 +89,12 @@ body {
         transition: width .7s ease-out;
         width: 100%;
       }
+    }
+
+    #fullpage-content {
+      padding: 1rem;
+      z-index: 4;
+      //width:100%;
     }
 
     .custom-select {
