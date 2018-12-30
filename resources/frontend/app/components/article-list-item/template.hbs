@@ -18,7 +18,7 @@
     article.id
     classNames="article-list-item-action"
   }}
-    {{fa-icon "book-reader" size="2x" prefix="fas"}}
+    {{fa-icon "book-reader" prefix="fas"}}
   {{/link-to}}
   <a class="article-list-item-action"
      href="{{article.url}}"
@@ -26,14 +26,14 @@
      target="_blank"
     {{action "originalArticle" preventDefault=false}}
   >
-    {{fa-icon "external-link-alt" size="2x" prefix="fas"}}
+    {{fa-icon "external-link-alt" prefix="fas"}}
   </a>
   <a role="button"
      class="article-list-item-action"
      href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}
   %0A%0A{{article.url}}"
   >
-  {{fa-icon "share-square" size="2x"}}
+  {{fa-icon "share-square"}}
   </a>
   <a class="article-list-item-action"
      href="#"
@@ -41,16 +41,16 @@
     {{action (route-action "read" article)}}
   >
     {{#if article.read}}
-      {{fa-icon "check-circle" size="2x"}}
+      {{fa-icon "check-circle"}}
     {{else}}
-      {{fa-icon "circle" size="2x" prefix="far"}}
+      {{fa-icon "circle" prefix="far"}}
     {{/if}}
   </a>
   <a class="article-list-item-action" href="#" {{action (route-action "keep" article)}}>
     {{#if article.keep}}
-      {{fa-icon "star" size="2x" prefix="fas"}}
+      {{fa-icon "star" prefix="fas"}}
     {{else}}
-      {{fa-icon "star" size="2x"}}
+      {{fa-icon "star"}}
     {{/if}}
   </a>
 </div>

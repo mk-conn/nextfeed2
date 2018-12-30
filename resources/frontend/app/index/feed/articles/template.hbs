@@ -1,9 +1,11 @@
 <div class="feed-header" id="articles-header">
   <div class="flex row content-between">
-    <h5>
+    <div>
       <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
-      <small>{{feed.description}}</small>
-    </h5>
+      <div class="feed description">
+        {{feed.description}}
+      </div>
+    </div>
     <div>
       <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span>
       <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
@@ -11,19 +13,48 @@
   </div>
   <div class="btn-toolbar flex row content-between" role="toolbar">
     <div class="btn-group-sm">
-      <button type="button" class="btn btn-sm btn-secondary" {{action toggleProperty "showFilter"}}>
+      {{!--
+      <button type="button" class="btn btn-sm btn-outline-secondary" {{action toggleProperty "showFilter"}}>
         {{fa-icon "filter" prefix="fas"}}
       </button>
       {{#if showFilter}}
-        <div>
+      --}}
 
-        </div>
-      {{/if}}
+      <button type="button"
+              class="btn btn-sm btn-outline-secondary"
+        {{action (action toggleProperty "filterUnread")}}
+      >
+        {{#if filterUnread}}
+          Show all
+        {{else}}
+
+          <div>
+            <span class="fa-layers fa-fw">
+            {{fa-icon "rss" prefix="fas"}}
+              {{fa-icon
+                class="fas fa-inverse check"
+                transform="shrink-2 up-2"
+                prefix="fas"
+                style="color:red"
+              }}
+            </span>
+          </div>
+        {{/if}}
+
+      </button>
+      {{!--
+                {{/if}}
+                --}}
+      <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action 'markAllRead' feed)}}>
+        Mark all read
+      </button>
     </div>
+
     {{#link-to
       "index"
       tagName="button"
-      classNames="btn btn-sm btn-secondary"
+      activeClass=null
+      classNames="btn btn-sm btn-outline-secondary"
     }}
       {{fa-icon "times" prefix="fas"}}
     {{/link-to}}
