@@ -1,8 +1,8 @@
 <div class="feed-header" id="articles-header">
-  <div class="flex row content content-between">
+  <div class="flex row content-between">
     <h5>
       <a href="{{feed.siteUrl}}" target="_blank">{{feed.name}}</a>
-      <small class="text-muted">{{feed.description}}</small>
+      <small>{{feed.description}}</small>
     </h5>
     <div>
       <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span>
@@ -10,9 +10,9 @@
     </div>
   </div>
   <div class="btn-toolbar flex row content-between" role="toolbar">
-    <div class="btn-group btn-group-sm">
-      <button type="button" class="btn btn-secondary" {{action toggleProperty "showFilter"}}>
-        {{fa-icon "filter"}}
+    <div class="btn-group-sm">
+      <button type="button" class="btn btn-sm btn-secondary" {{action toggleProperty "showFilter"}}>
+        {{fa-icon "filter" prefix="fas"}}
       </button>
       {{#if showFilter}}
         <div>
@@ -20,12 +20,17 @@
         </div>
       {{/if}}
     </div>
-    {{#link-to "index" tagName="button" classNames="btn-sm btn btn-outline-secondary"}}
-      {{fa-icon "times" size="2x"}}
+    {{#link-to
+      "index"
+      tagName="button"
+      classNames="btn btn-sm btn-secondary"
+    }}
+      {{fa-icon "times" prefix="fas"}}
     {{/link-to}}
   </div>
 </div>
 <div class="articles" id="article-list">
+  {{scroll-top elementToWatch="article-list"}}
   {{#each model as |article|}}
     {{article-list-item
       article=article

@@ -1,19 +1,15 @@
 import Component from '@ember/component';
 
-const ELEMENT_ID = 'scrollTopBtn';
-
-
 export default Component.extend({
   tagName: 'button',
   classNames: ['scroll-top'],
 
   init() {
     this._super(...arguments);
-    this.set('elementId', ELEMENT_ID);
     this.set('title', 'Scroll to top');
   },
   scrollFunction(elToWatch) {
-    const scrollTopBtn = document.getElementById(ELEMENT_ID);
+    const scrollTopBtn = document.getElementById(this.get('elementId'));
 
     if (elToWatch.scrollTop > 20) {
       scrollTopBtn.classList.add('show');

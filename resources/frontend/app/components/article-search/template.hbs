@@ -1,7 +1,7 @@
 <div class="input-group mb-3">
   <div class="input-group-prepend">
       <span class="input-group-text">
-        {{fa-icon "search"}}
+        {{fa-icon "search" prefix="fas"}}
       </span>
   </div>
   <input
@@ -12,7 +12,11 @@
   />
   <div class="input-group-append">
       <span class="input-group-text">
-        {{fa-icon "circle-notch" spin=searchArticle.isRunning}}
+        {{fa-icon
+          "circle-notch"
+          spin=searchArticle.isRunning
+          prefix="fas"
+        }}
       </span>
   </div>
 </div>

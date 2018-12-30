@@ -19,6 +19,7 @@
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
     "@fortawesome/ember-fontawesome": "^0.1.9",
+    "@fortawesome/free-regular-svg-icons": "^5.6.3",
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "bootstrap": "^4.2.1",
     "broccoli-asset-rev": "^2.7.0",

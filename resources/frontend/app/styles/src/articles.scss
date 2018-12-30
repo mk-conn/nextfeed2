@@ -19,18 +19,25 @@
 //flex-direction: column;
 
 .articles {
-  font-size:10px;
-  //position: relative;
-  //@include overflow-scroll;
-  //height: inherit;
-  //max-height: inherit;
+  font-size: .8rem;
+
   .article-list-item-action-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 
     .article-list-item-action, a.article-list-item-action:link {
-      color:#eee;
+      color: #eee;
+    }
+  }
+
+  .article {
+    &.preview {
+      .description {
+        margin-top:1rem;
+        margin-bottom: 1rem;
+      }
+      border-bottom: 1px solid #666;
     }
   }
 
@@ -70,7 +77,6 @@
 #articles-header {
   padding: .5rem;
   background: lighten($color1, 65%);
-  color: #333;
 }
 
 #article-search-result {

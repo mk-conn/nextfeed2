@@ -1,10 +1,11 @@
 {{scroll-top elementToWatch="column-two"}}
+
 {{#link-to
   onCloseRoute
-  tagName="button"
-  classNames="btn-sm btn btn-outline-secondary"
+  activeClass="none"
+  classNames="btn btn-outline-secondary"
 }}
-  {{fa-icon "times"}}
+  {{fa-icon "times" prefix="fas"}}
 {{/link-to}}
 
 <h3 class="article-header">
@@ -26,20 +27,22 @@
 </div>
 
 <div class="flex column">
-  <a class="btn btn-outline-secondary mb-2"
+  <a class="btn btn-outline-secondary"
      href="{{article.url}}"
      target="_blank"
      data-content="Open article in new tab"
     {{action (route-action "originalArticle") preventDefault=false}}
   >
+    {{fa-icon "external-link-alt" prefix="fas"}}
     Open article on publisher site
   </a>
 
   {{#link-to
     onCloseRoute
+    activeClass="none"
     classNames="btn btn-outline-secondary"
   }}
-    {{fa-icon "arrow-left"}}
+    {{fa-icon "arrow-alt-circle-left" prefix="fas"}}
   {{/link-to}}
 </div>
 

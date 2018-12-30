@@ -37,7 +37,7 @@ module.exports = function (environment) {
       authenticationRoute: 'login'
     },
     fontawesome: {
-      defaultPrefix: 'fal' // light icons
+      defaultPrefix: 'far' // light icons
     }
   };
 
