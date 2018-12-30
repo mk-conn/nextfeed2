@@ -1,4 +1,23 @@
 {{article-search}}
+<div class="flex row content-between feed-actions">
+  {{#link-to
+    "index.add"
+    tagName="button"
+    activeClass=null
+    classNames="btn btn-sm btn-outline-secondary"
+    title="Add feed"
+  }}
+    <span class="fa-layers fa-lg">
+      {{fa-icon "rss" prefix="fas"}}
+      {{fa-icon class ="fa-inverse plus" transform='shrink-6' style="color:#ffffff"}}
+    </span>
+  {{/link-to}}
+  <button type="button"
+          class="btn btn-sm btn-outline-secondary"
+          title="Fetch new articles">
+    {{fa-icon "sync" prefix="fas"}}
+  </button>
+</div>
 
 <div class="sidebar-item feed-item">
   {{#link-to "index.feed.articles" "archived"}}
