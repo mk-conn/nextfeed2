@@ -13,7 +13,19 @@
     justify-content: flex-start;
   }
 
+  &.content-end {
+    justify-content: flex-end;
+  }
+
   &.content-between {
     justify-content: space-between;
+  }
+
+  &.content-around {
+    justify-content: space-evenly;
+  }
+
+  &.align-center {
+    align-items: center;
   }
 }

@@ -1,14 +1,15 @@
 header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0, 0, 0, .15);
+  background: rgba(0, 0, 0, .75);
+  padding: .25rem;
 
-  a.navbar-brand {
-    //color: lighten($color2, 20%);
-    font-size: 1.2rem;
+  a, a:link {
+    color: lighten($color2, 30%);
+    font-size: 1.1rem;
     font-weight: bold;
+
+    &.active {
+      color: $orange;
+    }
   }
 
   .user {
@@ -17,20 +18,22 @@ header {
     }
   }
 
-  &:first-child {
-    padding-left: 1rem;
-  }
+  .right {
+    align-self: flex-start;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 
-  //
-  &:last-child {
-    padding-right: 1rem;
-  }
+    > * {
+      margin-left: 1rem;
 
-  .nav-link {
-    color: #eee;
-
-    &.active {
-      color: $orange;
+      > * {
+        margin-left: inherit;
+        &:last-child {
+          margin-right:.5rem;
+        }
+      }
     }
   }
+
 }

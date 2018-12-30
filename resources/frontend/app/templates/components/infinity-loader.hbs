@@ -1,15 +1,13 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{#if infinityModel.reachedInfinity}}
-    <div class="centered text-md-center text-muted">
-      <i class="fa fa-check-circle fa-2x fa-fw"></i>
-      <span>Nothing more to load</span>
-    </div>
+<div class="loader">
+  {{#if hasBlock}}
+    {{yield}}
   {{else}}
-    <div class="centered text-md-center text-muted">
-      <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
+    {{#if infinityModel.reachedInfinity}}
+      {{fa-icon "check" prefix="fas" size="2x"}}
+      <span>Nothing more to load</span>
+    {{else}}
+      {{fa-icon "circle-notch" spin=true prefix="fas" size="2x"}}
       <span>Loading...</span>
-    </div>
+    {{/if}}
   {{/if}}
-{{/if}}
+</div>
