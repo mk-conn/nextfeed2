@@ -13,7 +13,11 @@
   </div>
   <div class="btn-toolbar flex row content-between" role="toolbar">
     <div class="btn-group-sm">
-      <button type="button" class="btn btn-sm btn-link" {{action toggleProperty "showFilter"}}>
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-secondary"
+        {{action toggleProperty "showFilter" on="click"}}
+      >
         {{fa-icon "ellipsis-v" prefix="fas"}}
       </button>
     </div>

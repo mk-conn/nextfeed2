@@ -92,9 +92,11 @@ body {
     }
 
     #fullpage-content {
-      padding: 1rem;
       z-index: 4;
-      //width:100%;
+
+      &.enabled {
+        padding: 1rem;
+      }
     }
 
     .custom-select {
@@ -176,4 +178,8 @@ a:link {
 .loader {
   padding: 1rem;
   text-align: center;
+}
+
+[data-ember-action], a, button, input, .link {
+  cursor: pointer;
 }

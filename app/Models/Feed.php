@@ -178,7 +178,7 @@ class Feed extends BaseModel
         return Article::where('feed_id', $this->id)
                       ->where('read', false)
                       ->where('id', '<=', $lastArticleId)
-//                      ->orderBy('udpated-date', 'desc')
+                      ->orderBy('udpated-date', 'desc')
                       ->update(['read' => true]);
     }
     

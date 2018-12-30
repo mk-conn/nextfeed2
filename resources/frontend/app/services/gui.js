@@ -24,19 +24,23 @@ export default Service.extend({
     debug(`gui::enable(${layoutComponent})`);
 
     const enableElement = function () {
-      let toEnable = document.getElementById(layoutComponent);
-      if (toEnable && toEnable.classList.contains(ENABLED_CLASS)) {
-        return;
-      }
 
-      let enabled = document.getElementsByClassName(ENABLED_CLASS);
-      if (enabled.length) {
-        for (let i = 0; i < enabled.length; i++) {
-          enabled.item(i).classList.remove(ENABLED_CLASS);
+      try {
+        let toEnable = document.getElementById(layoutComponent);
+        if (toEnable && toEnable.classList.contains(ENABLED_CLASS)) {
+          return;
         }
+
+        let enabled = document.getElementsByClassName(ENABLED_CLASS);
+        if (enabled.length) {
+          for (let i = 0; i < enabled.length; i++) {
+            enabled.item(i).classList.remove(ENABLED_CLASS);
+          }
+        }
+        toEnable.classList.add('enabled');
+        debug(`gui: ${layoutComponent} enabled`);
+      } catch (e) {
       }
-      toEnable.classList.add('enabled');
-      debug(`gui: ${layoutComponent} enabled`);
     };
 
     run.scheduleOnce('afterRender', this, enableElement);

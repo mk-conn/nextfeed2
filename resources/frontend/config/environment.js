@@ -38,6 +38,12 @@ module.exports = function (environment) {
     },
     fontawesome: {
       defaultPrefix: 'far' // light icons
+    },
+    EmberHammertime: {
+      touchActionOnAction: true,
+      touchActionAttributes: ['onclick'],
+      touchActionSelectors: ['button', 'input', 'a', 'textarea'],
+      touchActionProperties: 'touch-action: manipulation; -ms-touch-action: manipulation; cursor: pointer;'
     }
   };
 
