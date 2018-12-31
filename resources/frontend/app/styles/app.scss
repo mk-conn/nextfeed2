@@ -12,6 +12,21 @@ $color2: rgba(89, 97, 87, 1);
 $color4: rgba(103, 119, 108, 1);
 $color1: rgba(24, 48, 78, .15);
 
+.text {
+  &.center {
+    text-align: center;
+  }
+
+  &.green {
+    color: $color5;
+  }
+
+  &.bold {
+    font-weight: bold;
+  }
+}
+
+
 $lightblue: #5099d0;
 $orange: #f54907;
 
@@ -41,7 +56,11 @@ $color1-light: lighten($color1, 20%);
 //noinspection CssUnknownTarget
 @import "ember-bootstrap/forms";
 //noinspection CssUnknownTarget
+@import "ember-bootstrap/custom-forms";
+//noinspection CssUnknownTarget
 @import "ember-bootstrap/input-group";
+//noinspection CssUnknownTarget
+@import "ember-bootstrap/utilities/spacing";
 //noinspection CssUnknownTarget
 @import "ember-bootstrap/badge";
 //noinspection CssUnknownTarget

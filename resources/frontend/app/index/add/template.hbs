@@ -1,9 +1,21 @@
 <h2>Add a feed</h2>
 
+{{#link-to "index"
+           tagName="button"
+           activeClass=null
+           classNames="btn btn-sm btn-outline-secondary mb-4 mt-2"
+}}
+  {{fa-icon "times" prefix="fas"}}
+{{/link-to}}
+
 <div class="form-group">
   <label for="feed-folder-select">Create in folder (optional)</label>
-  <select name="folder" id="feed-folder-select" class="custom-select" onchange={{action (route-action "setFolder" )}}>
-    <option value={{null}}></option>
+  <select name="folder"
+          id="feed-folder-select"
+          class="custom-select"
+          onchange={{action (route-action "setFolder" )}}
+  >
+    <option value={{null}}>Select a folder (optional)</option>
     {{#each model.folders as |folder|}}
       <option value={{folder}}>{{folder.name}}</option>
     {{/each}}
@@ -25,11 +37,17 @@
 
 <div class="mb-3">
   <label for="feed-url">Feed Url</label>
-  {{input type="text" value=model.feed.feedUrl classNames="form-control" id="feed-url"}}
+  {{input type="text"
+          value=model.feed.feedUrl
+          classNames="form-control"
+          id="feed-url"}}
 </div>
 
 {{#if model.feed.feedUrl}}
-  <button class="btn btn-primary" onclick={{action (route-action "subscribe")}}>
+  <button type="button"
+          class="btn btn-outline-primary"
+          onclick={{action (route-action "subscribe")}}
+  >
     Subscribe
   </button>
 {{/if}}

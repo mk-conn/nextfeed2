@@ -1,5 +1,4 @@
-{{article-search}}
-<div class="flex row content-between feed-actions">
+<div class="feed-actions">
   {{#link-to
     "index.add"
     tagName="button"
@@ -7,10 +6,7 @@
     classNames="btn btn-sm btn-outline-secondary"
     title="Add feed"
   }}
-    <span class="fa-layers fa-lg">
-      {{fa-icon "rss" prefix="fas"}}
-      {{fa-icon class ="fa-inverse plus" transform='shrink-6' style="color:#ffffff"}}
-    </span>
+    {{fa-icon "rss" prefix="fas" mask="plus"}}
   {{/link-to}}
   <button type="button"
           class="btn btn-sm btn-outline-secondary"
@@ -19,12 +15,14 @@
   </button>
 </div>
 
+{{article-search}}
+
 <div class="sidebar-item feed-item">
   {{#link-to "index.feed.articles" "archived"}}
-    <div class="d-flex justify-content-between feed-item">
+    <div class="flex row content-between feed-item">
       <div>
             <span class="feed-icon">
-              {{fa-icon 'rss'}}
+              {{fa-icon "rss" prefix="fas"}}
             </span>
         Archive
       </div>
@@ -33,15 +31,16 @@
   {{/link-to}}
 </div>
 
-
-<div class="item flex row content-between">
-    <span class="text-muted">
+{{!--
+<div class="flex row">
+    <div class="text-muted">
       Folders
-    </span>
-  {{#link-to "index.folders.add" activeClass=""}}
+    </div>
+  {{#link-to "index.folders.add" activeClass="" classNames=""}}
     {{fa-icon "plus-circle" prefix="fas"}}
   {{/link-to}}
 </div>
+--}}
 
 <div class="folders">
   {{#sortable-objects sortableObjectList=sortedFolders sortEndAction=(route-action "sort" sortedFolders)
@@ -61,5 +60,5 @@
       Feeds
     </span>
   </div>
-  {{feed-items classNames="list-group feeds" feeds=feeds}}
+  {{feed-items classNames="feeds" feeds=feeds}}
 </div>

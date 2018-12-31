@@ -1,7 +1,9 @@
 body > div.application #side-bar {
   z-index: 1;
+
   .feed-actions {
-  background: rgba(11, 11, 11, 0.6);
+    padding: .25rem;
+    background: rgba(11, 11, 11, 0.6);
   }
 
   $list-group-action-color: #ccc;
@@ -14,19 +16,6 @@ body > div.application #side-bar {
       margin-top: 1em;
       //padding-right:1em;
     }
-  }
-
-  .list-group {
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    background: $color1;
-  }
-
-  .list-group-item {
-    padding: 0;
-    border: none;
-    background: inherit;
   }
 
   .folder-list {
@@ -68,12 +57,12 @@ body > div.application #side-bar {
     padding-right: 1rem;
   }
 
-  a {
+  a, a:link {
     text-decoration: none;
-    width: 100%;
-    padding: .5rem .5rem .5rem 0;
     color: $list-group-action-color;
     font-weight: bold;
+    width: 100%;
+    padding: .5rem .5rem .5rem 0;
 
     .feed {
       &.name {
@@ -85,17 +74,47 @@ body > div.application #side-bar {
       &.unread-count {
         margin-left: auto;
       }
-    }
 
-    &:hover {
-      background: lighten($color1, 5%);
-      color: #999;
-    }
+      &:hover {
+        background: lighten($color1, 5%);
+        color: #999;
+      }
 
-    &.active {
-      background: lighten($color1, 10%);
-      color: #fff;
+      &.active {
+        background: lighten($color1, 10%);
+        color: #fff;
+      }
     }
   }
+
+  //a {
+  //  text-decoration: none;
+  //  //width: 100%;
+  //  padding: .5rem .5rem .5rem 0;
+  //  color: $list-group-action-color;
+  //  font-weight: bold;
+  //
+  //  .feed {
+  //    &.name {
+  //      margin-left: 1rem;
+  //      justify-self: start;
+  //      text-overflow: ellipsis;
+  //    }
+  //
+  //    &.unread-count {
+  //      margin-left: auto;
+  //    }
+  //  }
+  //
+  //  &:hover {
+  //    background: lighten($color1, 5%);
+  //    color: #999;
+  //  }
+  //
+  //  &.active {
+  //    background: lighten($color1, 10%);
+  //    color: #fff;
+  //  }
+  //}
 
 }

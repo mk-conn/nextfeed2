@@ -1,3 +1,12 @@
+@keyframes width-to-full {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 $header-height: 4em;
 
 @mixin overflow-scroll() {
@@ -81,12 +90,18 @@ body {
       width: 0;
       @include absolute-position;
       @include overflow-scroll;
-      transition: width .7s ease-in;
+      //animation-name: width-to-full;
+      //animation-direction: reverse;
+      //animation-duration: 1s;
+      //animation-delay: -.5s;
+      //animation-iteration-count: 1;
       display: flex;
       flex-direction: column;
 
       &.enabled {
-        transition: width .7s ease-out;
+        //animation-name: width-to-full;
+        //animation-duration: .5s;
+        //animation-iteration-count: 1;
         width: 100%;
       }
     }
@@ -100,7 +115,7 @@ body {
     }
 
     .custom-select {
-      background: none;
+      //background: none;
     }
   }
 }
@@ -182,4 +197,15 @@ a:link {
 
 [data-ember-action], a, button, input, .link {
   cursor: pointer;
+}
+
+.list-group {
+  display: flex;
+  flex-direction: column;
+
+  .list-group-item {
+    position: relative;
+    display: block;
+    border: $list-group-border-width solid $list-group-border-color;
+  }
 }

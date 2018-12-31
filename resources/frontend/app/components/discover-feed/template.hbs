@@ -26,13 +26,20 @@
 {{#if result}}
   <div class="mt-3">
     {{#each result.links as |link|}}
-      <div class="list-group">
-        <div class="list-group-item list-group-item-action action" {{action "selectLink" link}}>
-          <div>{{link.title}}</div>
-          <div>{{link.href}}</div>
-          <div>{{link.type}}</div>
+      <div class="discovered-feeds list-group">
+        <div
+          class="discovered-feed list-group-item list-group-item-action action p-1 flex row content-between"
+          {{action "selectLink" link}}
+        >
+          <div>
+            <div>{{link.title}}</div>
+            <div>{{link.href}}</div>
+            <div>{{link.type}}</div>
+          </div>
           {{#if (eq feed.feedUrl link.href)}}
-            <i class="fa fa-check"></i>
+            <div class="text center green bold">
+              {{fa-icon "check" prefix="fas"}}
+            </div>
           {{/if}}
         </div>
       </div>

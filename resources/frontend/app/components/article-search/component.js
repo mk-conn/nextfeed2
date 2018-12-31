@@ -13,7 +13,7 @@ export default Component.extend({
 
   tagName: 'div',
 
-  classNames: ['nav-item'],
+  classNames: [],
 
   init() {
     this._super(...arguments);
