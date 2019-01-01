@@ -10,7 +10,8 @@
 $header-height: 4em;
 
 @mixin overflow-scroll() {
-  overflow-y: visible;
+  overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
 }
 
