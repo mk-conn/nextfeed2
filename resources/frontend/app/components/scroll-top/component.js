@@ -2,7 +2,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
   tagName: 'button',
-  classNames: ['scroll-top'],
+  classNames: ['scroll-top', 'btn', 'btn-link'],
 
   init() {
     this._super(...arguments);

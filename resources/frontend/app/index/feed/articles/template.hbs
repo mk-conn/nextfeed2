@@ -15,7 +15,7 @@
     <div class="btn-group-sm">
       <button
         type="button"
-        class="btn btn-sm btn-outline-secondary"
+        class="btn btn-sm btn-link"
         {{action toggleProperty "showFilter" on="click"}}
       >
         {{fa-icon "ellipsis-v" prefix="fas"}}
@@ -25,23 +25,20 @@
       "index"
       tagName="button"
       activeClass=null
-      classNames="btn btn-sm btn-outline-secondary"
+      classNames="btn btn-sm btn-outline-secondary round"
     }}
       {{fa-icon "times" prefix="fas"}}
     {{/link-to}}
   </div>
   {{#if showFilter}}
-    <button type="button"
-            class="btn btn-sm btn-outline-secondary"
-      {{action (action toggleProperty "filterUnread")}}
-    >
+    <button type="button" class="btn btn-sm btn-outline-secondary" {{action (action toggleProperty "filterUnread")}}>
       {{#if filterUnread}}
         {{fa-icon "rss" prefix="fas"}} Show all
       {{else}}
         {{fa-icon "rss" prefix="fas"}} Hide read
       {{/if}}
     </button>
-    <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action 'markAllRead' feed)}}>
+    <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action "markAllRead" feed)}}>
       Mark all read
     </button>
   {{/if}}

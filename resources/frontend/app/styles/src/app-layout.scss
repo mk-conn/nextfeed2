@@ -63,8 +63,7 @@ body {
       -ms-transform: translateZ(0);
       -o-transform: translateZ(0);
       transform: translateZ(0);
-      //noinspection CssUnknownTarget
-      //background-image: url('img/background-nextfeed.png');
+
     }
 
     #content {
@@ -80,7 +79,6 @@ body {
         overflow: hidden;
         display: flex;
         flex-direction: row;
-        //flex-grow: 1;
         height: inherit;
         width: inherit;
       }
@@ -90,18 +88,10 @@ body {
       width: 0;
       @include absolute-position;
       @include overflow-scroll;
-      //animation-name: width-to-full;
-      //animation-direction: reverse;
-      //animation-duration: 1s;
-      //animation-delay: -.5s;
-      //animation-iteration-count: 1;
       display: flex;
       flex-direction: column;
 
       &.enabled {
-        //animation-name: width-to-full;
-        //animation-duration: .5s;
-        //animation-iteration-count: 1;
         width: 100%;
       }
     }
@@ -127,10 +117,10 @@ img {
 .blur {
   /* All the background image supports */
   transform: translate(0px, 0px);
-  background-image: -webkit-linear-gradient(bottom left, rgba(43, 40, 50, 0.8) 0%, rgba(83, 86, 99, 0.8) 45%, rgba(69, 77, 91, 0.6) 60%);
-  background-image: -moz-linear-gradient(bottom left, rgba(43, 40, 50, 0.8) 0%, rgba(83, 86, 99, 0.8) 45%, rgba(69, 77, 91, 0.6) 60%);
-  background-image: -o-linear-gradient(bottom left, rgba(43, 40, 50, 0.8) 0%, rgba(83, 86, 99, 0.8) 45%, rgba(69, 77, 91, 0.6) 60%);
-  background-image: linear-gradient(to top right, rgba(43, 40, 50, 0.8) 0%, rgba(83, 86, 99, 0.8) 45%, rgba(69, 77, 91, 0.6) 60%);
+  background-image: -webkit-linear-gradient(bottom left, rgba(43, 40, 50, .9) 0%, rgba(83, 86, 99, .9) 45%, rgba(69, 77, 91, .7) 60%);
+  background-image: -moz-linear-gradient(bottom left, rgba(43, 40, 50, .9) 0%, rgba(83, 86, 99, .9) 45%, rgba(69, 77, 91, .7) 60%);
+  background-image: -o-linear-gradient(bottom left, rgba(43, 40, 50, .9) 0%, rgba(83, 86, 99, .9) 45%, rgba(69, 77, 91, .7) 60%);
+  background-image: linear-gradient(to top right, rgba(43, 40, 50, .9) 0%, rgba(83, 86, 99, .9) 45%, rgba(69, 77, 91, .7) 60%);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -155,10 +145,10 @@ img {
   z-index: 1001;
 
   /* Setting the gradient. Adds depth, and glass like effect. */
-  background-image: -webkit-linear-gradient(289deg, rgba(20, 40, 50, 0.9) 0%, rgba(20, 40, 50, 0.6) 46%, rgba(0, 0, 0, 0.5) 50%);
-  background-image: -moz-linear-gradient(289deg, rgba(20, 40, 50, 0.9) 0%, rgba(20, 40, 50, 0.6) 46%, rgba(0, 0, 0, 0.5) 50%);
-  background-image: -o-linear-gradient(289deg, rgba(20, 40, 50, 0.9) 0%, rgba(20, 40, 50, 0.6) 46%, rgba(0, 0, 0, 0.5) 50%);
-  background-image: linear-gradient(-19deg, rgba(20, 40, 50, 0.9) 0%, rgba(20, 40, 50, 0.6) 46%, rgba(0, 0, 0, 0.5) 50%);
+  background-image: -webkit-linear-gradient(289deg, rgba(20, 40, 50, .9) 0%, rgba(20, 40, 50, .7) 46%, rgba(0, 0, 0, 0.5) 50%);
+  background-image: -moz-linear-gradient(289deg, rgba(20, 40, 50, .9) 0%, rgba(20, 40, 50, .7) 46%, rgba(0, 0, 0, 0.5) 50%);
+  background-image: -o-linear-gradient(289deg, rgba(20, 40, 50, .9) 0%, rgba(20, 40, 50, .7) 46%, rgba(0, 0, 0, 0.5) 50%);
+  background-image: linear-gradient(-19deg, rgba(20, 40, 50, .9) 0%, rgba(20, 40, 50, .7) 46%, rgba(0, 0, 0, 0.5) 50%);
 
   /* Blur to add depth. High to create smooth transition */
   -webkit-filter: blur(70px);
@@ -182,12 +172,14 @@ a:link {
   background-color: #555; /* Add a dark-grey background on hover */
 }
 
-.input-group-text {
-  background-color: inherit;
-}
+.btn {
+  &.btn-link {
+    color: #eee;
+  }
 
-.btn.btn-link {
-  color: #eee;
+  &.round {
+    border-radius: 50%;
+  }
 }
 
 .loader {
@@ -207,5 +199,11 @@ a:link {
     position: relative;
     display: block;
     border: $list-group-border-width solid $list-group-border-color;
+  }
+}
+
+.float {
+  &.right {
+    float: right
   }
 }

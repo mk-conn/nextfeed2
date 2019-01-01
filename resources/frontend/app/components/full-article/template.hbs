@@ -1,12 +1,15 @@
 {{scroll-top elementToWatch="column-two"}}
 
-{{#link-to
-  onCloseRoute
-  activeClass="none"
-  classNames="btn btn-outline-secondary"
-}}
-  {{fa-icon "times" prefix="fas"}}
-{{/link-to}}
+<div class="float right">
+  {{#link-to
+    onCloseRoute
+    activeClass=null
+    tagName="button"
+    classNames="btn btn-outline-secondary round"
+  }}
+    {{fa-icon "times" prefix="fas"}}
+  {{/link-to}}
+</div>
 
 <h3 class="article-header">
   <div>{{article.title}}</div>
@@ -39,7 +42,7 @@
 
   {{#link-to
     onCloseRoute
-    activeClass="none"
+    activeClass=null
     classNames="btn btn-outline-secondary"
   }}
     {{fa-icon "arrow-alt-circle-left" prefix="fas"}}

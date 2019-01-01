@@ -17,7 +17,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.showResults = false;
+    this.showResults = true;
     this.articles = [];
     this.showInput = false;
   },
@@ -85,7 +85,6 @@ export default Component.extend({
       }
     },
     toggleSearch() {
-      this.toggleProperty('showInput');
       this.toggleProperty('showResults');
     },
   }

@@ -3,19 +3,27 @@
     "index.add"
     tagName="button"
     activeClass=null
-    classNames="btn btn-sm btn-outline-secondary"
+    classNames="btn btn-sm btn-link"
     title="Add feed"
   }}
     {{fa-icon "rss" prefix="fas" mask="plus"}}
   {{/link-to}}
   <button type="button"
-          class="btn btn-sm btn-outline-secondary"
+          class="btn btn-sm btn-link"
           title="Fetch new articles">
     {{fa-icon "sync" prefix="fas"}}
   </button>
-</div>
 
-{{article-search}}
+  <button type="button"
+          class="btn btn-sm btn-link"
+    {{action toggleProperty "openSearch"}}
+  >
+    {{fa-icon "search" prefix="fas"}}
+  </button>
+</div>
+{{#if openSearch}}
+  {{article-search elementId="article-search-container"}}
+{{/if}}
 
 <div class="sidebar-item feed-item">
   {{#link-to "index.feed.articles" "archived"}}
