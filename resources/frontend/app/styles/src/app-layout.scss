@@ -251,7 +251,7 @@ $spacers: map-merge(
   }
 }
 
-img, .img-fluid {
+.img-fluid {
   // Part 1: Set a maximum relative to the parent
   max-width: 100% !important;
   // Part 2: Override the height to auto, otherwise images will be stretched

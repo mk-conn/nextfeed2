@@ -44,7 +44,17 @@ class FeedResourceTest extends ApiRequest
             'data' => [
                 'type'          => 'feeds',
                 'attributes'    => [
-                    'feed_url' => 'golem.de'
+                    'feed-url'      => 'golem.de',
+                    'auth-password' => null,
+                    'auth-user'     => null,
+                    'etag'          => null,
+                    'guid'          => null,
+                    'icon'          => null,
+                    'language'      => null,
+                    'logo'          => null,
+                    'name'          => null,
+                    'order'         => null,
+                    'site-url'      => null
                 ],
                 'relationships' => [
                     'folder' => [

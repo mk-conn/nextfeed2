@@ -36,8 +36,8 @@ export default Route.extend(Gui, {
     deleteFeed() {
       const feed = this.get('currentModel');
       feed.destroyRecord().then(() => {
-        this.transitionTo('feeds');
         getOwner(this).lookup('route:' + 'index').refresh();
+        this.transitionTo('index');
       });
     }
   }

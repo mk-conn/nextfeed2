@@ -20,7 +20,7 @@ export default Model.extend({
   user: belongsTo('user'),
   folder: belongsTo('folder'),
   articles: hasMany('article'),
-  settings: attr(),
+  settings: attr({default: []}),
   meta: attr(),
   /**
    *

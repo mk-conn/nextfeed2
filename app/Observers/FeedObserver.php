@@ -59,13 +59,16 @@ class FeedObserver extends BaseObserver
                   ->associate($user);
         }
         
-        if (!$model->settings) {
+        if (!$model->settings || empty($model->settings)) {
             $feedArticlesSettings = config('app-settings.feed.articles');
             
             $model->settings = [
                 'articles' => $feedArticlesSettings
             ];
         }
+        
+        logger()->debug('$feed', $model->toArray());
+        logger()->debug('$feed settings', $model->settings);
         
         return parent::creating($model);
     }

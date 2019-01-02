@@ -253,12 +253,18 @@ class Feed extends BaseModel
      */
     public function createFromChannel(AbstractFeed $feed)
     {
+        $logo = null;
+        $image = $feed->getImage();
+        if ($image) {
+            $logo = $image['uri'];
+        }
+        
         $this->guid = $feed->getId();
         $this->description = $feed->getDescription();
         $this->site_url = $feed->getLink();
         $this->feed_url = $feed->getFeedLink();
         $this->language = $feed->getLanguage();
-        $this->logo = $feed->getImage();
+        $this->logo = $logo;
         $this->name = trim($feed->getTitle());
     }
     
