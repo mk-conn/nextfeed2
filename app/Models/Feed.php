@@ -163,22 +163,15 @@ class Feed extends BaseModel
     }
     
     /**
-     * @param $lastArticleId
      *
      * @return bool|int
      */
-    public function read($lastArticleId)
+    public function read()
     {
-        // get last articles updated-at, than, set all that are before or equal this date to 'read: true' so new
-        // unread will not be set to read:true - makes sense?
-        
-        $lastArticle = Article::find($lastArticleId);
-        $updatedDate = $lastArticle->updated_at;
-        
         return Article::where('feed_id', $this->id)
                       ->where('read', false)
-                      ->where('id', '<=', $lastArticleId)
-                      ->orderBy('udpated-date', 'desc')
+            //->where('id', '<=', $lastArticleId)
+            //->orderBy('udpated-date', 'desc')
                       ->update(['read' => true]);
     }
     
@@ -283,6 +276,7 @@ class Feed extends BaseModel
                 $settings = $this->settings;
                 $days = array_get($settings, 'articles.keep');
             }
+            $force = !array_get($settings, 'articles.cleanup.keepUnread');
         }
         
         if ((int)$days === 0) {
@@ -300,7 +294,7 @@ class Feed extends BaseModel
                            ->where('keep', false);
         if (!$force) {
             $articles->where('read', true);
-        };;
+        };
         $count = $articles->delete();
         
         return $count;

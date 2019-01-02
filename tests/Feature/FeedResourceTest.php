@@ -44,7 +44,7 @@ class FeedResourceTest extends ApiRequest
             'data' => [
                 'type'          => 'feeds',
                 'attributes'    => [
-                    'url' => 'golem.de'
+                    'feed_url' => 'golem.de'
                 ],
                 'relationships' => [
                     'folder' => [
@@ -63,6 +63,8 @@ class FeedResourceTest extends ApiRequest
         
         $this->assertEquals('Feed Title', array_get($response, 'data.attributes.name'));
         $this->assertEquals($this->user->id, array_get($response, 'data.relationships.user.data.id'));
+        $this->assertArraySubset(
+            config('app-settings.feed.articles'), array_get($response, 'data.attributes.settings.articles'));
     }
     
     /**

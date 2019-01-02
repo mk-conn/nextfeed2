@@ -1,8 +1,11 @@
 import Route from '@ember/routing/route';
 import { getOwner } from '@ember/application';
 import { inject as service } from '@ember/service';
+import Gui from 'frontend/mixins/gui';
 
-export default Route.extend({
+export default Route.extend(Gui, {
+  displayIn: 'column-two',
+  enableOnClose: 'column-one',
   notify: service(),
   /**
    *
@@ -25,6 +28,10 @@ export default Route.extend({
       feed.save().then(feed => {
         this.get('notify').success({html: `<strong>${feed.name}</strong> settings saved`});
       });
+    },
+    toggleKeepUnread() {
+      const feed = this.get('currentModel');
+      feed.toggleProperty('settings.articles.cleanup.keepUnread');
     },
     deleteFeed() {
       const feed = this.get('currentModel');

@@ -13,7 +13,7 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('api/v1/feeds/{id}/mark-read/{lastId}', 'Api\V1\FeedsController@read')
+Route::get('api/v1/feeds/{id}/mark-read', 'Api\V1\FeedsController@read')
      ->middleware('auth:api');
 Route::get('api/v1/feeds/discover', 'Api\V1\FeedsController@discover')
      ->middleware('auth:api');

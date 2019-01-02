@@ -99,12 +99,12 @@ export default Route.extend(Gui, {
   /**
    * Mark all articles known until now (thats why the lastArticleId) as read
    */
-  markAllRead: task(function* (feedId, lastArticleId) {
+  markAllRead: task(function* (feedId) {
     this.store.adapterFor('application');
     const appAdapter = this.get('store').adapterFor('application');
     const urlPrefix = appAdapter.getUrlPrefix();
     let {access_token} = this.session.data.authenticated;
-    let url = `/${urlPrefix}/feeds/${feedId}/mark-read/${lastArticleId}`;
+    let url = `/${urlPrefix}/feeds/${feedId}/mark-read`;
     let xhr;
     try {
       xhr = $.getJSON({

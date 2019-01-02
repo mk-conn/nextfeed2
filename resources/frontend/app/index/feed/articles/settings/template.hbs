@@ -1,38 +1,75 @@
-<h2>Feed Settings</h2>
-
-<fieldset>
-  <div class="form-group">
-    <label for="name">Name</label>
-    {{input type="text" id="name" value=model.name class="form-control"}}
+<div class="p-3">
+  <div class="flex row content-between">
+    <div>
+      <h5 class="p-0 mb-3">Feed Settings</h5>
+    </div>
+    <div>
+      {{#link-to
+        "index.feed.articles"
+        activeClass=null
+        tagName="button"
+        classNames="btn btn-outline-secondary round"
+      }}
+        {{fa-icon "times" prefix="fas"}}
+      {{/link-to}}
+    </div>
   </div>
 
-  <div class="row">
-    <div class="form-group col">
-      <label for="cleanup-days">Keep articles (days)</label>
-      {{input value=model.feedSettings.articles.keep class="form-control" type="number"  }}
+  <fieldset>
+    <div class="form-group">
+      <label for="name">Name</label>
+      {{input
+        type="text"
+        id="name"
+        value=model.name class="form-control"
+        change=(action (route-action "updateFeed"))
+      }}
     </div>
-    <div class="form-group col">
-      <div class="custom-control custom-switch">
-        {{input type="checkbox" classNames="custom-control-input" id="keep-unread" checked=false}}
-        <label for="keep-unread" class="custom-control-label">Keep unread during cleanup</label>
 
+    <div class="row">
+      <div class="form-group col">
+        <label for="cleanup-days">Keep articles (days)</label>
+        {{input
+          value=model.settings.articles.keep
+          class="form-control"
+          type="number"
+          change=(action (route-action "updateFeed"))
+        }}
+      </div>
+      <div class="form-group col">
+        <div class="custom-control custom-switch">
+          {{input
+            type="checkbox"
+            classNames="custom-control-input"
+            id="keep-unread"
+            checked=model.settings.articles.cleanup.keepUnread
+            change=(action (pipe (route-action "toggleKeepUnread") (route-action "updateFeed")))
+          }}
+          <label for="keep-unread" class="custom-control-label">Keep unread during cleanup</label>
+        </div>
       </div>
     </div>
-  </div>
-  <button type="button" class="btn btn-secondary" {{action (route-action "updateFeed")}} disabled={{model.isSaving}}>
-    Save
-    {{#if model.isSaving}}
-      <i class="fa fa-spinner"></i>
-    {{/if}}
-  </button>
-</fieldset>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      {{action (route-action "updateFeed")}} disabled={{model.isSaving}}
+    >
+      Save
+      {{#if model.isSaving}}
+        <i class="fa fa-spinner"></i>
+      {{/if}}
+    </button>
+  </fieldset>
 
-<fieldset>
-  <p class="mt-3 text-danger">
-  <h4>Danger zone!</h4>
-  <div class="form-group">
-    <button type="button" class="btn btn-outline-danger" {{action (route-action "deleteFeed")}}>Delete Feed</button>
-  </div>
-  </p>
-</fieldset>
-
+  <fieldset class="mt-5">
+    <h4>Danger zone!</h4>
+    <div class="form-group">
+      <button type="button"
+              class="btn btn-outline-danger"
+        {{action (route-action "deleteFeed")}}
+      >
+        Delete Feed
+      </button>
+    </div>
+  </fieldset>
+</div>

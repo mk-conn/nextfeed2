@@ -1,8 +1,8 @@
 import DS from 'ember-data';
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { assert } from '@ember/debug';
 
 const {Model, attr, belongsTo, hasMany} = DS;
-const {computed} = Ember;
 
 export default Model.extend({
   name: attr('string'),
@@ -47,7 +47,7 @@ export default Model.extend({
       return this.get('meta.articles-count')
     },
     set(key, val) {
-      Ember.assert('You can not set the articles counter.', true);
+      assert('You can not set the articles counter.', true);
     }
   }),
   unreadCount: computed('meta.articles-unread-count', {
@@ -57,21 +57,6 @@ export default Model.extend({
     set(prop, value) {
       this.set('meta.articles-unread-count', value);
       return value;
-    }
-  }),
-  feedSettings: computed('settings', {
-    get() {
-      let settings = this.get('settings');
-      if (!settings) {
-        this.set('settings', {articles: {keep: null}});
-      }
-
-      return this.get('settings');
-    },
-    set(key, val) {
-      // let settings = this.get('settings');
-      // console.log('val:', val);
-      // seems not to be called
     }
   })
 });

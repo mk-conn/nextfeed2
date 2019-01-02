@@ -203,6 +203,54 @@ a:link {
   }
 }
 
+// take from bootstrap
+$spacer: 1rem !default;
+$spacers: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$spacers: map-merge(
+    (
+      0: 0,
+      1: ($spacer * .25),
+      2: ($spacer * .5),
+      3: $spacer,
+      4: ($spacer * 1.5),
+      5: ($spacer * 3)
+    ),
+    $spacers
+);
+
+
+// Negative margins (e.g., where `.mb-n1` is negative version of `.mb-1`)
+@each $size, $length in $spacers {
+  @if $size != 0 {
+    .m#-n#{$size} {
+      margin: -$length !important;
+    }
+    .mt#-n#{$size},
+    .my#-n#{$size} {
+      margin-top: -$length !important;
+    }
+    .mr#-n#{$size},
+    .mx#-n#{$size} {
+      margin-right: -$length !important;
+    }
+    .mb#-n#{$size},
+    .my#-n#{$size} {
+      margin-bottom: -$length !important;
+    }
+    .ml#-n#{$size},
+    .mx#-n#{$size} {
+      margin-left: -$length !important;
+    }
+  }
+}
+
+.p {
+  &1 {
+    padding: 1rem;
+  }
+}
+
 .float {
   &.right {
     float: right

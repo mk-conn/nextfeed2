@@ -14,18 +14,17 @@ class FeedsController extends Controller
     /**
      * @param Request $request
      * @param         $feedId
-     * @param         $lastArticleId
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function read(Request $request, $feedId, $lastArticleId)
+    public function read(Request $request, $feedId)
     {
         /** @var Feed $feed */
         $feed = Feed::findOrFail($feedId);
         $this->authorize('update', $feed, $request);
         
-        $success = $feed->read($lastArticleId);
+        $success = $feed->read();
         $result = [
             'success' => $success
         ];

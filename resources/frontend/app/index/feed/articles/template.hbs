@@ -11,7 +11,7 @@
       <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
     </div>
   </div>
-  <div class="btn-toolbar flex row content-between" role="toolbar">
+  <div class="btn-toolbar flex row content-end feed-actions" role="toolbar">
     <div class="btn-group-sm">
       <button
         type="button"
@@ -33,14 +33,22 @@
   {{#if showFilter}}
     <button type="button" class="btn btn-sm btn-outline-secondary" {{action (action toggleProperty "filterUnread")}}>
       {{#if filterUnread}}
-        {{fa-icon "rss" prefix="fas"}} Show all
+        Show all
       {{else}}
-        {{fa-icon "rss" prefix="fas"}} Hide read
+        Hide read
       {{/if}}
     </button>
-    <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action "markAllRead" feed)}}>
-      Mark all read
+    <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action "markAllRead")}}>
+      Mark read
     </button>
+    {{#link-to
+      "index.feed.articles.settings"
+      feed
+      tagName="button"
+      classNames="btn btn-sm btn-outline-secondary"
+    }}
+      Settings
+    {{/link-to}}
   {{/if}}
 </div>
 <div class="articles" id="article-list">
