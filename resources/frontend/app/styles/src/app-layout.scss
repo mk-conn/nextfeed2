@@ -245,14 +245,28 @@ $spacers: map-merge(
   }
 }
 
-.p {
-  &1 {
-    padding: 1rem;
-  }
-}
-
 .float {
   &.right {
     float: right
   }
 }
+
+img, .img-fluid {
+  // Part 1: Set a maximum relative to the parent
+  max-width: 100% !important;
+  // Part 2: Override the height to auto, otherwise images will be stretched
+  // when setting a width and height attribute on the img element.
+  height: auto;
+}
+
+//.nextfeed-notify {
+//  position: fixed;
+//  top: 10px;
+//  right: 0;
+//  left: 0;
+//}
+//
+//.nextfeed-notify .callout {
+//  position: relative;
+//  overflow: hidden;
+//}

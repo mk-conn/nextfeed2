@@ -3,6 +3,7 @@ import { computed, get } from '@ember/object';
 import $ from 'jquery';
 import { typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
+import { debug } from '@ember/debug';
 
 export default Component.extend({
 
@@ -32,18 +33,22 @@ export default Component.extend({
     });
 
     this.$('iframe').each(function () {
-      const origWidth = typeOf($(this).attr('width')) !== 'undefined' ? $(this).attr('width') : $(this).width();
-      const origHeight = typeOf($(this).attr('height')) !== 'undefined' ? $(this).attr('height') : $(this).height();
-      const currentWidth = _self.$('.article-content').width();
 
-      if (origWidth > currentWidth) {
-        const factor = origWidth / currentWidth;
-        const scaledWidth = currentWidth;
-        const scaledHeight = Math.round(origHeight / factor);
-
-        $(this).attr('width', scaledWidth);
-        $(this).attr('height', scaledHeight);
-      }
+      // const origWidth = typeOf($(this).attr('width')) !== 'undefined' ? $(this).attr('width') : $(this).width();
+      // const origHeight = typeOf($(this).attr('height')) !== 'undefined' ? $(this).attr('height') : $(this).height();
+      // const currentWidth = _self.$('.article-content').width();
+      // debug('iframe original witdth is ', origWidth);
+      //
+      // if (!origWidth || origWidth > currentWidth) {
+      //   const factor = origWidth / currentWidth;
+      //   const scaledWidth = currentWidth;
+      //   const scaledHeight = Math.round(origHeight / factor);
+      //
+      //   debug('set iframe witdth to ', scaledWidth);
+      //
+      //   $(this).attr('width', scaledWidth);
+      //   $(this).attr('height', scaledHeight);
+      // }
 
       $(this).attr('sandbox', '');
       $(this).attr('sandbox', 'allow-same-origin allow-scripts allow-presentation');

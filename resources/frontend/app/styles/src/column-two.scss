@@ -1,3 +1,12 @@
 #column-two {
   z-index: 3;
+
+  div, p, pre, section, article, span {
+    max-width: 100% !important;
+  }
+
+  iframe {
+    max-width: 100% !important;
+    height: auto;
+  }
 }
