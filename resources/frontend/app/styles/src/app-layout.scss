@@ -11,7 +11,7 @@ $header-height: 4em;
 
 @mixin overflow-scroll() {
   overflow-y: scroll; /* has to be scroll, not auto */
-  -webkit-overflow-scrolling: touch;
+  //-webkit-overflow-scrolling: touch;
   overflow-x: hidden;
 }
 
@@ -111,6 +111,104 @@ body {
   }
 }
 
+@include media-breakpoint-up(sm) {
+  $sidebar: 40% !important;
+  $col1: 60% !important;
+  $col2: 0% !important;
+
+  #column-one, #column-two {
+    border-left: 1px solid $color2;
+  }
+
+  #side-bar, #column-one, #column-two {
+    position: relative !important;
+  }
+
+  #side-bar {
+    width: $sidebar;
+
+    &.enabled {
+      width: $sidebar;
+    }
+  }
+  #column-one {
+    width: 0;
+
+    &.enabled {
+      width: $col1;
+    }
+  }
+  #column-two {
+    width: 0;
+
+    &.enabled {
+      width: $col1;
+    }
+  }
+
+}
+
+@include media-breakpoint-between(md, lg) {
+  $sidebar: 35% !important;
+  $col1: 65% !important;
+  $col2: 0% !important;
+
+  #side-bar {
+    width: $sidebar;
+
+    &.enabled {
+      width: $sidebar;
+    }
+  }
+  #column-one {
+    width: $col1;
+
+    &.enabled {
+      width: $col1;
+    }
+  }
+  #column-two {
+    width: $col2;
+
+    &.enabled {
+      width: 55% !important;
+      position: absolute !important;
+      right: 0;
+      left: auto !important;
+      background: #555;
+      top: 0;
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  $sidebar: 30% !important;
+  $col1: 30% !important;
+  $col2: 50% !important;
+
+  #side-bar {
+    width: $sidebar;
+
+    &.enabled {
+      width: $sidebar;
+    }
+  }
+  #column-one {
+    width: $col1;
+
+    &.enabled {
+      width: $col1;
+    }
+  }
+  #column-two {
+    width: $col2;
+
+    &.enabled {
+      width: $col2;
+    }
+  }
+}
+
 img {
   max-width: 100%;
 }
@@ -157,9 +255,15 @@ img {
   filter: blur(70px);
 }
 
-a:link {
+a:link, a:visited {
   color: $color3;
+  text-decoration: none;
+
+  &:hover {
+    color: $orange;
+  }
 }
+
 
 .scroll-top {
   display: none;
@@ -258,15 +362,3 @@ $spacers: map-merge(
   // when setting a width and height attribute on the img element.
   height: auto;
 }
-
-//.nextfeed-notify {
-//  position: fixed;
-//  top: 10px;
-//  right: 0;
-//  left: 0;
-//}
-//
-//.nextfeed-notify .callout {
-//  position: relative;
-//  overflow: hidden;
-//}

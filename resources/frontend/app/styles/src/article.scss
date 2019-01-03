@@ -1,17 +1,25 @@
 .full-article {
-  width: inherit;
+  //width: inherit;
   color: inherit;
   padding: .25rem .5rem 3rem .5rem;
   transition: all .6s ease;
 
   pre {
-    font-size: .5rem;
+    font-size: .8rem;
   }
 
   .article-actions {
     > * {
       margin-bottom: 1rem;
     }
+  }
+
+  blockquote {
+    border-left: 2px solid #ccc;
+    padding-left: .25rem;
+    font-style: italic;
+    color: #ccc;
+    //color: lighten($color1, 10%);
   }
 
   .article-header {

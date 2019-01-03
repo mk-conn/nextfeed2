@@ -2,14 +2,8 @@
   {{#if feed.logo}}
     <img src="{{feed.logo}}" alt="">
   {{else}}
-    <img src="/frontend/img/feed-icon.png" class="img-fluid" alt="">
+    {{fa-icon "rss" size="4x" prefix="fas"}}
   {{/if}}
 
   <span class="text-muted">Select an article on the left to start reading.</span>
-
-  <div class="btn-group" role="group">
-    <button type="button" class="btn btn-secondary" {{action (route-action "cleanup")}}>Cleanup</button>
-    {{#link-to "index.feed.articles.settings" tagName="button" classNames="btn btn-secondary"}}Settings{{/link-to}}
-  </div>
 </div>
-

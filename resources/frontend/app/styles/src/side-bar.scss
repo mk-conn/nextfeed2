@@ -58,10 +58,13 @@ body > div.application #side-bar {
     padding: .5rem .5rem .5rem 0;
 
     .feed {
+      display: inline-block;
+      width: auto;
+      text-overflow: ellipsis;
+
       &.name {
         margin-left: 1rem;
         justify-self: start;
-        text-overflow: ellipsis;
       }
 
       &.unread-count {
