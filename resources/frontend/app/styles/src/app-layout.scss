@@ -101,6 +101,7 @@ body {
       z-index: 4;
 
       &.enabled {
+        background: rgba(50, 50, 50, .9);
         padding: 1rem;
       }
     }

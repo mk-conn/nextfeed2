@@ -187,12 +187,10 @@ class FeedResourceTest extends ApiRequest
         $this->mockFeedReader();
         $this->withUser();
         $feed = $this->createFeed($this->user);
-        $articles = $this->createArticle($feed, [], 10);
+        $this->createArticle($feed, [], 10);
         $newerArticles = $this->createArticle($feed, [], 2);
         
-        $lastId = $articles->max('id');
-        
-        $this->getJson($this->apiUrl . '/' . $feed->id . '/mark-read/' . $lastId)
+        $this->getJson($this->apiUrl . '/' . $feed->id . '/mark-read')
              ->assertStatus(Response::HTTP_OK)
              ->decodeResponseJson();
         
@@ -208,7 +206,7 @@ class FeedResourceTest extends ApiRequest
         $this->mockFeedReader();
         $this->withUser();
         
-        $data = ['url' => 'feedmebaby1moreti . me'];
+        $data = ['url' => 'http://feedmebaby1moreti.me'];
         $query = http_build_query($data);
         $response = $this->getJson($this->apiUrl . '/discover?' . $query)
                          ->assertStatus(Response::HTTP_OK)
