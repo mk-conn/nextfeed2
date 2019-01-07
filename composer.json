@@ -10,7 +10,9 @@
   "require": {
     "php": ">=7.1.0",
     "ext-dom": "*",
+    "ext-gd": "*",
     "ext-libxml": "*",
+    "beyondcode/laravel-websockets": "^1.0",
     "cloudcreativity/laravel-json-api": "v1.0.0-beta.5",
     "doctrine/dbal": "^2.9",
     "fideloper/proxy": "^4.0",
@@ -22,8 +24,7 @@
     "owen-it/laravel-auditing": "^8.0",
     "pmatseykanets/laravel-scout-postgres": "4.0.*",
     "zendframework/zend-feed": "2.10.*",
-    "zendframework/zend-http": "^2.8",
-    "ext-gd": "*"
+    "zendframework/zend-http": "^2.8"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.5",

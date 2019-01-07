@@ -3623,7 +3623,7 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@^1.2.15:
+ember-auto-import@^1.2.15, ember-auto-import@^1.2.19:
   version "1.2.19"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.19.tgz#69a2da0d2c16ab88989c51381c415214e85d1af3"
   integrity sha512-OT7I3zrIAv/rbbYJFZNqfJi/2HpAscjOWOaBPPUj8VkUnY26HlLO6mSzDIkoUOaTAEWiy2GzjenHGj6b9rivxw==
@@ -6361,6 +6361,11 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
+laravel-echo@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/laravel-echo/-/laravel-echo-1.5.2.tgz#d27357971315533bcd6d4c316936e74c7518bcba"
+  integrity sha512-Xw9QsxJKapv0C2UTnXRRIM1+epL3+qaSRGd7V8pXEuIHnxjcdpk2I7YLauDzYhBNMKEKWtlE/sv9Wgs+hYKnbg==
+
 leek@0.0.24:
   version "0.0.24"
   resolved "https://registry.yarnpkg.com/leek/-/leek-0.0.24.tgz#e400e57f0e60d8ef2bd4d068dc428a54345dbcda"
@@ -8858,7 +8863,7 @@ socket.io-adapter@~1.1.0:
   resolved "https://registry.yarnpkg.com/socket.io-adapter/-/socket.io-adapter-1.1.1.tgz#2a805e8a14d6372124dd9159ad4502f8cb07f06b"
   integrity sha1-KoBeihTWNyEk3ZFZrUUC+MsH8Gs=
 
-socket.io-client@2.2.0:
+socket.io-client@2.2.0, socket.io-client@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-2.2.0.tgz#84e73ee3c43d5020ccc1a258faeeb9aec2723af7"
   integrity sha512-56ZrkTDbdTLmBIyfFYesgOxsjcLnwAKoN4CiPyTVkMQj3zTUh0QAx3GbvIvLpFEOvQWu92yyWICxB0u7wkVbYA==

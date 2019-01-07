@@ -24,6 +24,7 @@
     "bootstrap": "^4.2.1",
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^4.0.1",
+    "ember-auto-import": "^1.2.19",
     "ember-bootstrap": "^2.4.0",
     "ember-cli": "~3.6.0",
     "ember-cli-app-version": "^3.2.0",
@@ -59,10 +60,12 @@
     "ember-source": "~3.6.0",
     "ember-truth-helpers": "^2.1.0",
     "eslint-plugin-ember": "^6.1.0",
+    "laravel-echo": "^1.5.2",
     "liquid-fire": "^0.29.5",
     "loader.js": "^4.7.0",
     "qunit-dom": "^0.8.0",
-    "sass": "^1.15.2"
+    "sass": "^1.15.2",
+    "socket.io-client": "^2.2.0"
   },
   "engines": {
     "node": "6.* || 8.* || >= 11.*"

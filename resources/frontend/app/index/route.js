@@ -1,12 +1,13 @@
 import { debug } from '@ember/debug';
 import { computed, get } from '@ember/object';
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import RSVP from 'rsvp';
 import Gui from 'frontend/mixins/gui';
+import RSVP from 'rsvp';
 
 function sortedItems(collection, collectionKey, property) {
-  return computed(`${collectionKey}.@each.${property}`, {
+  return computed(`${ collectionKey }.@each.${ property }`, {
     get() {
       return collection.sortBy(property);
     }
@@ -14,6 +15,9 @@ function sortedItems(collection, collectionKey, property) {
 }
 
 export default Route.extend(AuthenticatedRouteMixin, Gui, {
+  socket: service('socket-channel'),
+  currentUser: service('current-user'),
+
   displayIn: 'side-bar',
   /**
    * Model
@@ -35,6 +39,11 @@ export default Route.extend(AuthenticatedRouteMixin, Gui, {
         })
     });
   },
+
+  afterModel() {
+    this.socket.start(this.get('currentUser.user'));
+  },
+
   /**
    *
    */
