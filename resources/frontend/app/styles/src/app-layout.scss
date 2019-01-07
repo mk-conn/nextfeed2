@@ -176,7 +176,7 @@ body {
       position: absolute !important;
       right: 0;
       left: auto !important;
-      background: #555;
+      background: rgba(#333, 0.95);
       top: 0;
     }
   }
@@ -185,7 +185,7 @@ body {
 @include media-breakpoint-up(lg) {
   $sidebar: 30% !important;
   $col1: 30% !important;
-  $col2: 50% !important;
+  $col2: 40% !important;
 
   #side-bar {
     width: $sidebar;
@@ -206,6 +206,7 @@ body {
 
     &.enabled {
       width: $col2;
+      background: inherit;
     }
   }
 }

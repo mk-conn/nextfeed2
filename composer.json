@@ -22,7 +22,8 @@
     "owen-it/laravel-auditing": "^8.0",
     "pmatseykanets/laravel-scout-postgres": "4.0.*",
     "zendframework/zend-feed": "2.10.*",
-    "zendframework/zend-http": "^2.8"
+    "zendframework/zend-http": "^2.8",
+    "ext-gd": "*"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.5",

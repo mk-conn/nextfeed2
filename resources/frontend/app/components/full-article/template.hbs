@@ -21,32 +21,32 @@
   </div>
 </h3>
 
-<div id="article-content">
+
+<div id="article-content" class="flex content-between column">
   {{#if article.scraped}}
     {{article.scraped}}
   {{else}}
     {{content}}
   {{/if}}
-</div>
+  <div class="article-actions mt-3">
+    <a class="btn btn-outline-secondary"
+       href="{{article.url}}"
+       target="_blank"
+       data-content="Open article in new tab"
+      {{action (route-action "originalArticle") preventDefault=false}}
+    >
+      {{fa-icon "external-link-alt" prefix="fas"}}
+      Open article on publisher site
+    </a>
 
-<div class="flex column article-actions">
-  <a class="btn btn-outline-secondary"
-     href="{{article.url}}"
-     target="_blank"
-     data-content="Open article in new tab"
-    {{action (route-action "originalArticle") preventDefault=false}}
-  >
-    {{fa-icon "external-link-alt" prefix="fas"}}
-    Open article on publisher site
-  </a>
-
-  {{#link-to
-    onCloseRoute
-    activeClass=null
-    classNames="btn btn-outline-secondary"
-  }}
-    {{fa-icon "arrow-alt-circle-left" prefix="fas"}}
-  {{/link-to}}
+    {{#link-to
+      onCloseRoute
+      activeClass=null
+      classNames="btn btn-outline-secondary"
+    }}
+      {{fa-icon "arrow-alt-circle-left" prefix="fas"}}
+    {{/link-to}}
+  </div>
 </div>
 
 {{!--
