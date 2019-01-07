@@ -29,3 +29,11 @@
     align-items: center;
   }
 }
+
+.self-start {
+  align-self: start !important;
+}
+
+.self-end {
+  justify-self: flex-end !important;
+}

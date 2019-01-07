@@ -6,13 +6,48 @@
         {{feed.description}}
       </div>
     </div>
-    <div>
-      <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span>
-      <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
+    <div class="flex row content-between ml-auto">
+      <div>
+        <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span>
+        <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
+      </div>
+      <div>
+        {{#link-to
+          "index"
+          tagName="button"
+          activeClass=null
+          classNames="btn btn-sm btn-outline-secondary round ml-1"
+        }}
+          {{fa-icon "times" prefix="fas"}}
+        {{/link-to}}
+      </div>
     </div>
   </div>
-  <div class="btn-toolbar flex row content-end feed-actions" role="toolbar">
-    <div class="btn-group-sm">
+  <div class="flex row content-between feed-actions" role="toolbar">
+    {{#if showFilter}}
+      <div class="self-start">
+        <button type="button" class="btn btn-sm btn-outline-secondary" {{action
+          (action toggleProperty "filterUnread")}}>
+          {{#if filterUnread}}
+            Show all
+          {{else}}
+            Hide read
+          {{/if}}
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action "markAllRead")}}>
+          Mark read
+        </button>
+        {{#link-to
+          "index.feed.articles.settings"
+          feed
+          tagName="button"
+          classNames="btn btn-sm btn-outline-secondary"
+        }}
+          Settings
+        {{/link-to}}
+      </div>
+    {{/if}}
+    <div class="ml-auto">
       <button
         type="button"
         class="btn btn-sm btn-link"
@@ -21,35 +56,7 @@
         {{fa-icon "ellipsis-v" prefix="fas"}}
       </button>
     </div>
-    {{#link-to
-      "index"
-      tagName="button"
-      activeClass=null
-      classNames="btn btn-sm btn-outline-secondary round"
-    }}
-      {{fa-icon "times" prefix="fas"}}
-    {{/link-to}}
   </div>
-  {{#if showFilter}}
-    <button type="button" class="btn btn-sm btn-outline-secondary" {{action (action toggleProperty "filterUnread")}}>
-      {{#if filterUnread}}
-        Show all
-      {{else}}
-        Hide read
-      {{/if}}
-    </button>
-    <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action "markAllRead")}}>
-      Mark read
-    </button>
-    {{#link-to
-      "index.feed.articles.settings"
-      feed
-      tagName="button"
-      classNames="btn btn-sm btn-outline-secondary"
-    }}
-      Settings
-    {{/link-to}}
-  {{/if}}
 </div>
 <div class="articles" id="article-list">
   {{scroll-top elementToWatch="article-list"}}
