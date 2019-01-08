@@ -4,6 +4,7 @@ import RSVP from 'rsvp';
 
 export default Service.extend({
   session: service(),
+  socket: service('socket-channel'),
   store: service(),
   /**
    * Init
@@ -22,8 +23,9 @@ export default Service.extend({
     if (!this.user && this.get('session').isAuthenticated) {
       debug('user not set, loading user...');
 
-      return this.get('store').queryRecord('user', {filter: {me: true}}).then((user) => {
+      return this.get('store').queryRecord('user', { filter: { me: true } }).then((user) => {
         this.set('user', user);
+        this.get('socket').start(user);
       });
     } else {
       return RSVP.resolve();

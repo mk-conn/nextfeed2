@@ -24,40 +24,33 @@ export default Service.extend({
    * @param user
    */
   start(user) {
-    this.subscribed = [];
+    if(!this.echo) {
+      this.subscribed = [];
 
-    const selector = document.querySelector('meta[name="csrf-token"]');
-    const csrfToken = selector.getAttribute('content');
+      const selector = document.querySelector('meta[name="csrf-token"]');
+      const csrfToken = selector.getAttribute('content');
 
-    let host = window.location.hostname;
-    if (window.location.port) {
-      host = host + ':' + window.location.port;
-    }
-
-    this.echo = new Echo({
-      broadcaster: 'socket.io',
-      host: host,
-      // wsPath: '/ws',
-      csrfToken: csrfToken,
-      client: io,
-      auth: {
-        headers: {
-          Authorization: 'Bearer ' + this.get('session.data.authenticated.access_token')
-        }
+      let host = window.location.hostname;
+      if (window.location.port) {
+        host = host + ':' + window.location.port;
       }
-    });
 
-    const listenOnPrivate = () => {
-      const channelId = `App.User.${ this.currentUser.user.id }`;
-      this.echo.private(channelId).notification((notification) => {
-        const msg = `<span>${ notification.type }</span>`;
-        notify({ html: msg });
+      let token = this.get('session.data.authenticated.access_token');
+
+      this.echo = new Echo({
+        broadcaster: 'socket.io',
+        host: host,
+        // wsPath: '/ws',
+        csrfToken: csrfToken,
+        client: io,
+        // disableStats: true,
+        auth: {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
       });
-      this.subscribed.push(channelId);
-    };
-
-    run.next(this, listenOnPrivate);
-
+    }
 
     // user.get('settings').then((settings) => {
     //   // const notifications = settings.findBy('key', 'notifications');

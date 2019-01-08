@@ -1,6 +1,7 @@
 import { debug } from '@ember/debug';
 import { computed, get } from '@ember/object';
 import Route from '@ember/routing/route';
+import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Gui from 'frontend/mixins/gui';
@@ -39,9 +40,18 @@ export default Route.extend(AuthenticatedRouteMixin, Gui, {
         })
     });
   },
-
   afterModel() {
-    this.socket.start(this.get('currentUser.user'));
+    let echo = this.socket.get('echo');
+
+    const listenOnPrivate = () => {
+      const channelId = `App.User.${ this.currentUser.user.id }`;
+      echo.private(channelId).notification((notification) => {
+        // const msg = `<span>${ notification.type }</span>`;
+        // notify({ html: msg });
+      });
+    };
+
+    run.next(this, listenOnPrivate);
   },
 
   /**
@@ -62,7 +72,6 @@ export default Route.extend(AuthenticatedRouteMixin, Gui, {
 
     controller.set('folders', model.folders);
     controller.set('feeds', model.feeds);
-
   },
 
 

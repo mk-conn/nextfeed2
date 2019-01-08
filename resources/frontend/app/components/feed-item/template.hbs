@@ -9,8 +9,12 @@
       {{fa-icon "rss" prefix="fas"}}
     {{/if}}
   </span>
-  <span class="feed name">{{feed.name}}</span>
+  <div class="feed name">
+    {{feed.name}}
+  </div>
   {{#if feed.unreadCount}}
-    <span class="feed unread-count badge badge-secondary">{{feed.unreadCount}}</span>
+    <div class="feed unread-count">
+      <span class="badge badge-secondary">{{feed.unreadCount}}</span>
+    </div>
   {{/if}}
 {{/link-to}}

@@ -40,11 +40,6 @@ class AppComposer
         $notify->setAttribute('content', 0);
         $head->appendChild($notify);
 
-        $notify = $doc->createElement('meta');
-        $notify->setAttribute('name', 'notification-key');
-        $notify->setAttribute('content', 'some-');
-        $head->appendChild($notify);
-
         $apiClient = $doc->createElement('meta');
         $apiClient->setAttribute('name', 'api-client-id');
         $apiClient->setAttribute('content', env('PASSPORT_CLIENT_ID'));
