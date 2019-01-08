@@ -43,4 +43,9 @@ class ArticlesFetched implements ShouldBroadcast
             'id' => $this->feed->id
         ];
     }
+
+    public function broadcastAs()
+    {
+        return 'feed.articles.fetched';
+    }
 }

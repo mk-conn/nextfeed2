@@ -43,15 +43,13 @@ export default Route.extend(AuthenticatedRouteMixin, Gui, {
   afterModel() {
     let echo = this.socket.get('echo');
 
-    const listenOnPrivate = () => {
-      const channelId = `App.User.${ this.currentUser.user.id }`;
-      echo.private(channelId).notification((notification) => {
-        // const msg = `<span>${ notification.type }</span>`;
-        // notify({ html: msg });
-      });
-    };
-
-    run.next(this, listenOnPrivate);
+    // const listenOnPrivate = () => {
+    const channelId = `App.User.${ this.currentUser.user.id }`;
+    const store = this.store;
+    echo.private(channelId).listen('.feed.articles.fetched', (e) => {
+      console.log('ws-event', e);
+      store.peekRecord('feed', e.id).reload();
+    });
   },
 
   /**

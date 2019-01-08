@@ -229,10 +229,9 @@ class Feed extends BaseModel
             ]);
 
         if ($feed) {
-            event(new ArticlesFetched($this));
-//            if ($saved = $this->storeArticles($feed) > 0) {
-//                event(new ArticlesFetched($this));
-//            }
+            if ($saved = $this->storeArticles($feed) > 0) {
+                event(new ArticlesFetched($this));
+            }
         }
         $this->etag = $feedReader->getEtag($this->feed_url);
         $this->last_modified = $feedReader->getLastModified($this->feed_url);

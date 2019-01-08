@@ -24,7 +24,7 @@ export default Service.extend({
    * @param user
    */
   start(user) {
-    if(!this.echo) {
+    if (!this.echo) {
       this.subscribed = [];
 
       const selector = document.querySelector('meta[name="csrf-token"]');
@@ -51,75 +51,6 @@ export default Service.extend({
         }
       });
     }
-
-    // user.get('settings').then((settings) => {
-    //   // const notifications = settings.findBy('key', 'notifications');
-    //   const notifications = true;
-    //
-    //   if (notifications) {
-    //
-    //     let notification = false;
-    //     const value = notifications.get('value');
-    //     let keys = Object.keys(value);
-    //
-    //     const notify = (msg) => {
-    //       this.notify.info(msg);
-    //     };
-    //
-    //     keys.forEach((key) => {
-    //       // todo: optimize this loop
-    //       if (value[key]['browser'] === true) {
-    //         notification = true;
-    //       }
-    //     });
-    //
-    //     if (!this.echo && notification) {
-    //
-    //       try {
-    //         let host = window.location.hostname;
-    //         if (window.location.port) {
-    //           host = host + ':' + window.location.port;
-    //         }
-    //         debug(`socket-host: ${ host }`);
-    //         const selector = document.querySelector('meta[name="csrf-token"]');
-    //         const csrfToken = selector.getAttribute('content');
-    //         this.echo = new Echo({
-    //           broadcaster: 'socket.io',
-    //           host: host,
-    //           csrfToken: csrfToken,
-    //           client: io,
-    //           auth: {
-    //             headers: {
-    //               Authorization: 'Bearer ' + this.get('session.data.authenticated.access_token')
-    //             }
-    //           }
-    //         });
-    //
-    //         const listenOnPrivate = () => {
-    //           const channelId = `App.User.${ this.currentUser.user.id }`;
-    //           this.echo.private(channelId).notification((notification) => {
-    //             const msg = `<span>${ notification.type }</span>`;
-    //             notify({ html: msg });
-    //           });
-    //           this.subscribed.push(channelId);
-    //         };
-    //
-    //         const listenOnMessages = () => {
-    //           this.echo.channel("messages").listen('.patch-released', (e) => {
-    //             const msg = `<span>A new patch <a href="/patches/patch/${ e.slug }"><strong>${ e.name }</strong></a> for <strong>${ e.instrument }</strong> was created</span>`;
-    //             notify({ html: msg });
-    //           });
-    //           this.subscribed.push("messages");
-    //         };
-    //
-    //         run.next(this, listenOnPrivate);
-    //         run.next(this, listenOnMessages);
-    //       } catch (e) {
-    //         console.log(e);
-    //       }
-    //     }
-    //   }
-    // });
   },
 
   /**
