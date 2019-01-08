@@ -12,7 +12,7 @@ export default Route.extend({
   setupController(controller, model) {
     this._super(controller, model);
 
-    controller.set('feed', this.modelFor('index'));
+    controller.set('feed', this.modelFor('index.feed'));
   },
 
   actions: {

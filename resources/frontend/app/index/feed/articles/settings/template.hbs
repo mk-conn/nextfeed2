@@ -33,7 +33,6 @@
           value=model.settings.articles.keep
           class="form-control"
           type="number"
-          change=(action (route-action "updateFeed"))
         }}
       </div>
       <div class="form-group col">
@@ -43,23 +42,45 @@
             classNames="custom-control-input"
             id="keep-unread"
             checked=model.settings.articles.cleanup.keepUnread
-            change=(action (pipe (route-action "toggleKeepUnread") (route-action "updateFeed")))
+            change=(action (route-action "toggleKeepUnread"))
           }}
           <label for="keep-unread" class="custom-control-label">Keep unread during cleanup</label>
         </div>
       </div>
     </div>
-    <button
-      type="button"
-      class="btn btn-secondary"
-      {{action (route-action "updateFeed")}} disabled={{model.isSaving}}
-    >
-      Save
-      {{#if model.isSaving}}
-        <i class="fa fa-spinner"></i>
-      {{/if}}
-    </button>
+
+    <fieldset>
+      <label for="">Feed Url</label>
+      {{input type="text" value=model.feedUrl classNames="form-control"}}
+    </fieldset>
+    <div class="mt-3">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        {{action (route-action "updateFeed")}} disabled={{model.isSaving}}
+      >
+        Save
+        {{#if model.isSaving}}
+          <i class="fa fa-spinner"></i>
+        {{/if}}
+      </button>
+    </div>
   </fieldset>
+
+  <div class="mt-5 mb-3">
+    <div>Logo</div>
+    {{#if model.logo}}
+      <img src={{model.logo}} alt="" class="img-fluid">
+    {{else}}
+      <div class="alert alert-dark">This feed has no logo</div>
+    {{/if}}
+    <div>Icon</div>
+    {{#if model.icon}}
+      <img src={{model.icon}} alt="" width="16">
+    {{else}}
+      <div class="alert alert-dark">This feed has no icon</div>
+    {{/if}}
+  </div>
 
   <fieldset class="mt-5">
     <h4>Danger zone!</h4>
