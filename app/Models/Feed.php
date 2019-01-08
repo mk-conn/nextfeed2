@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\BaseModel;
+use App\Events\ArticlesFetched;
 use App\Readers\FeedReader;
 use App\Traits\Model\HasOrder;
 use Carbon\Carbon;
@@ -228,7 +229,10 @@ class Feed extends BaseModel
             ]);
 
         if ($feed) {
-            $saved = $this->storeArticles($feed);
+            event(new ArticlesFetched($this));
+//            if ($saved = $this->storeArticles($feed) > 0) {
+//                event(new ArticlesFetched($this));
+//            }
         }
         $this->etag = $feedReader->getEtag($this->feed_url);
         $this->last_modified = $feedReader->getLastModified($this->feed_url);
