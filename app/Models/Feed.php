@@ -160,6 +160,9 @@ class Feed extends BaseModel
                     $icons[] = $elements->item($i)
                                         ->getAttribute('href');
                 }
+                // as last try
+                $icons[] = 'favicon.ico';
+
                 if (!empty($icons)) {
 
                     foreach ($icons as $icon) {
