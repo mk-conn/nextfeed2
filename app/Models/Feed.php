@@ -217,7 +217,7 @@ class Feed extends BaseModel
             ]);
 
         if ($feed) {
-            if ($saved = $this->storeArticles($feed) > 0) {
+            if (($saved = $this->storeArticles($feed)) > 0) {
                 event(new ArticlesFetched($this));
             }
         }
