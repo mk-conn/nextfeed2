@@ -56,12 +56,12 @@ use Zend\Feed\Reader\Entry\EntryInterface;
 class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
 {
     use Searchable, Auditable;
-    
+
     /**
      *
      */
     const TABLE = 'articles';
-    
+
     protected static $baseObserver = false;
     /**
      * @var array
@@ -69,14 +69,14 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     protected $auditEvents = [
         'updated'
     ];
-    
+
     /**
      * @var array
      */
     protected $casts = [
         'categories' => 'array'
     ];
-    
+
     protected $dates = [
         'publish_date', 'updated_date'
     ];
@@ -86,12 +86,12 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     protected $hidden = [
         'searchable',
     ];
-    
+
     /**
      * @var array
      */
     protected $with = ['feed'];
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -99,13 +99,13 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->belongsTo(Feed::class);
     }
-    
+
     /**
      * @param EntryInterface $entry
      */
     public function createFromFeedEntry(EntryInterface $entry)
     {
-        $this->title = $entry->getTitle();
+        $this->title = $entry->getTitle() ?? '';
         $authors = [];
         $entryAuthors = $entry->getAuthors() ?? [];
         foreach ($entryAuthors as $author) {
@@ -120,7 +120,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
         $this->categories = $entry->getCategories();
         $this->description = $entry->getDescription();
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -128,7 +128,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->belongsTo(User::class);
     }
-    
+
     /**
      * @param $value
      *
@@ -138,7 +138,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->getISODate($value);
     }
-    
+
     /**
      * @param $value
      *
@@ -148,7 +148,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->getISODate($value);
     }
-    
+
     /**
      * @return array
      */
@@ -163,7 +163,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
             'config'         => 'simple'
         ];
     }
-    
+
     /**
      * @return array
      */
@@ -176,7 +176,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
             'feed'    => $this->feed->name
         ];
     }
-    
+
     /**
      * @param $value
      *
@@ -185,12 +185,12 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     protected function getISODate($value)
     {
         $time = strtotime($value);
-        
+
         if ($time) {
             return Carbon::createFromTimestamp($time)
                          ->format(Carbon::ISO8601);
         }
-        
+
         return $value;
     }
 }

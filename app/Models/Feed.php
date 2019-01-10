@@ -9,7 +9,6 @@ use App\Readers\FeedReader;
 use App\Traits\Model\HasOrder;
 use Carbon\Carbon;
 use DOMXPath;
-use Illuminate\Http\Response;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Feed\AbstractFeed;
 use Zend\Feed\Reader\Feed\FeedInterface;
@@ -141,21 +140,10 @@ class Feed extends BaseModel
         $response = $client->send($request);
         $body = $response->getBody();
 
-        $retrieveImage = function ($imageUrl) use ($request, $client) {
-            $request->setUri($imageUrl);
-            $response = $client->send($request);
-            $status = $response->getStatusCode();
-            $imageResponse = $response->getBody();
+        $retrieveImage = function ($imageUrl) {
+            $size = @getimagesize($imageUrl);
 
-            if ($status === Response::HTTP_OK) {
-                try {
-                    $image = imagecreatefromstring($imageResponse);
-
-                    return is_resource($image);
-                } catch (\ErrorException $err) {
-                    return false;
-                }
-            }
+            return isset($size[ 'mime' ]);
         };
 
 
