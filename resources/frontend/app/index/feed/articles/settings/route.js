@@ -1,5 +1,5 @@
-import Route from '@ember/routing/route';
 import { getOwner } from '@ember/application';
+import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import Gui from 'frontend/mixins/gui';
 
@@ -26,7 +26,7 @@ export default Route.extend(Gui, {
       const feed = this.get('currentModel');
 
       feed.save().then(feed => {
-        this.get('notify').success({html: `<strong>${feed.name}</strong> settings saved`});
+        this.get('notify').success({ html: `<strong>${ feed.name }</strong> settings saved` });
       });
     },
     toggleKeepUnread() {
@@ -39,6 +39,9 @@ export default Route.extend(Gui, {
         getOwner(this).lookup('route:' + 'index').refresh();
         this.transitionTo('index');
       });
+    },
+    reloadFeedIcon() {
+
     }
   }
 });

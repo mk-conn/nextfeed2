@@ -75,6 +75,9 @@
       <div class="alert alert-dark">This feed has no logo</div>
     {{/if}}
     <div>Icon</div>
+    <button type="button" class="btn btn-sm btn-outline-primary" {{action (route-action "reloadFeedIcon")}}>
+      {{fa-icon "sync" prefix="fas"}}
+    </button>
     {{#if model.icon}}
       <img src={{model.icon}} alt="" width="16">
     {{else}}
