@@ -51,18 +51,21 @@ class FeedReader
         $this->httpClient = Reader::getHttpClient();
 
         $headers = [];
-        $headers[ 'If-None-Match' ] = [$params[ self::ETAG ] ?? ''];
-        $headers[ 'If-Modified-Since' ] = [$params[ self::LAST_MODIFIED ] ?? ''];
+        if ($params[ self::ETAG ]) {
+            $headers[ 'If-None-Match' ] = [$params[ self::ETAG ]];
+        }
+        if ($params[ self::LAST_MODIFIED ]) {
+            $headers[ 'If-Modified-Since' ] = [$params[ self::LAST_MODIFIED ]];
+        }
 
         $response = $this->httpClient->get($params[ self::URI ], $headers);
-        if ($response->getStatusCode() !== Response::HTTP_NOT_MODIFIED) {
-            $body = $response->getBody();
+        $etag = $response->getHeaderLine('ETag');
+        $lastModified = $response->getHeaderLine('last-modified');
+        $this->meta[ $params[ self::URI ] ][ self::LAST_MODIFIED ] = $lastModified;
+        $this->meta[ $params[ self::URI ] ][ self::ETAG ] = $etag;
 
-            if ($body) {
-                $etag = $response->getHeaderLine('ETag');
-                $lastModified = $response->getHeaderLine('last-modified');
-                $this->meta[ $params[ self::URI ] ][ self::LAST_MODIFIED ] = $lastModified;
-                $this->meta[ $params[ self::URI ] ][ self::ETAG ] = $etag;
+        if ($response->getStatusCode() !== Response::HTTP_NOT_MODIFIED) {
+            if ($body = $response->getBody()) {
 
                 $reader = Reader::importString($body);
                 $reader->setOriginalSourceUri($params[ self::URI ]);
