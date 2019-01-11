@@ -210,3 +210,4 @@ typings/
 /.phpstorm.meta.php
 /_ide_helper.php
 /laravel-echo-server.json
+/laravel-echo-server.lock

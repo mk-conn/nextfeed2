@@ -8,6 +8,13 @@
     </div>
     <div class="flex row content-between ml-auto">
       <div>
+        <button
+          type="button"
+          class="btn btn-sm btn-link"
+          {{action toggleProperty "showFilter" on="click"}}
+        >
+          {{fa-icon "ellipsis-v" prefix="fas"}}
+        </button>
         <span title="Unread" class="badge badge-secondary">{{feed.unreadCount}}</span>
         <span title="Total" class="badge badge-dark">{{feed.articlesCount}}</span>
       </div>
@@ -47,15 +54,6 @@
         {{/link-to}}
       </div>
     {{/if}}
-    <div class="ml-auto">
-      <button
-        type="button"
-        class="btn btn-sm btn-link"
-        {{action toggleProperty "showFilter" on="click"}}
-      >
-        {{fa-icon "ellipsis-v" prefix="fas"}}
-      </button>
-    </div>
   </div>
 </div>
 <div class="articles" id="article-list">
@@ -69,16 +67,4 @@
     }}
   {{/each}}
   {{infinity-loader infinityModel=model scrollable="#article-list"}}
-  {{!--
-  {{#scrollable-container id="article-list-items"}}
-    {{#each model as |article|}}
-      {{article-list-item
-        article=article
-        articleRoute=articleRoute
-        feed=feed classNames="article-list-item"
-      }}
-    {{/each}}
-    {{infinity-loader infinityModel=model scrollable='#article-list-items'}}
-  {{/scrollable-container}}
-  --}}
 </div>
