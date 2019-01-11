@@ -7,4 +7,7 @@ the API was not really handy in terms of consuming and dealing with feeds and ar
 Install the server 
 `npm install -g laravel-echo-server`
 
-Copy laravel-echo-server.example.json to laravel-echo-server.json
+Copy laravel-echo-server.example.json to laravel-echo-server.json and ajust values.
+
+Start artisan queue: `php artisan queue:work`  - its good advise to have this all handled by supervisor.
+
