@@ -1,6 +1,6 @@
 {
   "authHost": "__auth_host__",
-  "authEndpoint": "__auth_endpoint__",
+  "authEndpoint": "/broadcasting/auth",
   "clients": [],
   "database": "__database__",
   "databaseConfig": {
