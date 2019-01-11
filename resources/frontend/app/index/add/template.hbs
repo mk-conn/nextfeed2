@@ -10,16 +10,7 @@
 
 <div class="form-group">
   <label for="feed-folder-select">Create in folder (optional)</label>
-  <select name="folder"
-          id="feed-folder-select"
-          class="custom-select"
-          onchange={{action (route-action "setFolder" )}}
-  >
-    <option value={{null}}>Select a folder (optional)</option>
-    {{#each model.folders as |folder|}}
-      <option value={{folder}}>{{folder.name}}</option>
-    {{/each}}
-  </select>
+  {{folder-selector feed=model.feed}}
 </div>
 <div>
   Folder selected:{{model.feed.folder.name}}

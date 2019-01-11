@@ -15,6 +15,9 @@
     </div>
   </div>
 
+  <label>Folder</label>
+  {{folder-selector feed=model classNames="custom-select"}}
+
   <fieldset>
     <div class="form-group">
       <label for="name">Name</label>
@@ -49,7 +52,7 @@
       </div>
     </div>
 
-    <fieldset>
+    <fieldset>s
       <label for="">Feed Url</label>
       {{input type="text" value=model.feedUrl classNames="form-control"}}
     </fieldset>

@@ -8,7 +8,7 @@ use App\Events\ArticlesFetched;
 use App\Readers\FeedReader;
 use App\Traits\Model\HasOrder;
 use Carbon\Carbon;
-use DOMXPath;
+use Masterminds\HTML5;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Feed\AbstractFeed;
 use Zend\Feed\Reader\Feed\FeedInterface;
@@ -138,7 +138,18 @@ class Feed extends BaseModel
         $request->setMethod('GET');
         $client = new Client();
         $response = $client->send($request);
-        $body = $response->getBody();
+        $body = trim($response->getBody());
+        $body = (new \tidy)->repairString(
+            $body,
+            [
+                'drop-proprietary-attributes' => true,
+                'fix-uri'                     => true,
+                'wrap'                        => false,
+                //                'input-xml'   => false,
+                'output-xml'                  => true,
+                'quote-marks'                 => true
+            ]
+        );
 
         $retrieveImage = function ($imageUrl) {
             $size = @getimagesize($imageUrl);
@@ -146,38 +157,39 @@ class Feed extends BaseModel
             return isset($size[ 'mime' ]);
         };
 
-
         if (!empty($body)) {
-
             try {
-                $dom = new \DOMDocument();
                 libxml_use_internal_errors(true);
-                $dom->loadHtml($body);
-                $xpath = new DOMXpath($dom);
-                $elements = $xpath->query(
-                    '//link[@rel="icon" or @rel="shortcut icon" or @rel="Shortcut Icon" or @rel="icon shortcut"]');
-                for ($i = 0; $i < $elements->length; ++$i) {
-                    $icons[] = $elements->item($i)
-                                        ->getAttribute('href');
-                }
-                // as last try
                 $icons[] = 'favicon.ico';
+                $html5 = new HTML5(['encode_entities' => true]);
+                $doc = $html5->loadHTML($body);
+                // xpath did not work for some feeds (probably the html was to fucked up :-/
+                $xml = simplexml_import_dom($doc);
+                $errors = libxml_get_errors();
+                libxml_clear_errors();
 
-                if (!empty($icons)) {
-
-                    foreach ($icons as $icon) {
-                        $icon = ltrim(trim($icon), '/');
-                        $iconPath = ltrim(str_replace($this->site_url, null, $icon), '/');
-
-                        if (strpos($iconPath, '?')) {
-                            $iconPath = explode('?', $iconPath)[ 0 ];
+                if (empty($errors)) {
+                    foreach ($xml->head->link as $link) {
+                        $rel = $link->attributes()->rel;
+                        $rel = strtolower($rel);
+                        if ($rel === 'icon' || $rel === 'shortcut icon' || $rel === 'icon shortcut') {
+                            $icons = array_prepend($icons, (string) $link->attributes()->href);
                         }
-                        // check if item is available and not a 404
-                        $imageUrl = $this->site_url . '/' . $iconPath;
-                        if ($retrieveImage($imageUrl)) {
-                            $this->icon = $imageUrl;
-                            break;
-                        }
+                    }
+                }
+
+                foreach ($icons as $icon) {
+                    $icon = ltrim(trim($icon), '/');
+                    $iconPath = ltrim(str_replace($this->site_url, null, $icon), '/');
+
+                    if (strpos($iconPath, '?')) {
+                        $iconPath = explode('?', $iconPath)[ 0 ];
+                    }
+                    // check if item is available and not a 404
+                    $imageUrl = $this->site_url . '/' . $iconPath;
+                    if ($retrieveImage($imageUrl)) {
+                        $this->icon = $imageUrl;
+                        break;
                     }
 
                     return true;

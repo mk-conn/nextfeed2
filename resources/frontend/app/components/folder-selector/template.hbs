@@ -1,0 +1,11 @@
+<option value="">--- Select a folder ---</option>
+{{#if getFolders.isRunning}}
+  {{#each getFolders as |folder|}}
+    {{#if (eq feed.folder.id folder.id)}}
+      <option value={{folder.id}} selected>{{folder.name}}</option>
+    {{else}}
+      <option value={{folder.id}}>{{folder.name}}</option>
+    {{/if}}
+  {{/each}}
+{{else}}
+{{/if}}
