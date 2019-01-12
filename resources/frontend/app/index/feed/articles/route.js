@@ -27,8 +27,8 @@ export default Route.extend(Gui, {
   enableOnClose: 'side-bar',
 
   lastId: null,
-
   session: service(),
+  tasks: service(),
 
   queryParams: {
     sort: {
@@ -99,25 +99,26 @@ export default Route.extend(Gui, {
   /**
    * Mark all articles known until now (thats why the lastArticleId) as read
    */
-  markAllRead: task(function* (feedId) {
-    this.store.adapterFor('application');
-    const appAdapter = this.get('store').adapterFor('application');
-    const urlPrefix = appAdapter.getUrlPrefix();
-    let {access_token} = this.session.data.authenticated;
-    let url = `/${urlPrefix}/feeds/${feedId}/mark-read`;
-    let xhr;
-    try {
-      xhr = $.getJSON({
-        url: url,
-        headers: {
-          Authorization: `Bearer ${access_token}`
-        },
-      });
-      return yield xhr.promise();
-    } finally {
-      xhr.abort();
-    }
-  }),
+  markAllRead(feedId) {
+    // this.store.adapterFor('application');
+    // const appAdapter = this.get('store').adapterFor('application');
+    // const urlPrefix = appAdapter.getUrlPrefix();
+    // let {access_token} = this.session.data.authenticated;
+    // let url = `/${urlPrefix}/feeds/${feedId}/mark-read`;
+    // let xhr;
+    // try {
+    //   xhr = $.getJSON({
+    //     url: url,
+    //     headers: {
+    //       Authorization: `Bearer ${access_token}`
+    //     },
+    //   });
+    //   return yield xhr.promise();
+    // } finally {
+    //   xhr.abort();
+    // }
+    return this.get('tasks').markAllRead(feedId);
+  },
 
   actions: {
     /**
@@ -139,7 +140,8 @@ export default Route.extend(Gui, {
           }
         }
       });
-    },
+    }
+    ,
 
     openArticle(article) {
       this.transitionTo('index.feed.articles.article', get(article, 'id'));
@@ -160,11 +162,16 @@ export default Route.extend(Gui, {
     markAllRead() {
       this.debug(`route %s::readAll() `, this.routeName);
       const feed = this.modelFor('index.feed');
-      this.get('markAllRead').perform(feed.id, meta.lastArticleId).then((result) => {
+      this.markAllRead(feed.id).then((result) => {
         let currentUnreadCount = get(feed, 'meta.articles-unread-count');
         set(feed, 'unreadCount', (currentUnreadCount - result));
         this.refresh();
       });
+      // this.get('markAllRead').perform(feed.id, meta.lastArticleId).then((result) => {
+      //   let currentUnreadCount = get(feed, 'meta.articles-unread-count');
+      //   set(feed, 'unreadCount', (currentUnreadCount - result));
+      //   this.refresh();
+      // });
     }
   }
 });

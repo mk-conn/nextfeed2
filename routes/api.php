@@ -13,19 +13,22 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('api/v1/feeds/{id}/mark-read', 'Api\V1\FeedsController@read')
-     ->middleware('auth:api');
-Route::get('api/v1/feeds/discover', 'Api\V1\FeedsController@discover')
-     ->middleware('auth:api');
-Route::get('api/v1/articles/search', 'Api\V1\ArticlesController@search')
-     ->middleware('auth:api');
+
+Route::group(
+    ['middleware' => 'auth:api'], function () {
+    Route::get('api/v1/feeds/{id}/mark-read', 'Api\V1\FeedsController@read');
+    Route::get('api/v1/feeds/{id}/reload-icon', 'Api\V1\FeedsController@reloadIcon');
+    Route::get('api/v1/feeds/discover', 'Api\V1\FeedsController@discover');
+    Route::get('api/v1/articles/search', 'Api\V1\ArticlesController@search');
+});
+
 //Route::get('api/actions/articles/scrape/{articleId}', 'Api\ActionsController@scrapeArticle')
 //     ->middleware('auth:api');
 
 JsonApi::register(
     'v1',
     [
-        'namespace'  => 'JsonApi',
+        'namespace' => 'JsonApi',
         //'middleware' => 'json-api.auth:default'
     ],
     function (ApiGroup $api) {

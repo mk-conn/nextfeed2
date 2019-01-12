@@ -7,6 +7,8 @@ export default Route.extend(Gui, {
   displayIn: 'column-two',
   enableOnClose: 'column-one',
   notify: service(),
+  session: service(),
+  tasks: service(),
   /**
    *
    * @returns {*|DS.Model}
@@ -26,7 +28,7 @@ export default Route.extend(Gui, {
       const feed = this.get('currentModel');
 
       feed.save().then(feed => {
-        this.get('notify').success({ html: `<strong>${ feed.name }</strong> settings saved` });
+        this.get('notify').success({html: `<strong>${feed.name}</strong> settings saved`});
       });
     },
     toggleKeepUnread() {
@@ -40,8 +42,15 @@ export default Route.extend(Gui, {
         this.transitionTo('index');
       });
     },
+    /**
+     *
+     * @returns {*}
+     */
     reloadFeedIcon() {
-
+      const feed = this.get('currentModel');
+      this.get('tasks').reloadFeedIcon(feed.id).then(() => {
+        feed.reload();
+      });
     }
   }
 });
