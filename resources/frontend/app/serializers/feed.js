@@ -19,10 +19,12 @@ export default ApplicationSerializer.extend({
    */
   serialize(snapshot, options) {
     let json = this._super(snapshot, options);
-
-    if (isPresent(json.data.attributes.meta)) {
-      delete json.data.attributes.meta;
+    if (isPresent(json.data.attributes)) {
+      if (isPresent(json.data.attributes.meta)) {
+        delete json.data.attributes.meta;
+      }
     }
+
     return json;
   }
 });

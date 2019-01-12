@@ -12,6 +12,6 @@ $btn-action-color: #354A17;
 
 button {
   &:disabled {
-    cursor: not-allowed;
+    cursor: not-allowed !important;
   }
 }

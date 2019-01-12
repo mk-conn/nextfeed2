@@ -15,8 +15,13 @@
     </div>
   </div>
 
-  <label>Folder</label>
-  {{folder-selector feed=model classNames="custom-select"}}
+  <label>Folder (optional)</label>
+  <div class="form-group">
+    {{folder-selector
+      feed=model
+      classNames="custom-select"
+    }}
+  </div>
 
   <fieldset>
     <div class="form-group">
@@ -34,6 +39,7 @@
         <label for="cleanup-days">Keep articles (days)</label>
         {{input
           value=model.settings.articles.keep
+          change=(action (mut model.changed))
           class="form-control"
           type="number"
         }}
@@ -52,15 +58,15 @@
       </div>
     </div>
 
-    <fieldset>s
+    <fieldset>
       <label for="">Feed Url</label>
       {{input type="text" value=model.feedUrl classNames="form-control"}}
     </fieldset>
     <div class="mt-3">
       <button
         type="button"
-        class="btn btn-secondary"
-        {{action (route-action "updateFeed")}} disabled={{model.isSaving}}
+        class="btn btn-outline-secondary"
+        {{action (route-action "updateFeed")}}
       >
         Save
         {{#if model.isSaving}}
