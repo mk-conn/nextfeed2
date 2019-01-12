@@ -10,7 +10,10 @@
 
 <div class="form-group">
   <label for="feed-folder-select">Create in folder (optional)</label>
-  {{folder-selector feed=model.feed}}
+  {{folder-selector
+    feed=model.feed
+    classNames="custom-select"
+  }}
 </div>
 <div>
   Folder selected:{{model.feed.folder.name}}
