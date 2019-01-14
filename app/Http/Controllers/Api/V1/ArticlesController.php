@@ -22,15 +22,34 @@ class ArticlesController extends Controller
         $this->authorize('index', [Article::class, $request]);
         $userId = $request->user()->id;
         $q = $request->get('q');
-        
+
         $results = Article::search(
             $q, function ($builder, $config) use ($userId) {
-            
+
             return new PhraseToTsQuery($builder->query, $config);
         })
                           ->where('user_id', $userId)
                           ->get();
-        
+
         return response()->json($results);
+    }
+
+    /**
+     * @param Request $request
+     * @param         $articleId
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function loadRemoteContent(Request $request, $articleId)
+    {
+        $article = Article::findOrFail($articleId);
+        $this->authorize('view', [$request->user('api'), $article]);
+
+        $content = $article->readFromRemote();
+
+        return response()->json($content);
+
     }
 }

@@ -1,14 +1,16 @@
-import Route from '@ember/routing/route';
 import { get, set } from '@ember/object';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import Gui from 'frontend/mixins/gui';
 
 export default Route.extend(Gui, {
+  tasks: service(),
   displayIn: 'column-two',
   enableOnClose: 'column-one',
 
   beforeModel() {
     this.debug('route %s::beforeModel()', this.routeName);
-    $('#' + this.get('displayIn')).animate({scrollTop: 0, duration: 400});
+    $('#' + this.get('displayIn')).animate({ scrollTop: 0, duration: 400 });
 
     this._super(...arguments);
   },
@@ -45,16 +47,10 @@ export default Route.extend(Gui, {
   },
 
   actions: {
-    scrapeArticle(article) {
-      this.store.queryRecord('article-action', {
-        action: 'scrape',
-        params: {
-          article_id: get(article, 'id')
-        }
-      }).then(articleAction => {
-        const scraped = get(articleAction, 'result.scraped').htmlSafe();
-        article.set('scraped', scraped);
-      })
+    loadRemoteArticle(article) {
+      this.tasks.remoteArticle(article).then(content => {
+        article.set('scraped', content);
+      });
     },
     originalArticle() {
 

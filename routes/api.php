@@ -14,17 +14,6 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 |
 */
 
-Route::group(
-    ['middleware' => 'auth:api'], function () {
-    Route::get('api/v1/feeds/{id}/mark-read', 'Api\V1\FeedsController@read');
-    Route::get('api/v1/feeds/{id}/reload-icon', 'Api\V1\FeedsController@reloadIcon');
-    Route::get('api/v1/feeds/discover', 'Api\V1\FeedsController@discover');
-    Route::get('api/v1/articles/search', 'Api\V1\ArticlesController@search');
-});
-
-//Route::get('api/actions/articles/scrape/{articleId}', 'Api\ActionsController@scrapeArticle')
-//     ->middleware('auth:api');
-
 JsonApi::register(
     'v1',
     [
@@ -46,3 +35,12 @@ JsonApi::register(
             'has-many' => ['folders', 'feeds', 'settings']
         ]);
     });
+
+Route::group(
+    ['middleware' => 'auth:api'], function () {
+    Route::get('api/v1/articles/{$id}/remote-content', 'Api\V1\ArticlesController@loadRemoteContent');
+    Route::get('api/v1/articles/search', 'Api\V1\ArticlesController@search');
+    Route::get('api/v1/feeds/discover', 'Api\V1\FeedsController@discover');
+    Route::get('api/v1/feeds/{id}/mark-read', 'Api\V1\FeedsController@read');
+    Route::get('api/v1/feeds/{id}/reload-icon', 'Api\V1\FeedsController@reloadIcon');
+});

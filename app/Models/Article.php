@@ -5,6 +5,8 @@ namespace App\Models;
 
 use App\BaseModel;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use Illuminate\Http\Response;
 use Laravel\Scout\Searchable;
 use OwenIt\Auditing\Auditable;
 use Zend\Feed\Reader\Entry\EntryInterface;
@@ -109,7 +111,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
         $authors = [];
         $entryAuthors = $entry->getAuthors() ?? [];
         foreach ($entryAuthors as $author) {
-            $authors[] = $author['name'];
+            $authors[] = $author[ 'name' ];
         }
         $this->author = implode(', ', $authors);
         $this->content = $entry->getContent();
@@ -137,6 +139,23 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     public function getPublishDateAttribute($value)
     {
         return $this->getISODate($value);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    protected function getISODate($value)
+    {
+        $time = strtotime($value);
+
+        if ($time) {
+            return Carbon::createFromTimestamp($time)
+                         ->format(Carbon::ISO8601);
+        }
+
+        return $value;
     }
 
     /**
@@ -178,19 +197,25 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     }
 
     /**
-     * @param $value
-     *
-     * @return string
+     * @return \Psr\Http\Message\StreamInterface|string|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function getISODate($value)
+    public function readFromRemote()
     {
-        $time = strtotime($value);
+        $body = null;
+        $client = new Client();
+        $response = $client->request('GET', $this->url);
 
-        if ($time) {
-            return Carbon::createFromTimestamp($time)
-                         ->format(Carbon::ISO8601);
+        if ($response->getStatusCode() === Response::HTTP_OK) {
+            $body = $response->getBody();
+            $config = \HTMLPurifier_Config::createDefault();
+            $config->set('Filter.Youtube', true);
+            $config->set('HTML.AllowedElements', ['div', 'article', 'section', 'span', 'address', 'p']);
+            $purifier = new \HTMLPurifier($config);
+            $body = $purifier->purify($body);
         }
 
-        return $value;
+        return $body;
     }
+
 }

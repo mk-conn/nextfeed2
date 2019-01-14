@@ -49,8 +49,9 @@
   </div>
 </div>
 
-{{!--
-<button class="btn btn-outline-secondary" {{action (route-action "scrapeArticle" article)}} disabled={{scrapeDisabled}}>
-  Scrape Article
+<button class="btn btn-outline-secondary"
+        disabled={{loadRemoteDisabled}}
+  {{action (route-action "loadRemoteArticle" article.id)}}
+>
+  Load remote article
 </button>
---}}
