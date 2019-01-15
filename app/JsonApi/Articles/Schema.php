@@ -13,12 +13,12 @@ use App\Models\Article;
  */
 class Schema extends DefaultSchema
 {
-    
+
     /**
      * @var string
      */
     protected $resourceType = 'articles';
-    
+
     /**
      * @var array|null
      */
@@ -39,7 +39,7 @@ class Schema extends DefaultSchema
         'updated_at',
         'deleted_at'
     ];
-    
+
     /**
      * @param Article $resource
      * @param bool    $isPrimary
@@ -53,20 +53,23 @@ class Schema extends DefaultSchema
             'feed' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['feed']),
+                self::SHOW_DATA    => isset($includeRelationships[ 'feed' ]),
                 self::DATA         => function () use ($resource) {
                     return $resource->feed;
                 }
             ]
         ];
     }
-    
+
     public function getPrimaryMeta($resource)
     {
         return [
-            'audits' => count($resource->audits)
+            'audits'  => count($resource->audits),
+            'actions' => [
+                'remote' => route('api:v1:articles.remote', ['id' => $resource->id])
+            ]
         ];
     }
-    
+
 }
 

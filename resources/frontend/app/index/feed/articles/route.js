@@ -100,23 +100,6 @@ export default Route.extend(Gui, {
    * Mark all articles known until now (thats why the lastArticleId) as read
    */
   markAllRead(feedId) {
-    // this.store.adapterFor('application');
-    // const appAdapter = this.get('store').adapterFor('application');
-    // const urlPrefix = appAdapter.getUrlPrefix();
-    // let {access_token} = this.session.data.authenticated;
-    // let url = `/${urlPrefix}/feeds/${feedId}/mark-read`;
-    // let xhr;
-    // try {
-    //   xhr = $.getJSON({
-    //     url: url,
-    //     headers: {
-    //       Authorization: `Bearer ${access_token}`
-    //     },
-    //   });
-    //   return yield xhr.promise();
-    // } finally {
-    //   xhr.abort();
-    // }
     return this.get('tasks').markAllRead(feedId);
   },
 

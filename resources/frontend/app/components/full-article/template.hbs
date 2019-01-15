@@ -29,6 +29,14 @@
     {{content}}
   {{/if}}
   <div class="article-actions mt-3">
+    {{#link-to
+      onCloseRoute
+      activeClass=null
+      classNames="btn btn-outline-secondary"
+    }}
+      {{fa-icon "arrow-alt-circle-left" prefix="fas"}}
+    {{/link-to}}
+
     <a class="btn btn-outline-secondary"
        href="{{article.url}}"
        target="_blank"
@@ -39,19 +47,11 @@
       Open article on publisher site
     </a>
 
-    {{#link-to
-      onCloseRoute
-      activeClass=null
-      classNames="btn btn-outline-secondary"
-    }}
-      {{fa-icon "arrow-alt-circle-left" prefix="fas"}}
-    {{/link-to}}
+    <button class="btn btn-outline-secondary"
+            disabled={{loadRemoteDisabled}}
+      {{action (route-action "loadRemoteArticle" article.id)}}
+    >
+      Load remote article
+    </button>
   </div>
 </div>
-
-<button class="btn btn-outline-secondary"
-        disabled={{loadRemoteDisabled}}
-  {{action (route-action "loadRemoteArticle" article.id)}}
->
-  Load remote article
-</button>

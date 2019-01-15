@@ -24,8 +24,6 @@ JsonApi::register(
         Route::group(
             ['middleware' => 'json-api.auth:default'], function () use ($api) {
             $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
-            $api->resource('feed-actions');
-            $api->resource('article-actions');
             $api->resource('folders', ['has-many' => 'feeds', 'has-one' => 'user']);
             $api->resource('articles', ['has-one' => 'feed']);
             $api->resource('settings');
@@ -36,11 +34,15 @@ JsonApi::register(
         ]);
     });
 
-Route::group(
-    ['middleware' => 'auth:api'], function () {
-    Route::get('api/v1/articles/{$id}/remote-content', 'Api\V1\ArticlesController@loadRemoteContent');
-    Route::get('api/v1/articles/search', 'Api\V1\ArticlesController@search');
-    Route::get('api/v1/feeds/discover', 'Api\V1\FeedsController@discover');
-    Route::get('api/v1/feeds/{id}/mark-read', 'Api\V1\FeedsController@read');
-    Route::get('api/v1/feeds/{id}/reload-icon', 'Api\V1\FeedsController@reloadIcon');
-});
+
+Route::middleware(['auth:api'])
+     ->prefix('api/v1')
+     ->group(function () {
+         Route::get('articles/remote/{id}', 'Api\V1\ArticlesController@loadRemoteContent')
+              ->name('api:v1:articles.remote');
+         Route::get('articles/search', 'Api\V1\ArticlesController@search')
+              ->name('api:v1:articles.search');
+         Route::get('feeds/discover', 'Api\V1\FeedsController@discover');
+         Route::get('feeds/{id}/mark-read', 'Api\V1\FeedsController@read');
+         Route::get('feeds/{id}/reload-icon', 'Api\V1\FeedsController@reloadIcon');
+     });

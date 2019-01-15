@@ -15,7 +15,7 @@
     "ext-tidy": "*",
     "cloudcreativity/laravel-json-api": "v1.0.0-beta.5",
     "doctrine/dbal": "^2.9",
-    "ezyang/htmlpurifier": "^4.10",
+    "xemlock/htmlpurifier-html5": "0.1.*",
     "fideloper/proxy": "^4.0",
     "laravel/framework": "5.7.*",
     "laravel/passport": "7.0.*",

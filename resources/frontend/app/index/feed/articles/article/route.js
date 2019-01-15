@@ -47,10 +47,8 @@ export default Route.extend(Gui, {
   },
 
   actions: {
-    loadRemoteArticle(article) {
-      this.tasks.remoteArticle(article).then(content => {
-        article.set('scraped', content);
-      });
+    loadRemoteArticle(articleId) {
+      return this.tasks.remoteArticle(articleId);
     },
     originalArticle() {
 

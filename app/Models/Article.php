@@ -6,6 +6,8 @@ namespace App\Models;
 use App\BaseModel;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use HTMLPurifier;
+use HTMLPurifier_HTML5Config;
 use Illuminate\Http\Response;
 use Laravel\Scout\Searchable;
 use OwenIt\Auditing\Auditable;
@@ -208,13 +210,13 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
 
         if ($response->getStatusCode() === Response::HTTP_OK) {
             $body = $response->getBody();
-            $config = \HTMLPurifier_Config::createDefault();
-            $config->set('Filter.Youtube', true);
-            $config->set('HTML.AllowedElements', ['div', 'article', 'section', 'span', 'address', 'p']);
-            $purifier = new \HTMLPurifier($config);
+            $config = HTMLPurifier_HTML5Config::create([
+                'HTML.SafeIframe'      => true,
+                'URI.SafeIframeRegexp' => '%^//www\.youtube\.com/embed/%',
+            ]);
+            $purifier = new HTMLPurifier($config);
             $body = $purifier->purify($body);
         }
-
         return $body;
     }
 

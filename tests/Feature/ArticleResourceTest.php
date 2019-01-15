@@ -23,9 +23,9 @@ use Tests\Traits\ModelFactoryTrait;
 class ArticleResourceTest extends ApiRequest
 {
     use ModelFactoryTrait, FeedReaderMock;
-    
+
     const RESOURCE_TYPE = 'articles';
-    
+
     /**
      *
      */
@@ -35,14 +35,14 @@ class ArticleResourceTest extends ApiRequest
         $this->withUser();
         $feed = $this->createFeed($this->user);
         $this->createArticle($feed, [], 10);
-        
+
         $response = $this->getJsonApi($this->apiUrl)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
-        
-        $this->assertCount(10, $response['data']);
+
+        $this->assertCount(10, $response[ 'data' ]);
     }
-    
+
     /**
      *
      */
@@ -52,12 +52,12 @@ class ArticleResourceTest extends ApiRequest
         $this->withUser();
         $feed = $this->createFeed($this->user);
         $article = $this->createArticle($feed);
-        
+
         $this->getJsonApi($this->apiUrl . '/' . $article->id)
              ->assertStatus(Response::HTTP_OK)
              ->decodeResponseJson();
     }
-    
+
     /**
      *
      */
@@ -67,7 +67,7 @@ class ArticleResourceTest extends ApiRequest
         $this->withUser();
         $feed = $this->createFeed($this->user);
         $article = $this->createArticle($feed);
-        
+
         $update = [
             'data' => [
                 'type'       => 'articles',
@@ -78,14 +78,14 @@ class ArticleResourceTest extends ApiRequest
                 ]
             ]
         ];
-        
+
         $response = $this->patchJsonApi($this->apiUrl . '/' . $article->id, $update)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
         $this->assertTrue(array_get($response, 'data.attributes.read'));
         $this->assertTrue(array_get($response, 'data.attributes.keep'));
     }
-    
+
     /**
      *
      */
@@ -98,21 +98,21 @@ class ArticleResourceTest extends ApiRequest
         $otherFeed = $this->createFeed($otherUser);
         $this->createArticle($otherFeed, [], 3);
         $this->createArticle($feed);
-        
+
         $response = $this->getJsonApi($this->apiUrl . '/?filter[feed]=' . $otherFeed->id)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
-        $this->assertCount(0, $response['data']);
-        
+        $this->assertCount(0, $response[ 'data' ]);
+
     }
-    
+
     public function testUpdateWhitelistAttributes()
     {
         $this->mockFeedReader();
         $this->withUser();
         $feed = $this->createFeed($this->user);
         $article = $this->createArticle($feed);
-        
+
         $update = [
             'data' => [
                 'type'       => 'articles',
@@ -124,7 +124,7 @@ class ArticleResourceTest extends ApiRequest
                 ]
             ]
         ];
-        
+
         $response = $this->patchJsonApi($this->apiUrl . '/' . $article->id, $update)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
@@ -132,20 +132,20 @@ class ArticleResourceTest extends ApiRequest
         $this->assertTrue(array_get($response, 'data.attributes.keep'));
         $this->assertEquals($article->title, array_get($response, 'data.attributes.title'));
     }
-    
+
     /**
      *
      */
     public function testArchivedArticles()
     {
-        
+
         $this->mockFeedReader();
         $this->withUser();
         $feed = $this->createFeed($this->user);
-        
+
         $this->createArticle($feed, [], 4);
         $this->createArticle($feed, ['keep' => true], 6);
-        
+
         // http://localhost:8500/api/v1/articles?fields%5Barticles%5D=title%2Cdescription%2Cauthor%2Ckeep%2Cread%2Curl%2Cupdated-date%2Ccategories&filter%5Bkeep%5D=true&page%5Bsize%5D=10&page%5Bnumber%5D=1&page%5Bsize%5D=25&sort=-updated-date%2C-id
         // filter[keep]=1&fields[article]=title,description,author,keep,read,url,updated-date,categories&page[size]=10&page[number]=1&sort[0]=-updated-date,-id
         $query_data = [
@@ -160,18 +160,18 @@ class ArticleResourceTest extends ApiRequest
                 'number' => 1
             ],
             'sort'   => '-updated-date,-id'
-        
+
         ];
-        
+
         $query = http_build_query($query_data);
-        
+
         $response = $this->getJsonApi($this->apiUrl . '?' . $query)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
-        
-        $this->assertCount(6, $response['data']);
+
+        $this->assertCount(6, $response[ 'data' ]);
     }
-    
+
     /**
      *
      */
@@ -180,14 +180,14 @@ class ArticleResourceTest extends ApiRequest
         $this->mockFeedReader();
         $this->withUser();
         $feed = $this->createFeed($this->user);
-        
+
         $this->createArticle(
             $feed, [
             'title'   => 'Eine Artikel Überschrift',
             'content' => 'Some bloody content godamnit!'
         ]);
         $this->createArticle($feed, [], 10);
-        
+
         $data = [
             'q' => 'Überschrift'
         ];
@@ -203,7 +203,7 @@ class ArticleResourceTest extends ApiRequest
 //                         ->decodeResponseJson();
 //        $this->assertCount(1, array_get($response, 'data.attributes.result.articles'));
     }
-    
+
     public function testMarkReadDoesNotCreateAudit()
     {
         $this->mockFeedReader();
@@ -215,7 +215,7 @@ class ArticleResourceTest extends ApiRequest
             'content' => 'Some bloody content godamnit!',
             'read'    => false
         ]);
-        
+
         $this->patchJsonApi(
             $this->apiUrl . '/' . $article->id, [
             'data' => [
@@ -226,12 +226,29 @@ class ArticleResourceTest extends ApiRequest
                 ]
             ]
         ]);
-        
+
         $article = Article::find($article->id);
         $audits = $article->audits;
         $this->assertCount(0, $audits);
-        
     }
-    
-    
+
+    public function testGetRemoteArticle()
+    {
+        $this->mockFeedReader();
+        $this->withUser();
+        $feed = $this->createFeed($this->user);
+        $article = $this->createArticle(
+            $feed, [
+            'title'   => 'Eine Artikel Überschrift',
+            'content' => 'Some bloody content godamnit!',
+            'read'    => false
+        ]);
+
+        $response = $this->getJson($this->baseUrl . '/articles/remote/' . $article->id)
+                         ->assertStatus(Response::HTTP_OK)
+                         ->decodeResponseJson();
+
+    }
+
+
 }

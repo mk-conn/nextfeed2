@@ -1,30 +1,27 @@
 import Service, { inject as service } from '@ember/service';
+// noinspection ES6CheckImport
 import { task } from 'ember-concurrency';
 
 export default Service.extend({
   store: service(),
   session: service(),
-  /**
-   * @todo: use fetch instead of jquery
-   */
+
   runTask: task(function* (url) {
+    let { access_token } = this.session.data.authenticated;
     const appAdapter = this.get('store').adapterFor('application');
     const urlPrefix = appAdapter.getUrlPrefix();
-    let { access_token } = this.session.data.authenticated;
-    let getUrl = `/${ urlPrefix }/${ url }`;
-    let xhr;
-    try {
-      xhr = $.getJSON({
-        url: getUrl,
-        headers: {
-          Authorization: `Bearer ${ access_token }`
-        },
-      });
+    url = `/${ urlPrefix }/${ url }`;
 
-      return yield xhr.promise();
-    } finally {
-      xhr.abort();
-    }
+    return yield fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${ access_token }`,
+        'X-Requested-With': 'XMLHttpRequest',
+        "Content-Type": "application/json"
+      },
+    }).then(response => {
+      return response.json()
+    });
   }),
 
   /**
@@ -53,7 +50,7 @@ export default Service.extend({
    * @returns {*|void}
    */
   remoteArticle(articleId) {
-    let url = `articles/${ articleId }/remote-content`;
+    let url = `articles/remote/${ articleId }`;
 
     return this.get('runTask').perform(url);
   }

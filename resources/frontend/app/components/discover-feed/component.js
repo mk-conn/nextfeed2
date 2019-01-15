@@ -27,7 +27,7 @@ export default Component.extend({
 
       const appAdapter = this.store.adapterFor('application');
       let {access_token} = this.session.data.authenticated;
-      let url = `${appAdapter.getUrlPrefix()}/feeds/discover`;
+      let url = `api/actions/feeds/discover`;
       this.validateUrl();
       let discoverUrl = `${this.protocols[this.selectedProtocol]}${this.get('url') || ''}`;
 
