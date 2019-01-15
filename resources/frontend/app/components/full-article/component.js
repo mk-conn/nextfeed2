@@ -1,17 +1,15 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
-import $ from 'jquery';
-import { typeOf } from '@ember/utils';
-import { htmlSafe } from '@ember/template';
 import { debug } from '@ember/debug';
+import { computed, get } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/template';
+import { typeOf } from '@ember/utils';
+import $ from 'jquery';
 
 export default Component.extend({
+  tasks: service(),
 
   classNames: ['full-article'],
-
-  scrapeDisabled: computed('article.scraped', function () {
-    return !!get(this, 'article.scraped');
-  }),
 
   content: computed('article.content', function () {
 
@@ -24,6 +22,8 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.set('elementId', 'full-article');
+    this.fullArticleContent = null;
+    this.loader = false;
   },
 
   didRender() {
@@ -33,22 +33,6 @@ export default Component.extend({
     });
 
     this.$('iframe').each(function () {
-
-      // const origWidth = typeOf($(this).attr('width')) !== 'undefined' ? $(this).attr('width') : $(this).width();
-      // const origHeight = typeOf($(this).attr('height')) !== 'undefined' ? $(this).attr('height') : $(this).height();
-      // const currentWidth = _self.$('.article-content').width();
-      // debug('iframe original witdth is ', origWidth);
-      //
-      // if (!origWidth || origWidth > currentWidth) {
-      //   const factor = origWidth / currentWidth;
-      //   const scaledWidth = currentWidth;
-      //   const scaledHeight = Math.round(origHeight / factor);
-      //
-      //   debug('set iframe witdth to ', scaledWidth);
-      //
-      //   $(this).attr('width', scaledWidth);
-      //   $(this).attr('height', scaledHeight);
-      // }
 
       $(this).attr('sandbox', '');
       $(this).attr('sandbox', 'allow-same-origin allow-scripts allow-presentation');
@@ -60,8 +44,18 @@ export default Component.extend({
       // }
 
     });
-
-
+  },
+  actions: {
+    loadRemoteArticle(articleId) {
+      this.set('loader', true);
+      this.tasks.remoteArticle(articleId).then(content => {
+        this.set('fullArticleContent', htmlSafe(content));
+        this.set('loader', false);
+      });
+    },
+    restoreContent() {
+      this.set('fullArticleContent', null);
+    }
   }
 
 });

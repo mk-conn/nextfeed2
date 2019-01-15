@@ -1,39 +1,41 @@
 header {
-  background: rgba(0, 0, 0, .75);
-  padding: .25rem;
+  &.nextfeed {
+    background: rgba(0, 0, 0, .75);
+    padding: .25rem;
 
-  a, a:link {
-    color: lighten($color2, 30%);
-    font-size: 1.1rem;
-    font-weight: bold;
+    a, a:link {
+      color: lighten($color2, 30%);
+      font-size: 1.1rem;
+      font-weight: bold;
 
-    &.active {
-      color: $orange;
+      &.active {
+        color: $orange;
+      }
     }
-  }
 
-  .user {
-    &.fullname {
-      display: none;
+    .user {
+      &.fullname {
+        display: none;
+      }
     }
-  }
 
-  .right {
-    align-self: flex-start;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-
-    > * {
-      margin-left: 1rem;
+    .right {
+      align-self: flex-start;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
 
       > * {
-        margin-left: inherit;
-        &:last-child {
-          margin-right:.5rem;
+        margin-left: 1rem;
+
+        > * {
+          margin-left: inherit;
+
+          &:last-child {
+            margin-right: .5rem;
+          }
         }
       }
     }
   }
-
 }

@@ -23,8 +23,11 @@
 
 
 <div id="article-content" class="flex content-between column">
-  {{#if article.scraped}}
-    {{article.scraped}}
+  {{#if fullArticleContent}}
+    <div class="mb-3">
+      <button class="btn btn-outline-secondary" {{action "restoreContent"}}>Restore content</button>
+    </div>
+    {{fullArticleContent}}
   {{else}}
     {{content}}
   {{/if}}
@@ -46,12 +49,17 @@
       {{fa-icon "external-link-alt" prefix="fas"}}
       Open article on publisher site
     </a>
-
-    <button class="btn btn-outline-secondary"
-            disabled={{loadRemoteDisabled}}
-      {{action (route-action "loadRemoteArticle" article.id)}}
-    >
-      Load remote article
-    </button>
+    {{#if (not-eq fullArticleContent null)}}
+      <button class="btn btn-outline-secondary" {{action "restoreContent"}}>Restore content</button>
+    {{else}}
+      <button class="btn btn-outline-secondary"
+        {{action "loadRemoteArticle" article.id}}
+      >
+        Load remote article
+        {{#if loader}}
+          {{fa-icon "circle-notch" spin=true prefix="fas"}}
+        {{/if}}
+      </button>
+    {{/if}}
   </div>
 </div>

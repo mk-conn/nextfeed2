@@ -4,10 +4,9 @@ namespace App\Models;
 
 
 use App\BaseModel;
+use App\Readers\ArticleReader;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
-use HTMLPurifier;
-use HTMLPurifier_HTML5Config;
 use Illuminate\Http\Response;
 use Laravel\Scout\Searchable;
 use OwenIt\Auditing\Auditable;
@@ -210,14 +209,21 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
 
         if ($response->getStatusCode() === Response::HTTP_OK) {
             $body = $response->getBody();
-            $config = HTMLPurifier_HTML5Config::create([
-                'HTML.SafeIframe'      => true,
-                'URI.SafeIframeRegexp' => '%^//www\.youtube\.com/embed/%',
-            ]);
-            $purifier = new HTMLPurifier($config);
-            $body = $purifier->purify($body);
+//            $config = HTMLPurifier_HTML5Config::create([
+//                'HTML.Allowed'           => 'div,p,a[href],section,article,span,li,ul,dt,dd,table,tr,td,thead,tbody',
+//                'HTML.Doctype'           => 'XHTML 1.0 Strict',
+//                'HTML.TidyLevel'         => 'heavy',
+//                'HTML.TidyAdd'           => ['quote-mark', 'quote-ampersand'],
+//                'HTML.TidyRemove'        => ['wrap'],
+//                'HTML.SafeIframe'        => true,
+//                'URI.SafeIframeRegexp'   => '%^//www\.youtube\.com/embed/%',
+//                'AutoFormat.RemoveEmpty' => true,
+//                'Output.TidyFormat'      => true,
+//            ]);
+            $articleReader = new ArticleReader($body);
+            $body = $articleReader->getArticleContent();
         }
+
         return $body;
     }
-
 }
