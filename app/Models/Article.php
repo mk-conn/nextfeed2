@@ -59,12 +59,12 @@ use Zend\Feed\Reader\Entry\EntryInterface;
 class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
 {
     use Searchable, Auditable;
-
+    
     /**
      *
      */
     const TABLE = 'articles';
-
+    
     protected static $baseObserver = false;
     /**
      * @var array
@@ -72,14 +72,14 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     protected $auditEvents = [
         'updated'
     ];
-
+    
     /**
      * @var array
      */
     protected $casts = [
         'categories' => 'array'
     ];
-
+    
     protected $dates = [
         'publish_date', 'updated_date'
     ];
@@ -89,12 +89,12 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     protected $hidden = [
         'searchable',
     ];
-
+    
     /**
      * @var array
      */
     protected $with = ['feed'];
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -102,7 +102,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->belongsTo(Feed::class);
     }
-
+    
     /**
      * @param EntryInterface $entry
      */
@@ -112,7 +112,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
         $authors = [];
         $entryAuthors = $entry->getAuthors() ?? [];
         foreach ($entryAuthors as $author) {
-            $authors[] = $author[ 'name' ];
+            $authors[] = $author['name'];
         }
         $this->author = implode(', ', $authors);
         $this->content = $entry->getContent();
@@ -123,7 +123,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
         $this->categories = $entry->getCategories();
         $this->description = $entry->getDescription();
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -131,7 +131,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->belongsTo(User::class);
     }
-
+    
     /**
      * @param $value
      *
@@ -141,24 +141,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->getISODate($value);
     }
-
-    /**
-     * @param $value
-     *
-     * @return string
-     */
-    protected function getISODate($value)
-    {
-        $time = strtotime($value);
-
-        if ($time) {
-            return Carbon::createFromTimestamp($time)
-                         ->format(Carbon::ISO8601);
-        }
-
-        return $value;
-    }
-
+    
     /**
      * @param $value
      *
@@ -168,7 +151,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->getISODate($value);
     }
-
+    
     /**
      * @return array
      */
@@ -183,7 +166,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
             'config'         => 'simple'
         ];
     }
-
+    
     /**
      * @return array
      */
@@ -196,7 +179,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
             'feed'    => $this->feed->name
         ];
     }
-
+    
     /**
      * @return \Psr\Http\Message\StreamInterface|string|null
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -206,24 +189,35 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
         $body = null;
         $client = new Client();
         $response = $client->request('GET', $this->url);
-
+        
         if ($response->getStatusCode() === Response::HTTP_OK) {
             $body = $response->getBody();
-//            $config = HTMLPurifier_HTML5Config::create([
-//                'HTML.Allowed'           => 'div,p,a[href],section,article,span,li,ul,dt,dd,table,tr,td,thead,tbody',
-//                'HTML.Doctype'           => 'XHTML 1.0 Strict',
-//                'HTML.TidyLevel'         => 'heavy',
-//                'HTML.TidyAdd'           => ['quote-mark', 'quote-ampersand'],
-//                'HTML.TidyRemove'        => ['wrap'],
-//                'HTML.SafeIframe'        => true,
-//                'URI.SafeIframeRegexp'   => '%^//www\.youtube\.com/embed/%',
-//                'AutoFormat.RemoveEmpty' => true,
-//                'Output.TidyFormat'      => true,
-//            ]);
-            $articleReader = new ArticleReader($body);
-            $body = $articleReader->getArticleContent();
+            
+            try {
+                $articleReader = new ArticleReader($body);
+                $body = $articleReader->getArticleContent();
+            } catch (\Exception $e) {
+                \Log::warning($e->getMessage(), ['url' => $this->url]);
+            }
         }
-
+        
         return $body;
+    }
+    
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    protected function getISODate($value)
+    {
+        $time = strtotime($value);
+        
+        if ($time) {
+            return Carbon::createFromTimestamp($time)
+                         ->format(Carbon::ISO8601);
+        }
+        
+        return $value;
     }
 }

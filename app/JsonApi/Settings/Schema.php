@@ -2,20 +2,20 @@
 
 namespace App\JsonApi\Settings;
 
-use CloudCreativity\LaravelJsonApi\Schema\EloquentSchema;
+use App\JsonApi\DefaultSchema;
 
-class Schema extends EloquentSchema
+class Schema extends DefaultSchema
 {
-
+    
     /**
      * @var string
      */
     protected $resourceType = 'settings';
-
+    
     /**
      * @var array|null
      */
     protected $attributes = null;
-
+    
 }
 
