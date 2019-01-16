@@ -42,7 +42,7 @@ Route::middleware(['auth:api'])
               ->name('api:v1:articles.remote');
          Route::get('articles/search', 'Api\V1\ArticlesController@search')
               ->name('api:v1:articles.search');
-         Route::get('feeds/discover', 'Api\V1\FeedsController@discover');
+         Route::get('discover', 'Api\V1\FeedsController@discover');
          Route::get('feeds/{id}/mark-read', 'Api\V1\FeedsController@read');
          Route::get('feeds/{id}/reload-icon', 'Api\V1\FeedsController@reloadIcon');
      });

@@ -45,7 +45,17 @@ export default Component.extend({
 
     });
   },
+  /**
+   *
+   */
+  didUpdateAttrs() {
+    this.set('fullArticleContent', null);
+  },
   actions: {
+    /**
+     *
+     * @param articleId
+     */
     loadRemoteArticle(articleId) {
       this.set('loader', true);
       this.tasks.remoteArticle(articleId).then(content => {
@@ -53,6 +63,9 @@ export default Component.extend({
         this.set('loader', false);
       });
     },
+    /**
+     *
+     */
     restoreContent() {
       this.set('fullArticleContent', null);
     }

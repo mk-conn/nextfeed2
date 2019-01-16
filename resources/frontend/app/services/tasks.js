@@ -6,14 +6,15 @@ export default Service.extend({
   store: service(),
   session: service(),
 
-  runTask: task(function* (url) {
+  runTask: task(function* (url, data = {}, method = 'GET') {
     let { access_token } = this.session.data.authenticated;
     const appAdapter = this.get('store').adapterFor('application');
     const urlPrefix = appAdapter.getUrlPrefix();
     url = `/${ urlPrefix }/${ url }`;
 
     return yield fetch(url, {
-      method: 'GET',
+      method: method,
+      data: data,
       headers: {
         Authorization: `Bearer ${ access_token }`,
         'X-Requested-With': 'XMLHttpRequest',
@@ -51,6 +52,16 @@ export default Service.extend({
    */
   remoteArticle(articleId) {
     let url = `articles/remote/${ articleId }`;
+
+    return this.get('runTask').perform(url);
+  },
+  /**
+   *
+   * @param siteUrl
+   * @returns {*|void}
+   */
+  discoverFeed(siteUrl) {
+    let url = `discover?url=${ siteUrl }`;
 
     return this.get('runTask').perform(url);
   }

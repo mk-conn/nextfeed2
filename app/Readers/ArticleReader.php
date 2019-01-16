@@ -13,18 +13,24 @@ use Masterminds\HTML5;
  */
 class ArticleReader
 {
-    
+
+    protected $cleanTags = [
+        'names'      => ['head', 'script', 'svg', 'nav', 'style'],
+        'attributes' => ['style', 'class'],
+        'classes'    => ['social', 'share', 'facebook', 'twitter', 'google', 'flattr', 'share']
+    ];
+
     /**
      * @var
      */
     protected $html;
-    
+
     protected $errors = [];
     /**
      * @var \DOMDocument
      */
     protected $doc;
-    
+
     /**
      * ArticleReader constructor.
      *
@@ -34,7 +40,7 @@ class ArticleReader
     {
         $this->html = $html;
     }
-    
+
     /**
      *
      */
@@ -46,33 +52,23 @@ class ArticleReader
                 'drop-proprietary-attributes' => true,
                 'fix-uri'                     => true,
                 'wrap'                        => false,
-                //                'input-xml'   => false,
                 'output-html'                 => true,
                 'quote-marks'                 => true,
                 'merge-divs'                  => true,
                 'merge-spans'                 => true,
                 'quote-ampersand'             => true,
-                //                    'show-body-only'              => true
             ]
         );
-        
+
         $content = $this->parseDom($this->html);
-        
+
         if (!$content) {
             $content = $this->getBody();
         }
-        
+
         return $content;
     }
-    
-    /**
-     * @return array
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-    
+
     /**
      * @return string
      */
@@ -85,19 +81,13 @@ class ArticleReader
                 'disable_html_ns' => true
             ]);
         $this->doc = $html5->loadHTML($this->html);
-        $this->clean(
-            [
-                'names'      => ['head', 'script', 'svg', 'nav', 'style'],
-                'attributes' => ['style', 'class'],
-                'classes'    => ['social', 'share', 'facebook', 'twitter', 'google', 'flattr', 'share']
-            ]
-        );
+        $this->clean();
         $this->doc->saveHTML();
-        
+
         $article = $this->doc->getElementsByTagName('article');
         if ($article && $article->length) {
             $article = $article->item(0);
-            
+
             return $this->doc->saveHTML($article);
         } else {
             $body = $this->doc->getElementsByTagName('body');
@@ -106,35 +96,34 @@ class ArticleReader
                 // replace 'body' with 'article'
                 $body = $body->item(0);
                 $article->appendChild($body->cloneNode(true)); // todo: really replace
-                
+
                 return $this->doc->saveHTML($article);
             }
         }
-        
+
         $this->errors = $html5->getErrors();
-        
+
         if (empty($this->errors)) {
             $this->errors = libxml_get_errors();
             libxml_clear_errors();
         }
     }
-    
-    /**
-     * @param array $elements
-     */
-    protected function clean($tags = [])
+
+    protected function clean()
     {
-        foreach ($tags['names'] as $tag) {
+        $tags = $this->cleanTags;
+
+        foreach ($tags[ 'names' ] as $tag) {
             $elements = $this->doc->documentElement->getElementsByTagName($tag);
             if ($elements && $elements->length) {
                 $this->removeFromDom($elements);
             }
         }
-        
-        if (isset($tags['classes'])) {
+
+        if (isset($tags[ 'classes' ])) {
             $query = '//*[';
             $contains = [];
-            foreach ($tags['classes'] as $class) {
+            foreach ($tags[ 'classes' ] as $class) {
                 $contains[] = sprintf('contains(@class, "%s")', $class);
             }
             $query .= implode(' or ', $contains) . ']';
@@ -144,10 +133,10 @@ class ArticleReader
                 $this->removeFromDom($classElements);
             }
         }
-        
-        if (isset($tags['attributes'])) {
+
+        if (isset($tags[ 'attributes' ])) {
             $xpath = new \DOMXPath($this->doc);
-            foreach ($tags['attributes'] as $attribute) {
+            foreach ($tags[ 'attributes' ] as $attribute) {
                 $attributeElements = $xpath->query(sprintf('//*[@%s]', $attribute));
                 if ($attributeElements && $attributeElements->length) {
                     for ($i = 0; $i < $attributeElements->length; $i++) {
@@ -157,7 +146,7 @@ class ArticleReader
             }
         }
     }
-    
+
     /**
      * @param \DOMNodeList $elements
      */
@@ -169,18 +158,26 @@ class ArticleReader
             $parent->removeChild($element);
         }
     }
-    
+
     /**
      *
      */
     protected function getBody()
     {
-    
+
     }
-    
+
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
     protected function findArticleByTag()
     {
-    
+
     }
-    
+
 }

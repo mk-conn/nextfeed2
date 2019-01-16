@@ -59,12 +59,12 @@ use Zend\Feed\Reader\Entry\EntryInterface;
 class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
 {
     use Searchable, Auditable;
-    
+
     /**
      *
      */
     const TABLE = 'articles';
-    
+
     protected static $baseObserver = false;
     /**
      * @var array
@@ -72,14 +72,14 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     protected $auditEvents = [
         'updated'
     ];
-    
+
     /**
      * @var array
      */
     protected $casts = [
         'categories' => 'array'
     ];
-    
+
     protected $dates = [
         'publish_date', 'updated_date'
     ];
@@ -89,12 +89,12 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     protected $hidden = [
         'searchable',
     ];
-    
+
     /**
      * @var array
      */
     protected $with = ['feed'];
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -102,7 +102,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->belongsTo(Feed::class);
     }
-    
+
     /**
      * @param EntryInterface $entry
      */
@@ -112,18 +112,22 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
         $authors = [];
         $entryAuthors = $entry->getAuthors() ?? [];
         foreach ($entryAuthors as $author) {
-            $authors[] = $author['name'];
+            $authors[] = $author[ 'name' ];
         }
         $this->author = implode(', ', $authors);
-        $this->content = $entry->getContent();
         $this->guid = $entry->getId();
         $this->url = $entry->getPermalink();
         $this->publish_date = $entry->getDateCreated() ?? date($this->getDateFormat());
         $this->updated_date = $entry->getDateModified() ?? date($this->getDateFormat());
         $this->categories = $entry->getCategories();
         $this->description = $entry->getDescription();
+
+        $content = '<!DOCTYPE html><html><body><article>' . $entry->getContent() . '</article></body></html>';
+        $articleReader = new ArticleReader($content);
+        $content = $articleReader->getArticleContent();
+        $this->content = $content;
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -131,7 +135,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->belongsTo(User::class);
     }
-    
+
     /**
      * @param $value
      *
@@ -141,7 +145,24 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->getISODate($value);
     }
-    
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    protected function getISODate($value)
+    {
+        $time = strtotime($value);
+
+        if ($time) {
+            return Carbon::createFromTimestamp($time)
+                         ->format(Carbon::ISO8601);
+        }
+
+        return $value;
+    }
+
     /**
      * @param $value
      *
@@ -151,7 +172,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
     {
         return $this->getISODate($value);
     }
-    
+
     /**
      * @return array
      */
@@ -166,7 +187,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
             'config'         => 'simple'
         ];
     }
-    
+
     /**
      * @return array
      */
@@ -179,7 +200,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
             'feed'    => $this->feed->name
         ];
     }
-    
+
     /**
      * @return \Psr\Http\Message\StreamInterface|string|null
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -189,10 +210,10 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
         $body = null;
         $client = new Client();
         $response = $client->request('GET', $this->url);
-        
+
         if ($response->getStatusCode() === Response::HTTP_OK) {
             $body = $response->getBody();
-            
+
             try {
                 $articleReader = new ArticleReader($body);
                 $body = $articleReader->getArticleContent();
@@ -207,24 +228,7 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
                 \Log::warning($e->getMessage(), ['url' => $this->url]);
             }
         }
-        
+
         return $body;
-    }
-    
-    /**
-     * @param $value
-     *
-     * @return string
-     */
-    protected function getISODate($value)
-    {
-        $time = strtotime($value);
-        
-        if ($time) {
-            return Carbon::createFromTimestamp($time)
-                         ->format(Carbon::ISO8601);
-        }
-        
-        return $value;
     }
 }
