@@ -196,6 +196,13 @@ class Article extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
             try {
                 $articleReader = new ArticleReader($body);
                 $body = $articleReader->getArticleContent();
+                if (!$body) {
+                    $errors = $articleReader->getErrors();
+                    if (!empty($errors)) {
+                        $msgs = implode(PHP_EOL, $errors);
+                    }
+                    throw new \Error("Article body is empty\n {$msgs}");
+                }
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage(), ['url' => $this->url]);
             }

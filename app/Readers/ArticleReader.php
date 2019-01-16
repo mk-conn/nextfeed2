@@ -66,6 +66,14 @@ class ArticleReader
     }
     
     /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+    
+    /**
      * @return string
      */
     protected function parseDom()
