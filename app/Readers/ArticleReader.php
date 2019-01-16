@@ -15,8 +15,8 @@ class ArticleReader
 {
 
     protected $cleanTags = [
-        'names'      => ['head', 'script', 'svg', 'nav', 'style'],
-        'attributes' => ['style', 'class'],
+        'names'      => ['head', 'script', 'svg', 'nav', 'style', 'link'],
+        'attributes' => ['style', 'class', 'id', 'data', 'onclick', 'onClick'],
         'classes'    => ['social', 'share', 'facebook', 'twitter', 'google', 'flattr', 'share']
     ];
 
@@ -50,6 +50,7 @@ class ArticleReader
             $this->html,
             [
                 'drop-proprietary-attributes' => true,
+                'drop-empty-paras'            => true,
                 'fix-uri'                     => true,
                 'wrap'                        => false,
                 'output-html'                 => true,
@@ -57,6 +58,8 @@ class ArticleReader
                 'merge-divs'                  => true,
                 'merge-spans'                 => true,
                 'quote-ampersand'             => true,
+                'char-encoding'               => 'utf8',
+                'output-encoding'             => 'utf8'
             ]
         );
 
@@ -81,8 +84,9 @@ class ArticleReader
                 'disable_html_ns' => true
             ]);
         $this->doc = $html5->loadHTML($this->html);
+        $this->doc->preserveWhiteSpace = false;
         $this->clean();
-        $this->doc->saveHTML();
+//        $this->doc->saveHTML();
 
         $article = $this->doc->getElementsByTagName('article');
         if ($article && $article->length) {
@@ -137,11 +141,9 @@ class ArticleReader
         if (isset($tags[ 'attributes' ])) {
             $xpath = new \DOMXPath($this->doc);
             foreach ($tags[ 'attributes' ] as $attribute) {
-                $attributeElements = $xpath->query(sprintf('//*[@%s]', $attribute));
-                if ($attributeElements && $attributeElements->length) {
-                    for ($i = 0; $i < $attributeElements->length; $i++) {
-                        $attributeElements[ $i ]->removeAttribute($attribute);
-                    }
+                $attributes = $xpath->query(sprintf('//@*[contains(name(), "%s")]', $attribute));
+                if ($attributes && $attributes->length) {
+                    $this->removeAttributeFromElements($attributes);
                 }
             }
         }
@@ -152,10 +154,27 @@ class ArticleReader
      */
     protected function removeFromDom(\DOMNodeList $elements)
     {
-        for ($i = 0; $i < $elements->length; $i++) {
-            $element = $elements->item($i);
-            $parent = $element->parentNode;
-            $parent->removeChild($element);
+        $elementsToRemove = [];
+        foreach ($elements as $element) {
+            $elementsToRemove[] = $element;
+        }
+
+        foreach ($elementsToRemove as $element) {
+            $element->parentNode->removeChild($element);
+        }
+    }
+
+    /**
+     * @param \DOMNodeList $attributes
+     */
+    protected function removeAttributeFromElements(\DOMNodeList $attributes)
+    {
+        $attributesToRemove = [];
+        foreach ($attributes as $attribute) {
+            $attributesToRemove[] = $attribute;
+        }
+        foreach ($attributesToRemove as $attribute) {
+            $attribute->parentNode->removeAttributeNode($attribute);
         }
     }
 
