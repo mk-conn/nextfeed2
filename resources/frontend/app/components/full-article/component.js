@@ -37,7 +37,7 @@ export default Component.extend({
       $(this).attr('sandbox', '');
       $(this).attr('sandbox', 'allow-same-origin allow-scripts allow-presentation');
       // if (articleSettings && get(articleSettings, 'allowEmbedded') === true) {
-      //   $(this).attr('sandbox', 'allow-same-origin allow-scripts');
+      $(this).attr('sandbox', 'allow-same-origin allow-scripts');
       // } else {
       //   const hint = 'Embedded content disabled: <a href="/settings">Enable in settings</a>';
       //   $(this).after('<div class="text-muted">' + hint + '</div>');

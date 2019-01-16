@@ -46,6 +46,11 @@ class ArticleReader
      */
     public function getArticleContent()
     {
+        $encoding = mb_detect_encoding($this->html);
+        if (!$encoding) {
+            $encoding = 'latin1';
+        }
+
         $this->html = (new \tidy)->repairString(
             $this->html,
             [
@@ -58,7 +63,7 @@ class ArticleReader
                 'merge-divs'                  => true,
                 'merge-spans'                 => true,
                 'quote-ampersand'             => true,
-                'char-encoding'               => 'utf8',
+                'input-encoding'              => $encoding,
                 'output-encoding'             => 'utf8'
             ]
         );
