@@ -99,6 +99,4 @@ class FolderResourceTest extends ApiRequest
 
         $this->assertFalse(array_get($response, 'data.attributes.open'));
     }
-
-
 }

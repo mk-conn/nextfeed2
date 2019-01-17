@@ -6,14 +6,40 @@
     classNames="btn btn-sm btn-link"
     title="Add feed"
   }}
-    {{fa-icon "rss" prefix="fas" mask="plus"}}
+    <span class="fa-layers fa-lg">
+    {{fa-icon "rss"
+              class="fa-lg"
+              transform="shrink-6"
+              mask="circle"
+    }}
+      {{fa-icon "plus"
+                transform="shrink-10 up-8 right-14"
+      }}
+    </span>
   {{/link-to}}
+
+
+
+  {{#link-to "index.folders.add" activeClass="" classNames=""}}
+    <span class="fa-layers fa-lg">
+    {{fa-icon "folder"
+              class="fa-lg"
+              transform="shrink-7"
+              mask="circle"
+    }}
+    {{fa-icon "plus"
+              transform="shrink-10 up-8 right-12"
+    }}
+    </span>
+  {{/link-to}}
+
+  {{!--
   <button type="button"
           class="btn btn-sm btn-link"
           title="Fetch new articles">
     {{fa-icon "sync" prefix="fas"}}
   </button>
-
+--}}
   <button type="button"
           class="btn btn-sm btn-link"
     {{action toggleProperty "openSearch"}}

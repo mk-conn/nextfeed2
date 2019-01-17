@@ -36,9 +36,7 @@ module.exports = function (environment) {
       applicationRootUrl: '/',
       authenticationRoute: 'login'
     },
-    fontawesome: {
-      defaultPrefix: 'far' // light icons
-    },
+
     EmberHammertime: {
       touchActionOnAction: true,
       touchActionAttributes: ['onclick'],

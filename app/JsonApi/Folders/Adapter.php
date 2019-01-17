@@ -48,9 +48,6 @@ class Adapter extends DefaultAdapter
         $user = Auth::guard('api')
                     ->user();
 
-        if ($user) {
-            $query->where('user_id', $user->id);
-        }
+        $query->where('user_id', $user->getAuthIdentifier());
     }
-
 }

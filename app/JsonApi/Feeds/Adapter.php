@@ -5,6 +5,7 @@ namespace App\JsonApi\Feeds;
 
 use App\JsonApi\DefaultAdapter;
 use App\Models\Feed;
+use Illuminate\Support\Collection;
 
 /**
  * Class Adapter
@@ -40,6 +41,17 @@ class Adapter extends DefaultAdapter
     public function user()
     {
         return $this->belongsTo();
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param Collection                            $filters
+     */
+    protected function filter($query, Collection $filters)
+    {
+        $user = \Auth::user('api');
+
+        $query->where('user_id', $user->getAuthIdentifier());
     }
 
 }
