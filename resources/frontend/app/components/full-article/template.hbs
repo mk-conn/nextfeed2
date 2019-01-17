@@ -1,27 +1,25 @@
 {{scroll-top elementToWatch="column-two"}}
-
-<div class="float right">
-  {{#link-to
-    onCloseRoute
-    activeClass=null
-    tagName="button"
-    classNames="btn btn-outline-secondary round"
-  }}
-    {{fa-icon "times" prefix="fas"}}
-  {{/link-to}}
-</div>
-
-<h3 class="article-header">
-  <div>{{article.title}}</div>
-  <div class="text-muted">
-    <small>{{article.feed.name}}</small>
-    {{#if article.author}}
-      <small>by {{article.author}}</small>
-    {{/if}}
+<div class="flex row">
+  <h3 class="article-header">
+    <div>{{article.title}}</div>
+    <div class="text-muted">
+      <small>{{article.feed.name}}</small>
+      {{#if article.author}}
+        <small>by {{article.author}}</small>
+      {{/if}}
+    </div>
+  </h3>
+  <div class="ml-auto mt-2">
+    {{#link-to
+      onCloseRoute
+      activeClass=null
+      tagName="button"
+      classNames="btn btn-outline-secondary round"
+    }}
+      {{fa-icon "times" prefix="fas"}}
+    {{/link-to}}
   </div>
-</h3>
-
-
+</div>
 <div id="article-content" class="flex content-between column">
   {{#if fullArticleContent}}
     <div class="mb-3">

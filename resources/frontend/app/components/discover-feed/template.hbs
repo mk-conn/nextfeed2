@@ -1,5 +1,4 @@
 <div class="form-group">
-  <label for="url">Url</label>
   <div class="input-group">
     <div class="input-group-prepend">
       <!--suppress HtmlFormInputWithoutLabel -->
@@ -13,13 +12,19 @@
         {{/each}}
       </select>
     </div>
-    {{input type="text" enter=(perform discover) class="form-control" value=url}}
+    {{input type="text" enter=(perform discover) placeholder="enter page url" class="form-control" value=url}}
   </div>
 </div>
-<button class="btn btn-outline-secondary" type="button" onclick={{perform discover}}>
+
+<button class="btn btn-outline-secondary"
+        type="button"
+        onclick={{perform discover}}
+>
   Discover
   {{#if discover.isRunning}}
-    <i class="fa fa-circle-o-notch fa-spinn fa-fw"></i>
+    {{fa-icon "circle-notch"
+              class="fa-fw"
+              spin=true}}
   {{/if}}
 </button>
 

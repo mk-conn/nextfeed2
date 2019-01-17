@@ -3,26 +3,30 @@
     <a href="/" target="_self">Nextfeed</a>
     {{#if session.isAuthenticated}}
       {{#link-to "index" classNames="nav-link" activeClass="active"}}
-        {{fa-icon "rss" prefix="fas"}}
+        {{fa-icon "rss"}}
       {{/link-to}}
     {{/if}}
     {{outlet "top-bar-left"}}
   </div>
   {{#if session.isAuthenticated}}
     <div class="right">
+      {{!--
       <a href="#" {{action (route-action "updateAllFeeds")}}>
         {{fa-icon "sync-alt" prefix="fas"}}
       </a>
+      --}}
+      {{!--
       {{#link-to "index.settings"}}
         {{fa-icon "cogs" prefix="fas"}}
       {{/link-to}}
+      --}}
       <div class="user">
-        {{fa-icon "user"}}
         <span class="user fullname">
+        {{fa-icon "user"}}
           {{currentUser.user.fullname}}
         </span>
         <a href="#" {{action (route-action "invalidateSession")}}>
-          {{fa-icon "sign-out-alt" prefix="fas"}}
+          {{fa-icon "sign-out-alt"}}
         </a>
       </div>
       {{outlet "top-bar-right"}}

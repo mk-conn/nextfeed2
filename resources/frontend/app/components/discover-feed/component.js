@@ -29,6 +29,7 @@ export default Component.extend({
     if (this.get('url')) {
       this.validateUrl();
       let url = `${ this.protocols[this.selectedProtocol] }${ this.get('url') || '' }`;
+
       return yield this.get('tasks').discoverFeed(url).then(result => {
         this.set('result', result);
       });

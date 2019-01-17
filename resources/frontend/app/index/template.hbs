@@ -1,4 +1,4 @@
-<div class="feed-actions">
+<div class="feed-actions flex row">
   {{#link-to
     "index.add"
     tagName="button"
@@ -13,12 +13,10 @@
               mask="circle"
     }}
       {{fa-icon "plus"
-                transform="shrink-10 up-8 right-14"
+                transform="shrink-10 up-8 right-12"
       }}
     </span>
   {{/link-to}}
-
-
 
   {{#link-to "index.folders.add" activeClass="" classNames=""}}
     <span class="fa-layers fa-lg">
@@ -27,12 +25,11 @@
               transform="shrink-7"
               mask="circle"
     }}
-    {{fa-icon "plus"
-              transform="shrink-10 up-8 right-12"
-    }}
+      {{fa-icon "plus"
+                transform="shrink-10 up-8 right-12"
+      }}
     </span>
   {{/link-to}}
-
   {{!--
   <button type="button"
           class="btn btn-sm btn-link"
@@ -44,7 +41,13 @@
           class="btn btn-sm btn-link"
     {{action toggleProperty "openSearch"}}
   >
-    {{fa-icon "search" prefix="fas"}}
+    <span class="fa-layers fa-lg">
+      {{fa-icon "search"
+                class="fa-lg"
+                transform="shrink-7"
+                mask="circle"
+      }}
+    </span>
   </button>
 </div>
 {{#if openSearch}}
