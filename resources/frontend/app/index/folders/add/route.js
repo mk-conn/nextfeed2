@@ -1,10 +1,14 @@
-import Ember from 'ember';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { getOwner } from '@ember/application';
+import Route from '@ember/routing/route';
+import Gui from 'frontend/mixins/gui';
 
-const {Route, getOwner} = Ember;
-
-export default Route.extend(AuthenticatedRouteMixin, {
-
+export default Route.extend(Gui, {
+  displayIn: 'fullpage-content',
+  enableOnClose: 'side-bar',
+  /**
+   * Model
+   * @returns {*|DS.Model|EmberPromise}
+   */
   model() {
     return this.store.createRecord('folder');
   },
@@ -12,7 +16,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   renderTemplate() {
     this.render('index/folders/add', {
       into: 'application',
-      outlet: 'column-two'
+      outlet: 'main'
     })
   },
 

@@ -29,7 +29,11 @@ class FeedReader
     public static function parseUrl(string $url, $options = ['query' => false])
     {
         $parsed = parse_url($url);
-        $result = $parsed[ 'scheme' ] . '://' . $parsed[ 'host' ] . $parsed[ 'path' ];
+        $result = $parsed[ 'scheme' ] . '://' . $parsed[ 'host' ];
+
+        if (isset($parsed[ 'path' ])) {
+            $result .= $parsed[ 'path' ];
+        }
 
         if ($options[ 'query' ]) {
             $result .= $parsed[ 'query' ];

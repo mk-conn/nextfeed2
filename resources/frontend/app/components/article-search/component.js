@@ -10,11 +10,11 @@ const DEBOUNCE_MS = 700;
 export default Component.extend({
   session: service(),
   store: service(),
-
   tagName: 'div',
-
-  classNames: [],
-
+  classNames: ['article-search'],
+  /**
+   * Init
+   */
   init() {
     this._super(...arguments);
     this.showResults = true;
@@ -30,7 +30,7 @@ export default Component.extend({
 
     const appAdapter = this.get('store').adapterFor('application');
     const urlPrefix = appAdapter.getUrlPrefix();
-    let url = `${urlPrefix}/articles/search`;
+    let url = `${urlPrefix}/article/search`;
     let data = {
       q: term
     };

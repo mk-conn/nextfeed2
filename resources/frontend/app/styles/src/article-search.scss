@@ -1,0 +1,40 @@
+#article-search-container {
+  //position: absolute;
+  width: 100%;
+  //display: flex;
+  //flex-direction: column;
+  z-index: 10;
+  height: inherit;
+
+  .input-group-text {
+    background-color: inherit;
+    color: inherit;
+
+    input {
+      padding: 0;
+    }
+
+  }
+
+  #article-search-result {
+    //background: rgba(11, 11, 11, .8);
+    position: relative;
+    @include overflow-scroll;
+
+    .article-result {
+      h5 {
+        font-size:1rem;
+      }
+      font-size: .8rem;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #ccc;
+      }
+
+      &:hover {
+        background: #ccc;
+        color: #555;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <div class="search-input">
-  <div class="input-group mb-3">
+  <div class="input-group">
     <input
       type="text"
       placeholder="Search articles"
@@ -19,13 +19,10 @@
 </div>
 
 
-{{#scrollable-container id="article-search-result"}}
-  <div class="form-group ml-2 mr-2">
-
-  </div>
-
+{{!--{{#scrollable-container id="article-search-result" classNames="p-1"}}--}}
+  <div id="article-search-result">
   {{#each searchArticle.lastSuccessful.value as |article|}}
-    <div class="article-result action" {{action "goToArticle" article}}>
+    <div class="article-result action p-1" {{action "goToArticle" article}}>
       <h5 class="text-muted">{{article.feed.name}}</h5>
       <div>{{moment-format article.updated_date 'YYYY-MM-DD H:m'}}</div>
       <div>{{article.title}}</div>
@@ -35,4 +32,5 @@
       No articles found.
     </div>
   {{/each}}
-{{/scrollable-container}}
+  </div>
+  {{!--{{/scrollable-container}}--}}

@@ -1,58 +1,52 @@
-<div class="feed-actions flex row">
-  {{#link-to
-    "index.add"
-    tagName="button"
-    activeClass=null
-    classNames="btn btn-sm btn-link"
-    title="Add feed"
-  }}
-    <span class="fa-layers fa-lg">
+<div class="feed-actions">
+  <div class="row flex content-between">
+    <div class="left">
+      {{#link-to
+        "index.add"
+        tagName="button"
+        activeClass=null
+        classNames="btn btn-sm btn-link"
+        title="Add feed"
+      }}
+        <span class="fa-layers fa-fw">
     {{fa-icon "rss"
               class="fa-lg"
-              transform="shrink-6"
+              transform="shrink-7"
               mask="circle"
     }}
-      {{fa-icon "plus"
-                transform="shrink-10 up-8 right-12"
-      }}
+          {{fa-icon "plus"
+                    transform="shrink-10 up-8 right-12"
+          }}
     </span>
-  {{/link-to}}
+      {{/link-to}}
 
-  {{#link-to "index.folders.add" activeClass="" classNames=""}}
-    <span class="fa-layers fa-lg">
+      {{#link-to "index.folders.add" activeClass="" classNames=""}}
+        <span class="fa-layers fa-fw">
     {{fa-icon "folder"
               class="fa-lg"
               transform="shrink-7"
               mask="circle"
     }}
-      {{fa-icon "plus"
-                transform="shrink-10 up-8 right-12"
-      }}
+          {{fa-icon "plus"
+                    transform="shrink-10 up-8 right-12"
+          }}
     </span>
-  {{/link-to}}
-  {{!--
-  <button type="button"
-          class="btn btn-sm btn-link"
-          title="Fetch new articles">
-    {{fa-icon "sync" prefix="fas"}}
-  </button>
---}}
-  <button type="button"
-          class="btn btn-sm btn-link"
-    {{action toggleProperty "openSearch"}}
-  >
-    <span class="fa-layers fa-lg">
-      {{fa-icon "search"
-                class="fa-lg"
-                transform="shrink-7"
-                mask="circle"
-      }}
-    </span>
-  </button>
+      {{/link-to}}
+    </div>
+    {{!--
+    <button type="button"
+            class="btn btn-sm btn-link"
+            title="Fetch new articles">
+      {{fa-icon "sync" prefix="fas"}}
+    </button>
+  --}}
+    <div class="ml-auto">
+      {{#link-to "index.search"}}
+        {{fa-icon "search" class="fa-lg"}}
+      {{/link-to}}
+    </div>
+  </div>
 </div>
-{{#if openSearch}}
-  {{article-search elementId="article-search-container"}}
-{{/if}}
 
 <div class="sidebar-item feed-item">
   {{#link-to "index.feed.articles" "archived"}}

@@ -9,6 +9,7 @@ const Router = EmberRouter.extend({
 Router.map(function () {
   this.route('login');
   this.route('index', { path: '/' }, function () {
+    this.route('search');
     this.route('settings');
     this.route('add');
     this.route('folders', function () {
@@ -19,6 +20,7 @@ Router.map(function () {
         this.route('article', { path: '/:article_id' });
         this.route('settings');
       });
+
     });
     this.route('articles', function () {
     });

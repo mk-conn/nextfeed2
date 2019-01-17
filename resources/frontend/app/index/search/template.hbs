@@ -1,0 +1,20 @@
+<div class="feed-header" id="articles-header">
+  <div class="flex row content-between">
+    <div class="feed description">
+      Search
+    </div>
+    <div class="flex row content-between ml-auto">
+      <div>
+        {{#link-to
+          "index"
+          tagName="button"
+          activeClass=null
+          classNames="btn btn-sm btn-outline-secondary round ml-1"
+        }}
+          {{fa-icon "times" prefix="fas"}}
+        {{/link-to}}
+      </div>
+    </div>
+  </div>
+</div>
+{{article-search elementId="article-search-container"}}

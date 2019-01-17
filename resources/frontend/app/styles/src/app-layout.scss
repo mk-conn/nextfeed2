@@ -362,3 +362,7 @@ $spacers: map-merge(
   // when setting a width and height attribute on the img element.
   height: auto;
 }
+
+.baseline {
+  vertical-align: baseline !important;
+}

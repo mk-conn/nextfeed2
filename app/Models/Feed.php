@@ -129,6 +129,7 @@ class Feed extends BaseModel
     }
 
     /**
+     * @todo move to feed reader
      * @return bool
      */
     public function fetchIcon()

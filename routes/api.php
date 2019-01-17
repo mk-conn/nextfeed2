@@ -38,10 +38,10 @@ JsonApi::register(
 Route::middleware(['auth:api'])
      ->prefix('api/v1')
      ->group(function () {
+         Route::get('article/search', 'Api\V1\ArticlesController@search')
+              ->name('api:v1:articles.search');
          Route::get('articles/remote/{id}', 'Api\V1\ArticlesController@loadRemoteContent')
               ->name('api:v1:articles.remote');
-         Route::get('articles/search', 'Api\V1\ArticlesController@search')
-              ->name('api:v1:articles.search');
          Route::get('discover', 'Api\V1\FeedsController@discover');
          Route::get('feeds/{id}/mark-read', 'Api\V1\FeedsController@read');
          Route::get('feeds/{id}/reload-icon', 'Api\V1\FeedsController@reloadIcon');
