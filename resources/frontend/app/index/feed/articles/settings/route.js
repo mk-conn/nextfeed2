@@ -16,6 +16,16 @@ export default Route.extend(Gui, {
   model() {
     return this.modelFor('index.feed');
   },
+  /**
+   *
+   * @param controller
+   * @param model
+   */
+  setupController(controller, model) {
+    this._super(...arguments);
+
+    controller.set('feedIconLoadIsRunning', false);
+  },
 
   renderTemplate() {
     this.render('index/feed/articles/settings', {
@@ -48,8 +58,10 @@ export default Route.extend(Gui, {
      */
     reloadFeedIcon() {
       const feed = this.get('currentModel');
+      this.controller.set('feedIconLoadIsRunning', true);
       this.get('tasks').reloadFeedIcon(feed.id).then(() => {
         feed.reload();
+        this.controller.set('feedIconLoadIsRunning', false);
       });
     }
   }

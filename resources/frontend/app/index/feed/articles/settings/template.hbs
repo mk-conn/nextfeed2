@@ -76,25 +76,46 @@
     </div>
   </fieldset>
 
-  <div class="mt-5 mb-3">
-    <div>Logo</div>
+  <hr class="grey mt-5 mb-5"/>
+
+  <div>
+    <div class="flex row content-start align-baseline">
+      <h6>Icon</h6>
+      <div class="ml-1">
+        <button type="button" class="btn btn-sm btn-link round" {{action (route-action "reloadFeedIcon")}}>
+          {{fa-icon "sync"
+                    spin=feedIconLoadIsRunning
+                    fixedWidth=true
+          }}
+        </button>
+      </div>
+    </div>
+    <div class="mt-1">
+      {{#if feedIconLoadIsRunning}}
+        <div class="alert alert-info">... fetching ...</div>
+      {{else}}
+        {{#if model.icon}}
+          <div class="alert alert-light">
+            <img src={{model.icon}} alt="" width="16">
+          </div>
+        {{else}}
+          <div class="alert alert-warning">This feed has no icon</div>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+  <div class="mt-3">
+    <h6>Logo</h6>
     {{#if model.logo}}
       <img src={{model.logo}} alt="" class="img-fluid">
     {{else}}
       <div class="alert alert-dark">This feed has no logo</div>
     {{/if}}
-    <div>Icon</div>
-    <button type="button" class="btn btn-sm btn-outline-primary" {{action (route-action "reloadFeedIcon")}}>
-      {{fa-icon "sync" prefix="fas"}}
-    </button>
-    {{#if model.icon}}
-      <img src={{model.icon}} alt="" width="16">
-    {{else}}
-      <div class="alert alert-dark">This feed has no icon</div>
-    {{/if}}
   </div>
 
-  <fieldset class="mt-5">
+  <hr class="grey mt-5 mb-5"/>
+
+  <fieldset>
     <h4>Danger zone!</h4>
     <div class="form-group">
       <button type="button"

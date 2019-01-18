@@ -23,15 +23,15 @@ class FeedsController extends Controller
         /** @var Feed $feed */
         $feed = Feed::findOrFail($feedId);
         $this->authorize('update', $feed, $request);
-
+        
         $success = $feed->read();
         $result = [
             'success' => $success
         ];
-
+        
         return response()->json($result);
     }
-
+    
     /**
      * @param \Illuminate\Http\Request $request
      *
@@ -42,12 +42,12 @@ class FeedsController extends Controller
     {
         $this->authorize('create', [Feed::class, $request]);
         $url = $request->get('url');
-
+        
         $request->validate(
             [
                 'url' => 'required|url'
             ]);
-
+        
         $feedReader = app()->make(FeedReader::class);
         try {
             $feedLinks = $feedReader->discover($url);
@@ -55,13 +55,13 @@ class FeedsController extends Controller
             $code = $feedReader->getHttpClient()
                                ->getResponse()
                                ->getStatusCode();
-
+            
             return response()->json(['errors' => ['message' => $e->getMessage()]], $code);
         }
-
+        
         return response()->json(['links' => $feedLinks->getArrayCopy()]);
     }
-
+    
     /**
      * @param \Illuminate\Http\Request $request
      * @param                          $feedId
@@ -73,22 +73,25 @@ class FeedsController extends Controller
     {
         $feed = Feed::findOrFail($feedId);
         $this->authorize('update', [$request->user('api'), $feed]);
-
-        if ($feed->fetchIcon()) {
+        
+        $icon = FeedReader::fetchIcon($feed);
+        if ($icon) {
+            $feed->icon = $icon;
             $feed->save();
         }
+        
         $result = [
             'success' => true
         ];
-
+        
         return response()->json($result);
     }
-
+    
     /**
      * @param $feedId
      */
     public function cleanup($feedId, $days)
     {
-
+    
     }
 }

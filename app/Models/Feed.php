@@ -8,12 +8,9 @@ use App\Events\ArticlesFetched;
 use App\Readers\FeedReader;
 use App\Traits\Model\HasOrder;
 use Carbon\Carbon;
-use Masterminds\HTML5;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Feed\AbstractFeed;
 use Zend\Feed\Reader\Feed\FeedInterface;
-use Zend\Http\Client;
-use Zend\Http\Request;
 
 /**
  * Class Feed
@@ -67,7 +64,7 @@ use Zend\Http\Request;
 class Feed extends BaseModel
 {
     use HasOrder;
-
+    
     /**
      *
      */
@@ -80,7 +77,7 @@ class Feed extends BaseModel
      * @var FeedInterface
      */
     protected $feedInterface = null;
-
+    
     /**
      * @var array
      */
@@ -91,7 +88,7 @@ class Feed extends BaseModel
      * @var array
      */
     protected $fetchErrors = [];
-
+    
     /**
      * @param $feedInterface
      *
@@ -100,10 +97,10 @@ class Feed extends BaseModel
     public function attachFeedInterface(FeedInterface $feedInterface)
     {
         $this->feedInterface = $feedInterface;
-
+        
         return $this;
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -111,7 +108,7 @@ class Feed extends BaseModel
     {
         return $this->belongsTo(User::class);
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -119,7 +116,7 @@ class Feed extends BaseModel
     {
         return $this->belongsTo(Folder::class);
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -127,81 +124,7 @@ class Feed extends BaseModel
     {
         return $this->hasMany(Article::class);
     }
-
-    /**
-     * @todo move to feed reader
-     * @return bool
-     */
-    public function fetchIcon()
-    {
-        $request = new Request();
-        $request->setUri($this->site_url);
-        $request->setMethod('GET');
-        $client = new Client();
-        $response = $client->send($request);
-        $body = trim($response->getBody());
-        $body = (new \tidy)->repairString(
-            $body,
-            [
-                'drop-proprietary-attributes' => true,
-                'fix-uri'                     => true,
-                'wrap'                        => false,
-                //                'input-xml'   => false,
-                'output-xml'                  => true,
-                'quote-marks'                 => true
-            ]
-        );
-
-        $retrieveImage = function ($imageUrl) {
-            $size = @getimagesize($imageUrl);
-
-            return isset($size[ 'mime' ]);
-        };
-
-        if (!empty($body)) {
-            try {
-                libxml_use_internal_errors(true);
-                $icons[] = 'favicon.ico';
-                $html5 = new HTML5(['encode_entities' => true]);
-                $doc = $html5->loadHTML($body);
-                // xpath did not work for some feeds (probably the html was to fucked up :-/
-                $xml = simplexml_import_dom($doc);
-                $errors = libxml_get_errors();
-                libxml_clear_errors();
-
-                if (empty($errors)) {
-                    foreach ($xml->head->link as $link) {
-                        $rel = $link->attributes()->rel;
-                        $rel = strtolower($rel);
-                        if ($rel === 'icon' || $rel === 'shortcut icon' || $rel === 'icon shortcut') {
-                            $icons = array_prepend($icons, (string) $link->attributes()->href);
-                        }
-                    }
-                }
-
-                foreach ($icons as $icon) {
-                    $icon = ltrim(trim($icon), '/');
-                    $iconPath = ltrim(str_replace($this->site_url, null, $icon), '/');
-
-                    if (strpos($iconPath, '?')) {
-                        $iconPath = explode('?', $iconPath)[ 0 ];
-                    }
-                    // check if item is available and not a 404
-                    $imageUrl = rtrim($this->site_url, '/') . '/' . $iconPath;
-                    if ($retrieveImage($imageUrl)) {
-                        $this->icon = $imageUrl;
-                        break;
-                    }
-                }
-
-                return true;
-            } catch (\Exception $e) {
-                return false;
-            }
-        }
-    }
-
-
+    
     /**
      *
      * @return bool|int
@@ -214,7 +137,7 @@ class Feed extends BaseModel
             //->orderBy('udpated-date', 'desc')
                       ->update(['read' => true]);
     }
-
+    
     /**
      *
      */
@@ -226,7 +149,7 @@ class Feed extends BaseModel
         /** @var FeedReader $feedReader */
         $feedReader = app()->make(FeedReader::class);
         $feed = null;
-
+        
         try {
             $feed = $feedReader->read(
                 [
@@ -237,7 +160,7 @@ class Feed extends BaseModel
         } catch (\Exception $e) {
             $this->fetchErrors[] = $e->getMessage();
         }
-
+        
         if ($feed) {
             if (($saved = $this->storeArticles($feed)) > 0) {
                 event(new ArticlesFetched($this));
@@ -245,19 +168,19 @@ class Feed extends BaseModel
         }
         $this->etag = $feedReader->getEtag($this->feed_url);
         $this->last_modified = $feedReader->getLastModified($this->feed_url);
-
+        
         if (!empty($this->fetchErrors)) {
             $this->update_error = implode("\n\n", $this->fetchErrors);
             $this->fetchErrors = [];
         } else {
             $this->update_error = null;
         }
-
+        
         $this->save();
-
+        
         return $saved;
     }
-
+    
     /**
      * @param FeedInterface $feed
      *
@@ -279,7 +202,7 @@ class Feed extends BaseModel
                     continue;
                 }
             }
-
+            
             try {
                 $article->createFromFeedEntry($entry);
                 $article->feed()
@@ -292,18 +215,10 @@ class Feed extends BaseModel
                 $this->addFetchError($e->getMessage() . "\n" . $e->getTraceAsString());
             }
         }
-
+        
         return $count;
     }
-
-    /**
-     * @param $error
-     */
-    protected function addFetchError($error)
-    {
-        $this->fetchErrors[] = $error;
-    }
-
+    
     /**
      * @param AbstractFeed $feed
      */
@@ -312,9 +227,9 @@ class Feed extends BaseModel
         $logo = null;
         $image = $feed->getImage();
         if ($image) {
-            $logo = $image[ 'uri' ];
+            $logo = $image['uri'];
         }
-
+        
         $this->guid = $feed->getId();
         $this->description = $feed->getDescription();
         $this->site_url = FeedReader::parseUrl($feed->getLink());
@@ -323,7 +238,7 @@ class Feed extends BaseModel
         $this->logo = $logo;
         $this->name = trim($feed->getTitle());
     }
-
+    
     /**
      * @param int  $days
      * @param bool $force
@@ -340,17 +255,17 @@ class Feed extends BaseModel
             }
             $force = !array_get($settings, 'articles.cleanup.keepUnread');
         }
-
-        if ((int) $days === 0) {
+        
+        if ((int)$days === 0) {
             // no setting means, to keep em all
             return 0;
         }
-
+        
         $dateFormat = self::dateFormat();
         $maxUpatedDate = Carbon::create()
                                ->subDays($days)
                                ->format($dateFormat);
-
+        
         $articles = Article::where('updated_date', '<', $maxUpatedDate)
                            ->where('feed_id', $this->id)
                            ->where('keep', false);
@@ -358,15 +273,23 @@ class Feed extends BaseModel
             $articles->where('read', true);
         };
         $count = $articles->delete();
-
+        
         return $count;
     }
-
+    
     /**
      * @return FeedInterface
      */
     public function getFeedInterface()
     {
         return $this->feedInterface;
+    }
+    
+    /**
+     * @param $error
+     */
+    protected function addFetchError($error)
+    {
+        $this->fetchErrors[] = $error;
     }
 }

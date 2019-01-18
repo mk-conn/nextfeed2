@@ -13,7 +13,7 @@ export default Component.extend({
    */
   init() {
     this._super(...arguments);
-    this.protocols = ['http://', 'https://'];
+    this.protocols = ['https://', 'http://'];
     this.selectedProtocol = 0;
   },
   /**

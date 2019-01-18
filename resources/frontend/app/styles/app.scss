@@ -12,6 +12,11 @@ $color2: rgba(89, 97, 87, 1);
 $color4: rgba(103, 119, 108, 1);
 $color1: rgba(24, 48, 78, .15);
 
+
+$lightblue: #5099d0;
+$orange: #f54907;
+$grey: $color2;
+
 .text {
   &.center {
     text-align: center;
@@ -21,14 +26,30 @@ $color1: rgba(24, 48, 78, .15);
     color: $color5;
   }
 
+  &.grey {
+    color: $grey;
+  }
+
   &.bold {
     font-weight: bold;
   }
 }
 
+.grey {
 
-$lightblue: #5099d0;
-$orange: #f54907;
+}
+
+hr {
+  height: .2rem;
+
+  &.grey {
+    color: $grey;
+    background-color: $grey;
+  }
+
+  border: none;
+}
+
 
 $color1-light: lighten($color1, 20%);
 //noinspection CssUnknownTarget

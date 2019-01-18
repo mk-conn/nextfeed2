@@ -25,7 +25,7 @@ use Zend\Feed\Reader\Feed\AbstractFeed;
  */
 class FeedObserver extends BaseObserver
 {
-
+    
     /**
      * @param Model $model
      *
@@ -43,33 +43,34 @@ class FeedObserver extends BaseObserver
             $error = new Error(null, null, null, null, 'Feed creation failed', $e->getMessage());
             throw new JsonApiException($error);
         }
-
+        
         $model->createFromChannel($feedInterface);
         $model->etag = $feedReader->getEtag($model->feed_url);
         $model->last_modified = $feedReader->getLastModified($model->feed_url);
         $model->attachFeedInterface($feedInterface);
         if (!$model->icon) {
-            $model->fetchIcon();
+            $icon = FeedReader::fetchIcon($model);
+            $model->icon = $icon;
         }
-
+        
         if (!$model->user) {
             $user = Auth::guard('api')
                         ->user();
             $model->user()
                   ->associate($user);
         }
-
+        
         if (!$model->settings || empty($model->settings)) {
             $feedArticlesSettings = config('app-settings.feed.articles');
-
+            
             $model->settings = [
                 'articles' => $feedArticlesSettings
             ];
         }
-
+        
         return parent::creating($model);
     }
-
+    
     /**
      * @param Model $model
      *
@@ -79,8 +80,8 @@ class FeedObserver extends BaseObserver
     {
         /** @var Feed $model */
         $model->storeArticles($model->getFeedInterface());
-
+        
         return parent::created($model);
     }
-
+    
 }
