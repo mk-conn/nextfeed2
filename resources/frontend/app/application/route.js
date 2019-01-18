@@ -30,23 +30,6 @@ export default Route.extend(ApplicationRouteMixin, {
 
     },
 
-    searchArticle(q) {
-      this.store.queryRecord('article-action', {
-        action: 'search',
-        params: {
-          q: q
-        }
-      }).then(articleAction => {
-        let articles = get(articleAction, 'result.articles');
-        this.controller.set('articlesSearchResult', articles);
-        this.controller.set('processing', false);
-        this.controller.set('processed', true);
-      }, error => {
-        this.controller.set('processing', false);
-        // set(discover, 'errors', error.errors)
-      });
-    },
-
     invalidateSession() {
       this.get('session').invalidate();
     }

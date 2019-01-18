@@ -1,8 +1,8 @@
-import DS from 'ember-data';
-import { computed } from '@ember/object';
 import { assert } from '@ember/debug';
+import { computed } from '@ember/object';
+import DS from 'ember-data';
 
-const {Model, attr, belongsTo, hasMany} = DS;
+const { Model, attr, belongsTo, hasMany } = DS;
 
 export default Model.extend({
   name: attr('string'),
@@ -20,7 +20,7 @@ export default Model.extend({
   user: belongsTo('user'),
   folder: belongsTo('folder'),
   articles: hasMany('article'),
-  settings: attr({default: []}),
+  settings: attr({ default: [] }),
   meta: attr(),
   /**
    *

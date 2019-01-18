@@ -17,13 +17,14 @@ export default Component.extend({
 
   change() {
     let folderId = document.getElementById(this.elementId).value;
+    console.log('folderid', folderId);
     let folder = this.store.peekRecord('folder', folderId);
 
     this.feed.set('folder', folder);
   },
 
   getFolders: task(function* () {
-    return yield this.store.findAll('folder', {sort: 'name'}).then(folders => {
+    return yield this.store.findAll('folder', { sort: 'name' }).then(folders => {
       this.set('result', folders);
     });
   })

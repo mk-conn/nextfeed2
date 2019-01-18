@@ -21,7 +21,11 @@ export default Service.extend({
         "Content-Type": "application/json"
       },
     }).then(response => {
-      return response.json()
+      if (response.ok) {
+        return response.json()
+      }
+
+      return false;
     });
   }),
 

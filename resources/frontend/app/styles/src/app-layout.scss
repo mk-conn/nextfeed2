@@ -209,6 +209,35 @@ body {
   }
 }
 
+@include media-breakpoint-up(xl) {
+  $sidebar: 20% !important;
+  $col1: 35% !important;
+  $col2: 45% !important;
+
+  #side-bar {
+    width: $sidebar;
+
+    &.enabled {
+      width: $sidebar;
+    }
+  }
+  #column-one {
+    width: $col1;
+
+    &.enabled {
+      width: $col1;
+    }
+  }
+  #column-two {
+    width: $col2;
+
+    &.enabled {
+      width: $col2;
+      background: inherit;
+    }
+  }
+}
+
 img {
   max-width: 100%;
 }

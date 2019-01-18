@@ -48,20 +48,6 @@
   </div>
 </div>
 
-<div class="sidebar-item feed-item">
-  {{#link-to "index.feed.articles" "archived"}}
-    <div class="flex row content-between feed-item">
-      <div>
-            <span class="feed-icon">
-              {{fa-icon "star" prefix="fas"}}
-            </span>
-        Archive
-      </div>
-      <span class="badge badge-secondary">{{starred}}</span>
-    </div>
-  {{/link-to}}
-</div>
-
 {{!--
 <div class="flex row">
     <div class="text-muted">
@@ -86,10 +72,19 @@
   {{/sortable-objects}}
 </div>
 <div class="folder-item">
-  <div class="folder">
-    <span class="text-muted">
-      Feeds
-    </span>
+  <div class="sidebar-item feed-item">
+    {{#link-to "index.feed.articles" "archived"}}
+      <div class="flex row content-between feed-item">
+        <div>
+            <span class="feed-icon">
+              {{fa-icon "star" prefix="fas"}}
+            </span>
+          Archive
+        </div>
+        <span class="badge badge-secondary">{{starred}}</span>
+      </div>
+    {{/link-to}}
   </div>
+
   {{feed-items classNames="feeds" feeds=feeds}}
 </div>

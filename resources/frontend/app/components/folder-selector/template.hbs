@@ -3,6 +3,10 @@
   <span>{{fa-icon "circle" spin=true}} Loading...</span>
 {{else}}
   {{#each result as |folder|}}
-    <option value={{folder.id}} selected={{is-equal feed.folder.id folder.id}}>{{folder.name}}</option>
+    <option value={{folder.id}}
+            selected={{is-equal feed.folder.id folder.id}}
+    >
+      {{folder.name}}
+    </option>
   {{/each}}
 {{/if}}

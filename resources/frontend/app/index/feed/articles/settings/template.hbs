@@ -21,6 +21,7 @@
       feed=model
       classNames="custom-select"
     }}
+    Selected: {{model.folder.name}}
   </div>
 
   <fieldset>
@@ -30,7 +31,6 @@
         type="text"
         id="name"
         value=model.name class="form-control"
-        change=(action (route-action "updateFeed"))
       }}
     </div>
 
@@ -70,7 +70,7 @@
       >
         Save
         {{#if model.isSaving}}
-          <i class="fa fa-spinner"></i>
+          {{fa-icon "circle-notch" fixedWith=true}}
         {{/if}}
       </button>
     </div>

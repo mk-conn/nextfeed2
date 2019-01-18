@@ -8,7 +8,7 @@ import $ from 'jquery';
 
 export default Component.extend({
   tasks: service(),
-
+  notify: service(),
   classNames: ['full-article'],
 
   content: computed('article.content', function () {
@@ -59,8 +59,13 @@ export default Component.extend({
     loadRemoteArticle(articleId) {
       this.set('loader', true);
       this.tasks.remoteArticle(articleId).then(content => {
-        this.set('fullArticleContent', htmlSafe(content));
-        this.set('loader', false);
+        if (content) {
+          this.set('fullArticleContent', htmlSafe(content));
+          this.set('loader', false);
+        } else {
+          let msg = 'An error happened while trying to get the remote article';
+          this.get('notify').error({ html: msg });
+        }
       });
     },
     /**
