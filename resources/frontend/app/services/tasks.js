@@ -69,4 +69,5 @@ export default Service.extend({
 
     return this.get('runTask').perform(url);
   }
+
 });
