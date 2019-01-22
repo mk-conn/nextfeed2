@@ -42,7 +42,9 @@
           {{/if}}
         </button>
         <button type="button" class="btn btn-sm btn-outline-secondary" {{action (route-action "markAllRead")}}>
-          Mark read
+          {{fa-icon "check-circle"
+                    title="Mark all read"
+          }}
         </button>
         {{#link-to
           "index.feed.articles.settings"
@@ -50,7 +52,7 @@
           tagName="button"
           classNames="btn btn-sm btn-outline-secondary"
         }}
-          Settings
+          {{fa-icon "cogs"}}
         {{/link-to}}
       </div>
     {{/if}}

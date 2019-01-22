@@ -32,6 +32,14 @@
   &.align-baseline {
     align-items: baseline;
   }
+
+  &.no-wrap {
+    flex-wrap: nowrap;
+  }
+}
+
+.self-left {
+  align-self: flex-start;
 }
 
 .self-start {

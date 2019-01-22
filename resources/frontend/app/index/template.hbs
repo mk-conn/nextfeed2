@@ -1,6 +1,6 @@
 <div class="feed-actions">
-  <div class="row flex content-between">
-    <div class="left">
+  <div class="row flex content-between no-wrap">
+    <div>
       {{#link-to
         "index.add"
         tagName="button"
@@ -9,32 +9,45 @@
         title="Add feed"
       }}
         <span class="fa-layers fa-fw">
-    {{fa-icon "rss"
-              class="fa-lg"
-              transform="shrink-7"
-              mask="circle"
-    }}
+            {{fa-icon "rss"
+                      class="fa-lg"
+                      transform="shrink-7"
+                      mask="circle"
+            }}
           {{fa-icon "plus"
                     transform="shrink-10 up-8 right-12"
           }}
-    </span>
+          </span>
       {{/link-to}}
 
-      {{#link-to "index.folders.add" activeClass="" classNames=""}}
+      {{#link-to "index.folders.add"
+                 activeClass=null
+                 classNames="btn btn-sm btn-link"
+      }}
         <span class="fa-layers fa-fw">
-    {{fa-icon "folder"
-              class="fa-lg"
-              transform="shrink-7"
-              mask="circle"
-    }}
+          {{fa-icon "folder"
+                    class="fa-lg"
+                    transform="shrink-7"
+                    mask="circle"
+          }}
           {{fa-icon "plus"
                     transform="shrink-10 up-8 right-12"
           }}
-    </span>
+        </span>
       {{/link-to}}
 
-      {{#link-to "index.settings"}}
-        {{fa-icon "cogs"}}
+
+      {{#link-to "index.settings"
+                 activeClass=null
+                 classNames="btn btn-sm btn-link"
+      }}
+        <span class="fa-layers fa-fw">
+          {{fa-icon "cog"
+                    class="fa-lg"
+                    transform="shrink-5"
+                    mask="circle"
+          }}
+        </span>
       {{/link-to}}
 
     </div>
