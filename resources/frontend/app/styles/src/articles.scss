@@ -14,6 +14,13 @@
   font-size: .8rem;
   @include overflow-scroll;
 
+  .article-link, .article-list-item-action {
+    color: inherit;
+
+    &:hover {
+      color: $color3 !important;
+    }
+  }
 
   .article-list-item-action-container {
     display: flex;

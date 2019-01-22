@@ -1,25 +1,24 @@
-<h6 class="article-title">{{article.title}}</h6>
-<div>
-  {{#if article.categories}}
-    <div class="article-categories text-muted">
-      {{#each article.categories as |category|}}
-        <span class="badge badge-secondary">{{category.label}}</span>
-      {{/each}}
-    </div>
-  {{/if}}
-  <small>{{moment-format article.updatedDate 'Y-MM-DD HH:mm'}}</small>
-  <div class="description">
-    {{articleDescription}}
+{{#if article.categories}}
+  <div class="article-categories text-muted">
+    {{#each article.categories as |category|}}
+      <span class="badge badge-secondary">{{category.label}}</span>
+    {{/each}}
   </div>
-</div>
+{{/if}}
+{{#link-to
+  "index.feed.articles.article"
+  article.id
+  classNames="article-link"
+}}
+  <h6 class="article-title">{{article.title}}</h6>
+  <div>
+    <small>{{moment-format article.updatedDate 'Y-MM-DD HH:mm'}}</small>
+    <div class="description">
+      {{articleDescription}}
+    </div>
+  </div>
+{{/link-to}}
 <div class="article-list-item-action-container">
-  {{#link-to
-    "index.feed.articles.article"
-    article.id
-    classNames="article-list-item-action"
-  }}
-    {{fa-icon "book-reader" prefix="fas"}}
-  {{/link-to}}
   <a class="article-list-item-action"
      href="{{article.url}}"
      data-content="Open article in new tab"
@@ -30,10 +29,10 @@
   </a>
   <a role="button"
      class="article-list-item-action"
-     href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}
-  %0A%0A{{article.url}}"
+     title="Share article in a mail"
+     href="mailto:?subject=Article: {{article.title}}&body={{article.title}}%0A%0A{{articleDescription}}%0A%0A{{article.url}}"
   >
-  {{fa-icon "share-square"}}
+    {{fa-icon "share-square"}}
   </a>
   <a class="article-list-item-action"
      href="#"
