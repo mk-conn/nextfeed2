@@ -231,12 +231,23 @@ class Feed extends BaseModel
         }
         
         $this->guid = $feed->getId();
-        $this->description = $feed->getDescription();
         $this->site_url = FeedReader::parseUrl($feed->getLink());
         $this->feed_url = $feed->getFeedLink();
         $this->language = $feed->getLanguage();
         $this->logo = $logo;
-        $this->name = trim($feed->getTitle());
+        
+        $description = trim($feed->getDescription());
+        if (strlen($description > 250)) {
+            $description = substr($description, 0, 250) . '...';
+        }
+        $this->description = $description;
+        
+        $name = trim($feed->getTitle());
+        if (strlen($name > 250)) {
+            $name = substr($name, 0, 250) . '...';
+        }
+        
+        $this->name = $name;
     }
     
     /**
