@@ -237,13 +237,13 @@ class Feed extends BaseModel
         $this->logo = $logo;
         
         $description = trim($feed->getDescription());
-        if (strlen($description > 250)) {
+        if (strlen($description) > 250) {
             $description = substr($description, 0, 250) . '...';
         }
         $this->description = $description;
         
         $name = trim($feed->getTitle());
-        if (strlen($name > 250)) {
+        if (strlen($name) > 250) {
             $name = substr($name, 0, 250) . '...';
         }
         
