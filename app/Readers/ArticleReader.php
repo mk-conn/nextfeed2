@@ -13,24 +13,24 @@ use Masterminds\HTML5;
  */
 class ArticleReader
 {
-
+    
     protected $cleanTags = [
         'names'      => ['head', 'script', 'svg', 'nav', 'style', 'link'],
         'attributes' => ['style', 'class', 'id', 'data', 'onclick', 'onClick'],
         'classes'    => ['social', 'share', 'facebook', 'twitter', 'google', 'flattr', 'share']
     ];
-
+    
     /**
-     * @var
+     * @var string
      */
     protected $html;
-
+    
     protected $errors = [];
     /**
      * @var \DOMDocument
      */
     protected $doc;
-
+    
     /**
      * ArticleReader constructor.
      *
@@ -40,7 +40,7 @@ class ArticleReader
     {
         $this->html = $html;
     }
-
+    
     /**
      *
      */
@@ -50,7 +50,7 @@ class ArticleReader
         if (!$encoding) {
             $encoding = 'latin1';
         }
-
+        
         $this->html = (new \tidy)->repairString(
             $this->html,
             [
@@ -67,16 +67,24 @@ class ArticleReader
                 'output-encoding'             => 'utf8'
             ]
         );
-
-        $content = $this->parseDom($this->html);
-
+        
+        $content = $this->parseDom();
+        
         if (!$content) {
             $content = $this->getBody();
         }
-
+        
         return $content;
     }
-
+    
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+    
     /**
      * @return string
      */
@@ -92,11 +100,11 @@ class ArticleReader
         $this->doc->preserveWhiteSpace = false;
         $this->clean();
 //        $this->doc->saveHTML();
-
+        
         $article = $this->doc->getElementsByTagName('article');
         if ($article && $article->length) {
             $article = $article->item(0);
-
+            
             return $this->doc->saveHTML($article);
         } else {
             $body = $this->doc->getElementsByTagName('body');
@@ -105,34 +113,34 @@ class ArticleReader
                 // replace 'body' with 'article'
                 $body = $body->item(0);
                 $article->appendChild($body->cloneNode(true)); // todo: really replace
-
+                
                 return $this->doc->saveHTML($article);
             }
         }
-
+        
         $this->errors = $html5->getErrors();
-
+        
         if (empty($this->errors)) {
             $this->errors = libxml_get_errors();
             libxml_clear_errors();
         }
     }
-
+    
     protected function clean()
     {
         $tags = $this->cleanTags;
-
-        foreach ($tags[ 'names' ] as $tag) {
+        
+        foreach ($tags['names'] as $tag) {
             $elements = $this->doc->documentElement->getElementsByTagName($tag);
             if ($elements && $elements->length) {
                 $this->removeFromDom($elements);
             }
         }
-
-        if (isset($tags[ 'classes' ])) {
+        
+        if (isset($tags['classes'])) {
             $query = '//*[';
             $contains = [];
-            foreach ($tags[ 'classes' ] as $class) {
+            foreach ($tags['classes'] as $class) {
                 $contains[] = sprintf('contains(@class, "%s")', $class);
             }
             $query .= implode(' or ', $contains) . ']';
@@ -142,10 +150,10 @@ class ArticleReader
                 $this->removeFromDom($classElements);
             }
         }
-
-        if (isset($tags[ 'attributes' ])) {
+        
+        if (isset($tags['attributes'])) {
             $xpath = new \DOMXPath($this->doc);
-            foreach ($tags[ 'attributes' ] as $attribute) {
+            foreach ($tags['attributes'] as $attribute) {
                 $attributes = $xpath->query(sprintf('//@*[contains(name(), "%s")]', $attribute));
                 if ($attributes && $attributes->length) {
                     $this->removeAttributeFromElements($attributes);
@@ -153,7 +161,7 @@ class ArticleReader
             }
         }
     }
-
+    
     /**
      * @param \DOMNodeList $elements
      */
@@ -163,12 +171,12 @@ class ArticleReader
         foreach ($elements as $element) {
             $elementsToRemove[] = $element;
         }
-
+        
         foreach ($elementsToRemove as $element) {
             $element->parentNode->removeChild($element);
         }
     }
-
+    
     /**
      * @param \DOMNodeList $attributes
      */
@@ -182,26 +190,18 @@ class ArticleReader
             $attribute->parentNode->removeAttributeNode($attribute);
         }
     }
-
+    
     /**
      *
      */
     protected function getBody()
     {
-
+        return '';
     }
-
-    /**
-     * @return array
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
+    
     protected function findArticleByTag()
     {
-
+    
     }
-
+    
 }
