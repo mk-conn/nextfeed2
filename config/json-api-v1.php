@@ -42,9 +42,7 @@ return [
         'folders'         => App\Models\Folder::class,
         'articles'        => App\Models\Article::class,
         'settings'        => App\Models\Setting::class,
-        'users'           => App\Models\User::class,
-        'feed-actions'    => App\Models\FeedAction::class,
-        'article-actions' => App\Models\ArticleAction::class,
+        'users'           => App\Models\User::class
     ],
 
     /*

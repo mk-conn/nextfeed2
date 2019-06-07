@@ -27,7 +27,7 @@ class ApiRequest extends TestCase
      */
     public $apiUrl;
 
-    public $rootUrl = 'http://localhost';
+    public $rootUrl = 'http://localhost/api';
 
     /**
      * @var string

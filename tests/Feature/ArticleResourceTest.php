@@ -11,6 +11,7 @@ namespace Tests\Feature;
 
 use App\Models\Article;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Tests\ApiRequest;
 use Tests\Traits\FeedReaderMock;
 use Tests\Traits\ModelFactoryTrait;
@@ -79,11 +80,11 @@ class ArticleResourceTest extends ApiRequest
             ]
         ];
 
-        $response = $this->patchJsonApi($this->apiUrl . '/' . $article->id, $update)
+        $response = $this->patchJsonApi($this->apiUrl . '/' . $article->id, [], $update)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
-        $this->assertTrue(array_get($response, 'data.attributes.read'));
-        $this->assertTrue(array_get($response, 'data.attributes.keep'));
+        $this->assertTrue(Arr::get($response, 'data.attributes.read'));
+        $this->assertTrue(Arr::get($response, 'data.attributes.keep'));
     }
 
     /**
@@ -125,7 +126,7 @@ class ArticleResourceTest extends ApiRequest
             ]
         ];
 
-        $response = $this->patchJsonApi($this->apiUrl . '/' . $article->id, $update)
+        $response = $this->patchJsonApi($this->apiUrl . '/' . $article->id, [], $update)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
         $this->assertTrue(array_get($response, 'data.attributes.read'));
@@ -192,7 +193,7 @@ class ArticleResourceTest extends ApiRequest
             'q' => 'Überschrift'
         ];
         $query = http_build_query($data);
-        $response = $this->getJson($this->apiUrl . '/search?' . $query)
+        $response = $this->getJson($this->rootUrl . '/article/search?' . $query)
                          ->assertStatus(200)
                          ->decodeResponseJson();
         $this->assertCount(1, $response);
@@ -244,7 +245,7 @@ class ArticleResourceTest extends ApiRequest
             'read'    => false
         ]);
 
-        $response = $this->getJson($this->baseUrl . '/articles/remote/' . $article->id)
+        $response = $this->getJson($this->rootUrl . '/articles/remote/' . $article->id)
                          ->assertStatus(Response::HTTP_OK)
                          ->decodeResponseJson();
 

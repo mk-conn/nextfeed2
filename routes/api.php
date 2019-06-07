@@ -28,6 +28,7 @@ JsonApi::register(
             $api->resource('articles', ['has-one' => 'feed']);
             $api->resource('settings');
         });
+
         $api->resource(
             'users', [
             'has-many' => ['folders', 'feeds', 'settings']
