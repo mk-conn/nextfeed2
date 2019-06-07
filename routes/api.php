@@ -1,6 +1,7 @@
 <?php
 
 use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
+use CloudCreativity\LaravelJsonApi\Routing\RouteRegistrar;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ JsonApi::register(
         'namespace' => 'JsonApi',
         //'middleware' => 'json-api.auth:default'
     ],
-    function ($api) {
+    function (RouteRegistrar $api) {
         Route::group(
             ['middleware' => 'json-api.auth:default'], function () use ($api) {
             $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
@@ -35,7 +36,6 @@ JsonApi::register(
 
 
 Route::middleware(['auth:api'])
-     ->prefix('api/v1')
      ->group(function () {
          Route::get('article/search', 'Api\V1\ArticlesController@search')
               ->name('api:v1:articles.search');

@@ -21,6 +21,7 @@
     "ext-simplexml": "*",
     "ext-tidy": "*",
     "cloudcreativity/laravel-json-api": "1.1.*",
+    "cloudcreativity/json-api-testing": "1.1.*",
     "doctrine/dbal": "^2.9",
     "xemlock/htmlpurifier-html5": "0.1.*",
     "fideloper/proxy": "^4.0",
