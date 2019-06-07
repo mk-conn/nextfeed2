@@ -5,6 +5,13 @@
     "framework",
     "laravel"
   ],
+  "authors": [
+    {
+      "name": "Marko Krüger",
+      "email": "nextfeed@marko-krueger.de",
+      "role": "Lead Developer"
+    }
+  ],
   "license": "MIT",
   "type": "project",
   "require": {
