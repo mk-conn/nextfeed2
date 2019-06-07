@@ -1,7 +1,6 @@
 <?php
 
 use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
-use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +19,7 @@ JsonApi::register(
         'namespace' => 'JsonApi',
         //'middleware' => 'json-api.auth:default'
     ],
-    function (ApiGroup $api) {
+    function ($api) {
         Route::group(
             ['middleware' => 'json-api.auth:default'], function () use ($api) {
             $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);

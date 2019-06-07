@@ -20,23 +20,6 @@ class HasOrderTest extends TestCase
     /**
      *
      */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $user = new User([
-                             'username' => 'unittest',
-                             'fullname' => 'Unit Test',
-                             'password' => 'some randomn string',
-                             'email'    => 'unittest@localhost',
-                         ]);
-        $user->save();
-        $this->be($user);
-    }
-
-    /**
-     *
-     */
     public function testFolderHasOrder()
     {
 
@@ -45,6 +28,24 @@ class HasOrderTest extends TestCase
         $folder->save();
 
         $this->assertEquals(1, $folder->order);
+    }
+
+    /**
+     *
+     */
+    protected function setUp()
+    : void
+    {
+        parent::setUp();
+
+        $user = new User([
+            'username' => 'unittest',
+            'fullname' => 'Unit Test',
+            'password' => 'some randomn string',
+            'email'    => 'unittest@localhost',
+        ]);
+        $user->save();
+        $this->be($user);
     }
 
 
