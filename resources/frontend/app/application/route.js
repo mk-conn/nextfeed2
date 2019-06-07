@@ -14,11 +14,11 @@ export default Route.extend(ApplicationRouteMixin, {
     return this._loadCurrentUser();
   },
 
-  sessionAuthenticated() {
-    this._super(...arguments);
-    debug('application-route: Session is authenticated, loading user');
-    this._loadCurrentUser();
-  },
+  // sessionAuthenticated() {
+  //   this._super(...arguments);
+  //   debug('application-route: Session is authenticated, loading user');
+  //   this._loadCurrentUser();
+  // },
 
   _loadCurrentUser() {
     return this.get('currentUser').load()
@@ -30,8 +30,8 @@ export default Route.extend(ApplicationRouteMixin, {
 
     },
 
-    invalidateSession() {
-      this.get('session').invalidate();
-    }
+    // invalidateSession() {
+    //   this.get('session').invalidate();
+    // }
   }
 });
