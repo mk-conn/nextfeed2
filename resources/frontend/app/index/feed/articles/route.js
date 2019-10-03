@@ -1,10 +1,8 @@
-import { debug } from '@ember/debug';
 import { get, set } from '@ember/object';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import Gui from 'frontend/mixins/gui';
 import $ from 'jquery';
-import { task } from 'ember-concurrency';
 import InfinityModel from 'ember-infinity/lib/infinity-model';
 
 const meta = {
@@ -40,7 +38,7 @@ export default Route.extend(Gui, {
   },
 
   beforeModel() {
-    $('#article-list-items').animate({scrollTop: 0, duration: 400});
+    $('#article-list-items').animate({ scrollTop: 0, duration: 400 });
 
     this._super(...arguments);
   },
@@ -68,7 +66,7 @@ export default Route.extend(Gui, {
       pageParam: 'page[number]',
       perPageParam: 'page[size]',
       totalPagesParam: 'meta.page.last-page',
-      sort: '-updated-date',
+      sort: '-updated-date,-id',
       feed: feed.id
     };
     let filter = {};
@@ -83,7 +81,7 @@ export default Route.extend(Gui, {
     }
 
     options['filter'] = filter;
-    options['fields'] = {article: 'title,description,author,keep,read,url,updated-date,categories'};
+    options['fields'] = { article: 'title,description,author,keep,read,url,updated-date,categories' };
 
     return this.infinity.model('article', options, ExtendedInfinityModel);
   },
