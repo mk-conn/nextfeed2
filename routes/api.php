@@ -1,7 +1,6 @@
 <?php
 
-use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
-use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
+use CloudCreativity\LaravelJsonApi\Routing\RouteRegistrar as Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,25 +13,20 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 |
 */
 
-JsonApi::register(
-    'v1',
-    [
-        'namespace' => 'JsonApi',
-        //'middleware' => 'json-api.auth:default'
-    ],
-    function (ApiGroup $api) {
-        Route::group(
-            ['middleware' => 'json-api.auth:default'], function () use ($api) {
-            $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
-            $api->resource('folders', ['has-many' => 'feeds', 'has-one' => 'user']);
-            $api->resource('articles', ['has-one' => 'feed']);
-            $api->resource('settings');
-        });
-        $api->resource(
-            'users', [
-            'has-many' => ['folders', 'feeds', 'settings']
-        ]);
-    });
+JsonApi::register('v1')
+       ->routes(function (Api $api) {
+           Route::group(
+               ['middleware' => 'json-api.auth:default'], function () use ($api) {
+               $api->resource('feeds', ['has-many' => 'articles', 'has-one' => 'folder']);
+               $api->resource('folders', ['has-many' => 'feeds', 'has-one' => 'user']);
+               $api->resource('articles', ['has-one' => 'feed']);
+               $api->resource('settings');
+           });
+           $api->resource(
+               'users', [
+               'has-many' => ['folders', 'feeds', 'settings']
+           ]);
+       });
 
 
 Route::middleware(['auth:api'])

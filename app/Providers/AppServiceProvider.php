@@ -5,6 +5,7 @@ namespace App\Providers;
 
 use App\ViewComposers\AppComposer;
 use Illuminate\Support\ServiceProvider;
+use CloudCreativity\LaravelJsonApi\LaravelJsonApi;
 use View;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        LaravelJsonApi::defaultApi('v1');
         View::composer('app', AppComposer::class);
     }
 
